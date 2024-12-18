@@ -160,7 +160,7 @@ public class BlockMap {
 
 			ExtendedBlockStorage storage = chunk.getBlockStorageArray()[storY];
 			if (storage == Chunk.NULL_BLOCK_STORAGE){
-				storage = new ExtendedBlockStorage(storY << 4, !world.provider.getHasNoSky());
+				storage = new ExtendedBlockStorage(storY << 4, world.provider.hasSkyLight());
 				chunk.getBlockStorageArray()[storY] = storage;
 			}
 			return storage; 

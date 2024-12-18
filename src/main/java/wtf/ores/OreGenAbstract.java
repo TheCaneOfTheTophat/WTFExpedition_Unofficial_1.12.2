@@ -1,9 +1,6 @@
 package wtf.ores;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Random;
+import java.util.*;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -53,7 +50,7 @@ public abstract class OreGenAbstract{
 			Biome biome = world.getBiomeForCoordsBody(new BlockPos(coords.getWorldX(), 100, coords.getWorldZ()));
 			if (reqBiomeTypes.size() > 0){
 				for (BiomeDictionary.Type type : reqBiomeTypes){
-					if (!BiomeDictionary.isBiomeOfType(biome, type)){
+					if (!BiomeDictionary.hasType(biome, type)){
 						//System.out.println("biome regected for ore spawn" + this.oreBlock.getBlock().getLocalizedName());
 						return;
 					}
@@ -74,9 +71,9 @@ public abstract class OreGenAbstract{
 	protected int getBlocksPerChunk(World world, ChunkCoords coords, Random random, double surfaceAvg){
 				
 		int genNum = WTFOresNewConfig.simplexGen ? (int) getSimplexOres(world, coords.getWorldX(), coords.getWorldZ()) : (int)(random.nextFloat()*(maxPerChunk-minPerChunk)+minPerChunk);
-		
-		
-		Type[] biomeTypes = BiomeDictionary.getTypesForBiome(world.getBiome(new BlockPos(coords.getWorldX()+8, surfaceAvg, coords.getWorldZ()+8)));
+
+
+		Set<Type> biomeTypes = BiomeDictionary.getTypes(world.getBiome(new BlockPos(coords.getWorldX()+8, surfaceAvg, coords.getWorldZ()+8)));
 		for (Type biome : biomeTypes){
 			if (biomeModifier.containsKey(biome)){
 				genNum+= (minPerChunk+(maxPerChunk-minPerChunk)/2) * biomeModifier.get(biome);
@@ -89,8 +86,8 @@ public abstract class OreGenAbstract{
 
 	public int getGenStartHeight(double surfaceAvg, Random random) {
 		
-		int maxHeight = MathHelper.floor_float((float) (maxGenRangeHeight*surfaceAvg));
-		int minHeight = MathHelper.floor_float((float) (minGenRangeHeight*surfaceAvg));
+		int maxHeight = MathHelper.floor((float) (maxGenRangeHeight*surfaceAvg));
+		int minHeight = MathHelper.floor((float) (minGenRangeHeight*surfaceAvg));
 		
 		int range = maxHeight-minHeight;
 		if (range < 1){

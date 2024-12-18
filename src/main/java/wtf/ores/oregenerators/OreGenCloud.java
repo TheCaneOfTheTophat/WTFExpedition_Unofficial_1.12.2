@@ -56,7 +56,7 @@ public OreGenCloud(IBlockState blockstate, int[] genRange, int[] minmaxPerChunk,
 		for (int xloop = (int) -radius; xloop < radius+1; xloop++) {
 			for (int yloop = (int) -radius; yloop < radius+1; yloop++) {
 				for (int zloop = (int) -radius; zloop < radius+1; zloop++) {
-					double distance = MathHelper.sqrt_double(xloop*xloop + yloop*yloop + zloop*zloop);
+					double distance = MathHelper.sqrt(xloop*xloop + yloop*yloop + zloop*zloop);
 					if (distance < radius) {
 
 						int densityToSet;

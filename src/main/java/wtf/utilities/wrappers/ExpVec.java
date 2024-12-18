@@ -59,7 +59,7 @@ public class ExpVec extends Vec{
 			if (BlockSets.explosiveBlocks.containsKey(block)) {
 				world.setBlockState(pos, air, 2);
 				ExploderEntity entity = new ExploderEntity(world, pos, BlockSets.explosiveBlocks.get(block));
-				world.spawnEntityInWorld(entity);
+				world.spawnEntity(entity);
 			}
 
 			double atomize = resistance * GameplayConfig.expLvlAatomize;

@@ -6,6 +6,8 @@ import exterminatorjeff.undergroundbiomes.api.API;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import wtf.Core;
 import wtf.blocks.UBC.UBCSand;
@@ -106,7 +108,8 @@ public class UBCCompat {
 
 
 			WTFStoneRegistry.defCobble.put(SedimentaryStone[loop], "wtfcore:ubcSand@"+loop);
-			GameRegistry.addShapelessRecipe(new ItemStack(API.SEDIMENTARY_STONE.getBlock(), 4, loop), new Object[] {new ItemStack(WTFBlocks.ubcSand, 1, loop), new ItemStack(WTFBlocks.ubcSand, 1, loop), new ItemStack(WTFBlocks.ubcSand, 1, loop), new ItemStack(WTFBlocks.ubcSand, 1, loop)});
+			// Also not sure about this one either, chief
+			GameRegistry.addShapelessRecipe(API.SEDIMENTARY_STONE.getItemBlock().getRegistryName(), null, new ItemStack(API.SEDIMENTARY_STONE.getBlock(), 4, loop), Ingredient.fromStacks(new ItemStack(WTFBlocks.ubcSand, 1, loop), new ItemStack(WTFBlocks.ubcSand, 1, loop), new ItemStack(WTFBlocks.ubcSand, 1, loop), new ItemStack(WTFBlocks.ubcSand, 1, loop)));
 
 			UBCStoneList.add(SedimentaryStone[loop].getBlock().getRegistryName()+"@"+loop);
 			WTFStoneRegistry.defTextureLocations.put(SedimentaryStone[loop], "undergroundbiomes:blocks/"+SedimentaryStoneList[loop]);

@@ -22,7 +22,7 @@ public class ReplacerUBCSand extends ReplacerUBCAbstract{
 
 	@Override
 	public boolean isNonSolidAndReplacement(Chunk chunk, BlockPos pos, GeneratorMethods gen, IBlockState oldState) {
-		if (!BiomeDictionary.isBiomeOfType(chunk.getWorld().getBiome(pos), Type.SANDY)){
+		if (!BiomeDictionary.hasType(chunk.getWorld().getBiome(pos), Type.SANDY)){
 
 			double noise =getSimplexSand(chunk.getWorld(), pos);
 			if (noise < 8){
