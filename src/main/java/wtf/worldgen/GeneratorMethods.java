@@ -7,6 +7,7 @@ import java.util.Random;
 import net.minecraft.block.BlockVine;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -262,13 +263,13 @@ public class GeneratorMethods{
 
 	public void genRoot(BlockPos pos){
 		Biome biome = chunk.getBiome(pos, chunk.getWorld().getBiomeProvider());
-		if (BiomeDictionary.isBiomeOfType(biome, Type.CONIFEROUS)){
+		if (BiomeDictionary.hasType(biome, Type.CONIFEROUS)){
 			replaceBlock(pos, WTFBlocks.roots.getDefaultState().withProperty(BlockRoots.TYPE, RootType.spruce));
 		}
-		else if (BiomeDictionary.isBiomeOfType(biome, Type.SAVANNA)){
+		else if (BiomeDictionary.hasType(biome, Type.SAVANNA)){
 			replaceBlock(pos, WTFBlocks.roots.getDefaultState().withProperty(BlockRoots.TYPE, RootType.acacia));
 		}
-		else if (BiomeDictionary.isBiomeOfType(biome, Type.JUNGLE)){
+		else if (BiomeDictionary.hasType(biome, Type.JUNGLE)){
 			replaceBlock(pos, WTFBlocks.roots.getDefaultState().withProperty(BlockRoots.TYPE, RootType.jungle));
 		}
 		else if (biome.getBiomeName().contains("ark")){
@@ -286,7 +287,7 @@ public class GeneratorMethods{
 	/**
 	 **Checks if spawners are enabled, and then generates a mob spawner
 	 **/
-	public void spawnVanillaSpawner(BlockPos pos, String entityName, int count){
+	public void spawnVanillaSpawner(BlockPos pos, Entity entityName, int count){
 		blockmap.add(pos, new QMobSpawner(this.getWorld(), pos, entityName, count));
 	}
 

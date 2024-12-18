@@ -25,13 +25,13 @@ public class DungeonSpeleothemGrotto extends AbstractDungeonType{
 	@Override
 	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		if (simplex.get2DRandom(gen.getWorld(), pos) < 0.5){
-			gen.genSpeleothem(pos, random.nextInt(5), depth, BiomeDictionary.isBiomeOfType(gen.getWorld().getBiome(pos), Type.SNOWY));
+			gen.genSpeleothem(pos, random.nextInt(5), depth, BiomeDictionary.hasType(gen.getWorld().getBiome(pos), Type.SNOWY));
 		}
 	}
 	@Override
 	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		if (simplex.get2DRandom(gen.getWorld(), pos) < 0.5){
-			gen.genSpeleothem(pos, random.nextInt(3), depth, BiomeDictionary.isBiomeOfType(gen.getWorld().getBiome(pos), Type.SNOWY));
+			gen.genSpeleothem(pos, random.nextInt(3), depth, BiomeDictionary.hasType(gen.getWorld().getBiome(pos), Type.SNOWY));
 		}
 	}
 	

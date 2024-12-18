@@ -49,17 +49,6 @@ public abstract class AbstractCaveType
 		
 	}
 	
-
-	
-	/**
-	 * 
-	 * @param pos
-	 * @param returnSize
-	 * @param scale : smaller for larger, less random, more chunky looking areas
-	 * @return
-	 */
-			
-	
 	protected int getSpelSize(Random random, float depth){
 		
 		return (int)(Math.sqrt(random.nextInt(9))*(1-depth))+random.nextInt(2)+random.nextInt(2);

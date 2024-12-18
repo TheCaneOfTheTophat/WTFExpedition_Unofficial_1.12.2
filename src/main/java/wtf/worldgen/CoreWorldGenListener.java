@@ -76,7 +76,7 @@ public class CoreWorldGenListener {
 	@SubscribeEvent
 	public void chunkLoad(ChunkEvent.Load event){
 				
-		ChunkCoords coords = new ChunkCoords(event.getChunk().xPosition, event.getChunk().zPosition);
+		ChunkCoords coords = new ChunkCoords(event.getChunk().x, event.getChunk().z);
 		if (event.getWorld().isRemote || event.getWorld().getWorldType() == WorldType.FLAT){
 			return;
 		}

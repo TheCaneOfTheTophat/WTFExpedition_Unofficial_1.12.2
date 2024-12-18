@@ -49,7 +49,7 @@ public class Branch {
 		this.y = oriY;
 		this.z = oriZ;
 		
-		axis = Math.abs(vecY) < MathHelper.abs_max(vecX, vecZ) ? (Math.abs(vecX) > Math.abs(vecZ) ? BlockLog.EnumAxis.X : BlockLog.EnumAxis.Z) : BlockLog.EnumAxis.Y;
+		axis = Math.abs(vecY) < MathHelper.absMax(vecX, vecZ) ? (Math.abs(vecX) > Math.abs(vecZ) ? BlockLog.EnumAxis.X : BlockLog.EnumAxis.Z) : BlockLog.EnumAxis.Y;
 	}
 	 
 	public boolean hasNext(){
@@ -68,7 +68,7 @@ public class Branch {
 	
 	public BlockPos next(){
 		
-		if (length > 6 && MathHelper.abs_max(vecX,  vecY) > vecY){
+		if (length > 6 && MathHelper.absMax(vecX,  vecY) > vecY){
 			if ((int)(y+vecY) > (int)y){
 				y += vecY;
 				return new BlockPos(x, y, z);

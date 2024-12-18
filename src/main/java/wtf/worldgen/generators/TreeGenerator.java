@@ -58,14 +58,14 @@ public class TreeGenerator {
 					//failloop++;
 				//}
 				Biome biome = world.getBiome(pos);
-				double numTrees = biome.theBiomeDecorator.treesPerChunk > -1 ? biome.theBiomeDecorator.treesPerChunk : 16;
+				double numTrees = biome.decorator.treesPerChunk > -1 ? biome.decorator.treesPerChunk : 16;
 				double genChance = 16*numTrees/256;
 				
 				if (random.nextFloat() > genChance || pos.generated || !shouldTreePosGenerate(world, random, pos)){
 					continue;
 				}
 				
-				WorldGenerator oldTree = biome.genBigTreeChance(random);
+				WorldGenerator oldTree = biome.getRandomTreeFeature(random);
 				
 				if (oldTree instanceof WorldGenShrub){
 						shrubQ.add(new Shrub((WorldGenShrub) oldTree, gen));

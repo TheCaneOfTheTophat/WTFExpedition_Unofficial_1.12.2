@@ -1,20 +1,23 @@
 package wtf.worldgen.generators.queuedgen;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class QMobSpawner implements QueuedGenerator {
 
 	private final World world;
 	private final BlockPos pos;
-	private final String entity;
+	private final Entity entity;
 	private final int count;
 	
-	public QMobSpawner(World world, BlockPos pos, String entity, int count){
+	public QMobSpawner(World world, BlockPos pos, Entity entity, int count){
 		this.world = world;
 		this.pos = pos;
 		this.entity = entity;
@@ -26,7 +29,8 @@ public class QMobSpawner implements QueuedGenerator {
 		world.setBlockState(pos, Blocks.MOB_SPAWNER.getDefaultState());
 		TileEntityMobSpawner spawner = (TileEntityMobSpawner)world.getTileEntity(pos);
 		if (spawner != null){
-			spawner.getSpawnerBaseLogic().setEntityName(entity);
+			// Not sure about this, chief.
+			spawner.getSpawnerBaseLogic().setEntityId(EntityRegistry.getEntry(entity.getClass()).getRegistryName());
 			NBTTagCompound nbt = new NBTTagCompound();
 			spawner.writeToNBT(nbt);
 			nbt.setShort("SpawnCount",(short)count);

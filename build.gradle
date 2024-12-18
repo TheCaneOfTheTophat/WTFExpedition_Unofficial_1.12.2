@@ -10,7 +10,7 @@ repositories {
     }
 }
 
-version = "v1.12.2_1.6.0" // Fuck's up with that lack of parity between the CF releases and this?
+version = "v1.12.2_2.0.0" // Fuck's up with that lack of parity between the CF releases and this?
 archivesBaseName = "WTFs_Expedition_Unofficial"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'

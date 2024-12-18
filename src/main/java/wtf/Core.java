@@ -1,5 +1,6 @@
 package wtf;
 
+import net.minecraft.item.ItemStack;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -50,19 +51,16 @@ public class Core {
 	
 	public static boolean UBC;
 
-	public static CreativeTabs wtfTab = new CreativeTabs("WTFBlocks")
-	{
-
+	public static CreativeTabs wtfTab = new CreativeTabs("WTFBlocks") {
 		@Override
-		public Item getTabIconItem()
+		public ItemStack getTabIconItem()
 		{
-			return Item.getItemFromBlock(Blocks.COBBLESTONE);
+			return new ItemStack(Item.getItemFromBlock(Blocks.COBBLESTONE));
 		}		
 	};
 
 	@EventHandler
-	public void PreInit(FMLPreInitializationEvent preEvent) throws Exception
-	{
+	public void PreInit(FMLPreInitializationEvent preEvent) throws Exception {
 		coreLog = preEvent.getModLog();
 
 		proxy.writeResourcePack();
@@ -75,12 +73,11 @@ public class Core {
 
 		CaveBiomesConfig.customConfig();
 
-		if (UBC){
+		if (UBC)
 			UBCCompat.loadUBCStone();
-		}
-		else {
+		else
 			coreLog.info("Underground Biomes Construct not detected");
-		}
+
 		OverworldGenConfig.loadConfig();
 		GameplayConfig.loadConfig();
 		WTFBlocks.initSimpleBlocks();
@@ -92,13 +89,11 @@ public class Core {
 		WTFEntities.initEntites();
 		WTFRecipes.initRecipes();
 		
-		if (MasterConfig.enableOverworldGeneration){
+		if (MasterConfig.enableOverworldGeneration)
 			WTFBiomes.init();
-		}
 		
-		if (MasterConfig.enableOreGen){
+		if (MasterConfig.enableOreGen)
 			WTFOresNewConfig.loadConfig();
-		}
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 		
@@ -107,34 +102,16 @@ public class Core {
 		proxy.finishLangFile();
 	}
 	
-	@EventHandler public void load(FMLInitializationEvent event) throws Exception
-	{
-	
-		
+	@EventHandler public void load(FMLInitializationEvent event) throws Exception {
 		EventListenerRegistry.initListeners();
-		
-
-		
 	}
 	
 	@EventHandler
-	public void PostInit(FMLPostInitializationEvent postEvent) throws Exception{
-
-		if (MasterConfig.doResourcePack){
+	public void PostInit(FMLPostInitializationEvent postEvent) throws Exception {
+		if (MasterConfig.doResourcePack)
 			proxy.enableBlockstateTexturePack();
-		}
 
-		if (GameplayConfig.wcictable){
+		if (GameplayConfig.wcictable)
 			RecipeParser.init();
-		}
-		
-		
-		
-
-	}	
-
-
-
-
-
+	}
 }

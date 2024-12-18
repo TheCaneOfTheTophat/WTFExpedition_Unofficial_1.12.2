@@ -88,7 +88,7 @@ public class BiomeAutumnForest extends BiomeForest implements SubBiome{
 
 	@Override
 	public WorldGenerator getTree(ChunkScan chunkscan,  Random random) {
-			return parentBiome.genBigTreeChance(random);
+			return parentBiome.getRandomTreeFeature(random);
 	}
 
 

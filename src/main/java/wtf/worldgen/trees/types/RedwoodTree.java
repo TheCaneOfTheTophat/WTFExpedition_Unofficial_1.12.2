@@ -57,7 +57,7 @@ public class RedwoodTree extends AbstractTreeType{
 		double bottom = this.getLowestBranchRatio()*trunkHeight;
 		double distFromBottom = nodeHeight - bottom;
 		double branchSectionLength = trunkHeight-bottom;
-		double taper = 1 - MathHelper.clamp_double(distFromBottom/branchSectionLength, 0.1, 0.9);
+		double taper = 1 - MathHelper.clamp(distFromBottom/branchSectionLength, 0.1, 0.9);
 		return  trunkHeight/4*taper;
 	}
 
@@ -86,7 +86,7 @@ public class RedwoodTree extends AbstractTreeType{
 			return (int) (thirdHeight + 2*(thirdHeight*rad) + random.nextInt(5)-2);
 		}
 		else {
-			return MathHelper.ceiling_double_int(trunkHeight);
+			return MathHelper.ceil(trunkHeight);
 		}
 	}
 	@Override

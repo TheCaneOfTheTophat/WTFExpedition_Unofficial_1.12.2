@@ -54,7 +54,7 @@ public class Taiga1Tree extends AbstractTreeType{
 		double bottom = this.getLowestBranchRatio()*trunkHeight;
 		double distFromBottom = nodeHeight - bottom;
 		double branchSectionLength = trunkHeight-bottom;
-		double taper = 1 - MathHelper.clamp_double(distFromBottom/branchSectionLength, 0.1, 0.9);
+		double taper = 1 - MathHelper.clamp(distFromBottom/branchSectionLength, 0.1, 0.9);
 		return  1+(trunkHeight/5)*taper;
 	}
 

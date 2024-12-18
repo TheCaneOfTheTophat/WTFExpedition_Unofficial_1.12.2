@@ -23,19 +23,19 @@ public class SurfaceGenerator {
 		for (SurfacePos[] posArray : chunkscan.surface){
 			for (SurfacePos pos : posArray){
 				Biome biome = world.getBiome(pos);
-				if (BiomeDictionary.isBiomeOfType(biome, Type.RIVER)){
+				if (BiomeDictionary.hasType(biome, Type.RIVER)){
 					if (simplex.get2DNoise(world, pos.getX()*16, pos.getZ()*16) > OverworldGenConfig.riverFracChunkPercent &&
 							simplex.get3DNoise(world, pos) > OverworldGenConfig.riverFracFreq){
 						gen.transformBlock(pos, Modifier.COBBLE);
 					}
 				}
-				else if (BiomeDictionary.isBiomeOfType(biome, Type.MOUNTAIN)){
+				else if (BiomeDictionary.hasType(biome, Type.MOUNTAIN)){
 					if (simplex.get2DNoise(world, pos.getX()*16, pos.getZ()*16) > OverworldGenConfig.mountainFracChunkPercent &&
 							simplex.get3DNoise(world, pos) > OverworldGenConfig.mountainFracFreq){
 						gen.transformBlock(pos, Modifier.COBBLE);
 					}
 				}
-				else if (BiomeDictionary.isBiomeOfType(biome, Type.FOREST )){
+				else if (BiomeDictionary.hasType(biome, Type.FOREST )){
 					if (simplex.get2DNoise(world, pos.getX()*16, pos.getZ()*16) > OverworldGenConfig.forestMossChunkPercent &&
 							simplex.get3DNoise(world, pos) > OverworldGenConfig.ForestMossFreq){
 						gen.transformBlock(pos, Modifier.MOSSY);

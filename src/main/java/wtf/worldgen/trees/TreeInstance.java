@@ -53,7 +53,7 @@ public class TreeInstance {
 	private final HashMap<BlockPos, IBlockState> decoBlocks;
 
 
-	public TreeInstance(World world, Random random, ChunkScan chunkscan, BlockPos pos, AbstractTreeType tree){
+	public TreeInstance(World world, Random random, ChunkScan chunkscan, BlockPos pos, AbstractTreeType tree) {
 		//tree.canGrowOn.add(CaveBlocks.MossyDirt);
 		trunkBlocks = new HashMap<BlockPos, IBlockState>();
 		leafBlocks = new HashMap<BlockPos, IBlockState>();
@@ -66,7 +66,7 @@ public class TreeInstance {
 		this.oriX =pos.getX()+0.5;
 		this.y = pos.getY();
 		this.oriZ =pos.getZ()+0.5;
-		this.snow = BiomeDictionary.isBiomeOfType(world.getBiome(pos), Type.SNOWY);
+		this.snow = BiomeDictionary.hasType(world.getBiome(pos), Type.SNOWY);
 		
 		this.type = tree;
 
@@ -78,7 +78,7 @@ public class TreeInstance {
 
 		//branchLength = MathHelper.ceiling_double_int((tree.baseBranchLength +  tree.baseBranchLength*scale)/2);
 		//rootLength = (int) (trunkHeight/tree.rootLengthDivisor);
-		if (!tree.airGenerate){
+		if (!tree.airGenerate) {
 			rootLevel = tree.rootLevel == 0 ? random.nextInt(2): tree.rootLevel;
 		}
 		else {
@@ -87,62 +87,57 @@ public class TreeInstance {
 		this.chunkscan = chunkscan;
 	}
 
-	Block[] groundArray = {Blocks.DIRT, Blocks.GRASS, Blocks.GRAVEL, Block.getBlockFromName("dirt0decoStatic")};
+	Block[] groundArray = { Blocks.DIRT, Blocks.GRASS, Blocks.GRAVEL, Block.getBlockFromName("dirt0decoStatic") };
 	public HashSet<Block> groundBlocks = new HashSet<Block>(Arrays.asList(groundArray));
 
 
 
 	
-	public void setTrunk(BlockPos pos){
+	public void setTrunk(BlockPos pos) {
 		trunkBlocks.put(pos, type.wood);
 		//this.chunkscan.setGenerated(pos);
 	}
 
-	public void setRoot(BlockPos pos){
+	public void setRoot(BlockPos pos) {
 		rootBlocks.put(pos, type.wood.withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.NONE));
 		this.chunkscan.setGenerated(pos);
 
 	}
-	public void setBranch(BlockPos pos, BlockLog.EnumAxis axis){
+	public void setBranch(BlockPos pos, BlockLog.EnumAxis axis) {
 		rootBlocks.put(pos, type.branch.withProperty(BlockLog.LOG_AXIS, axis));
 		this.chunkscan.setGenerated(pos);
 	}
 	public int airHash = Blocks.AIR.hashCode();
-	public void setLeaf(BlockPos pos){
-		if (world.getBlockState(pos).getBlock().hashCode() == airHash){
+	public void setLeaf(BlockPos pos) {
+		if (world.getBlockState(pos).getBlock().hashCode() == airHash) {
 			leafBlocks.put(pos, type.leaf.withProperty(BlockLeaves.CHECK_DECAY, false));
-			if (snow){
+			if (snow) {
 				setDeco(pos.up(), Blocks.SNOW_LAYER.getDefaultState());
-				if (random.nextInt(100) < 0){
+				if (random.nextInt(100) < 0) {
 					setDeco(pos.down(), WTFBlocks.icicle.getDefaultState());
 				}
 			}
 		}
-		
 	}
 	
-	public void setDeco(BlockPos pos, IBlockState state){	
+	public void setDeco(BlockPos pos, IBlockState state) {
 			decoBlocks.put(pos, state);
-		
 	}
 
-	public void setBlocksForPlacement(GeneratorMethods gen){
+	public void setBlocksForPlacement(GeneratorMethods gen) {
 		HashMap<BlockPos, IBlockState> masterMap = new HashMap<BlockPos, IBlockState>();
 		masterMap.putAll(decoBlocks);
 		masterMap.putAll(leafBlocks);
 		masterMap.putAll(rootBlocks);
 		masterMap.putAll(trunkBlocks);
 		
-		for (Entry<BlockPos, IBlockState> entry: masterMap.entrySet()){
+		for (Entry<BlockPos, IBlockState> entry: masterMap.entrySet()) {
 			gen.setTreeBlock(entry.getKey(), entry.getValue());	
 		}
-		
-		
 	}
 
-	public boolean inTrunk(BlockPos pos){
+	public boolean inTrunk(BlockPos pos) {
 		//System.out.println(relPosZ(zpos) - z);
 		return trunkBlocks.containsKey(pos);
 	}
-
 }

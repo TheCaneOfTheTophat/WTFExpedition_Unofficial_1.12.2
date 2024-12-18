@@ -34,11 +34,11 @@ public class LavaReplacer extends Replacer{
 			World world = chunk.getWorld();
 			Biome biome = world.getBiomeForCoordsBody(pos);
 			
-			if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.OCEAN)){
+			if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.OCEAN)){
 				gen.replaceBlock(pos, Blocks.WATER.getDefaultState());
 				return true;
 			}
-			else if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.SNOWY)){
+			else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.SNOWY)){
 		
 				if (n < 0.33){
 					return true;
@@ -53,7 +53,7 @@ public class LavaReplacer extends Replacer{
 				
 				
 			}
-			else if (BiomeDictionary.isBiomeOfType(biome, Type.NETHER)){
+			else if (BiomeDictionary.hasType(biome, Type.NETHER)){
 				hellBiome netherbiome = CaveTypeRegister.nether.getSubType(pos);
 
 				switch (netherbiome){

@@ -49,7 +49,7 @@ public class Taiga2Tree extends AbstractTreeType {
 		double bottom = this.getLowestBranchRatio()*trunkHeight;
 		double distFromBottom = nodeHeight - bottom;
 		double branchSectionLength = trunkHeight-bottom;
-		double taper = 1 - MathHelper.clamp_double(distFromBottom/branchSectionLength, 0.1, 0.9);
+		double taper = 1 - MathHelper.clamp(distFromBottom/branchSectionLength, 0.1, 0.9);
 		return  1+(trunkHeight/6)*taper;
 		
 	}
@@ -73,7 +73,7 @@ public class Taiga2Tree extends AbstractTreeType {
 
 	@Override
 	public int getTrunkColumnHeight(double trunkHeight, double currentRadius, double maxRadius) {
-		return MathHelper.ceiling_double_int(trunkHeight);
+		return MathHelper.ceil(trunkHeight);
 	}
 
 	@Override

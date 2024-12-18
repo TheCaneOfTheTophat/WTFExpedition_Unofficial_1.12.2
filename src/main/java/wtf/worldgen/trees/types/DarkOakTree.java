@@ -59,7 +59,7 @@ public class DarkOakTree extends AbstractTreeType{
 		double bottom = this.getLowestBranchRatio()*trunkHeight;
 		double distFromBottom = nodeHeight - bottom;
 		double branchSectionLength = trunkHeight-bottom;
-		double taper = 1 - MathHelper.clamp_double(distFromBottom/branchSectionLength, 0.1, 0.9);
+		double taper = 1 - MathHelper.clamp(distFromBottom/branchSectionLength, 0.1, 0.9);
 		return trunkHeight/2+trunkHeight/2*taper;
 		
 	}
@@ -87,7 +87,7 @@ public class DarkOakTree extends AbstractTreeType{
 			return (int) (thirdHeight + (thirdHeight*rad) + random.nextInt(5)-2);
 		}
 		else {
-			return MathHelper.ceiling_double_int(trunkHeight);
+			return MathHelper.ceil(trunkHeight);
 		}
 	}
 
@@ -107,9 +107,9 @@ public class DarkOakTree extends AbstractTreeType{
 	@Override
 	public void doLeafNode(TreeInstance tree, Branch branch, BlockPos pos) {
 		double height = pos.getY()-tree.y;
-		double taper = MathHelper.clamp_double((tree.type.leafTaper) * (tree.trunkHeight-height)/tree.trunkHeight, tree.type.leafTaper, 1);
+		double taper = MathHelper.clamp((tree.type.leafTaper) * (tree.trunkHeight-height)/tree.trunkHeight, tree.type.leafTaper, 1);
 
-		double radius = MathHelper.clamp_double(tree.type.leafRad*taper, 1, tree.type.leafRad);
+		double radius = MathHelper.clamp(tree.type.leafRad*taper, 1, tree.type.leafRad);
 		double ymin = tree.type.leafYMin;
 		double ymax = tree.type.leafYMax;
 
@@ -136,7 +136,7 @@ public class DarkOakTree extends AbstractTreeType{
 								tree.setLeaf(leafPos);
 
 
-								if (tree.type.vines > 0 && MathHelper.abs_max(xloop, zloop) > yloop && tree.random.nextBoolean()){
+								if (tree.type.vines > 0 && MathHelper.absMax(xloop, zloop) > yloop && tree.random.nextBoolean()){
 									TreeGenMethods.genVine(tree, leafPos, xloop, zloop);
 								}
 							}

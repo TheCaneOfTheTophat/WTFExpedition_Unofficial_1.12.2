@@ -88,29 +88,29 @@ public class CaveTypeRegister {
 		ArrayList<AbstractDungeonType> dungeonShallow = new ArrayList<AbstractDungeonType>(DungeonTypeRegister.defaultList());
 		AbstractCaveType shallow = simple;
 		
-		if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.MESA) || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SAVANNA)){
+		if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.MESA) || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SAVANNA)){
 			shallow = paintedDesert;
 			dungeonShallow.addAll(DungeonTypeRegister.desertList());
 		}
-		else if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.MOUNTAIN) || BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.HILLS)) {
+		else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.MOUNTAIN) || BiomeDictionary.hasType(biome,BiomeDictionary.Type.HILLS)) {
 
-			if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.SNOWY)){
+			if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.SNOWY)){
 				shallow = iceRocky;
 				dungeonShallow.addAll(DungeonTypeRegister.coldList());		
 			}
-			else if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.SAVANNA)){
+			else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.SAVANNA)){
 				shallow = redSandyRocky;
 				dungeonShallow.addAll(DungeonTypeRegister.desertList());
 			}
-			else if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.SANDY)){
+			else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.SANDY)){
 				shallow = sandyRocky;
 				dungeonShallow.addAll(DungeonTypeRegister.desertList());
 			}
-			else if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.JUNGLE)){
+			else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.JUNGLE)){
 				shallow = lushVolcanic;
 				dungeonShallow.addAll(DungeonTypeRegister.lushList());
 			}
-			else if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.FOREST)){
+			else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.FOREST)){
 				shallow = mossyRocky;
 				dungeonShallow.addAll(DungeonTypeRegister.forestList());
 			}
@@ -119,41 +119,41 @@ public class CaveTypeRegister {
 			}
 			dungeonShallow.addAll(DungeonTypeRegister.mountainList());
 		}
-		else if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SNOWY)){
+		else if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.SNOWY)){
 			shallow = ice;
 			dungeonShallow.addAll(DungeonTypeRegister.coldList());
 		}
-		else if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.OCEAN)|| BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.RIVER)){
+		else if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.OCEAN)|| BiomeDictionary.hasType(biome, BiomeDictionary.Type.RIVER)){
 			shallow = wet;
 			dungeonShallow.addAll(DungeonTypeRegister.wetList());
 		}
-		else if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SWAMP)){
+		else if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.SWAMP)){
 			shallow = swamp;
 			dungeonShallow.addAll(DungeonTypeRegister.wetList());
 			dungeonShallow.addAll(DungeonTypeRegister.forestList());
 		}
-		else if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.SANDY)){
+		else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.SANDY)){
 			shallow = sandy;
 			dungeonShallow.addAll(DungeonTypeRegister.desertList());
 		}
-		else if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.JUNGLE)){
+		else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.JUNGLE)){
 			shallow = lush;
 			dungeonShallow.addAll(DungeonTypeRegister.lushList());
 		}
-		else if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.MUSHROOM)){
+		else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.MUSHROOM)){
 			shallow = fungal;
 		}
-		else if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.PLAINS)){
+		else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.PLAINS)){
 			shallow = plains;
 			dungeonShallow.addAll(DungeonTypeRegister.wetList());
 		}
-		else if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.CONIFEROUS)){
+		else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.CONIFEROUS)){
 			shallow =podzol;
 			dungeonShallow.addAll(DungeonTypeRegister.forestList());
 			dungeonShallow.addAll(DungeonTypeRegister.coldList());
 		}
-		else if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.FOREST)){
-			if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.LUSH)){
+		else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.FOREST)){
+			if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.LUSH)){
 				shallow =swamp;
 				dungeonShallow.addAll(DungeonTypeRegister.forestList());
 				dungeonShallow.addAll(DungeonTypeRegister.wetList());
@@ -168,31 +168,31 @@ public class CaveTypeRegister {
 		ArrayList<AbstractDungeonType> dungeonMid = new ArrayList<AbstractDungeonType>(DungeonTypeRegister.defaultList());
 		AbstractCaveType mid = rocky;
 		
-		if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.SNOWY)){
+		if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.SNOWY)){
 			mid = iceRocky;
 			dungeonMid.addAll(DungeonTypeRegister.coldList());
 		}
-		else if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.OCEAN) || BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.RIVER)){
+		else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.OCEAN) || BiomeDictionary.hasType(biome,BiomeDictionary.Type.RIVER)){
 			mid = wet;
 			dungeonMid.addAll(DungeonTypeRegister.wetList());
 		}
-		else if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.SAVANNA) || BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.MESA)){
+		else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.SAVANNA) || BiomeDictionary.hasType(biome,BiomeDictionary.Type.MESA)){
 			mid = redSandyRocky;
 			dungeonMid.addAll(DungeonTypeRegister.desertList());	
 		}
-		else if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.SANDY)){
+		else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.SANDY)){
 			mid = sandyRocky;
 			dungeonMid.addAll(DungeonTypeRegister.desertList());	
 		}
-		else if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.JUNGLE)){
+		else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.JUNGLE)){
 			mid = lushVolcanic;
 			dungeonMid.addAll(DungeonTypeRegister.volcanicList());
 		}
-		else if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.FOREST)){
+		else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.FOREST)){
 			mid = mossyRocky;
 			dungeonMid.addAll(DungeonTypeRegister.forestList());
 		}
-		else if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.WET)){
+		else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.WET)){
 			mid = wet;
 			dungeonMid.addAll(DungeonTypeRegister.wetList());
 		}
@@ -200,16 +200,16 @@ public class CaveTypeRegister {
 		//DEEP
 		AbstractCaveType deep = volcanic;
 		ArrayList<AbstractDungeonType> dungeonDeep = new ArrayList<AbstractDungeonType>(DungeonTypeRegister.netherList());
-		if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.SNOWY)){
+		if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.SNOWY)){
 			deep = iceRocky;
 			dungeonShallow.addAll(DungeonTypeRegister.coldList());	
 		}
-		else if (BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.SANDY) || BiomeDictionary.isBiomeOfType(biome,BiomeDictionary.Type.SAVANNA)){
+		else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.SANDY) || BiomeDictionary.hasType(biome,BiomeDictionary.Type.SAVANNA)){
 			deep = sandyVolcanic;
 			dungeonShallow.addAll(DungeonTypeRegister.desertList());
 		}
 
-		if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.NETHER)){
+		if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.NETHER)){
 			shallow = nether;
 			mid = nether;
 			deep = nether;

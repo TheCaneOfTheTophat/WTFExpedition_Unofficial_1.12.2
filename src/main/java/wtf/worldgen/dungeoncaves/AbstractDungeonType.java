@@ -62,7 +62,7 @@ public abstract class AbstractDungeonType extends AbstractCaveType{
 		double sinY = Math.sin(pitchY);
 
 		
-		double n = MathHelper.clamp_double(vecx/sinY, -1, 1);
+		double n = MathHelper.clamp(vecx/sinY, -1, 1);
 		double pitchX = Math.acos(n);
 		double pitchZ = Math.asin(n);
 		 

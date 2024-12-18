@@ -60,8 +60,8 @@ public class TreeGenMethods {
 	
 	protected static boolean genTrunk(TreeInstance tree){
 		
-		int startloop = tree.trunkDiameter > 1 ? MathHelper.floor_double(-(tree.trunkRadius)) : 0;
-		int finishLoop = MathHelper.ceiling_double_int(tree.trunkRadius);
+		int startloop = tree.trunkDiameter > 1 ? MathHelper.floor(-(tree.trunkRadius)) : 0;
+		int finishLoop = MathHelper.ceil(tree.trunkRadius);
 		
 		int canGrow = 0;
 		
@@ -114,7 +114,7 @@ public class TreeGenMethods {
 			double nodeHeight = tree.trunkHeight-1;
 
 			//looping for multiple branches per node
-			int crownLoops = 4;//(int) MathHelper.clamp_double(tree.trunkHeight/7, 3, 12);
+			int crownLoops = 4;//(int) MathHelper.clamp(tree.trunkHeight/7, 3, 12);
 			
 			while (nodeHeight < tree.trunkHeight+crownLoops){
 				
@@ -178,13 +178,13 @@ public class TreeGenMethods {
 
 
 		//looping for multiple branches per node
-		int lowestBranch = MathHelper.floor_double(tree.trunkHeight*tree.type.getLowestBranchRatio());
+		int lowestBranch = MathHelper.floor(tree.trunkHeight*tree.type.getLowestBranchRatio());
 		while (nodeHeight > lowestBranch){
 			
 			double bottom = tree.type.getLowestBranchRatio()*tree.trunkHeight;
 			double distFromBottom = nodeHeight - bottom;
 			double branchSectionLength = tree.trunkHeight-bottom;
-			double taper = 1 - MathHelper.clamp_double(distFromBottom/branchSectionLength, 0.1, 1);
+			double taper = 1 - MathHelper.clamp(distFromBottom/branchSectionLength, 0.1, 1);
 			
 			int branches = tree.type.getBranchesPerNode(taper, tree.scale);
 			
