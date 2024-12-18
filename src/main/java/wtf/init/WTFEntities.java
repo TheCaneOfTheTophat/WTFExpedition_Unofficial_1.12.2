@@ -1,6 +1,7 @@
 package wtf.init;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import wtf.Core;
 import wtf.entities.customentities.EntityBlockHead;
@@ -48,7 +49,7 @@ public class WTFEntities {
 		int entityId = counter;
 		counter++;
 		
-		EntityRegistry.registerModEntity(entityClass, name, entityId, Core.instance, 64, 1, true, counter*31, counter*62);
+		EntityRegistry.registerModEntity(new ResourceLocation(Core.coreID, name), entityClass, name, entityId, Core.instance, 64, 1, true, counter*31, counter*62);
 		
 	}
 

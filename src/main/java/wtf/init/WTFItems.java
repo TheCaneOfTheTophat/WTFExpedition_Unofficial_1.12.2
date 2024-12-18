@@ -24,7 +24,7 @@ public class WTFItems {
 	
 	private static Item registerItem(Item item, String name){
 		item.setUnlocalizedName(name);
-		GameRegistry.register(item.setRegistryName(name));
+//		GameRegistry.register(item.setRegistryName(name));
 		Core.proxy.registerItemRenderer(item);
 		return item;
 	}

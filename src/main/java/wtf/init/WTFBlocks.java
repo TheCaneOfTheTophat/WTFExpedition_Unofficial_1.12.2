@@ -177,9 +177,9 @@ public class WTFBlocks{
 	public static Block registerBlock(Block block, String name){
 		block.setRegistryName(name);
 		block.setUnlocalizedName(name);
-		GameRegistry.register(block);
+//		GameRegistry.register(block);
 		ItemBlock temp = (ItemBlock) new ItemBlock(block).setUnlocalizedName(name).setRegistryName(name).setHasSubtypes(true);
-		GameRegistry.register(temp);
+//		GameRegistry.register(temp);
 		Core.proxy.registerItemRenderer(block);
 		
 		
@@ -198,9 +198,9 @@ public class WTFBlocks{
 		
 		block.setRegistryName(name);
 		block.setUnlocalizedName(name);
-		GameRegistry.register(block);
+//		GameRegistry.register(block);
 		ItemBlock temp = (ItemBlock) new ItemBlockState(block).setUnlocalizedName(name).setRegistryName(name).setHasSubtypes(true);
-		GameRegistry.register(temp);
+//		GameRegistry.register(temp);
 		Core.proxy.registerItemSubblocksRenderer(block, meta);
 		
 		return block;

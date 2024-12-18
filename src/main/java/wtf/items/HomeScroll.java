@@ -22,11 +22,11 @@ public class HomeScroll extends Item{
 	Random random = new Random();
 	
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
-	//public boolean onItemUse(ItemStack itemstack, EntityPlayer player, World world, int x, int y, int z, int side, float px, float py, float pz){
+	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
 		BlockPos home = player.getBedLocation(world.provider.getDimension());
+		ItemStack stack = player.getHeldItem(hand);
 		if (home != null){
-			--stack.stackSize;
+			stack.shrink(1);
 			if (!world.isRemote)
 			{
 

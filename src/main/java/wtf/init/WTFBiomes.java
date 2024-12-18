@@ -40,11 +40,11 @@ public class WTFBiomes {
 		if (MasterConfig.enableOverworldGeneration && OverworldGenConfig.autumnForestID > 0){
 			autumnForest = new BiomeAutumnForest(Type.NORMAL, new BiomeProperties("Autumn Forest").setTemperature(0.4F).setRainfall(0.8F), Biomes.FOREST);
 			registerSubBiome(autumnForest, "AutumnForest", OverworldGenConfig.autumnForestID, 4);
-			BiomeDictionary.registerBiomeType(autumnForest, BiomeDictionary.Type.FOREST);
+			BiomeDictionary.addTypes(autumnForest, BiomeDictionary.Type.FOREST);
 
 			autumnHills = new BiomeAutumnForest(Type.NORMAL, new BiomeProperties("Autumn Hills").setTemperature(0.3F).setRainfall(0.8F), Biomes.FOREST_HILLS);
 			registerSubBiome(autumnHills, "AutumnHills", OverworldGenConfig.autumnHillsID, 18);
-			BiomeDictionary.registerBiomeType(autumnHills, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.HILLS);
+			BiomeDictionary.addTypes(autumnHills, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.HILLS);
 			
 			/*autumnBirchForest = new BiomeAutumnForest(Type.NORMAL, new BiomeProperties("Autumn Birch Forest").setTemperature(0.4F).setRainfall(0.8F), Biomes.BIRCH_FOREST);
 			registerSubBiome(autumnBirchForest, "AutumnBirchForest", OverworldGenConfig.autumnBirchForestID, 27);
