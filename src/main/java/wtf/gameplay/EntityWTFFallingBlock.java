@@ -27,7 +27,7 @@ public class EntityWTFFallingBlock extends EntityFallingBlock {
 	public void setDead()
     {
     	if (!this.isDead){
-    		GravityMethods.checkPos(this.worldObj, new BlockPos(this.posX, this.posY, this.posZ));
+    		GravityMethods.checkPos(this.world, new BlockPos(this.posX, this.posY, this.posZ));
     		this.isDead = true;
     	}
     	

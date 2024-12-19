@@ -19,13 +19,13 @@ public class ListenerBlockNameGetter {
 		if (event.getItemStack() != null){
 			Block block = Block.getBlockFromItem(event.getItemStack().getItem());
 			if (block != null){
-				event.getEntityPlayer().addChatComponentMessage(new TextComponentString("The block registry name is : " + block.getRegistryName()));
-				event.getEntityPlayer().addChatComponentMessage(new TextComponentString("The block metadata is : " + event.getItemStack().getItemDamage()));
+				event.getEntityPlayer().sendMessage(new TextComponentString("The block registry name is : " + block.getRegistryName()));
+				event.getEntityPlayer().sendMessage(new TextComponentString("The block metadata is : " + event.getItemStack().getItemDamage()));
 			}
 			else {
-				event.getEntityPlayer().addChatComponentMessage(new TextComponentString("The item registry name is : " + event.getItemStack().getItem().getRegistryName()));
-				event.getEntityPlayer().addChatComponentMessage(new TextComponentString("The item metadata is : " + event.getItemStack().getItemDamage()));
-				event.getEntityPlayer().addChatComponentMessage(new TextComponentString("The stack number is : " + event.getItemStack().stackSize));
+				event.getEntityPlayer().sendMessage(new TextComponentString("The item registry name is : " + event.getItemStack().getItem().getRegistryName()));
+				event.getEntityPlayer().sendMessage(new TextComponentString("The item metadata is : " + event.getItemStack().getItemDamage()));
+				event.getEntityPlayer().sendMessage(new TextComponentString("The stack number is : " + event.getItemStack().getCount()));
 				
 			}
 		}

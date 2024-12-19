@@ -32,16 +32,16 @@ public class SkeletonMage extends EntitySkeleton{
 		double d1 = target.getEntityBoundingBox().minY  + target.height / 2.0F - (this.posY + this.height / 2.0F);
 		double d2 = target.posZ - this.posZ;
 
-		float f1 = MathHelper.sqrt_float(p_70785_2_) * 0.5F;
+		float f1 = MathHelper.sqrt(p_70785_2_) * 0.5F;
 		this.playSound(SoundEvents.ENTITY_BLAZE_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
 		this.swingArm(EnumHand.MAIN_HAND);
 		for (int i = 0; i < 1; ++i){
-			EntitySmallFireball entitysmallfireball = new EntitySmallFireball(this.worldObj, this, d0 + this.rand.nextGaussian() * f1, d1, d2 + this.rand.nextGaussian() * f1);
+			EntitySmallFireball entitysmallfireball = new EntitySmallFireball(this.world, this, d0 + this.rand.nextGaussian() * f1, d1, d2 + this.rand.nextGaussian() * f1);
 			entitysmallfireball.setLocationAndAngles(this.posX, this.posY + this.getEyeHeight(), this.posZ, this.rotationYaw, this.rotationPitch);
 			entitysmallfireball.posX -= MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) * 0.16F;
 			entitysmallfireball.posY -= 0.10000000149011612D;
 			entitysmallfireball.posZ -= MathHelper.sin(this.rotationYaw / 180.0F * (float)Math.PI) * 0.16F;
-			this.worldObj.spawnEntityInWorld(entitysmallfireball);
+			this.world.spawnEntity(entitysmallfireball);
 		}
 	}
 }

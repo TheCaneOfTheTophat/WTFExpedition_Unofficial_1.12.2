@@ -1,19 +1,16 @@
 package wtf.entities.simpleentities;
 
-import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.monster.ZombieType;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class Mummy extends EntityZombie{
+public class Mummy extends Husk{
 
 	static int mummyCount = 0;
 	
 	public Mummy(World worldIn) {
 		super(worldIn);
-		this.setZombieType(ZombieType.HUSK);
 		
 		if (mummyCount > 4){
 			mummyCount = 0;

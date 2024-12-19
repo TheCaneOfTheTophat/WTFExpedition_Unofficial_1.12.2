@@ -44,7 +44,8 @@ public class ListenerStoneFrac {
 				}
 
 				if (tool != null){
-					tool.attemptDamageItem(1, event.getWorld().rand);
+					// Unsure about this
+					tool.attemptDamageItem(1, event.getWorld().rand, null);
 					event.getPlayer().addStat(StatList.getBlockStats(event.getState().getBlock()));
 					event.getPlayer().addExhaustion(0.025F);
 				}

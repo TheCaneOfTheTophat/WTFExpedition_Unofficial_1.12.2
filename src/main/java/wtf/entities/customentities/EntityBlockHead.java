@@ -30,6 +30,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -116,7 +117,7 @@ public class EntityBlockHead extends EntityMob implements IRangedAttackMob{
 	    }
 
 	    @Override
-		protected SoundEvent getHurtSound()
+		protected SoundEvent getHurtSound(DamageSource damageSourceIn)
 	    {
 	        return SoundEvents.ENTITY_PLAYER_HURT;
 	    }
@@ -175,7 +176,7 @@ public class EntityBlockHead extends EntityMob implements IRangedAttackMob{
 	     */
 	    public void setCombatTask()
 	    {
-	        if (this.worldObj != null && !this.worldObj.isRemote)
+	        if (this.world != null && !this.world.isRemote)
 	        {
 	            this.tasks.removeTask(this.aiAttackOnCollide);
 	            this.tasks.removeTask(this.aiArrowAttack);
@@ -185,7 +186,7 @@ public class EntityBlockHead extends EntityMob implements IRangedAttackMob{
 	            {
 	            	int i = 20;
 
-	                if (this.worldObj.getDifficulty() != EnumDifficulty.HARD)
+	                if (this.world.getDifficulty() != EnumDifficulty.HARD)
 	                {
 	                    i = 40;
 	                }
@@ -208,16 +209,16 @@ public class EntityBlockHead extends EntityMob implements IRangedAttackMob{
 	    @Override
 		public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor)
 	    {
-	        EntityTippedArrow entitytippedarrow = new EntityTippedArrow(this.worldObj, this);
+	        EntityTippedArrow entitytippedarrow = new EntityTippedArrow(this.world, this);
 	        double d0 = target.posX - this.posX;
 	        double d1 = target.getEntityBoundingBox().minY + target.height / 3.0F - entitytippedarrow.posY;
 	        double d2 = target.posZ - this.posZ;
-	        double d3 = MathHelper.sqrt_double(d0 * d0 + d2 * d2);
-	        entitytippedarrow.setThrowableHeading(d0, d1 + d3 * 0.20000000298023224D, d2, 1.6F, 14 - this.worldObj.getDifficulty().getDifficultyId() * 4);
+	        double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
+	        entitytippedarrow.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.6F, 14 - this.world.getDifficulty().getDifficultyId() * 4);
 	        int i = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.POWER, this);
 	        int j = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.PUNCH, this);
-	        DifficultyInstance difficultyinstance = this.worldObj.getDifficultyForLocation(new BlockPos(this));
-	        entitytippedarrow.setDamage(distanceFactor * 2.0F + this.rand.nextGaussian() * 0.25D + this.worldObj.getDifficulty().getDifficultyId() * 0.11F);
+	        DifficultyInstance difficultyinstance = this.world.getDifficultyForLocation(new BlockPos(this));
+	        entitytippedarrow.setDamage(distanceFactor * 2.0F + this.rand.nextGaussian() * 0.25D + this.world.getDifficulty().getDifficultyId() * 0.11F);
 
 	        if (i > 0)
 	        {
@@ -229,7 +230,7 @@ public class EntityBlockHead extends EntityMob implements IRangedAttackMob{
 	            entitytippedarrow.setKnockbackStrength(j);
 	        }
 
-	        boolean flag = this.isBurning() && difficultyinstance.isHard() && this.rand.nextBoolean();
+	        boolean flag = this.isBurning() && difficultyinstance.isHarderThan((float)EnumDifficulty.NORMAL.ordinal()) && this.rand.nextBoolean();
 	        flag = flag || EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.FLAME, this) > 0;
 
 	        if (flag)
@@ -245,7 +246,7 @@ public class EntityBlockHead extends EntityMob implements IRangedAttackMob{
 	        }
 
 	        this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-	        this.worldObj.spawnEntityInWorld(entitytippedarrow);
+	        this.world.spawnEntity(entitytippedarrow);
 	    }
 
 	    /**
@@ -274,7 +275,7 @@ public class EntityBlockHead extends EntityMob implements IRangedAttackMob{
 	    {
 	        super.setItemStackToSlot(slotIn, stack);
 
-	        if (!this.worldObj.isRemote && slotIn == EntityEquipmentSlot.MAINHAND)
+	        if (!this.world.isRemote && slotIn == EntityEquipmentSlot.MAINHAND)
 	        {
 	            this.setCombatTask();
 	        }

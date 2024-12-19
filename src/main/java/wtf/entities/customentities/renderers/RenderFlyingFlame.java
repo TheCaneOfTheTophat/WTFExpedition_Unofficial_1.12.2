@@ -1,18 +1,16 @@
 package wtf.entities.customentities.renderers;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBat;
 import net.minecraft.client.model.ModelBlaze;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -48,13 +46,13 @@ public class RenderFlyingFlame extends RenderLiving<EntityFlyingFlame>
     }
 
     @Override
-	protected void rotateCorpse(EntityFlyingFlame entityLiving, float p_77043_2_, float p_77043_3_, float partialTicks)
+	protected void applyRotations(EntityFlyingFlame entityLiving, float p_77043_2_, float p_77043_3_, float partialTicks)
     {
       
             GlStateManager.translate(0.0F, MathHelper.cos(p_77043_2_ * 0.3F) * 0.1F, 0.0F);
       
 
-        super.rotateCorpse(entityLiving, p_77043_2_, p_77043_3_, partialTicks);
+        super.applyRotations(entityLiving, p_77043_2_, p_77043_3_, partialTicks);
     }
     
     @Override
@@ -82,7 +80,7 @@ public class RenderFlyingFlame extends RenderLiving<EntityFlyingFlame>
         float f = entity.width * entity.getFlameSize();
         GlStateManager.scale(f, f, f);
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer vertexbuffer = tessellator.getBuffer();
+        BufferBuilder vertexbuffer = tessellator.getBuffer();
         float f1 = 0.5F;
         float f2 = 0.0F;
         float f3 = entity.height / f;

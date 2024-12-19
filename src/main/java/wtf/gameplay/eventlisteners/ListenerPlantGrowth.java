@@ -56,7 +56,7 @@ public class ListenerPlantGrowth {
 		Type type = plantmods.get(event.getState().getBlock());
 		if (type != null){
 			Biome biome = event.getWorld().getBiome(event.getPos());
-			if (BiomeDictionary.isBiomeOfType(biome, type)){
+			if (BiomeDictionary.hasType(biome, type)){
 				if (chance > GameplayConfig.appleCoreConstant){
 					event.setResult(Result.DENY);
 					return;
@@ -71,7 +71,7 @@ public class ListenerPlantGrowth {
 		Block plant = event.getState().getBlock();
 		if (plantmods.containsKey(plant)){
 			Biome biome = event.getWorld().getBiome(event.getPos());
-			if (!BiomeDictionary.isBiomeOfType(biome, plantmods.get(plant))){
+			if (!BiomeDictionary.hasType(biome, plantmods.get(plant))){
 				List<ItemStack> drops = event.getDrops();
 				for (int loop = 0; loop < drops.size() && drops.size() > 1; loop++){
 					if (random.nextFloat() < 0.33){

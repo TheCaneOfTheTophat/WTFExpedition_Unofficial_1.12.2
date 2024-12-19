@@ -10,7 +10,7 @@ public class ListenerChickenDrops {
 
 	@SubscribeEvent
 	public void onLivingUpdate(LivingUpdateEvent event) {
-		if (!event.getEntity().worldObj.isRemote && (event.getEntity() instanceof EntityChicken)){
+		if (!event.getEntity().world.isRemote && (event.getEntity() instanceof EntityChicken)){
 			EntityChicken chicken = (EntityChicken) event.getEntity();
 			if (!chicken.isChild()){
 

@@ -35,25 +35,25 @@ public class EntityStoneCrack extends Entity{
 	public static void crackStone(World world, BlockPos pos){
 		EntityStoneCrack crack = new EntityStoneCrack(world, pos);
 		crack.addAllAdj(pos);
-		world.spawnEntityInWorld(crack);
+		world.spawnEntity(crack);
 	}
 	
 	public static void FracOreSmple(World world, BlockPos pos){
 		EntityStoneCrack crack = new EntityStoneCrack(world, pos);
 		crack.addAdj(pos);
-		world.spawnEntityInWorld(crack);
+		world.spawnEntity(crack);
 	}
 	
 	public static void FracOre(World world, BlockPos pos, int toolLevel){
 		EntityStoneCrack crack = new EntityStoneCrack(world, pos);
 		crack.crackOre(world, pos, toolLevel);
-		world.spawnEntityInWorld(crack);
+		world.spawnEntity(crack);
 	}
 	
 	public static void cracHammer(World world, BlockPos pos, int toolLevel){
 		EntityStoneCrack crack = new EntityStoneCrack(world, pos);
 		crack.crackHammer(world, pos, toolLevel);
-		world.spawnEntityInWorld(crack);
+		world.spawnEntity(crack);
 	}
 	
 	public void crackOre(World world, BlockPos pos, int toolLevel){
@@ -70,7 +70,7 @@ public class EntityStoneCrack extends Entity{
 		int maxDist = 1 + blockLevel;
 		
 		for (int loop = 0; loop < numLoop; loop++){
-			int blockToFrac = MathHelper.clamp_int(1+random.nextInt(blockLevel+1), 1, maxDist);
+			int blockToFrac = MathHelper.clamp(1+random.nextInt(blockLevel+1), 1, maxDist);
 			
 			
 			if (random.nextBoolean()){
@@ -83,7 +83,7 @@ public class EntityStoneCrack extends Entity{
 			}
 		}
 		
-		world.spawnEntityInWorld(crack);
+		world.spawnEntity(crack);
 		
 		
 	}
@@ -99,7 +99,7 @@ public class EntityStoneCrack extends Entity{
 			int maxDist = 1 + toolLevel;
 			cracking.add(new FracVec(pos, blockToFrac, maxDist, posRandom));
 		}
-		world.spawnEntityInWorld(crack);
+		world.spawnEntity(crack);
 		
 	}
 	
@@ -146,7 +146,7 @@ public class EntityStoneCrack extends Entity{
 	public void onUpdate()
 	{
 		if (count < cracking.size() ){
-			int random = (worldObj.rand.nextInt(3)+1) * cracking.size()/27;
+			int random = (world.rand.nextInt(3)+1) * cracking.size()/27;
 			for (int loop = random; loop > -1 && count < cracking.size(); loop--){
 				FracVec vec = cracking.get(count);
 				doVec(vec);
@@ -165,30 +165,30 @@ public class EntityStoneCrack extends Entity{
 			for (int dist = 1; dist <= vec.maxDist; dist++){
 
 				BlockPos pos = vec.getPos(dist);
-				IBlockState state = worldObj.getBlockState(pos);
+				IBlockState state = world.getBlockState(pos);
 				IBlockState cobble = BlockSets.getTransformedState(state, Modifier.COBBLE); //if it can be fractured
 				
 				if (state.getBlock() instanceof BlockDecoAnim && state.getValue(BlockDecoAnim.TYPE) == BlockDecoAnim.ANIMTYPE.LAVA_CRUST){
 					//if lava crust, frac to lava
-					worldObj.setBlockState(pos, Blocks.LAVA.getDefaultState());
+					world.setBlockState(pos, Blocks.LAVA.getDefaultState());
 
 				}
 				else if (state.getBlock() instanceof BlockDecoStatic && state.getValue(BlockDecoStatic.TYPE) == BlockDecoStatic.DecoType.CRACKED){
 					BlockDecoStatic block = (BlockDecoStatic) state.getBlock();
 					cobble = BlockSets.getTransformedState(block.parentBackground, Modifier.COBBLE);
 					if (cobble != null){
-						worldObj.setBlockState(pos, cobble);
+						world.setBlockState(pos, cobble);
 						if (GameplayConfig.gravity){
-							GravityMethods.dropBlock(worldObj, pos, true);
+							GravityMethods.dropBlock(world, pos, true);
 						}
 						addAllAdj(pos);
 					}
 				}
 				else if (cobble != null){
 					//if has cobble, then frac and drop the block
-					worldObj.setBlockState(pos, cobble);
+					world.setBlockState(pos, cobble);
 					if (GameplayConfig.gravity){
-						GravityMethods.dropBlock(worldObj, pos, true);
+						GravityMethods.dropBlock(world, pos, true);
 					}
 				}
 

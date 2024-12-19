@@ -13,7 +13,7 @@ public class ListenerCustomExplosion {
 			Explosion explosion = event.getExplosion();
 			float size = ObfuscationReflectionHelper.getPrivateValue(Explosion.class, explosion, 8);
 			ExploderEntity entity = new ExploderEntity(event.getWorld(), explosion.getPosition(), size, 0);
-			event.getWorld().spawnEntityInWorld(entity);
+			event.getWorld().spawnEntity(entity);
 		event.setCanceled(true);
 		}
 	

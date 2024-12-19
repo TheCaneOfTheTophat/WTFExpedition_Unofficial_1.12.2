@@ -99,8 +99,8 @@ public class EntityFireElemental extends EntityBlockHead implements IRangedAttac
 	    @Override
 		public void onDeath(DamageSource cause)
 	    {
-			ExploderEntity entity = new ExploderEntity(worldObj, new Vec3d(posX, posY, posZ), 1.5F, 0, true);
-			worldObj.spawnEntityInWorld(entity);
+			ExploderEntity entity = new ExploderEntity(world, new Vec3d(posX, posY, posZ), 1.5F, 0, true);
+			world.spawnEntity(entity);
 			super.onDeath(cause);
 	    }
 	    
@@ -112,16 +112,16 @@ public class EntityFireElemental extends EntityBlockHead implements IRangedAttac
 	            this.motionY *= 0.6D;
 	        }
 
-	        if (this.worldObj.isRemote)
+	        if (this.world.isRemote)
 	        {
 	            if (this.rand.nextInt(24) == 0 && !this.isSilent())
 	            {
-	                this.worldObj.playSound(this.posX + 0.5D, this.posY + 0.5D, this.posZ + 0.5D, SoundEvents.ENTITY_BLAZE_BURN, this.getSoundCategory(), 1.0F + this.rand.nextFloat(), this.rand.nextFloat() * 0.7F + 0.3F, false);
+	                this.world.playSound(this.posX + 0.5D, this.posY + 0.5D, this.posZ + 0.5D, SoundEvents.ENTITY_BLAZE_BURN, this.getSoundCategory(), 1.0F + this.rand.nextFloat(), this.rand.nextFloat() * 0.7F + 0.3F, false);
 	            }
 
 	            for (int i = 0; i < 2; ++i)
 	            {
-	                this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX + (this.rand.nextDouble() - 0.5D) * this.width, this.posY + this.rand.nextDouble() * this.height, this.posZ + (this.rand.nextDouble() - 0.5D) * this.width, 0.0D, 0.0D, 0.0D, new int[0]);
+	                this.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX + (this.rand.nextDouble() - 0.5D) * this.width, this.posY + this.rand.nextDouble() * this.height, this.posZ + (this.rand.nextDouble() - 0.5D) * this.width, 0.0D, 0.0D, 0.0D, new int[0]);
 	            }
 	        }
 

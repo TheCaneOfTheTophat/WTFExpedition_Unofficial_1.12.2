@@ -13,7 +13,7 @@ public class ListenerEntityDrops {
 	
 	@SubscribeEvent
 	public void entityDrops(LivingDropsEvent event){
-		if (event.getEntity() instanceof EntityPlayer || event.getSource().getEntity() instanceof EntityPlayer){
+		if (event.getEntity() instanceof EntityPlayer || event.getSource().getTrueSource() instanceof EntityPlayer){
 			return;
 		}
 		int r = random.nextInt(100);

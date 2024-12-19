@@ -24,7 +24,7 @@ public class EntityDerangedGolem extends EntityIronGolem{
 	{
 		super.onLivingUpdate();
 
-		EntityPlayer player = this.worldObj.getClosestPlayerToEntity(this, 5);
+		EntityPlayer player = this.world.getClosestPlayerToEntity(this, 5);
 		if (player != null){
 			this.setRevengeTarget(player);
 		}

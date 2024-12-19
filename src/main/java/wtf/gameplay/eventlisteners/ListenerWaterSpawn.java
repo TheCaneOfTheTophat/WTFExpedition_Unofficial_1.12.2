@@ -11,7 +11,7 @@ public class ListenerWaterSpawn {
 	@SubscribeEvent
 	public void watergen(CreateFluidSourceEvent event){
 		if (event.getWorld().getBlockState(event.getPos()).getMaterial() == Material.WATER 
-				&& !BiomeDictionary.isBiomeOfType(event.getWorld().getBiome(event.getPos()), Type.WET)){
+				&& !BiomeDictionary.hasType(event.getWorld().getBiome(event.getPos()), Type.WET)){
 			event.setResult(Result.DENY);
 		}
 	}

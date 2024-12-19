@@ -1,6 +1,7 @@
 package wtf.gameplay;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.MoverType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -15,7 +16,7 @@ public class EntityWTFSlidingBlock extends EntityWTFFallingBlock{
 		addVelocity(0.05D * motx, -0.1D, 0.05D * motz);
 		this.oriY = pos.getY();
 		
-		worldIn.spawnEntityInWorld(this);
+		worldIn.spawnEntity(this);
 		worldIn.setBlockToAir(pos);
 	
 	}
@@ -34,7 +35,7 @@ public class EntityWTFSlidingBlock extends EntityWTFFallingBlock{
     		super.onUpdate();
     	}
     	else {
-    		this.moveEntity(this.motionX, this.motionY, this.motionZ);                    		
+    		this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
     	}
     }
 	

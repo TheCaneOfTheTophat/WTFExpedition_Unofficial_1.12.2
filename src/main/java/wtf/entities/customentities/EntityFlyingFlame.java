@@ -34,7 +34,7 @@ public class EntityFlyingFlame extends EntityBat{
     }
 	
     @Override
-	public float getBrightness(float partialTicks)
+	public float getBrightness()
     {
         return 1.0F;
     }
@@ -67,7 +67,7 @@ public class EntityFlyingFlame extends EntityBat{
         	count++;
         	if (count > 30){
         		
-        		float light = this.worldObj.getLightBrightness(new BlockPos(this.posX, this.posY, this.posZ));
+        		float light = this.world.getLightBrightness(new BlockPos(this.posX, this.posY, this.posZ));
         		flameSize = 1.5F-light;
         		flameOn = !flameOn;
         		count = flameOn ? 0-random.nextInt(100)-100 : 0-random.nextInt(30);

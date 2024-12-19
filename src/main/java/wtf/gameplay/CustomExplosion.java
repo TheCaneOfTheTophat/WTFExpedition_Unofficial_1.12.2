@@ -48,25 +48,25 @@ public class CustomExplosion extends Explosion{
 	protected Map<Entity, Vec3d> affectedPlayers = new HashMap<Entity, Vec3d>();
 
 	public CustomExplosion(Entity entity, World world, Vec3d vec3d, float str) {
-		super(world, entity, vec3d.xCoord, vec3d.yCoord, vec3d.zCoord, str, false, false);
+		super(world, entity, vec3d.x, vec3d.y, vec3d.z, str, false, false);
 		this.world = world;
-		BlockPos origin = new BlockPos(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord);
+		BlockPos origin = new BlockPos(vec3d.x, vec3d.y, vec3d.z);
 		this.sourceEntity = entity;
 		this.counterMod = 0;
-		populateVectorList(new BlockPos(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord), str);
+		populateVectorList(new BlockPos(vec3d.x, vec3d.y, vec3d.z), str);
 		doExplosionB(origin, str);
 
 	}
 	
 	public CustomExplosion(Entity entity, World world, Vec3d vec3d, float str, boolean fire) {
-		super(world, entity, vec3d.xCoord, vec3d.yCoord, vec3d.zCoord, str, false, false);
+		super(world, entity, vec3d.x, vec3d.y, vec3d.z, str, false, false);
 		flaming = fire;
 		isSmoking = fire;
 		this.world = world;
-		BlockPos origin = new BlockPos(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord);
+		BlockPos origin = new BlockPos(vec3d.x, vec3d.y, vec3d.z);
 		this.sourceEntity = entity;
 		this.counterMod = 0;
-		populateVectorList(new BlockPos(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord), str);
+		populateVectorList(new BlockPos(vec3d.x, vec3d.y, vec3d.z), str);
 		doExplosionB(origin, str);
 		
 		
@@ -102,12 +102,12 @@ public class CustomExplosion extends Explosion{
 
 		//System.out.println("y+ " + ypos + " y- " + yneg);
 
-		int xMin = MathHelper.clamp_int(MathHelper.floor_float(-4 * xneg), -12, -4);
-		int xMax = MathHelper.clamp_int(MathHelper.floor_float(4 * xpos), 4, 12);
-		int yMin = MathHelper.clamp_int(MathHelper.floor_float(-4 * yneg),-12, -4);
-		int yMax = MathHelper.clamp_int(MathHelper.floor_float(4 * ypos), 4, 12);
-		int zMin = MathHelper.clamp_int(MathHelper.floor_float(-4 * zneg),-12, -4);
-		int zMax = MathHelper.clamp_int(MathHelper.floor_float(4 * zpos), 4, 12);
+		int xMin = MathHelper.clamp(MathHelper.floor(-4 * xneg), -12, -4);
+		int xMax = MathHelper.clamp(MathHelper.floor(4 * xpos), 4, 12);
+		int yMin = MathHelper.clamp(MathHelper.floor(-4 * yneg),-12, -4);
+		int yMax = MathHelper.clamp(MathHelper.floor(4 * ypos), 4, 12);
+		int zMin = MathHelper.clamp(MathHelper.floor(-4 * zneg),-12, -4);
+		int zMax = MathHelper.clamp(MathHelper.floor(4 * zpos), 4, 12);
 
 		for (int xloop = xMin; xloop < xMax + 1; xloop++) {
 			for (int yloop = yMin; yloop < yMax + 1; yloop++) {
@@ -230,7 +230,7 @@ public class CustomExplosion extends Explosion{
 		double d3 = d0 - origin.getX();
 		double d4 = d1 - origin.getY();
 		double d5 = d2 - origin.getZ();
-		double d6 = MathHelper.sqrt_double(d3 * d3 + d4 * d4 + d5 * d5);
+		double d6 = MathHelper.sqrt(d3 * d3 + d4 * d4 + d5 * d5);
 		d3 /= d6;
 		d4 /= d6;
 		d5 /= d6;
@@ -248,7 +248,7 @@ public class CustomExplosion extends Explosion{
 
 	private float getModifier(BlockPos pos) {
 		IBlockState state = world.getBlockState(pos);
-		float mod = MathHelper.sqrt_float(MathHelper.sqrt_float(1 / (1 + state.getBlock().getExplosionResistance(this.sourceEntity) * 5F * state.getBlockHardness(world, pos))));
+		float mod = MathHelper.sqrt(MathHelper.sqrt(1 / (1 + state.getBlock().getExplosionResistance(this.sourceEntity) * 5F * state.getBlockHardness(world, pos))));
 		if (mod < 1) {
 			counterMod++;
 			return mod;
@@ -269,7 +269,8 @@ public class CustomExplosion extends Explosion{
 		for (BlockPos pos: this.getAffectedBlockPositions()){
 			//System.out.println("neightbor changed");
 			IBlockState iblockstate = world.getBlockState(pos);
-			iblockstate.neighborChanged(world, pos, iblockstate.getBlock());
+			// Also unsure about this one
+			iblockstate.neighborChanged(world, pos, iblockstate.getBlock(), pos);
 			if (GameplayConfig.gravity){
 				GravityMethods.checkPos(world, pos);
 			}

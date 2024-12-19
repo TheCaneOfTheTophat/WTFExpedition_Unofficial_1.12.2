@@ -28,18 +28,18 @@ public class ExploderEntity extends Entity{
 		super(worldIn);
 		this.fuse = fuse;
 		this.str = str;
-		this.posX=pos.xCoord;
-		this.posY=pos.yCoord;
-		this.posZ=pos.zCoord;
+		this.posX=pos.x;
+		this.posY=pos.y;
+		this.posZ=pos.z;
 	}
 
 	public ExploderEntity(World worldIn, Vec3d pos, float str, int fuse, boolean fire) {
 		super(worldIn);
 		this.fuse = fuse;
 		this.str = str;
-		this.posX=pos.xCoord;
-		this.posY=pos.yCoord;
-		this.posZ=pos.zCoord;
+		this.posX=pos.x;
+		this.posY=pos.y;
+		this.posZ=pos.z;
 		this.flaming = fire;
 	}
 
@@ -55,9 +55,9 @@ public class ExploderEntity extends Entity{
 	public void onUpdate()
 	{
 
-		if (!this.worldObj.isRemote){
+		if (!this.world.isRemote){
 			if (fuse == 0){
-				explosion = new CustomExplosion(null, this.worldObj, new Vec3d(this.posX, this.posY, this.posZ), str, flaming);
+				explosion = new CustomExplosion(null, this.world, new Vec3d(this.posX, this.posY, this.posZ), str, flaming);
 				explosion.incrementVectorList();
 				//explosion.update();
 			}

@@ -219,29 +219,29 @@ public class RenderBlockHead extends RenderLivingBase<EntityBlockHead>{
 	    }
 
 	    @Override
-		protected void rotateCorpse(EntityBlockHead entityLiving, float p_77043_2_, float p_77043_3_, float partialTicks)
+		protected void applyRotations(EntityBlockHead entityLiving, float p_77043_2_, float p_77043_3_, float partialTicks)
 	    {
 	       
 	       if (entityLiving.isElytraFlying())
 	        {
-	            super.rotateCorpse(entityLiving, p_77043_2_, p_77043_3_, partialTicks);
+	            super.applyRotations(entityLiving, p_77043_2_, p_77043_3_, partialTicks);
 	            float f = entityLiving.getTicksElytraFlying() + partialTicks;
-	            float f1 = MathHelper.clamp_float(f * f / 100.0F, 0.0F, 1.0F);
+	            float f1 = MathHelper.clamp(f * f / 100.0F, 0.0F, 1.0F);
 	            GlStateManager.rotate(f1 * (-90.0F - entityLiving.rotationPitch), 1.0F, 0.0F, 0.0F);
 	            Vec3d vec3d = entityLiving.getLook(partialTicks);
 	            double d0 = entityLiving.motionX * entityLiving.motionX + entityLiving.motionZ * entityLiving.motionZ;
-	            double d1 = vec3d.xCoord * vec3d.xCoord + vec3d.zCoord * vec3d.zCoord;
+	            double d1 = vec3d.x * vec3d.x + vec3d.z * vec3d.z;
 
 	            if (d0 > 0.0D && d1 > 0.0D)
 	            {
-	                double d2 = (entityLiving.motionX * vec3d.xCoord + entityLiving.motionZ * vec3d.zCoord) / (Math.sqrt(d0) * Math.sqrt(d1));
-	                double d3 = entityLiving.motionX * vec3d.zCoord - entityLiving.motionZ * vec3d.xCoord;
+	                double d2 = (entityLiving.motionX * vec3d.x + entityLiving.motionZ * vec3d.z) / (Math.sqrt(d0) * Math.sqrt(d1));
+	                double d3 = entityLiving.motionX * vec3d.z - entityLiving.motionZ * vec3d.x;
 	                GlStateManager.rotate((float)(Math.signum(d3) * Math.acos(d2)) * 180.0F / (float)Math.PI, 0.0F, 1.0F, 0.0F);
 	            }
 	        }
 	        else
 	        {
-	            super.rotateCorpse(entityLiving, p_77043_2_, p_77043_3_, partialTicks);
+	            super.applyRotations(entityLiving, p_77043_2_, p_77043_3_, partialTicks);
 	        }
 	    }
 
