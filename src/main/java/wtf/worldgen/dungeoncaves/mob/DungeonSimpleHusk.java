@@ -5,7 +5,9 @@ import java.util.Random;
 import net.minecraft.block.BlockSandStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import wtf.Core;
 import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.dungeoncaves.DungeonAbstractSimple;
@@ -18,7 +20,7 @@ public class DungeonSimpleHusk extends DungeonAbstractSimple{
 
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), "wtfcore.Husk", 5);	
+		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(Core.coreID, "husk"), 5);
 	}
 
 	IBlockState sandstone = Blocks.SANDSTONE.getDefaultState().withProperty(BlockSandStone.TYPE, BlockSandStone.EnumType.SMOOTH);

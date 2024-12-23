@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import wtf.init.BlockSets;
 import wtf.init.BlockSets.Modifier;
@@ -20,7 +21,7 @@ public class DungeonSimpleZombie extends DungeonAbstractSimple{
 
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), "Zombie", 5);	
+		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation("zombie"), 5);
 	}
 	
 	IBlockState block = null;

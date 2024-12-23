@@ -10,6 +10,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -287,7 +288,7 @@ public class GeneratorMethods{
 	/**
 	 **Checks if spawners are enabled, and then generates a mob spawner
 	 **/
-	public void spawnVanillaSpawner(BlockPos pos, Entity entityName, int count){
+	public void spawnVanillaSpawner(BlockPos pos, ResourceLocation entityName, int count){
 		blockmap.add(pos, new QMobSpawner(this.getWorld(), pos, entityName, count));
 	}
 

@@ -8,12 +8,14 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
 import wtf.Core;
 
 import java.util.List;
 
 import exterminatorjeff.undergroundbiomes.api.enums.SedimentaryVariant;
+import wtf.blocks.BlockDecoAnim;
 
 public class UBCSand extends BlockFalling{
 
@@ -48,13 +50,9 @@ public class UBCSand extends BlockFalling{
 	}
 
 	@Override
-	public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
+	public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> items) {
 		for (int loop = 0; loop < 8; loop++){
-			list.add(new ItemStack(itemIn, 1, loop));
+			items.add(new ItemStack(this, 1, loop));
 		}
 	}
-	
-	
-	
-	
 }

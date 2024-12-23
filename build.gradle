@@ -51,6 +51,7 @@ fancyGradle {
         resources
         asm
         mergetool
+        coremods
     }
 }
 

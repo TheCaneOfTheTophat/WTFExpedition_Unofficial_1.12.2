@@ -14,6 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -124,9 +125,9 @@ public class BlockDecoStatic extends AbstractBlockDerivative{
 	}
 
 	@Override
-	public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
+	public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> items) {
 		for (int loop = 0; loop < DecoType.values().length; loop++){
-			list.add(new ItemStack(itemIn, 1, loop));
+			items.add(new ItemStack(this, 1, loop));
 		}
 	}
 

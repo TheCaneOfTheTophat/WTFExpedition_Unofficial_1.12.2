@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.block.BlockSandStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import wtf.Core;
 import wtf.utilities.wrappers.CaveListWrapper;
@@ -29,7 +30,7 @@ public class DungeonTypeMummy extends AbstractDungeonType{
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
 		
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), Core.coreID+".Mummy", 5);
+		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(Core.coreID,"mummy"), 5);
 		
 		gen.replaceBlock(pos.getFloorPos().up(2), Blocks.GOLD_BLOCK.getDefaultState());
 		

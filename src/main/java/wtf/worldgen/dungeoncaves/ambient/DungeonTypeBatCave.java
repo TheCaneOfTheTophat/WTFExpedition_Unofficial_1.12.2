@@ -2,7 +2,10 @@ package wtf.worldgen.dungeoncaves.ambient;
 
 import java.util.Random;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import wtf.init.BlockSets.Modifier;
 import wtf.utilities.wrappers.CaveListWrapper;
@@ -43,7 +46,7 @@ public class DungeonTypeBatCave  extends AbstractDungeonType{
 	@Override
 	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		gen.setCeilingAddon(pos, Modifier.COBBLE);
-		gen.spawnVanillaSpawner(pos.up(), "Bat", 6);
+		gen.spawnVanillaSpawner(pos.up(), new ResourceLocation("bat"), 6);
 		
 		
 		

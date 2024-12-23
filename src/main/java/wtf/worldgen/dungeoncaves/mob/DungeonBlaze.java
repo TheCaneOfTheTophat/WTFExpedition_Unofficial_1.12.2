@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import wtf.utilities.wrappers.AdjPos;
 import wtf.utilities.wrappers.CaveListWrapper;
@@ -19,7 +20,7 @@ public class DungeonBlaze extends DungeonAbstractSimple{
 	
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), "Blaze", 2);	
+		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation("blaze"), 2);
 	}
 	
 	IBlockState block = null;

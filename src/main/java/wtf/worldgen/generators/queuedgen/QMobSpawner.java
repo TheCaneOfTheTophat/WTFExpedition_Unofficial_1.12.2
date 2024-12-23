@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityMobSpawner;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
@@ -14,10 +15,10 @@ public class QMobSpawner implements QueuedGenerator {
 
 	private final World world;
 	private final BlockPos pos;
-	private final Entity entity;
+	private final ResourceLocation entity;
 	private final int count;
 	
-	public QMobSpawner(World world, BlockPos pos, Entity entity, int count){
+	public QMobSpawner(World world, BlockPos pos, ResourceLocation entity, int count){
 		this.world = world;
 		this.pos = pos;
 		this.entity = entity;
@@ -30,7 +31,7 @@ public class QMobSpawner implements QueuedGenerator {
 		TileEntityMobSpawner spawner = (TileEntityMobSpawner)world.getTileEntity(pos);
 		if (spawner != null){
 			// Not sure about this, chief.
-			spawner.getSpawnerBaseLogic().setEntityId(EntityRegistry.getEntry(entity.getClass()).getRegistryName());
+			spawner.getSpawnerBaseLogic().setEntityId(entity);
 			NBTTagCompound nbt = new NBTTagCompound();
 			spawner.writeToNBT(nbt);
 			nbt.setShort("SpawnCount",(short)count);

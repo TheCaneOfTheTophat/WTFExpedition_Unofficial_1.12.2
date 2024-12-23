@@ -14,6 +14,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -54,7 +55,6 @@ public class BlockSpeleothem extends AbstractBlockDerivative{
 	}
 */
 
-
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
 	{
@@ -63,15 +63,11 @@ public class BlockSpeleothem extends AbstractBlockDerivative{
 		}
 	}
 
-
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
 	{
 		return state.getValue(TYPE).boundingBox;
 	}
-
-
-
 
 	public boolean canBlockStay(World world, BlockPos pos)
 	{
@@ -130,9 +126,9 @@ public class BlockSpeleothem extends AbstractBlockDerivative{
 	}
 
 	@Override
-	public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
+	public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> items) {
 		for (int loop = 0; loop < SpType.values().length; loop++){
-			list.add(new ItemStack(itemIn, 1, loop));
+			items.add(new ItemStack(this, 1, loop));
 		}
 	}
 
@@ -144,7 +140,7 @@ public class BlockSpeleothem extends AbstractBlockDerivative{
 
 	@Override
 	@Nullable
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
 	{
 		return NULL_AABB;
 	}

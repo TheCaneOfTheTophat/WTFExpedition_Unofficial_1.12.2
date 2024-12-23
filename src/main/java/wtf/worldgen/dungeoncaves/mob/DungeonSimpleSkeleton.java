@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import wtf.init.BlockSets;
 import wtf.init.BlockSets.Modifier;
@@ -32,7 +33,7 @@ public class DungeonSimpleSkeleton extends DungeonAbstractSimple{
 	
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), "Skeleton", 5);	
+		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation("skeleton"), 5);
 	}
 
 	public void generate(GeneratorMethods gen, Random random, BlockPos pos) {

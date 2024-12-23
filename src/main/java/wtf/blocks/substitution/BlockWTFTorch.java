@@ -48,16 +48,16 @@ public class BlockWTFTorch extends BlockTorch
 
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
 		if (!isLit){
 			if(GameplayConfig.relightTorchByHand) {
 				IBlockState newState = torch_on.getStateFromMeta(state.getBlock().getMetaFromState(state));
-				return world.setBlockState(pos, newState);
+				return worldIn.setBlockState(pos, newState);
 				}
-			else if (heldItem != null && heldItem.getItem() == Items.FLINT_AND_STEEL){
+			else if (playerIn.getHeldItem(hand) != null && playerIn.getHeldItem(hand) .getItem() == Items.FLINT_AND_STEEL){
 				IBlockState newState = torch_on.getStateFromMeta(state.getBlock().getMetaFromState(state));
-				return world.setBlockState(pos, newState);
+				return worldIn.setBlockState(pos, newState);
 				}			
 		}
 		return false;

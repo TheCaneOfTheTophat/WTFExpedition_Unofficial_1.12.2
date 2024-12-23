@@ -65,12 +65,11 @@ public class BlockPuddle extends Block{
 	}
 
     @Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn)
+	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
     {
-    	if(!canBlockStay(world, pos)){
-			world.setBlockToAir(pos);
+    	if(!canBlockStay(worldIn, pos)){
+			worldIn.setBlockToAir(pos);
 		}
-
     }
 	
 	@Override
@@ -135,10 +134,10 @@ public class BlockPuddle extends Block{
     {
         return false;
     }
-    
+
 	@Override
 	@Nullable
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
 	{
 		return NULL_AABB;
 	}

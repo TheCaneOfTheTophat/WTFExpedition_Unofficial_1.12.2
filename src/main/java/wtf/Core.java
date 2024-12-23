@@ -35,11 +35,10 @@ import wtf.proxy.CommonProxy;
 import wtf.utilities.UBC.UBCCompat;
 
 
-@Mod (modid = Core.coreID, name = "WTFs Expedition", version = Core.version, dependencies = "after:undergroundbiomes")
+@Mod (modid = Core.coreID, name = "WTFs Expedition", dependencies = "after:undergroundbiomes")
 
 public class Core {
 	public static  final String coreID = "wtfcore";
-	public static final String version = "1.10.2_v1.5";
 
 	@SidedProxy(clientSide="wtf.proxy.ClientProxy", serverSide="wtf.proxy.CommonProxy")
 	public static CommonProxy proxy;
@@ -61,57 +60,57 @@ public class Core {
 
 	@EventHandler
 	public void PreInit(FMLPreInitializationEvent preEvent) throws Exception {
-		coreLog = preEvent.getModLog();
-
-		proxy.writeResourcePack();
-		proxy.loadLangFile();
-		
-		UBC = Loader.isModLoaded("undergroundbiomes");
-	
-		MasterConfig.loadConfig();
-		
-
-		CaveBiomesConfig.customConfig();
-
-		if (UBC)
-			UBCCompat.loadUBCStone();
-		else
-			coreLog.info("Underground Biomes Construct not detected");
-
-		OverworldGenConfig.loadConfig();
-		GameplayConfig.loadConfig();
-		WTFBlocks.initSimpleBlocks();
-		WTFStoneRegistry.loadStoneReg();
-		BlockSets.initBlockSets();
-		WTFBlocks.initDependentBlocks();
-		proxy.initWCICRender();
-		WTFItems.initItems();
-		WTFEntities.initEntites();
-		WTFRecipes.initRecipes();
-		
-		if (MasterConfig.enableOverworldGeneration)
-			WTFBiomes.init();
-		
-		if (MasterConfig.enableOreGen)
-			WTFOresNewConfig.loadConfig();
-
-		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
-		
-		WTFSubstitutions.init();
-
-		proxy.finishLangFile();
+//		coreLog = preEvent.getModLog();
+//
+//		proxy.writeResourcePack();
+//		proxy.loadLangFile();
+//
+//		UBC = Loader.isModLoaded("undergroundbiomes");
+//
+//		MasterConfig.loadConfig();
+//
+//
+//		CaveBiomesConfig.customConfig();
+//
+//		if (UBC)
+//			UBCCompat.loadUBCStone();
+//		else
+//			coreLog.info("Underground Biomes Construct not detected");
+//
+//		OverworldGenConfig.loadConfig();
+//		GameplayConfig.loadConfig();
+//		WTFBlocks.initSimpleBlocks();
+//		WTFStoneRegistry.loadStoneReg();
+//		BlockSets.initBlockSets();
+//		WTFBlocks.initDependentBlocks();
+//		proxy.initWCICRender();
+//		WTFItems.initItems();
+//		WTFEntities.initEntites();
+//		WTFRecipes.initRecipes();
+//
+//		if (MasterConfig.enableOverworldGeneration)
+//			WTFBiomes.init();
+//
+//		if (MasterConfig.enableOreGen)
+//			WTFOresNewConfig.loadConfig();
+//
+//		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+//
+//		WTFSubstitutions.init();
+//
+//		proxy.finishLangFile();
 	}
 	
 	@EventHandler public void load(FMLInitializationEvent event) throws Exception {
-		EventListenerRegistry.initListeners();
+//		EventListenerRegistry.initListeners();
 	}
 	
 	@EventHandler
 	public void PostInit(FMLPostInitializationEvent postEvent) throws Exception {
-		if (MasterConfig.doResourcePack)
-			proxy.enableBlockstateTexturePack();
+//		if (MasterConfig.doResourcePack)
+//			proxy.enableBlockstateTexturePack();
 
-		if (GameplayConfig.wcictable)
-			RecipeParser.init();
+//		if (GameplayConfig.wcictable)
+//			RecipeParser.init();
 	}
 }

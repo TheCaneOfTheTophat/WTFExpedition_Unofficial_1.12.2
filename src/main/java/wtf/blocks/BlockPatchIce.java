@@ -66,14 +66,13 @@ public class BlockPatchIce extends BlockBreakable{
 		return 0;
 	}
 
-    @Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn)
-    {
-    	if(!canBlockStay(world, pos)){
-			world.setBlockToAir(pos);
+	@Override
+	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
+	{
+		if(!canBlockStay(worldIn, pos)){
+			worldIn.setBlockToAir(pos);
 		}
-
-    }
+	}
 	
 	@Override
 	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)

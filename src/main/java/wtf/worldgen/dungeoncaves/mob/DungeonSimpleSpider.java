@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import wtf.init.BlockSets;
 import wtf.init.BlockSets.Modifier;
@@ -39,7 +40,7 @@ public class DungeonSimpleSpider extends DungeonAbstractSimple{
 
 		BlockPos midpos = pos.getMidPos();
 
-		gen.spawnVanillaSpawner(midpos, "Spider", 3);
+		gen.spawnVanillaSpawner(midpos, new ResourceLocation("spider"), 3);
 		midpos = midpos.down();
 		while (midpos.getY() > pos.floor){
 			gen.replaceBlock(midpos, Blocks.MOSSY_COBBLESTONE.getDefaultState());

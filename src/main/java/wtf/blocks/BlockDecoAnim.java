@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -153,9 +154,9 @@ public class BlockDecoAnim extends AbstractBlockDerivative{
 	}
 	
 	@Override
-	public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
+	public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> items) {
 		for (int loop = 0; loop < ANIMTYPE.values().length; loop++){
-			list.add(new ItemStack(itemIn, 1, loop));
+			items.add(new ItemStack(this, 1, loop));
 		}
 	}
 	

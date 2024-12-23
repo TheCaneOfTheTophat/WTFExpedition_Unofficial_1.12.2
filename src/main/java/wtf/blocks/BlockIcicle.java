@@ -16,6 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -35,13 +36,11 @@ public class BlockIcicle extends AbstractBlockDerivative{
 	}
 
 	@Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn)
+	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
     {
-    	if(!canBlockStay(world, pos)){
-			world.destroyBlock(pos, true);
-
+    	if(!canBlockStay(worldIn, pos)){
+			worldIn.destroyBlock(pos, true);
 		}
-
     }
 	/*
 	@Override
@@ -111,9 +110,9 @@ public class BlockIcicle extends AbstractBlockDerivative{
 	}
 
 	@Override
-	public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list) {
+	public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> items) {
 		for (int loop = 0; loop < IcicleType.values().length; loop++){
-			list.add(new ItemStack(itemIn, 1, loop));
+			items.add(new ItemStack(this, 1, loop));
 		}
 	}
 
@@ -145,7 +144,7 @@ public class BlockIcicle extends AbstractBlockDerivative{
 	@Override
 	@Deprecated
     @Nullable
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
     {
         return null;
     }

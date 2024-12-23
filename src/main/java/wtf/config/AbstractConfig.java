@@ -14,11 +14,11 @@ public abstract class AbstractConfig {
 	protected final static String configPath = "config/WTF-Expedition/";
 	
 	
-	public static BiomeDictionary.Type getBiomeTypeFromString(String biomestring) throws Exception{
+	public static Type getBiomeTypeFromString(String biomestring) throws Exception{
 		try {
-			return BiomeDictionary.Type.valueOf(biomestring.toUpperCase());
+			return Type.getType(biomestring.toUpperCase());
 		} catch (IllegalArgumentException e){
-			Type[] types = BiomeDictionary.Type.values();
+			Type[] types = Type.getAll().toArray(new Type[0]);
 			String string = "";
 			for (Type type : types){
 				string += type.toString() + ", " ;
