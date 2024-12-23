@@ -97,11 +97,6 @@ public class ClientProxy extends CommonProxy {
 	public void registerItemRenderer(Block block){
 			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName().toString(), "inventory"));	
 	}
-	
-	@Override
-	public void registerItemRenderer(Item item){
-		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName().toString()));
-	}
 
 	@Override
 	public void initWCICRender(){

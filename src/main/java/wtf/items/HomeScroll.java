@@ -16,8 +16,10 @@ import wtf.Core;
 
 public class HomeScroll extends Item{
 	
-	public HomeScroll(){
+	public HomeScroll() {
 		this.setCreativeTab(Core.wtfTab);
+		this.setRegistryName(Core.coreID, "home_scroll");
+		this.setUnlocalizedName(getRegistryName().toString());
 	}
 	Random random = new Random();
 	

@@ -12,10 +12,6 @@ public class CommonProxy {
 		
 	}
 
-	public void registerItemRenderer(Item item) {
-		
-	}
-
 	public void registerItemSubblocksRenderer(Block block, int meta) {
 		// TODO Auto-generated method stub
 		

@@ -67,7 +67,7 @@ public class Core {
 //
 //		UBC = Loader.isModLoaded("undergroundbiomes");
 //
-//		MasterConfig.loadConfig();
+		MasterConfig.loadConfig();
 //
 //
 //		CaveBiomesConfig.customConfig();
@@ -78,13 +78,12 @@ public class Core {
 //			coreLog.info("Underground Biomes Construct not detected");
 //
 //		OverworldGenConfig.loadConfig();
-//		GameplayConfig.loadConfig();
+        GameplayConfig.loadConfig();
 //		WTFBlocks.initSimpleBlocks();
 //		WTFStoneRegistry.loadStoneReg();
 //		BlockSets.initBlockSets();
 //		WTFBlocks.initDependentBlocks();
 //		proxy.initWCICRender();
-//		WTFItems.initItems();
 //		WTFEntities.initEntites();
 //		WTFRecipes.initRecipes();
 //

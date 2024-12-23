@@ -29,7 +29,7 @@ public class LangFileWriter {
 
 			Charset charset = Charset.defaultCharset();        
 			
-			Path filePath = new File(path+File.separatorChar+"en_US.lang").toPath();
+			Path filePath = new File(path+File.separatorChar+"en_us.lang").toPath();
 			List<String> stringList = Files.readAllLines(filePath, charset);
 			
 			
@@ -61,7 +61,7 @@ public class LangFileWriter {
 		
 		BufferedWriter writer;
 		try {
-			writer = new BufferedWriter(new FileWriter(path+File.separatorChar+"en_US.lang"));
+			writer = new BufferedWriter(new FileWriter(path+File.separatorChar+"en_us.lang"));
 
 			for (Entry<String, String> entry : langFile.entrySet()){
 				writer.write(entry.getValue());

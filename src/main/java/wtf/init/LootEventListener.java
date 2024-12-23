@@ -41,7 +41,7 @@ public class LootEventListener {
 	NameAndPool blacksmith = new NameAndPool(LootTableList.CHESTS_VILLAGE_BLACKSMITH, "main");
 	
 	NameAndPool[] teleportScrollList = {dungeonMain, pyramid, library};
-	LootEntry teleportScroll = new LootEntryItem(WTFItems.homescroll, 15, 0, new LootFunction[] {new SetCount(new LootCondition[0], 
+	LootEntry teleportScroll = new LootEntryItem(WTFItems.home_scroll, 15, 0, new LootFunction[] {new SetCount(new LootCondition[0],
 			new RandomValueRange(1, 3))}, new LootCondition[0], "loottable:teleportscroll");
 	
 	LootEntry wcicTable = new LootEntryItem(Item.getItemFromBlock(WTFBlocks.wcicTable), 20, 0, new LootFunction[0], new LootCondition[0], "loottable:wcicTable");
