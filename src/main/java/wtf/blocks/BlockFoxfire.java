@@ -110,7 +110,7 @@ public class BlockFoxfire extends BlockBush {
 			world.setBlockState(pos, state.withProperty(ACTIVE, false));
 
 		// Spread
-		if (random.nextInt(2) == 0) {
+		if (random.nextInt(25) == 0) {
 			int threshold = 6;
 
 			for (BlockPos blockpos : BlockPos.getAllInBoxMutable(pos.add(-4, -2, -4), pos.add(4, 2, 4))) {
