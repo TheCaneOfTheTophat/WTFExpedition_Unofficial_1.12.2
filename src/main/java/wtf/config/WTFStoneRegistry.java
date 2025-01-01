@@ -13,7 +13,6 @@ import net.minecraft.block.BlockStone;
 import net.minecraft.block.BlockDirt.DirtType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.config.Configuration;
 import wtf.Core;
@@ -42,8 +41,8 @@ public class WTFStoneRegistry extends AbstractConfig {
 		defBlockStateLocations.put(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE), "granite#normal");
 		defBlockStateLocations.put(Blocks.SAND.getDefaultState(), "sand#normal");
 		defBlockStateLocations.put(Blocks.SAND.getDefaultState().withProperty(BlockSand.VARIANT, BlockSand.EnumType.RED_SAND), "red_sand#normal");
-		defBlockStateLocations.put(WTFBlocks.natSandStone.getDefaultState(), "sandstone#normal");
-		defBlockStateLocations.put(WTFBlocks.natRedSandStone.getDefaultState(), "red_sandstone#normal");
+		defBlockStateLocations.put(WTFBlocks.natural_sandstone.getDefaultState(), "sandstone#normal");
+		defBlockStateLocations.put(WTFBlocks.natural_red_sandstone.getDefaultState(), "red_sandstone#normal");
 		defBlockStateLocations.put(Blocks.DIRT.getDefaultState(), "dirt#normal");
 		defBlockStateLocations.put(Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, DirtType.COARSE_DIRT), "coarse_dirt#normal");
 		defBlockStateLocations.put(Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, DirtType.PODZOL), "podzol#normal");
@@ -57,8 +56,8 @@ public class WTFStoneRegistry extends AbstractConfig {
 		defTextureLocations.put(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE), "minecraft:blocks/stone_granite");
 		defTextureLocations.put(Blocks.SAND.getDefaultState(), "minecraft:blocks/sand");
 		defTextureLocations.put(Blocks.SAND.getDefaultState().withProperty(BlockSand.VARIANT, BlockSand.EnumType.RED_SAND), "minecraft:blocks/red_sand");
-		defTextureLocations.put(WTFBlocks.natSandStone.getDefaultState(), "minecraft:blocks/sandstone_top");
-		defTextureLocations.put(WTFBlocks.natRedSandStone.getDefaultState(), "minecraft:blocks/red_sandstone_top");
+		defTextureLocations.put(WTFBlocks.natural_sandstone.getDefaultState(), "minecraft:blocks/sandstone_top");
+		defTextureLocations.put(WTFBlocks.natural_red_sandstone.getDefaultState(), "minecraft:blocks/red_sandstone_top");
 		defTextureLocations.put(Blocks.DIRT.getDefaultState(), "minecraft:blocks/dirt");
 		defTextureLocations.put(Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, DirtType.COARSE_DIRT), "minecraft:blocks/coarse_dirt");
 		defTextureLocations.put(Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, DirtType.PODZOL), "minecraft:blocks/podzol");
@@ -66,12 +65,12 @@ public class WTFStoneRegistry extends AbstractConfig {
 		defTextureLocations.put(Blocks.GRAVEL.getDefaultState(), "minecraft:blocks/gravel");
 		defTextureLocations.put(Blocks.NETHERRACK.getDefaultState(), "minecraft:blocks/netherrack");
 		
-		defCobble.put(WTFBlocks.natSandStone.getDefaultState(), "minecraft:sand@0");
-		defCobble.put(WTFBlocks.natRedSandStone.getDefaultState(), "minecraft:sand@1");
+		defCobble.put(WTFBlocks.natural_sandstone.getDefaultState(), "minecraft:sand@0");
+		defCobble.put(WTFBlocks.natural_red_sandstone.getDefaultState(), "minecraft:sand@1");
 		
 		defSpeed.put(Blocks.STONE, 15);
-		defSpeed.put(WTFBlocks.natSandStone, 30);
-		defSpeed.put(WTFBlocks.natRedSandStone, 30);
+		defSpeed.put(WTFBlocks.natural_sandstone, 30);
+		defSpeed.put(WTFBlocks.natural_red_sandstone, 30);
 		if (Core.UBC){
 			defSpeed.put(UBCCompat.IgneousStone[0].getBlock(), 5);
 			defSpeed.put(UBCCompat.MetamorphicStone[0].getBlock(), 20);
@@ -83,7 +82,7 @@ public class WTFStoneRegistry extends AbstractConfig {
 		loadOverrideMap();
 		config.load();
 
-		String[] defstone = {"minecraft:stone@0", "minecraft:stone@1", "minecraft:stone@3", "minecraft:stone@5","wtfcore:natSandStone@0", "wtfcore:natRedSandStone@0", "minecraft:obsidian@0", "minecraft:dirt@0", 
+		String[] defstone = {"minecraft:stone@0", "minecraft:stone@1", "minecraft:stone@3", "minecraft:stone@5","wtfcore:natural_sandstone@0", "wtfcore:natural_red_sandstone@0", "minecraft:obsidian@0", "minecraft:dirt@0",
 				"minecraft:sand@0", "minecraft:sand@1", "minecraft:gravel@0", "minecraft:netherrack@0"};
 				
 		

@@ -80,7 +80,6 @@ public class OreGenCluster extends OreGenAbstract {
 
 	@Override
 	public int blocksReq() {
-		// TODO Auto-generated method stub
 		return (int) (12*this.veinDensity);
 	}
 

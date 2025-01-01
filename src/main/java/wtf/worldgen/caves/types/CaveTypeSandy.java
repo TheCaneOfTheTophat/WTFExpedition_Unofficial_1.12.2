@@ -19,8 +19,8 @@ public class CaveTypeSandy extends AbstractCaveType{
 	public CaveTypeSandy(String name, int ceilingAddonPercentChance, int floorAddonPercentChance, boolean redSand) {
 		super(name, ceilingAddonPercentChance, floorAddonPercentChance);
 		this.sand = redSand ?  Blocks.SAND.getDefaultState().withProperty(BlockSand.VARIANT, BlockSand.EnumType.RED_SAND) : Blocks.SAND.getDefaultState();
-		this.sandstone = redSand? WTFBlocks.natRedSandStone.getDefaultState() : WTFBlocks.natSandStone.getDefaultState();
-		this.slab = redSand? WTFBlocks.redSandSlab.getDefaultState() : WTFBlocks.sandSlab.getDefaultState();
+		this.sandstone = redSand? WTFBlocks.natural_red_sandstone.getDefaultState() : WTFBlocks.natural_sandstone.getDefaultState();
+		this.slab = redSand? WTFBlocks.red_sand_patch.getDefaultState() : WTFBlocks.sand_patch.getDefaultState();
 	}
 
 	

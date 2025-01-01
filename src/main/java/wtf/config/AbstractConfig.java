@@ -5,7 +5,6 @@ import java.util.Arrays;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import wtf.utilities.UBC.UBCCompat;
 
@@ -34,7 +33,6 @@ public abstract class AbstractConfig {
 				try {
 					throw new NoBlockRegistryFoundForStringException ("Unable to find block for " + string);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -67,7 +65,6 @@ public abstract class AbstractConfig {
 			try {
 				throw new Exception("Invalid blockstate for block and meta " + string);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

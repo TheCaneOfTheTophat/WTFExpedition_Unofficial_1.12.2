@@ -2,17 +2,13 @@
     "forge_marker": 1,
     "defaults": {
         "textures": {
-         	"all": "blocks/dirt"
+         	"all": "blocks/hardened_clay"
         },
         "model": "wtfcore:patch",
         "uvlock": true
     },
     "variants": {
-        "normal": [{
-
-        }],
-        "inventory": [{
-        
-        }]
+        "normal": [{}],
+        "inventory": [{}]
     }
 }

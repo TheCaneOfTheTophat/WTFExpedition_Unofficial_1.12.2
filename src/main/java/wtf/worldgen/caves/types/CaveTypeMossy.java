@@ -30,10 +30,10 @@ public class CaveTypeMossy extends AbstractCaveType{
 		
 		if (noise < 0.33){
 			if (mossy){
-				gen.setPatch(pos, WTFBlocks.mossyDirtSlab.getDefaultState());
+				gen.setPatch(pos, WTFBlocks.mossy_dirt_patch.getDefaultState());
 			}
 			else {
-				gen.setPatch(pos, WTFBlocks.dirtSlab.getDefaultState());
+				gen.setPatch(pos, WTFBlocks.dirt_patch.getDefaultState());
 			}
 		}
 		

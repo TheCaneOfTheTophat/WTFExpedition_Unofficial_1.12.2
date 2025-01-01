@@ -9,12 +9,8 @@
         "uvlock": true
     },
     "variants": {
-        "normal": [{
-
-        }],
-        "inventory": [{
-        
-        }],
+        "normal": [{}],
+        "inventory": [{}],
 		"active=false,hanging=false" : [{
 			"textures": {
 					"cross": "wtfcore:blocks/foxfire"

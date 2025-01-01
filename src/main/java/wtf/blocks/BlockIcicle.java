@@ -1,6 +1,5 @@
 package wtf.blocks;
 
-import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Nullable;
@@ -12,9 +11,10 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.Item;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -30,68 +30,48 @@ public class BlockIcicle extends AbstractBlockDerivative{
 
 	public static final IProperty<IcicleType> TYPE = PropertyEnum.create("type", IcicleType.class);
 	
-	public BlockIcicle(IBlockState state) {
-		super(state, state);
-		// TODO Auto-generated constructor stub
+	public BlockIcicle() {
+		super(Blocks.ICE.getDefaultState(), Blocks.ICE.getDefaultState());
 	}
 
 	@Override
-	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
-    {
-    	if(!canBlockStay(worldIn, pos)){
+	public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side) {
+		return side == EnumFacing.DOWN;
+	}
+
+	@Override
+	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+    	if(!canBlockStay(worldIn, pos, state)){
 			worldIn.destroyBlock(pos, true);
 		}
     }
-	/*
-	@Override
-	public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
-	{
-		//The block hasn't actually been placed yet, so this method is completely unaware of the state of the block
-		//If I want to add player placeable stalactites with logic, it is going to have to be through an item
-		return super.canPlaceBlockAt(worldIn, pos) && this.canBlockStay(worldIn, pos);
-	}
-	*/
-	
 
     @Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
-    {
-    	if(!canBlockStay(world, pos)){
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+    	if(!canBlockStay(world, pos, state)) {
     		world.destroyBlock(pos, true);
 		}
     }
 	
-	public boolean canBlockStay(World world, BlockPos pos)
-	{
-		for (int loopx = -1; loopx < 2; loopx++){
-			for (int loopy = -2; loopy < 1; loopy++){
-				for (int loopz = -1; loopz < 2; loopz++){
-					BlockPos relpos = new BlockPos(pos.getX()+loopx, pos.getY()+loopy, pos.getZ()+loopz);
-					if (BlockSets.meltBlocks.contains(world.getBlockState(relpos).getBlock())){
-						return false;
-					}
-				}
-			}	
+	public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
+		for(BlockPos relpos : BlockPos.getAllInBoxMutable(pos.add(-1, -2, -1), pos.add(1, 1, 1)))
+			if(BlockSets.meltBlocks.contains(world.getBlockState(relpos).getBlock()))
+				return false;
+
+		if (state.getBlock() == this)
+			switch (state.getValue(TYPE)) {
+				case icicle_base:
+				case icicle_small: return (world.getBlockState(pos.up()).isBlockNormalCube());
+				case icicle_tip: return (world.getBlockState(pos.up()) == this.getDefaultState().withProperty(TYPE, IcicleType.icicle_base));
+				default: return false;
 		}
-		
-		switch (world.getBlockState(pos).getValue(TYPE)){
-		
-		case icicle_base:
-			return (world.getBlockState(pos.up()).isBlockNormalCube());
-		case icicle_small:
-			return (world.getBlockState(pos.up()).isBlockNormalCube());
-		case icicle_tip:
-			return (world.getBlockState(pos.up()) == this.getDefaultState().withProperty(TYPE, IcicleType.icicle_base));
-		default :
-			return false;
-		}
+		return false;
 	}
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, TYPE);
 	}
-
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
@@ -111,44 +91,37 @@ public class BlockIcicle extends AbstractBlockDerivative{
 
 	@Override
 	public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> items) {
-		for (int loop = 0; loop < IcicleType.values().length; loop++){
+		for (int loop = 0; loop < IcicleType.values().length; loop++) {
 			items.add(new ItemStack(this, 1, loop));
 		}
 	}
 
 	@Override
-	public boolean isOpaqueCube(IBlockState state)
-	{
+	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
 
 	@Override
-	public boolean isFullCube(IBlockState state)
-	{
+	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
     
 	@Override
-	public int quantityDropped(Random random)
-	{
+	public int quantityDropped(Random random) {
 		return 0;
 	}
 
-	
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-	{
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return state.getValue(TYPE).boundingBox;
 	}
     
 	@Override
 	@Deprecated
     @Nullable
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
-    {
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
         return null;
     }
-	
 	
 	public enum IcicleType implements IStringSerializable {
 		icicle_small(0, "stalactite_small", new AxisAlignedBB(0.2F, 0.2F, 0.2F, 0.8F, 1F, 0.8F)),
@@ -180,16 +153,13 @@ public class BlockIcicle extends AbstractBlockDerivative{
 		
 	}
 	
-	public IBlockState getBlockState(IcicleType type){
+	public IBlockState getBlockState(IcicleType type) {
 		return this.getDefaultState().withProperty(TYPE, type);
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public BlockRenderLayer getBlockLayer()
-	{
+	public BlockRenderLayer getBlockLayer() {
 		return BlockRenderLayer.TRANSLUCENT;
 	}
-
-
 }

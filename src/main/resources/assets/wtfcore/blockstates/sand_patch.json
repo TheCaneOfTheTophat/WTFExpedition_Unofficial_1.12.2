@@ -2,17 +2,13 @@
     "forge_marker": 1,
     "defaults": {
         "textures": {
-        	"all": "blocks/gravel"
+        	"all": "blocks/sand"
         },
         "model": "wtfcore:patch",
         "uvlock": true
     },
     "variants": {
-        "normal": [{
-
-        }],
-        "inventory": [{
-        
-        }]
+        "normal": [{}],
+        "inventory": [{}]
     }
 }

@@ -71,7 +71,6 @@ public class Vec {
 	}
 
 	public BlockPos pos() {
-		// TODO Auto-generated method stub
 		return new BlockPos(currentX, currentY, currentZ);
 	}
 

@@ -10,12 +10,8 @@
         }
     },
     "variants": {
-        "normal": [{
-
-        }],
-        "inventory": [{
-        
-        }],
+        "normal": [{}],
+        "inventory": [{}],
 	   	"age" : {
    			"0" : { },
 			"1" : { },

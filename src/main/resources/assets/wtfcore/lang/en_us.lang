@@ -2,44 +2,58 @@ itemGroup.WTFBlocks=WTF's Blocks
 
 tile.wcic_table.name=Recipe Guide Crafting Table
 
-tile.nitre_ore.name=Nitre Ore
-tile.oreSandGold.name=Gold Nugget Ore
+tile.wtfcore:nitre_ore.name=Nitre Ore
+tile.wtfcore:gold_ore_sand.name=Gold Nugget Ore
+
 tile.torch_on.name=Lit Torch
 tile.torch_off.name=Unlit Torch
-tile.patchIce.name=Ice Patch
-tile.patchWater.name=Water
-tile.icicle.0.name=Icicle
-tile.icicle.1.name=Icicle
-tile.icicle.2.name=Icicle
-tile.icicle.3.name=Icicle
-tile.foxfire.name=Fox Fire
-tile.red_cactus.name=Red Cactus
-tile.mycorrack.name=Mycorrack
 
-tile.slabDirt.name=Dirt
-tile.slabSand.name=Sand
-tile.slabRedsand.name=Red Sand
-tile.slabGravel.name=Gravel
-tile.slabMossyDirt.name=Mossy Dirt
-tile.slabPodzol.name=Podzol
+tile.wtfcore:icicle.0.name=Icicle
+tile.wtfcore:icicle.1.name=Icicle
+tile.wtfcore:icicle.2.name=Icicle
+tile.wtfcore:icicle.3.name=Icicle
+tile.wtfcore:foxfire.name=Foxfire
 
+tile.wtfcore:red_cactus.name=Red Cactus
+tile.wtfcore:mycorrack.name=Mycorrack
 
-tile.natSandStone.name=Natural Sandstone
-tile.natRedSandStone.name=Natural Red Sandstone
+tile.wtfcore:dirt_patch.name=Dirt Patch
+tile.wtfcore:mossy_dirt_patch.name=Mossy Dirt Patch
+tile.wtfcore:sand_patch.name=Sand Patch
+tile.wtfcore:red_sand_patch.name=Red Sand Patch
+tile.wtfcore:gravel_patch.name=Gravel Patch
+tile.wtfcore:podzol_patch.name=Podzol Patch
+tile.wtfcore:ice_patch.name=Ice Patch
 
+tile.wtfcore:terracotta_patch.name=Terracotta Patch
+tile.wtfcore:terracotta_patch_stained.0.name=White Terracotta Patch
+tile.wtfcore:terracotta_patch_stained.1.name=Orange Terracotta Patch
+tile.wtfcore:terracotta_patch_stained.2.name=Magenta Terracotta Patch
+tile.wtfcore:terracotta_patch_stained.3.name=Light Blue Terracotta Patch
+tile.wtfcore:terracotta_patch_stained.4.name=Yellow Terracotta Patch
+tile.wtfcore:terracotta_patch_stained.5.name=Lime Terracotta Patch
+tile.wtfcore:terracotta_patch_stained.6.name=Pink Terracotta Patch
+tile.wtfcore:terracotta_patch_stained.7.name=Gray Terracotta Patch
+tile.wtfcore:terracotta_patch_stained.8.name=Silver Terracotta Patch
+tile.wtfcore:terracotta_patch_stained.9.name=Cyan Terracotta Patch
+tile.wtfcore:terracotta_patch_stained.10.name=Purple Terracotta Patch
+tile.wtfcore:terracotta_patch_stained.11.name=Blue Terracotta Patch
+tile.wtfcore:terracotta_patch_stained.12.name=Brown Terracotta Patch
+tile.wtfcore:terracotta_patch_stained.13.name=Green Terracotta Patch
+tile.wtfcore:terracotta_patch_stained.14.name=Red Terracotta Patch
+tile.wtfcore:terracotta_patch_stained.15.name=Black Terracotta Patch
 
-tile.roots.0.name=Oak Roots
-tile.roots.1.name=Spruce Roots
-tile.roots.2.name=Birch Roots
-tile.roots.3.name=Jungle Roots
-tile.roots.4.name=Big Oak Roots
-tile.roots.5.name=Acacia Roots
-tile.roots.6.name=Frozen Oak Roots
-tile.roots.7.name=Frozen Spruce Roots
-tile.roots.8.name=Frozen Birch Roots
-tile.roots.9.name=Frozen Jungle Roots
-tile.roots.10.name=Frozen Big Oak Roots
-tile.roots.11.name=Frozen Acacia Roots
+tile.wtfcore:puddle.name=Puddle
+
+tile.wtfcore:natural_sandstone.name=Natural Sandstone
+tile.wtfcore:natural_red_sandstone.name=Natural Red Sandstone
+
+tile.wtfcore:roots.0.name=Oak Roots
+tile.wtfcore:roots.1.name=Spruce Roots
+tile.wtfcore:roots.2.name=Birch Roots
+tile.wtfcore:roots.3.name=Jungle Roots
+tile.wtfcore:roots.4.name=Acacia Roots
+tile.wtfcore:roots.5.name=Dark Oak Roots
 
 item.wtfcore:nitre.name=Saltpeter
 item.wtfcore:sulfur.name=Sulfur
@@ -47,7 +61,7 @@ item.wtfcore:home_scroll.name=Home Scroll
 
 tile.ubcSand.0.name=Limestone Sand
 tile.ubcSand.1.name=Chalk Sand
-tile.ubcSand.2.name=Shale San
+tile.ubcSand.2.name=Shale Sand
 tile.ubcSand.3.name=Siltstone Sand
 tile.ubcSand.4.name=Lignite Sand
 tile.ubcSand.5.name=Dolomite Sand

@@ -16,11 +16,7 @@ import wtf.Core;
 
 public class HomeScroll extends Item{
 	
-	public HomeScroll() {
-		this.setCreativeTab(Core.wtfTab);
-		this.setRegistryName(Core.coreID, "home_scroll");
-		this.setUnlocalizedName(getRegistryName().toString());
-	}
+	public HomeScroll() {}
 	Random random = new Random();
 	
 	@Override
@@ -29,18 +25,13 @@ public class HomeScroll extends Item{
 		ItemStack stack = player.getHeldItem(hand);
 		if (home != null){
 			stack.shrink(1);
-			if (!world.isRemote)
-			{
-
-				for (int i = 0; i < 32; ++i)
-			        {
+			if (!world.isRemote) {
+				for (int i = 0; i < 32; ++i) {
 			            world.spawnParticle(EnumParticleTypes.PORTAL, home.getX(), home.getY() + random.nextDouble() * 2.0D, home.getZ(), random.nextGaussian(), 0.0D, random.nextGaussian());
-			        }
+				}
 				player.setPositionAndUpdate( home.getX(), home.getY(), home.getZ());
-
 			}
 		}
 		return EnumActionResult.SUCCESS;
 	}
-
 }

@@ -10,8 +10,8 @@ import wtf.init.WTFBlocks;
 
 public class MapGenWTFCave extends MapGenCaves{
 
-    protected static final IBlockState BLK_SANDSTONE = WTFBlocks.natSandStone.getDefaultState();
-    protected static final IBlockState BLK_RED_SANDSTONE = WTFBlocks.natRedSandStone.getDefaultState();
+    protected static final IBlockState BLK_SANDSTONE = WTFBlocks.natural_sandstone.getDefaultState();
+    protected static final IBlockState BLK_RED_SANDSTONE = WTFBlocks.natural_red_sandstone.getDefaultState();
 	
 	int sandstoneID = Blocks.SANDSTONE.getDefaultState().hashCode();
 	int redsandstonestoneID = Blocks.RED_SANDSTONE.getDefaultState().hashCode();

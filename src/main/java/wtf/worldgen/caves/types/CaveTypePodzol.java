@@ -30,7 +30,7 @@ public class CaveTypePodzol extends AbstractCaveType{
 	@Override
 	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		if (simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.2) < 0.33){
-			gen.replaceBlock(pos.up(), WTFBlocks.podzolSlab.getDefaultState());
+			gen.replaceBlock(pos.up(), WTFBlocks.podzol_patch.getDefaultState());
 		}
 		else {
 			if (simplex.get3DNoise(gen.getWorld(), pos) > 0.66){

@@ -2,17 +2,13 @@
     "forge_marker": 1,
     "defaults": {
         "textures": {
-         	"all": "blocks/dirt_podzol_top"
+         	"all": "blocks/ice"
         },
         "model": "wtfcore:patch",
         "uvlock": true
     },
     "variants": {
-        "normal": [{
-
-        }],
-        "inventory": [{
-        
-        }]
+        "normal": [{}],
+        "inventory": [{}]
     }
 }

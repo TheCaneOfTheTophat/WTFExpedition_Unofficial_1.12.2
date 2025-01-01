@@ -10,7 +10,6 @@ public class UBCOreReplacer extends ReplacerUBCAbstract{
 
 	public UBCOreReplacer(Block block) {
 		super(block);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

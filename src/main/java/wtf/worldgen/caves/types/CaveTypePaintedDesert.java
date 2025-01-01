@@ -20,19 +20,19 @@ public class CaveTypePaintedDesert extends AbstractCaveType{
 	//Red, orange, yellow, brown, white, light gray and unstained hardened c
 
 	IBlockState[] slabs = { 
-			//WTFBlocks.claySlab.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.BLUE),
-			//WTFBlocks.claySlab.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.CYAN),
-			//WTFBlocks.claySlab.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.LIGHT_BLUE),
-			//WTFBlocks.claySlab.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.SILVER),
-			WTFBlocks.claySlab.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.WHITE),
-			//WTFBlocks.claySlab.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.GRAY),
-			WTFBlocks.claySlab.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.YELLOW),
-			WTFBlocks.claySlab.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.BLACK),
-			WTFBlocks.claySlab.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.BROWN),
-			WTFBlocks.claySlab.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.RED),
-			WTFBlocks.claySlab.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.ORANGE),
-			WTFBlocks.claySlab.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.PINK),
-			//WTFBlocks.claySlab.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.PURPLE),
+			//WTFBlocks.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.BLUE),
+			//WTFBlocks.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.CYAN),
+			//WTFBlocks.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.LIGHT_BLUE),
+			//WTFBlocks.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.SILVER),
+			WTFBlocks.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.WHITE),
+			//WTFBlocks.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.GRAY),
+			WTFBlocks.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.YELLOW),
+			WTFBlocks.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.BLACK),
+			WTFBlocks.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.BROWN),
+			WTFBlocks.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.RED),
+			WTFBlocks.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.ORANGE),
+			WTFBlocks.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.PINK),
+			//WTFBlocks.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.PURPLE),
 			
 	};
 	
@@ -78,7 +78,7 @@ public class CaveTypePaintedDesert extends AbstractCaveType{
 				gen.replaceBlock(pos, Blocks.GRASS_PATH.getDefaultState());
 			}
 			else {
-				gen.setPatch(pos, WTFBlocks.redSandSlab.getDefaultState());
+				gen.setPatch(pos, WTFBlocks.red_sand_patch.getDefaultState());
 			}
 		}
 

@@ -10,8 +10,6 @@ public class BlockNaturalSandstone extends AbstractBlockDerivative{
 	public BlockNaturalSandstone(IBlockState state){
 		 super(state, state);
 		 BlockSets.blockTransformer.put(new StateAndModifier(this.getDefaultState(), Modifier.BRICK), state);
-	        
 	}
-	
 }
 

@@ -45,7 +45,7 @@ public class UBCCompat {
 		
 
 		System.out.println("Registering UBC Sedimentary Sand");
-		WTFBlocks.ubcSand = WTFBlocks.registerBlockItemSubblocks(new UBCSand(), 7, "ubcSand");
+		// WTFBlocks.ubcSand = WTFBlocks.registerBlockItemSubblocks(new UBCSand(), 7, "ubcSand");
 		BlockSets.surfaceBlocks.add(WTFBlocks.ubcSand);
 		BlockSets.surfaceBlocks.add(API.IGNEOUS_STONE.getBlock());
 		BlockSets.surfaceBlocks.add(API.METAMORPHIC_STONE.getBlock());

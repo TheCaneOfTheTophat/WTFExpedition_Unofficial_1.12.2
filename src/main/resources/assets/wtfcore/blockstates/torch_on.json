@@ -5,18 +5,14 @@
        },
     
     "variants": {
-       	 "normal": [{
-
-        }],
-        "inventory": [{
-        
-        }],
-       		"facing" : {
-        		"up": { "model": "normal_torch" },
-        		"east": { "model": "normal_torch_wall" },
-        		"south": { "model": "normal_torch_wall", "y": 90 },
-        		"west": { "model": "normal_torch_wall", "y": 180 },
-        		"north": { "model": "normal_torch_wall", "y": 270 }
+		"normal": [{}],
+        "inventory": [{}],
+		"facing" : {
+			"up": { "model": "normal_torch" },
+			"east": { "model": "normal_torch_wall" },
+			"south": { "model": "normal_torch_wall", "y": 90 },
+			"west": { "model": "normal_torch_wall", "y": 180 },
+			"north": { "model": "normal_torch_wall", "y": 270 }
 		}
 	}
 }

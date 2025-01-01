@@ -1,118 +1,104 @@
 
 package wtf.init;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import net.minecraft.block.material.Material;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.IForgeRegistry;
 import org.apache.commons.lang3.StringUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand;
-import net.minecraft.block.BlockSandStone;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemBlock;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
 import wtf.Core;
-import wtf.blocks.BlockDecoAnim;
-import wtf.blocks.BlockFoxfire;
-import wtf.blocks.BlockIcicle;
-import wtf.blocks.BlockDecoStatic;
-import wtf.blocks.BlockClaySlab;
-import wtf.blocks.BlockCustomSlab;
-import wtf.blocks.BlockPatchIce;
-import wtf.blocks.BlockPuddle;
-import wtf.blocks.BlockRedCactus;
-import wtf.blocks.BlockRoots;
-import wtf.blocks.BlockSpeleothem;
-import wtf.blocks.GenPlaceHolder;
-import wtf.blocks.BlockMycorrack;
-import wtf.blocks.BlockNaturalSandstone;
-import wtf.blocks.OreNitre;
-import wtf.blocks.substitution.BlockWTFTorch;
+import wtf.blocks.*;
+import wtf.client.WTFModels;
 import wtf.config.StoneRegEntry;
 import wtf.config.WTFStoneRegistry;
-import wtf.crafting.WCICTable;
-import wtf.crafting.render.WCICTileEntity;
-import wtf.gameplay.OreSandGoldNugget;
-import wtf.items.ItemBlockState;
-import wtf.worldgen.replacers.NetherrackReplacer;
+import wtf.blocks.OreSandGoldNugget;
 
+@Mod.EventBusSubscriber
+@GameRegistry.ObjectHolder(Core.coreID)
 public class WTFBlocks{
 
-
 	public static HashMap<IBlockState, BlockSpeleothem> speleothemMap = new HashMap<IBlockState, BlockSpeleothem>();
-	
-	public static Block oreSandGold;
-	public static Block oreNitre;
-	
-	public static Block icePatch;
-	public static BlockIcicle icicle;
-	public static Block foxfire;
-	public static BlockRoots roots;
-	public static Block red_cactus;
-	
+
+	public static final Block nitre_ore = null;
+	public static final Block gold_ore_sand = null;
+	public static final Block red_cactus = null;
+	public static final Block mycorrack = null;
+
+	public static final Block foxfire = null;
 
 	public static Block wcicTable;
-	public static Block mycorrack;
-	public static Block fireLeaves;
-	public static Block ubcSand;
-	public static Block puddle;
-	public static Block dirtSlab;
-	public static Block sandSlab;
-	public static Block redSandSlab;
-	public static Block gravelSlab;
-	public static Block mossyDirtSlab;
-	public static Block claySlab;
-	public static Block podzolSlab;
-	
-	public static Block genMarker;
-	
-	public static Block natSandStone;
-	public static Block natRedSandStone;
-	
-	public static void initSimpleBlocks(){
-		new NetherrackReplacer();
-		
-		oreNitre =  registerBlock(new OreNitre(), "nitre_ore");
-		icePatch =  registerBlock(new BlockPatchIce(), "patchIce");
-		icicle = (BlockIcicle) registerBlockItemSubblocks(new BlockIcicle(Blocks.ICE.getDefaultState()), 2, "icicle");
-		foxfire = registerBlock(new BlockFoxfire(), "foxfire");
-		roots = (BlockRoots) registerBlockItemSubblocks(new BlockRoots(), 4, "roots");
-		oreSandGold = registerBlock(new OreSandGoldNugget(), "oreSandGold");
-		natSandStone = registerBlock(new BlockNaturalSandstone(Blocks.SANDSTONE.getDefaultState()), "natSandStone");
-		natRedSandStone = registerBlock(new BlockNaturalSandstone(Blocks.RED_SANDSTONE.getDefaultState()), "natRedSandStone");
-		
-		//BlockstateWriter.writeDecoStaticBlockstate(Blocks.DIRT.getDefaultState(), "dirt0DecoStatic");
-		
-		red_cactus =  registerBlock(new BlockRedCactus(), "red_cactus");
-		mycorrack = registerBlock(new BlockMycorrack().setHardness(0.4F), "mycorrack");
-		//fireLeaves = registerBlock(new BlockFireLeaves(), "fireLeaves");
-		
-		//this is done so that the game "sees" base.json, which is used by all the other auto generated jsons
-		registerBlock(new Block(Material.AIR), "base");
-		
-		puddle = registerBlock(new BlockPuddle(), "patchWater");
-		dirtSlab = registerBlock(new BlockCustomSlab(Blocks.DIRT.getDefaultState()), "slabDirt");
-		sandSlab = registerBlock(new BlockCustomSlab(Blocks.SAND.getDefaultState()), "slabSand");
-		redSandSlab = registerBlock(new BlockCustomSlab(Blocks.SAND.getDefaultState().withProperty(BlockSand.VARIANT, BlockSand.EnumType.RED_SAND)), "slabRedsand");
-		gravelSlab = registerBlock(new BlockCustomSlab(Blocks.GRAVEL.getDefaultState()), "slabGravel");
-		mossyDirtSlab = registerBlock(new BlockCustomSlab(Blocks.DIRT.getDefaultState()), "slabMossyDirt");
-		podzolSlab = registerBlock(new BlockCustomSlab(Blocks.DIRT.getDefaultState()), "slabPodzol");
-		claySlab = registerBlock(new BlockClaySlab(), "slabClay");
-		
-		genMarker = registerBlock(new GenPlaceHolder(), "genMarker");
-		
-		wcicTable = registerBlock(new WCICTable(), "wcic_table");
-		GameRegistry.registerTileEntity(WCICTileEntity.class, "WCICTable");
+	public static final Block ubcSand = null;
+	public static final Block dirt_patch = null;
+	public static final Block mossy_dirt_patch = null;
+	public static final Block sand_patch = null;
+	public static final Block red_sand_patch = null;
+	public static final Block gravel_patch = null;
+	public static final Block podzol_patch = null;
+	public static final Block puddle = null;
+	public static final Block ice_patch = null;
+	public static final Block stained_terracotta_patch = null;
 
-		BlockWTFTorch.torch_off = new BlockWTFTorch(false);
-		
-				
-		
+	public static final Block icicle = null;
+	public static final Block roots = null;
+
+	public static final Block gen_marker = null;
+	
+	public static final Block natural_sandstone = null;
+	public static final Block natural_red_sandstone = null;
+
+	public static ArrayList<Block> blocks = new ArrayList<>();
+
+	@SuppressWarnings("unused")
+	@SubscribeEvent
+	public static void registerBlocks(RegistryEvent.Register<Block> event) {
+		IForgeRegistry<Block> reg = event.getRegistry();
+
+
+		// Blocks in the Creative tab
+		registerBlock(reg, new BlockNitreOre().setCreativeTab(Core.wtfTab), "nitre_ore");
+		registerBlock(reg, new OreSandGoldNugget().setCreativeTab(Core.wtfTab), "gold_ore_sand");
+		registerBlock(reg, new BlockRedCactus().setCreativeTab(Core.wtfTab), "red_cactus");
+		registerBlock(reg, new BlockMycorrack().setCreativeTab(Core.wtfTab), "mycorrack");
+
+		registerBlock(reg, new BlockFoxfire().setCreativeTab(Core.wtfTab), "foxfire");
+
+		registerBlock(reg, new BlockPatch(Blocks.DIRT.getDefaultState()), "dirt_patch");
+		registerBlock(reg, new BlockPatch(Blocks.DIRT.getDefaultState()), "mossy_dirt_patch");
+		registerBlock(reg, new BlockPatch(Blocks.SAND.getDefaultState()), "sand_patch");
+		registerBlock(reg, new BlockPatch(Blocks.SAND.getDefaultState().withProperty(BlockSand.VARIANT, BlockSand.EnumType.RED_SAND)), "red_sand_patch");
+		registerBlock(reg, new BlockPatch(Blocks.GRAVEL.getDefaultState()), "gravel_patch");
+		registerBlock(reg, new BlockPatch(Blocks.DIRT.getDefaultState()), "podzol_patch");
+		registerBlock(reg, new BlockPuddle().setCreativeTab(Core.wtfTab), "puddle");
+		registerBlock(reg, new BlockIcePatch().setCreativeTab(Core.wtfTab), "ice_patch");
+		registerBlock(reg, new BlockPatch(Blocks.HARDENED_CLAY.getDefaultState()), "terracotta_patch");
+		registerBlock(reg, new BlockStainedTerracottaPatch().setCreativeTab(Core.wtfTab), "terracotta_patch_stained", 15);
+
+		// new NetherrackReplacer();
+		registerBlock(reg, new BlockIcicle().setCreativeTab(Core.wtfTab), "icicle", 2);
+		registerBlock(reg, new BlockRoots().setCreativeTab(Core.wtfTab), "roots", 5);
+		// BlockstateWriter.writeDecoStaticBlockstate(Blocks.DIRT.getDefaultState(), "dirt0DecoStatic");
+		// wcicTable = registerBlock(new WCICTable(), "wcic_table");
+		// GameRegistry.registerTileEntity(WCICTileEntity.class, "WCICTable");
+
+		// BlockWTFTorch.torch_off = new BlockWTFTorch(false);
+
+		registerBlockWithoutItem(reg, new Block(Material.AIR), "base");
+		registerBlockWithoutItem(reg, new Block(Material.AIR), "gen_marker");
+
+		registerBlock(reg, new BlockNaturalSandstone(Blocks.SANDSTONE.getDefaultState()), "natural_sandstone");
+		registerBlock(reg, new BlockNaturalSandstone(Blocks.RED_SANDSTONE.getDefaultState()), "natural_red_sandstone");
+
 	}
 	
 	public static void initDependentBlocks(){	
@@ -126,7 +112,7 @@ public class WTFBlocks{
 			String localisedName = StringUtils.capitalize(entry.getValue().textureLocation.split("/")[1].replaceAll("_", " "));
 			
 			if (entry.getValue().speleothem){
-				registerBlockItemSubblocks(new BlockSpeleothem(entry.getKey()).setFrozen(stoneName + "Speleothem"), 6, stoneName + "Speleothem");// .setFrozen("stoneSpeleothem");
+				// registerBlockItemSubblocks(new BlockSpeleothem(entry.getKey()).setFrozen(stoneName + "Speleothem"), 6, stoneName + "Speleothem");// .setFrozen("stoneSpeleothem");
 				Core.proxy.writeSpeleothemBlockstate(entry.getKey(), stoneName + "Speleothem");
 				
 				Core.proxy.addName(stoneName+"Speleothem.0", localisedName + " Small Stalactite");
@@ -147,7 +133,7 @@ public class WTFBlocks{
 			}
 			
 			if (entry.getValue().decoAnim){
-				registerBlockItemSubblocks(new BlockDecoAnim(entry.getKey()), BlockDecoAnim.ANIMTYPE.values().length-1, stoneName+"DecoAnim");
+				// registerBlockItemSubblocks(new BlockDecoAnim(entry.getKey()), BlockDecoAnim.ANIMTYPE.values().length-1, stoneName+"DecoAnim");
 				Core.proxy.writeDecoAnimBlockstate(entry.getKey(), stoneName+"DecoAnim");
 				
 				Core.proxy.addName(stoneName+"DecoAnim.0", localisedName+ " Lava Crust");
@@ -156,7 +142,7 @@ public class WTFBlocks{
 			}
 			
 			if (entry.getValue().decoStatic){
-				registerBlockItemSubblocks(new BlockDecoStatic(entry.getKey()), BlockDecoStatic.DecoType.values().length-1, stoneName+"DecoStatic");
+				// registerBlockItemSubblocks(new BlockDecoStatic(entry.getKey()), BlockDecoStatic.DecoType.values().length-1, stoneName+"DecoStatic");
 				Core.proxy.writeDecoStaticBlockstate(entry.getKey(), stoneName+"DecoStatic");
 				
 				Core.proxy.addName(stoneName+"DecoStatic.0", "Mossy " + localisedName);
@@ -174,35 +160,25 @@ public class WTFBlocks{
 	
 	}
 
-	public static Block registerBlock(Block block, String name){
-		block.setRegistryName(name);
-		block.setUnlocalizedName(name);
-//		GameRegistry.register(block);
-		ItemBlock temp = (ItemBlock) new ItemBlock(block).setUnlocalizedName(name).setRegistryName(name).setHasSubtypes(true);
-//		GameRegistry.register(temp);
-		Core.proxy.registerItemRenderer(block);
-		
-		
+	public static <T extends Block> Block registerBlockWithoutItem(IForgeRegistry<Block> registry, T block, String name) {
+		block.setRegistryName(Core.coreID, name);
+		block.setUnlocalizedName(block.getRegistryName().toString());
+
+		registry.register(block);
 		return block;
 	}
-	
-	/**
-	 * Called to register blocks with subblocks that should appear in the inventory
-	 * Requires a blockstate json, with values for both the block models and inventory models
-	 * @param block
-	 * @param meta - value of the maximus metadata
-	 * @param name
-	 * @return
-	 */
-	public static Block registerBlockItemSubblocks(Block block, int meta, String name){
-		
-		block.setRegistryName(name);
-		block.setUnlocalizedName(name);
-//		GameRegistry.register(block);
-		ItemBlock temp = (ItemBlock) new ItemBlockState(block).setUnlocalizedName(name).setRegistryName(name).setHasSubtypes(true);
-//		GameRegistry.register(temp);
-		Core.proxy.registerItemSubblocksRenderer(block, meta);
-		
+
+	public static <T extends Block> Block registerBlock(IForgeRegistry<Block> registry, T block, String name) {
+		blocks.add(block);
+
+		registerBlockWithoutItem(registry, block, name);
+        return block;
+    }
+
+	public static <T extends Block> Block registerBlock(IForgeRegistry<Block> registry, T block, String name, int meta) {
+		registerBlock(registry, block, name);
+		WTFModels.metaMap.put(block.getRegistryName(), meta);
+
 		return block;
 	}
 }

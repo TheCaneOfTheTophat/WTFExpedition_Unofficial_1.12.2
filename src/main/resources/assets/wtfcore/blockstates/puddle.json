@@ -8,13 +8,8 @@
         "uvlock": true
     },
     "variants": {
-        "normal": [{
-
-        }],
-        "inventory": [{
-        
-        }],
-           
+        "normal": [{}],
+        "inventory": [{}],
         "level" : {
 			"0" : { },
 			"1" : { },
@@ -32,7 +27,6 @@
 			"13" : { },
 			"14" : { },
 			"15" : { }
-
     	}
     }
 }

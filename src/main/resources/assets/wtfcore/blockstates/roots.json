@@ -5,34 +5,20 @@
         "model": "wtfcore:root_block"
     },
     "variants": {
-        "normal": [{
-
-        }],
-        "inventory0": [{
-			"textures" : { "texture" : "blocks/log_oak"}
-        }],
-        "inventory1": [{
-			"textures" : { "texture" : "blocks/log_spruce"}
-        }],
-        "inventory2": [{
-			"textures" : { "texture" : "blocks/log_birch"}
-        }],
-        "inventory3": [{
-			"textures" : { "texture" : "blocks/log_jungle"}
-        }],
-        "inventory4": [{
-			"textures" : { "texture" : "blocks/log_big_oak"}
-        }],
-        "inventory5": [{
-			"textures" : { "texture" : "blocks/log_acacia"}
-        }],
-        "type" : {
+        "normal": [{}],
+        "inventory0": [{"textures" : { "texture" : "blocks/log_oak"}}],
+        "inventory1": [{"textures" : { "texture" : "blocks/log_spruce"}}],
+        "inventory2": [{"textures" : { "texture" : "blocks/log_birch"}}],
+        "inventory3": [{"textures" : { "texture" : "blocks/log_jungle"}}],
+        "inventory4": [{"textures" : { "texture" : "blocks/log_acacia"}}],
+        "inventory5": [{"textures" : { "texture" : "blocks/log_big_oak"}}],
+        "variant" : {
         	"oak" 		: { "textures" : { "texture" : "blocks/log_oak"} },
        		"spruce" 	: { "textures" : { "texture" : "blocks/log_spruce"} },
         	"birch" 	: { "textures" : { "texture" : "blocks/log_birch"} },
         	"jungle" 	: { "textures" : { "texture" : "blocks/log_jungle"} },
-	        "big_oak" 	: { "textures" : { "texture" : "blocks/log_big_oak"} },
-    	    "acacia"	: { "textures" : { "texture" : "blocks/log_acacia"} }
+	        "acacia" 	: { "textures" : { "texture" : "blocks/log_acacia"} },
+    	    "dark_oak"	: { "textures" : { "texture" : "blocks/log_big_oak"} }
 		}	
     }
 }

@@ -8,7 +8,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraftforge.event.terraingen.BiomeEvent.GetVillageBlockID;
-import net.minecraftforge.event.terraingen.ChunkGeneratorEvent.ReplaceBiomeBlocks;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -51,7 +50,7 @@ public class CoreWorldGenListener {
 		ChunkCoords coords = new ChunkCoords(event.getChunkX(), event.getChunkZ());
 
 		BlockPos pos = coords.getGenMarkerPos();
-		event.getWorld().setBlockState(pos, WTFBlocks.genMarker.getDefaultState());	
+		event.getWorld().setBlockState(pos, WTFBlocks.gen_marker.getDefaultState());
 		
 		for (ChunkCoords adjCoords : coords.getChunksInRadius(1)){
 			if (shouldScan(worldMap, adjCoords)){

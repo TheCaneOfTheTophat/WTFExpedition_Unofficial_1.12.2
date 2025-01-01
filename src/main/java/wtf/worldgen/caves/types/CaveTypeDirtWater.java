@@ -2,18 +2,11 @@ package wtf.worldgen.caves.types;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockDirt;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import wtf.init.WTFBlocks;
-import wtf.utilities.wrappers.ChunkScan;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
-import wtf.worldgen.trees.TreeTypeGetter;
-import wtf.worldgen.trees.types.AbstractTreeType;
-import wtf.worldgen.trees.types.PoplarTree;
 
 public class CaveTypeDirtWater extends AbstractCaveType{
 
@@ -35,7 +28,7 @@ public class CaveTypeDirtWater extends AbstractCaveType{
 			gen.setWaterPatch(pos);
 		}
 		else if (simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.2) > 0.66){
-			gen.setPatch(pos, WTFBlocks.dirtSlab.getDefaultState());		
+			gen.setPatch(pos, WTFBlocks.dirt_patch.getDefaultState());
 		}
 		
 

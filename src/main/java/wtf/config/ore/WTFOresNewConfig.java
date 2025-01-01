@@ -15,14 +15,10 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Loader;
 import wtf.Core;
-import wtf.blocks.BlockDenseOre;
-import wtf.blocks.BlockDenseOreFalling;
-import wtf.blocks.redstone.DenseRedstoneOre;
 import wtf.config.AbstractConfig;
 import wtf.config.WTFStoneRegistry;
 import wtf.init.BlockSets;
 import wtf.init.BlockSets.Modifier;
-import wtf.init.WTFBlocks;
 import wtf.ores.OreGenAbstract;
 import wtf.ores.OreReplacer;
 import wtf.ores.VanillOreGenCatcher;
@@ -211,30 +207,35 @@ public class WTFOresNewConfig extends AbstractConfig{
 						//if (Block.getBlockFromName(dense_"+blockName) == null){
 						if (oreState.getBlock() != Blocks.REDSTONE_ORE){
 							if (stone.getBlock() instanceof BlockFalling){
-								block = WTFBlocks.registerBlock(new BlockDenseOreFalling(stone, oreState), regName);
+								// TODO Uncomment this
+							//	block = WTFBlocks.registerBlock(new BlockDenseOreFalling(stone, oreState), regName);
 								Core.proxy.writeDenseOreBlockstate(stone, regName, textureLoc, stoneName);
 								Core.proxy.addName(regName,  "Dense " + locStoneName + " " + locOreName);
 							}
 							else {
-								block = WTFBlocks.registerBlock(new BlockDenseOre(stone, oreState), regName);
+								// TODO Uncomment this
+							//	block = WTFBlocks.registerBlock(new BlockDenseOre(stone, oreState), regName);
 								Core.proxy.writeDenseOreBlockstate(stone, regName, textureLoc, stoneName);
 								Core.proxy.addName(regName,  "Dense " + locStoneName + " " + locOreName);
 							}
 						}
 						else {
 
-							block = WTFBlocks.registerBlock(new DenseRedstoneOre(false), regName);
+							// TODO Uncomment this
+							// block = WTFBlocks.registerBlock(new DenseRedstoneOre(false), regName);
 							Core.proxy.writeDenseOreBlockstate(stone, regName, textureLoc, stoneName);
 							Core.proxy.addName(regName,  "Dense " + locStoneName + " " + locOreName);
-							
-							DenseRedstoneOre.denseRedstone_off = block;
-							DenseRedstoneOre.denseRedstone_on = WTFBlocks.registerBlock(new DenseRedstoneOre(true), regName+"_on");
+
+							// TODO Uncomment this
+							// DenseRedstoneOre.denseRedstone_off = block;
+							// DenseRedstoneOre.denseRedstone_on = WTFBlocks.registerBlock(new DenseRedstoneOre(true), regName+"_on");
 							Core.proxy.writeDenseOreBlockstate(stone, regName+"_on", textureLoc, stoneName);
 							Core.proxy.addName(regName+"_on",  "Dense " + locStoneName + " " + locOreName);
 							
 						}
 
-						BlockSets.stoneAndOre.put(new StoneAndOre(stone, oreState), block.getDefaultState());
+						// TODO Uncomment this
+						// BlockSets.stoneAndOre.put(new StoneAndOre(stone, oreState), block.getDefaultState());
 						//Ore ubification/densification of existing ores- removed because it was crashing
 						//new OreReplacer(blockstate.getBlock());
 					}

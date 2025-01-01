@@ -25,7 +25,7 @@ public class CaveTypeLush extends AbstractCaveType{
 	}
 	
 	final IBlockState leaves = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.JUNGLE).withProperty(BlockLeaves.DECAYABLE, Boolean.valueOf(false));
-	final IBlockState roots = WTFBlocks.roots.getDefaultState().withProperty(BlockRoots.TYPE, BlockRoots.RootType.jungle);
+	final IBlockState roots = WTFBlocks.roots.getDefaultState().withProperty(BlockRoots.VARIANT, BlockPlanks.EnumType.JUNGLE);
 	final IBlockState fern = Blocks.TALLGRASS.getDefaultState().withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.FERN);
 	final IBlockState sapling = Blocks.SAPLING.getDefaultState().withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.JUNGLE);
 
@@ -54,10 +54,10 @@ public class CaveTypeLush extends AbstractCaveType{
 		}
 		if (simplex.get3DNoiseShifted(gen.getWorld(), pos, -100) > 0.66){
 			if (mossy){
-				gen.setPatch(pos, WTFBlocks.mossyDirtSlab.getDefaultState());
+				gen.setPatch(pos, WTFBlocks.mossy_dirt_patch.getDefaultState());
 			}
 			else {
-				gen.setPatch(pos, WTFBlocks.dirtSlab.getDefaultState());
+				gen.setPatch(pos, WTFBlocks.dirt_patch.getDefaultState());
 			}
 		}
 		

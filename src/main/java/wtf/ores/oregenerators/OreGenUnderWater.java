@@ -49,7 +49,6 @@ public class OreGenUnderWater extends OreGenAbstract{
 	@Override
 	public int genVein(World world, GeneratorMethods gen, Random random, ChunkScan scan, BlockPos pos)
 			throws Exception {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

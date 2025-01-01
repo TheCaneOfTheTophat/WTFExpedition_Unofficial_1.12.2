@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 
+import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockVine;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -17,10 +18,10 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
+import wtf.blocks.BlockIcicle;
 import wtf.blocks.BlockRoots;
 import wtf.blocks.BlockSpeleothem;
 import wtf.blocks.BlockIcicle.IcicleType;
-import wtf.blocks.BlockRoots.RootType;
 import wtf.blocks.BlockSpeleothem.SpType;
 import wtf.config.CaveBiomesConfig;
 import wtf.init.BlockSets;
@@ -196,7 +197,7 @@ public class GeneratorMethods{
 			}
 			else if (!nextQueued && remaining > 1){ //middle block
 				if (isAir(pos.up(direction))){
-					set = speleothem.getBlockState(SpType.column); 
+					set = speleothem.getBlockState(SpType.column);
 				}
 				else if (next.hashCode() == speleothem.parentBackground.hashCode()){
 					set = direction == 1 ? speleothem.getBlockState(SpType.stalactite_base) : speleothem.getBlockState(BlockSpeleothem.SpType.stalagmite_base);
@@ -224,11 +225,11 @@ public class GeneratorMethods{
 	 **/
 	public  void genIcicle (BlockPos pos){
 			if (random.nextBoolean() && isAir(pos.down())){
-				replaceBlock(pos, WTFBlocks.icicle.getBlockState(IcicleType.icicle_base));
-				replaceBlock(pos.down(),  WTFBlocks.icicle.getBlockState(IcicleType.icicle_tip));
+				replaceBlock(pos, WTFBlocks.icicle.getDefaultState().withProperty(BlockIcicle.TYPE, IcicleType.icicle_base));
+				replaceBlock(pos.down(),  WTFBlocks.icicle.getDefaultState().withProperty(BlockIcicle.TYPE, IcicleType.icicle_tip));
 			}
 			else {
-				replaceBlock(pos, WTFBlocks.icicle.getBlockState(IcicleType.icicle_small));
+				replaceBlock(pos, WTFBlocks.icicle.getDefaultState().withProperty(BlockIcicle.TYPE, IcicleType.icicle_small));
 			}
 		
 	}
@@ -264,24 +265,18 @@ public class GeneratorMethods{
 
 	public void genRoot(BlockPos pos){
 		Biome biome = chunk.getBiome(pos, chunk.getWorld().getBiomeProvider());
-		if (BiomeDictionary.hasType(biome, Type.CONIFEROUS)){
-			replaceBlock(pos, WTFBlocks.roots.getDefaultState().withProperty(BlockRoots.TYPE, RootType.spruce));
-		}
-		else if (BiomeDictionary.hasType(biome, Type.SAVANNA)){
-			replaceBlock(pos, WTFBlocks.roots.getDefaultState().withProperty(BlockRoots.TYPE, RootType.acacia));
-		}
-		else if (BiomeDictionary.hasType(biome, Type.JUNGLE)){
-			replaceBlock(pos, WTFBlocks.roots.getDefaultState().withProperty(BlockRoots.TYPE, RootType.jungle));
-		}
-		else if (biome.getBiomeName().contains("ark")){
-			replaceBlock(pos, WTFBlocks.roots.getDefaultState().withProperty(BlockRoots.TYPE, RootType.big_oak));
-		}
-		else if (biome.getBiomeName().contains("irch")){
-			replaceBlock(pos, WTFBlocks.roots.getDefaultState().withProperty(BlockRoots.TYPE, RootType.birch));
-		}
-		else {
+		if (BiomeDictionary.hasType(biome, Type.CONIFEROUS))
+			replaceBlock(pos, WTFBlocks.roots.getDefaultState().withProperty(BlockRoots.VARIANT, BlockPlanks.EnumType.SPRUCE));
+		else if (BiomeDictionary.hasType(biome, Type.SAVANNA))
+			replaceBlock(pos, WTFBlocks.roots.getDefaultState().withProperty(BlockRoots.VARIANT, BlockPlanks.EnumType.ACACIA));
+		else if (BiomeDictionary.hasType(biome, Type.JUNGLE))
+			replaceBlock(pos, WTFBlocks.roots.getDefaultState().withProperty(BlockRoots.VARIANT, BlockPlanks.EnumType.JUNGLE));
+		else if (biome.getBiomeName().contains("dark"))
+			replaceBlock(pos, WTFBlocks.roots.getDefaultState().withProperty(BlockRoots.VARIANT, BlockPlanks.EnumType.DARK_OAK));
+		else if (biome.getBiomeName().contains("birch"))
+			replaceBlock(pos, WTFBlocks.roots.getDefaultState().withProperty(BlockRoots.VARIANT, BlockPlanks.EnumType.BIRCH));
+		else
 			replaceBlock(pos, WTFBlocks.roots.getDefaultState());
-		}
 	}
 
 

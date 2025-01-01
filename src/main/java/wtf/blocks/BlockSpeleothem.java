@@ -1,7 +1,5 @@
 package wtf.blocks;
 
-import java.util.List;
-
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
@@ -9,9 +7,7 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
@@ -22,7 +18,7 @@ import net.minecraft.world.World;
 import wtf.init.WTFBlocks;
 
 
-public class BlockSpeleothem extends AbstractBlockDerivative{
+public class BlockSpeleothem extends AbstractBlockDerivative {
 
 	public static final IProperty<SpType> TYPE = PropertyEnum.create("type", SpType.class);
 
@@ -32,17 +28,16 @@ public class BlockSpeleothem extends AbstractBlockDerivative{
 		super(state, state);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, SpType.stalactite_small));
 		WTFBlocks.speleothemMap.put(state, this);
-
 	}
+
 	protected BlockSpeleothem(IBlockState backState, IBlockState foreState) { //used for frozen speleothems
 		super(backState, foreState);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, SpType.stalactite_small));
 		//WTFBlocks.speleothemMap.put(state, this); //don't put it in the map
-
 	}
 
-	public Block setFrozen(String string){
-		frozen = (BlockSpeleothem) WTFBlocks.registerBlockItemSubblocks(new BlockSpeleothemFrozen(this), 6, string+"Frozen");
+	public Block setFrozen(String string) {
+		// frozen = (BlockSpeleothem) WTFBlocks.registerBlockItemSubblocks(new BlockSpeleothemFrozen(this), 6, string+"Frozen");
 		return this;
 	}
 /*
@@ -56,22 +51,19 @@ public class BlockSpeleothem extends AbstractBlockDerivative{
 */
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
-	{
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		if(!canBlockStay(world, pos)){
 			world.destroyBlock(pos, true);
 		}
 	}
 
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-	{
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return state.getValue(TYPE).boundingBox;
 	}
 
-	public boolean canBlockStay(World world, BlockPos pos)
-	{
-		switch (world.getBlockState(pos).getValue(TYPE)){
+	public boolean canBlockStay(World world, BlockPos pos) {
+		switch (world.getBlockState(pos).getValue(TYPE)) {
 		case column:
 			return (hasProperty(world.getBlockState(pos.down()), SpType.stalagmite_base) ||
 					hasProperty(world.getBlockState(pos.down()), SpType.column) ||
@@ -96,7 +88,7 @@ public class BlockSpeleothem extends AbstractBlockDerivative{
 		}
 	}
 
-	private boolean hasProperty(IBlockState state, SpType type){
+	private boolean hasProperty(IBlockState state, SpType type) {
 		if (state.getBlock() instanceof BlockSpeleothem){
 			return state.getValue(TYPE) == type;
 		}
@@ -133,21 +125,18 @@ public class BlockSpeleothem extends AbstractBlockDerivative{
 	}
 
 	@Override
-	public boolean isOpaqueCube(IBlockState state)
-	{
+	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
 
 	@Override
 	@Nullable
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
-	{
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
 		return NULL_AABB;
 	}
 
 	@Override
-	public boolean isFullCube(IBlockState state)
-	{
+	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
 

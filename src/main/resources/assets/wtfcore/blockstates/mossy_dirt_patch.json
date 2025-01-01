@@ -6,15 +6,11 @@
         	"texture": "blocks/dirt",
         	"mask": "wtfcore:blocks/moss_overlay"
         },
-        "model": "wtfcore:patchOverlaid",
+        "model": "wtfcore:patch_overlaid",
         "uvlock": true
     },
     "variants": {
-        "normal": [{
-
-        }],
-        "inventory": [{
-        
-        }]
+        "normal": [{}],
+        "inventory": [{}]
     }
 }

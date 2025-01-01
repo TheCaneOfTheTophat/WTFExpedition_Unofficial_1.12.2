@@ -8,21 +8,17 @@ public class ItemBlockState extends ItemBlock{
 
 	public ItemBlockState(Block block) {
 		super(block);
-		 this.setMaxDamage(0);
-	        this.setHasSubtypes(true);
+		this.setMaxDamage(0);
+		this.setHasSubtypes(true);
 	}
    
 	@Override
-	public int getMetadata(int damage)
-    {
+	public int getMetadata(int damage) {
         return damage;
     }
 
 	@Override
 	public String getUnlocalizedName(ItemStack itemstack) {
-		return this.getUnlocalizedName() + "."+itemstack.getItemDamage();
+		return this.getUnlocalizedName() + "." + itemstack.getItemDamage();
 	}
-
-
-
 }
