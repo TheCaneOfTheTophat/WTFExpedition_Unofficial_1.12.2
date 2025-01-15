@@ -6,7 +6,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.ChunkProviderServer;
-import wtf.init.WTFBlocks;
+import wtf.init.WTFContent;
 
 public class ChunkCoords {
 
@@ -97,7 +97,7 @@ public class ChunkCoords {
 		return true;
 	}
 	public boolean isWTFGenerated(World world) {
-		if (world.getBlockState(this.getGenMarkerPos()).getBlock() == WTFBlocks.gen_marker){
+		if (world.getBlockState(this.getGenMarkerPos()).getBlock() == WTFContent.gen_marker){
 			return false;
 		}
 		return true;

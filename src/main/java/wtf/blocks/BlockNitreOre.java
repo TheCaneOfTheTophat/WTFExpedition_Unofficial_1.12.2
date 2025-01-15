@@ -8,7 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import wtf.init.WTFItems;
+import wtf.init.WTFContent;
 
 public class BlockNitreOre extends BlockOre {
 	public BlockNitreOre() {
@@ -19,7 +19,7 @@ public class BlockNitreOre extends BlockOre {
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return WTFItems.nitre;
+		return WTFContent.nitre;
 	}
 
 	@Override

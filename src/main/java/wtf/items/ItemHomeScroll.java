@@ -11,12 +11,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import wtf.Core;
 
 
-public class HomeScroll extends Item{
+public class ItemHomeScroll extends Item{
 	
-	public HomeScroll() {}
+	public ItemHomeScroll() {}
 	Random random = new Random();
 	
 	@Override

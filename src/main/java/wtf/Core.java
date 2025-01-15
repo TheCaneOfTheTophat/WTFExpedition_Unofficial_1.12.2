@@ -5,6 +5,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -12,13 +14,15 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.Logger;
 import wtf.config.MasterConfig;
 import wtf.config.GameplayConfig;
+import wtf.config.OreEntry;
+import wtf.init.JSONLoader;
 
 
-@Mod (modid = Core.coreID, name = "WTFs Expedition", dependencies = "after:undergroundbiomes")
-
+@Mod(modid = Core.coreID, name = "WTFs Expedition", dependencies = "after:undergroundbiomes")
 public class Core {
 	public static  final String coreID = "wtfcore";
 
@@ -40,17 +44,14 @@ public class Core {
 	};
 
 	@EventHandler
-	public void PreInit(FMLPreInitializationEvent preEvent) throws Exception {
-//		coreLog = preEvent.getModLog();
-//
-//		proxy.writeResourcePack();
-//		proxy.loadLangFile();
-//
-//		UBC = Loader.isModLoaded("undergroundbiomes");
-//
+	public void preInitialization(FMLPreInitializationEvent event) throws Exception {
+		coreLog = event.getModLog();
+
+		JSONLoader.loadJsonContent(event);
+
+		// UBC = Loader.isModLoaded("undergroundbiomes");
+
 		MasterConfig.loadConfig();
-//
-//
 //		CaveBiomesConfig.customConfig();
 //
 //		if (UBC)
@@ -60,10 +61,8 @@ public class Core {
 //
 //		OverworldGenConfig.loadConfig();
         GameplayConfig.loadConfig();
-//		WTFBlocks.initSimpleBlocks();
 //		WTFStoneRegistry.loadStoneReg();
 //		BlockSets.initBlockSets();
-//		WTFBlocks.initDependentBlocks();
 //		proxy.initWCICRender();
 //		WTFEntities.initEntites();
 //		WTFRecipes.initRecipes();
@@ -78,19 +77,18 @@ public class Core {
 //
 //		WTFSubstitutions.init();
 //
-//		proxy.finishLangFile();
+		proxy.preInitialization();
 	}
 	
-	@EventHandler public void load(FMLInitializationEvent event) throws Exception {
+	@EventHandler
+	public void initialization(FMLInitializationEvent event) throws Exception {
 //		EventListenerRegistry.initListeners();
 	}
 	
 	@EventHandler
-	public void PostInit(FMLPostInitializationEvent postEvent) throws Exception {
-//		if (MasterConfig.doResourcePack)
-//			proxy.enableBlockstateTexturePack();
-
+	public void postInitialization(FMLPostInitializationEvent event) throws Exception {
 //		if (GameplayConfig.wcictable)
 //			RecipeParser.init();
 	}
+
 }

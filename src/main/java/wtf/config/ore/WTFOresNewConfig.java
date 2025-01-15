@@ -208,29 +208,29 @@ public class WTFOresNewConfig extends AbstractConfig{
 						if (oreState.getBlock() != Blocks.REDSTONE_ORE){
 							if (stone.getBlock() instanceof BlockFalling){
 								// TODO Uncomment this
-							//	block = WTFBlocks.registerBlock(new BlockDenseOreFalling(stone, oreState), regName);
-								Core.proxy.writeDenseOreBlockstate(stone, regName, textureLoc, stoneName);
-								Core.proxy.addName(regName,  "Dense " + locStoneName + " " + locOreName);
+//								block = WTFBlocks.registerBlock(new BlockDenseOreFalling(stone, oreState), regName);
+//								Core.proxy.writeDenseOreBlockstate(stone, regName, textureLoc, stoneName);
+//								Core.proxy.addName(regName,  "Dense " + locStoneName + " " + locOreName);
 							}
 							else {
 								// TODO Uncomment this
 							//	block = WTFBlocks.registerBlock(new BlockDenseOre(stone, oreState), regName);
-								Core.proxy.writeDenseOreBlockstate(stone, regName, textureLoc, stoneName);
-								Core.proxy.addName(regName,  "Dense " + locStoneName + " " + locOreName);
+//								Core.proxy.writeDenseOreBlockstate(stone, regName, textureLoc, stoneName);
+//								Core.proxy.addName(regName,  "Dense " + locStoneName + " " + locOreName);
 							}
 						}
 						else {
 
 							// TODO Uncomment this
 							// block = WTFBlocks.registerBlock(new DenseRedstoneOre(false), regName);
-							Core.proxy.writeDenseOreBlockstate(stone, regName, textureLoc, stoneName);
-							Core.proxy.addName(regName,  "Dense " + locStoneName + " " + locOreName);
+//							Core.proxy.writeDenseOreBlockstate(stone, regName, textureLoc, stoneName);
+//							Core.proxy.addName(regName,  "Dense " + locStoneName + " " + locOreName);
 
 							// TODO Uncomment this
 							// DenseRedstoneOre.denseRedstone_off = block;
 							// DenseRedstoneOre.denseRedstone_on = WTFBlocks.registerBlock(new DenseRedstoneOre(true), regName+"_on");
-							Core.proxy.writeDenseOreBlockstate(stone, regName+"_on", textureLoc, stoneName);
-							Core.proxy.addName(regName+"_on",  "Dense " + locStoneName + " " + locOreName);
+//							Core.proxy.writeDenseOreBlockstate(stone, regName+"_on", textureLoc, stoneName);
+//							Core.proxy.addName(regName+"_on",  "Dense " + locStoneName + " " + locOreName);
 							
 						}
 

@@ -28,7 +28,7 @@ public class DenseRedstoneOre extends BlockDenseOre{
 	public static Block denseRedstone_off;
 	
 	public DenseRedstoneOre(boolean isOn) {
-		super(Blocks.STONE.getDefaultState(), Blocks.REDSTONE_ORE.getDefaultState());
+		super(Blocks.STONE.getDefaultState(), 0, Blocks.REDSTONE_ORE.getDefaultState(), 0);
 		active = isOn;
 		if (isOn){
 			this.setTickRandomly(true);

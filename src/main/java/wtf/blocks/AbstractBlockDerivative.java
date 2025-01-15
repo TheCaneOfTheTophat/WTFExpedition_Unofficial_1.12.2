@@ -1,17 +1,12 @@
 package wtf.blocks;
 
-import java.util.List;
 import java.util.Random;
-
-import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -20,15 +15,12 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import wtf.Core;
-import wtf.init.BlockSets;
 
 public abstract class AbstractBlockDerivative extends Block{
 	
 	public final IBlockState parentBackground;
-	protected final IBlockState parentForeground;
-	
-	
+	public final IBlockState parentForeground;
+
 	/**
 	 * This class is used to create blocks whose properties are derivative of other blocks
 	 * backState is used to determine the properties of the block
@@ -41,22 +33,12 @@ public abstract class AbstractBlockDerivative extends Block{
 		super(backState.getMaterial());
 		this.parentBackground = backState;
 		this.parentForeground = foreState;
-		if (this.parentBackground != null)
-			this.setCreativeTab(Core.wtfTab);
 		this.setHarvestLevel(foreState.getBlock().getHarvestTool(foreState), foreState.getBlock().getHarvestLevel(foreState));
 	}
 
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-        List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
-
-        //Random rand = world instanceof World ? ((World)world).rand : RANDOM;
-
-        for (int loop = 3-this.getMetaFromState(state); loop > -1; loop--){
-        	ret.addAll(parentForeground.getBlock().getDrops(world, pos, parentForeground, fortune));
-        }
-        ret.addAll(parentBackground.getBlock().getDrops(world, pos, parentBackground, fortune));
-        
-        return ret;
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        return parentForeground.getBlock().getItemDropped(parentForeground, rand, fortune);
     }
 	
     @Override
@@ -67,34 +49,6 @@ public abstract class AbstractBlockDerivative extends Block{
     @Override
 	public float getExplosionResistance(Entity exploder) {
         return parentBackground.getBlock().getExplosionResistance(exploder)/2.5F;
-    }
-    
-    int airHash = Blocks.AIR.hashCode();
-    @Override
-    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
-        if (!worldIn.isRemote && !worldIn.restoringBlockSnapshots) { // do not drop items while restoring blockstates, prevents item dupe
-            java.util.List<ItemStack> items = parentForeground.getBlock().getDrops(worldIn, pos, this.parentForeground, fortune);
-
-            if (worldIn.rand.nextInt(5) < fortune)
-            	items.addAll(parentForeground.getBlock().getDrops(worldIn, pos, this.parentForeground, fortune));
-
-            chance = net.minecraftforge.event.ForgeEventFactory.fireBlockHarvesting(items, worldIn, pos, this.parentForeground, fortune, chance, false, harvesters.get());
-
-            if (worldIn.getBlockState(pos).getBlock().hashCode() != airHash) {
-            	if (worldIn.getBlockState(pos.up()).getBlock().hashCode() == airHash) pos = pos.up();
-            	else if (worldIn.getBlockState(pos.down()).getBlock().hashCode() == airHash) pos = pos.down();
-            	else if (worldIn.getBlockState(pos.north()).getBlock().hashCode() == airHash) pos = pos.north();
-            	else if (worldIn.getBlockState(pos.south()).getBlock().hashCode() == airHash) pos = pos.south();
-            	else if (worldIn.getBlockState(pos.east()).getBlock().hashCode() == airHash) pos = pos.east();
-            	else if (worldIn.getBlockState(pos.west()).getBlock().hashCode() == airHash) pos = pos.west();
-            }
-            
-            for (ItemStack item : items) {
-                if (worldIn.rand.nextFloat() <= chance) {
-                    spawnAsEntity(worldIn, pos, item);
-                }
-            }
-        }
     }
     
     @Override

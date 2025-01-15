@@ -4,7 +4,7 @@ import java.util.Random;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
-import wtf.init.WTFBlocks;
+import wtf.init.WTFContent;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
 
@@ -28,7 +28,7 @@ public class CaveTypeDirtWater extends AbstractCaveType{
 			gen.setWaterPatch(pos);
 		}
 		else if (simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.2) > 0.66){
-			gen.setPatch(pos, WTFBlocks.dirt_patch.getDefaultState());
+			gen.setPatch(pos, WTFContent.dirt_patch.getDefaultState());
 		}
 		
 

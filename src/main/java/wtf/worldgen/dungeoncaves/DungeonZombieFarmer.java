@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import wtf.Core;
 import wtf.blocks.BlockFoxfire;
-import wtf.init.WTFBlocks;
+import wtf.init.WTFContent;
 import wtf.utilities.wrappers.CaveListWrapper;
 import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
@@ -24,7 +24,7 @@ public class DungeonZombieFarmer extends AbstractDungeonType{
 		gen.replaceBlock(pos.up(), Blocks.LOG.getDefaultState());
 		gen.replaceBlock(pos, Blocks.LOG.getDefaultState());
 		gen.replaceBlock(pos.down(), Blocks.LOG.getDefaultState());
-		gen.replaceBlock(pos.down(2), WTFBlocks.foxfire.getDefaultState().withProperty(BlockFoxfire.HANGING, true));
+		gen.replaceBlock(pos.down(2), WTFContent.foxfire.getDefaultState().withProperty(BlockFoxfire.HANGING, true));
 	}
 	
 	@Override

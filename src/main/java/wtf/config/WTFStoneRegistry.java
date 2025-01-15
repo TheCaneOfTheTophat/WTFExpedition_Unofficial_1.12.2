@@ -18,7 +18,7 @@ import net.minecraftforge.common.config.Configuration;
 import wtf.Core;
 import wtf.init.BlockSets;
 import wtf.init.BlockSets.Modifier;
-import wtf.init.WTFBlocks;
+import wtf.init.WTFContent;
 import wtf.utilities.UBC.UBCCompat;
 import wtf.utilities.wrappers.StateAndModifier;
 
@@ -41,8 +41,8 @@ public class WTFStoneRegistry extends AbstractConfig {
 		defBlockStateLocations.put(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE), "granite#normal");
 		defBlockStateLocations.put(Blocks.SAND.getDefaultState(), "sand#normal");
 		defBlockStateLocations.put(Blocks.SAND.getDefaultState().withProperty(BlockSand.VARIANT, BlockSand.EnumType.RED_SAND), "red_sand#normal");
-		defBlockStateLocations.put(WTFBlocks.natural_sandstone.getDefaultState(), "sandstone#normal");
-		defBlockStateLocations.put(WTFBlocks.natural_red_sandstone.getDefaultState(), "red_sandstone#normal");
+		defBlockStateLocations.put(WTFContent.natural_sandstone.getDefaultState(), "sandstone#normal");
+		defBlockStateLocations.put(WTFContent.natural_red_sandstone.getDefaultState(), "red_sandstone#normal");
 		defBlockStateLocations.put(Blocks.DIRT.getDefaultState(), "dirt#normal");
 		defBlockStateLocations.put(Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, DirtType.COARSE_DIRT), "coarse_dirt#normal");
 		defBlockStateLocations.put(Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, DirtType.PODZOL), "podzol#normal");
@@ -56,8 +56,8 @@ public class WTFStoneRegistry extends AbstractConfig {
 		defTextureLocations.put(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE), "minecraft:blocks/stone_granite");
 		defTextureLocations.put(Blocks.SAND.getDefaultState(), "minecraft:blocks/sand");
 		defTextureLocations.put(Blocks.SAND.getDefaultState().withProperty(BlockSand.VARIANT, BlockSand.EnumType.RED_SAND), "minecraft:blocks/red_sand");
-		defTextureLocations.put(WTFBlocks.natural_sandstone.getDefaultState(), "minecraft:blocks/sandstone_top");
-		defTextureLocations.put(WTFBlocks.natural_red_sandstone.getDefaultState(), "minecraft:blocks/red_sandstone_top");
+		defTextureLocations.put(WTFContent.natural_sandstone.getDefaultState(), "minecraft:blocks/sandstone_top");
+		defTextureLocations.put(WTFContent.natural_red_sandstone.getDefaultState(), "minecraft:blocks/red_sandstone_top");
 		defTextureLocations.put(Blocks.DIRT.getDefaultState(), "minecraft:blocks/dirt");
 		defTextureLocations.put(Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, DirtType.COARSE_DIRT), "minecraft:blocks/coarse_dirt");
 		defTextureLocations.put(Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, DirtType.PODZOL), "minecraft:blocks/podzol");
@@ -65,12 +65,12 @@ public class WTFStoneRegistry extends AbstractConfig {
 		defTextureLocations.put(Blocks.GRAVEL.getDefaultState(), "minecraft:blocks/gravel");
 		defTextureLocations.put(Blocks.NETHERRACK.getDefaultState(), "minecraft:blocks/netherrack");
 		
-		defCobble.put(WTFBlocks.natural_sandstone.getDefaultState(), "minecraft:sand@0");
-		defCobble.put(WTFBlocks.natural_red_sandstone.getDefaultState(), "minecraft:sand@1");
+		defCobble.put(WTFContent.natural_sandstone.getDefaultState(), "minecraft:sand@0");
+		defCobble.put(WTFContent.natural_red_sandstone.getDefaultState(), "minecraft:sand@1");
 		
 		defSpeed.put(Blocks.STONE, 15);
-		defSpeed.put(WTFBlocks.natural_sandstone, 30);
-		defSpeed.put(WTFBlocks.natural_red_sandstone, 30);
+		defSpeed.put(WTFContent.natural_sandstone, 30);
+		defSpeed.put(WTFContent.natural_red_sandstone, 30);
 		if (Core.UBC){
 			defSpeed.put(UBCCompat.IgneousStone[0].getBlock(), 5);
 			defSpeed.put(UBCCompat.MetamorphicStone[0].getBlock(), 20);

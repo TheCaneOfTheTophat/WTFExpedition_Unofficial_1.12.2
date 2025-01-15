@@ -13,9 +13,9 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class OreSandGoldNugget extends BlockFalling{
+public class BlockOreSand extends BlockFalling{
 
-	public OreSandGoldNugget() {
+	public BlockOreSand() {
 		this.setSoundType(SoundType.SAND);
 	}
 	

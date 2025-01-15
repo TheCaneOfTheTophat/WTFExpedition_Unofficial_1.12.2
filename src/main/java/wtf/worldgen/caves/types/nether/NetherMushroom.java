@@ -7,7 +7,7 @@ import net.minecraft.block.BlockHugeMushroom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
-import wtf.init.WTFBlocks;
+import wtf.init.WTFContent;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
 
@@ -26,7 +26,7 @@ public class NetherMushroom extends AbstractCaveType{
 
 	@Override
 	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		gen.replaceBlock(pos, WTFBlocks.mycorrack.getDefaultState());
+		gen.replaceBlock(pos, WTFContent.mycorrack.getDefaultState());
 		
 	}
 
@@ -104,7 +104,7 @@ public class NetherMushroom extends AbstractCaveType{
             {
                 Block block1 = gen.getWorld().getBlockState(position.down()).getBlock();
 
-                if (block1.hashCode() != WTFBlocks.mycorrack.hashCode())
+                if (block1.hashCode() != WTFContent.mycorrack.hashCode())
                 {
                     return false;
                 }

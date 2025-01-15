@@ -7,13 +7,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import wtf.Core;
-import wtf.blocks.UBC.UBCSand;
 import wtf.config.WTFStoneRegistry;
 import wtf.init.BlockSets;
-import wtf.init.WTFBlocks;
+import wtf.init.WTFContent;
 import wtf.utilities.wrappers.StateAndModifier;
 import wtf.init.BlockSets.Modifier;
 
@@ -46,7 +44,7 @@ public class UBCCompat {
 
 		System.out.println("Registering UBC Sedimentary Sand");
 		// WTFBlocks.ubcSand = WTFBlocks.registerBlockItemSubblocks(new UBCSand(), 7, "ubcSand");
-		BlockSets.surfaceBlocks.add(WTFBlocks.ubcSand);
+		BlockSets.surfaceBlocks.add(WTFContent.ubcSand);
 		BlockSets.surfaceBlocks.add(API.IGNEOUS_STONE.getBlock());
 		BlockSets.surfaceBlocks.add(API.METAMORPHIC_STONE.getBlock());
 		BlockSets.surfaceBlocks.add(API.SEDIMENTARY_STONE.getBlock());
@@ -109,7 +107,7 @@ public class UBCCompat {
 
 			WTFStoneRegistry.defCobble.put(SedimentaryStone[loop], "wtfcore:ubcSand@"+loop);
 			// Also not sure about this one either, chief
-			GameRegistry.addShapelessRecipe(API.SEDIMENTARY_STONE.getItemBlock().getRegistryName(), null, new ItemStack(API.SEDIMENTARY_STONE.getBlock(), 4, loop), Ingredient.fromStacks(new ItemStack(WTFBlocks.ubcSand, 1, loop), new ItemStack(WTFBlocks.ubcSand, 1, loop), new ItemStack(WTFBlocks.ubcSand, 1, loop), new ItemStack(WTFBlocks.ubcSand, 1, loop)));
+			GameRegistry.addShapelessRecipe(API.SEDIMENTARY_STONE.getItemBlock().getRegistryName(), null, new ItemStack(API.SEDIMENTARY_STONE.getBlock(), 4, loop), Ingredient.fromStacks(new ItemStack(WTFContent.ubcSand, 1, loop), new ItemStack(WTFContent.ubcSand, 1, loop), new ItemStack(WTFContent.ubcSand, 1, loop), new ItemStack(WTFContent.ubcSand, 1, loop)));
 
 			UBCStoneList.add(SedimentaryStone[loop].getBlock().getRegistryName()+"@"+loop);
 			WTFStoneRegistry.defTextureLocations.put(SedimentaryStone[loop], "undergroundbiomes:blocks/"+SedimentaryStoneList[loop]);
@@ -119,14 +117,14 @@ public class UBCCompat {
 		
 		//StainedGlass
 
-		GameRegistry.addSmelting(new ItemStack(WTFBlocks.ubcSand, 1, 0), new ItemStack(Blocks.STAINED_GLASS, 1, 9), 0F);
-		GameRegistry.addSmelting(new ItemStack(WTFBlocks.ubcSand, 1, 1), new ItemStack(Blocks.STAINED_GLASS, 1, 0), 0F);
-		GameRegistry.addSmelting(new ItemStack(WTFBlocks.ubcSand, 1, 2), new ItemStack(Blocks.STAINED_GLASS, 1, 8), 0F);
-		GameRegistry.addSmelting(new ItemStack(WTFBlocks.ubcSand, 1, 3), new ItemStack(Blocks.STAINED_GLASS, 1, 1), 0F);
-		GameRegistry.addSmelting(new ItemStack(WTFBlocks.ubcSand, 1, 4), new ItemStack(Blocks.STAINED_GLASS, 1, 15), 0F);
-		GameRegistry.addSmelting(new ItemStack(WTFBlocks.ubcSand, 1, 5), new ItemStack(Blocks.STAINED_GLASS, 1, 4), 0F);
-		GameRegistry.addSmelting(new ItemStack(WTFBlocks.ubcSand, 1, 6), new ItemStack(Blocks.STAINED_GLASS, 1, 7), 0F);
-		GameRegistry.addSmelting(new ItemStack(WTFBlocks.ubcSand, 1, 7), new ItemStack(Blocks.STAINED_GLASS, 1, 12), 0F);
+		GameRegistry.addSmelting(new ItemStack(WTFContent.ubcSand, 1, 0), new ItemStack(Blocks.STAINED_GLASS, 1, 9), 0F);
+		GameRegistry.addSmelting(new ItemStack(WTFContent.ubcSand, 1, 1), new ItemStack(Blocks.STAINED_GLASS, 1, 0), 0F);
+		GameRegistry.addSmelting(new ItemStack(WTFContent.ubcSand, 1, 2), new ItemStack(Blocks.STAINED_GLASS, 1, 8), 0F);
+		GameRegistry.addSmelting(new ItemStack(WTFContent.ubcSand, 1, 3), new ItemStack(Blocks.STAINED_GLASS, 1, 1), 0F);
+		GameRegistry.addSmelting(new ItemStack(WTFContent.ubcSand, 1, 4), new ItemStack(Blocks.STAINED_GLASS, 1, 15), 0F);
+		GameRegistry.addSmelting(new ItemStack(WTFContent.ubcSand, 1, 5), new ItemStack(Blocks.STAINED_GLASS, 1, 4), 0F);
+		GameRegistry.addSmelting(new ItemStack(WTFContent.ubcSand, 1, 6), new ItemStack(Blocks.STAINED_GLASS, 1, 7), 0F);
+		GameRegistry.addSmelting(new ItemStack(WTFContent.ubcSand, 1, 7), new ItemStack(Blocks.STAINED_GLASS, 1, 12), 0F);
 		//GameRegistry.addSmelting(new ItemStack(Blocks.SAND, 1, 1), new ItemStack(Blocks.STAINED_GLASS, 1, 14), 0F);
 		
 		new ReplacerUBCMossyCobble();

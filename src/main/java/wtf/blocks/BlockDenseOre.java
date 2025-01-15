@@ -16,42 +16,35 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import wtf.init.BlockSets;
-import wtf.utilities.wrappers.StoneAndOre;
+import net.minecraftforge.event.ForgeEventFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlockDenseOre extends AbstractBlockDerivative{
 
 	public static final PropertyInteger DENSITY = PropertyInteger.create("density", 0, 2);
+
+    public final int backMeta;
+    public final int foreMeta;
 	
-	public BlockDenseOre(IBlockState backState, IBlockState foreState) {
+	public BlockDenseOre(IBlockState backState, int backMeta, IBlockState foreState, int foreMeta) {
 		super(backState, foreState);
+        this.backMeta = backMeta;
+        this.foreMeta = foreMeta;
 		this.setDefaultState(this.blockState.getBaseState().withProperty(DENSITY, 0));
-		BlockSets.stoneAndOre.put(new StoneAndOre(backState, foreState), this.getDefaultState());
-		BlockSets.oreAndFractures.add(this);
-		BlockSets.surfaceBlocks.add(this);
+//		BlockSets.stoneAndOre.put(new StoneAndOre(backState, foreState), this.getDefaultState());
+//		BlockSets.oreAndFractures.add(this);
+//		BlockSets.surfaceBlocks.add(this);
 		this.disableStats();
-		
 	}
 	
 	@Override
-	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer)
-    {
-        switch (layer){
-		case CUTOUT:
-			return false;
-		case CUTOUT_MIPPED:
-			return false;
-		case SOLID:
-			return true;
-		case TRANSLUCENT:
-			return true;
-		default:
-			break;
-        
-        }
+	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
+        if(layer == BlockRenderLayer.CUTOUT || layer == BlockRenderLayer.TRANSLUCENT)
+            return true;
         return false;
     }
-	
     
     @Override
 	public IBlockState getStateFromMeta(int meta) {
@@ -62,19 +55,18 @@ public class BlockDenseOre extends AbstractBlockDerivative{
 	public int getMetaFromState(IBlockState state) {
 		return state.getValue(DENSITY);
 	}
-    
 	
     @Override
-	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest)
-    {
+	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
     	this.onBlockHarvested(world, pos, state, player);
-        if(state.getValue(DENSITY) < 2){
+
+        if(state.getValue(DENSITY) < 2)
         	state = state.withProperty(DENSITY, state.getValue(DENSITY)+1);
-        }
         else {
         	this.parentBackground.getBlock().dropBlockAsItem(world, pos, this.parentBackground, 0);
         	state = Blocks.AIR.getDefaultState();
         }
+
         player.addStat(StatList.getBlockStats(this.parentForeground.getBlock()));
         return world.setBlockState(pos, state, world.isRemote ? 11 : 3);
     }
@@ -85,8 +77,7 @@ public class BlockDenseOre extends AbstractBlockDerivative{
 	}
 	
     @Override
-	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player)
-    {
+	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
         return this.parentForeground.getBlock().canSilkHarvest(world, pos, state, player);
     }
     
@@ -97,7 +88,7 @@ public class BlockDenseOre extends AbstractBlockDerivative{
 
         if (this.canSilkHarvest(worldIn, pos, state, player) && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0)
         {
-            java.util.List<ItemStack> items = new java.util.ArrayList<ItemStack>();
+            List<ItemStack> items = new ArrayList<ItemStack>();
             int meta = this.parentForeground.getBlock().getMetaFromState(this.parentForeground);
             ItemStack itemstack = new ItemStack(this.parentForeground.getBlock(),1, meta);
 
@@ -106,7 +97,7 @@ public class BlockDenseOre extends AbstractBlockDerivative{
                 items.add(itemstack);
             }
 
-            net.minecraftforge.event.ForgeEventFactory.fireBlockHarvesting(items, worldIn, pos, state, 0, 1.0f, true, player);
+            ForgeEventFactory.fireBlockHarvesting(items, worldIn, pos, state, 0, 1.0f, true, player);
             for (ItemStack item : items)
             {
                 spawnAsEntity(worldIn, pos, item);
@@ -120,5 +111,12 @@ public class BlockDenseOre extends AbstractBlockDerivative{
             harvesters.set(null);
         }
     }
-    
+
+    @Override
+    public String getLocalizedName() {
+        // May God have mercy on the Mojang employee that deprecated getStateFromMeta.
+        ItemStack backStack = new ItemStack(parentBackground.getBlock(), 1, backMeta);
+        ItemStack foreStack = new ItemStack(parentForeground.getBlock(), 1, foreMeta);
+        return "Dense" + " " + backStack.getDisplayName() + " " + foreStack.getDisplayName();
+    }
 }

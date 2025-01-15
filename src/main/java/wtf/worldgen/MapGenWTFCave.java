@@ -6,12 +6,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.MapGenCaves;
 import wtf.config.CaveBiomesConfig;
-import wtf.init.WTFBlocks;
+import wtf.init.WTFContent;
 
 public class MapGenWTFCave extends MapGenCaves{
 
-    protected static final IBlockState BLK_SANDSTONE = WTFBlocks.natural_sandstone.getDefaultState();
-    protected static final IBlockState BLK_RED_SANDSTONE = WTFBlocks.natural_red_sandstone.getDefaultState();
+    protected static final IBlockState BLK_SANDSTONE = WTFContent.natural_sandstone.getDefaultState();
+    protected static final IBlockState BLK_RED_SANDSTONE = WTFContent.natural_red_sandstone.getDefaultState();
 	
 	int sandstoneID = Blocks.SANDSTONE.getDefaultState().hashCode();
 	int redsandstonestoneID = Blocks.RED_SANDSTONE.getDefaultState().hashCode();

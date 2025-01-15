@@ -6,7 +6,7 @@ import net.minecraft.block.BlockSand;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
-import wtf.init.WTFBlocks;
+import wtf.init.WTFContent;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
 
@@ -19,8 +19,8 @@ public class CaveTypeSandy extends AbstractCaveType{
 	public CaveTypeSandy(String name, int ceilingAddonPercentChance, int floorAddonPercentChance, boolean redSand) {
 		super(name, ceilingAddonPercentChance, floorAddonPercentChance);
 		this.sand = redSand ?  Blocks.SAND.getDefaultState().withProperty(BlockSand.VARIANT, BlockSand.EnumType.RED_SAND) : Blocks.SAND.getDefaultState();
-		this.sandstone = redSand? WTFBlocks.natural_red_sandstone.getDefaultState() : WTFBlocks.natural_sandstone.getDefaultState();
-		this.slab = redSand? WTFBlocks.red_sand_patch.getDefaultState() : WTFBlocks.sand_patch.getDefaultState();
+		this.sandstone = redSand? WTFContent.natural_red_sandstone.getDefaultState() : WTFContent.natural_sandstone.getDefaultState();
+		this.slab = redSand? WTFContent.red_sand_patch.getDefaultState() : WTFContent.sand_patch.getDefaultState();
 	}
 
 	

@@ -11,6 +11,8 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -24,7 +26,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockRoots extends AbstractBlockDerivative{
 
-	// TODO Fix roots dropping oak logs in weird amounts.
     public static final PropertyEnum<BlockPlanks.EnumType> VARIANT = PropertyEnum.<BlockPlanks.EnumType>create("variant", BlockPlanks.EnumType.class);
 	
 	public BlockRoots() {
@@ -33,12 +34,22 @@ public class BlockRoots extends AbstractBlockDerivative{
 	}
 
 	@Override
+	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+		return Items.STICK;
+	}
+
+	@Override
+	public int quantityDropped(Random random) {
+		return 1 + random.nextInt(2);
+	}
+
+	@Override
 	public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side) {
 		return side == EnumFacing.DOWN && canBlockStay(worldIn, pos, this.getDefaultState());
 	}
 
 	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-		if (!worldIn.isRemote && !canBlockStay(worldIn, pos, state)) {
+		if (!canBlockStay(worldIn, pos, state)) {
 			this.dropBlockAsItem(worldIn, pos, state, 0);
 			worldIn.setBlockToAir(pos);
 		}
@@ -51,30 +62,12 @@ public class BlockRoots extends AbstractBlockDerivative{
 		}
 		return false;
 	}
-	
-    @Override
-    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
-        if (!worldIn.isRemote && !worldIn.restoringBlockSnapshots) {
-            java.util.List<ItemStack> items = this.getDrops(worldIn, pos, state, fortune);
-
-            for (ItemStack item : items) {
-                if (worldIn.rand.nextFloat() <= chance) {
-                    spawnAsEntity(worldIn, pos, item);
-                }
-            }
-        }
-    }
 
 	@Override
 	@Nullable
 	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
 		return NULL_AABB;
 	}
-    
-    @Override
-	public int quantityDropped(Random random) {
-        return 1 + random.nextInt(2);
-    }
     
 	@Override
 	protected BlockStateContainer createBlockState() {
@@ -90,11 +83,6 @@ public class BlockRoots extends AbstractBlockDerivative{
 	public int getMetaFromState(IBlockState state) {
         BlockPlanks.EnumType type = state.getValue(VARIANT);
 		return type.getMetadata();
-	}
-
-	@Override
-	public int damageDropped(IBlockState state) {
-		return getMetaFromState(state);
 	}
 
 	@Override

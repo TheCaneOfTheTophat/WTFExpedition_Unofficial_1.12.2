@@ -46,10 +46,10 @@ public class BlockSets {
 
 	//WorldGenHashSets
 
-	private static Block[] listReplaceBlocks = {Blocks.STONE, WTFBlocks.natural_sandstone, WTFBlocks.natural_red_sandstone, Blocks.DIRT, Blocks.GRAVEL, Blocks.SAND, Blocks.AIR, Blocks.LAVA, Blocks.FLOWING_LAVA, Blocks.OBSIDIAN, Blocks.WATER, Blocks.FLOWING_WATER, WTFBlocks.ice_patch, Blocks.NETHERRACK, Blocks.SNOW, Blocks.SNOW_LAYER};
+	private static Block[] listReplaceBlocks = {Blocks.STONE, WTFContent.natural_sandstone, WTFContent.natural_red_sandstone, Blocks.DIRT, Blocks.GRAVEL, Blocks.SAND, Blocks.AIR, Blocks.LAVA, Blocks.FLOWING_LAVA, Blocks.OBSIDIAN, Blocks.WATER, Blocks.FLOWING_WATER, WTFContent.ice_patch, Blocks.NETHERRACK, Blocks.SNOW, Blocks.SNOW_LAYER};
 	public static HashSet<Block> ReplaceHashset = new HashSet<Block>(Arrays.asList(listReplaceBlocks));
 
-	private static Block[] listSurfaceBlocks = {Blocks.DIRT, Blocks.SAND, WTFBlocks.natural_sandstone, WTFBlocks.natural_red_sandstone, Blocks.GRASS, Blocks.STONE, Blocks.GRAVEL, Blocks.CLAY, Blocks.HARDENED_CLAY, Blocks.STAINED_HARDENED_CLAY};
+	private static Block[] listSurfaceBlocks = {Blocks.DIRT, Blocks.SAND, WTFContent.natural_sandstone, WTFContent.natural_red_sandstone, Blocks.GRASS, Blocks.STONE, Blocks.GRAVEL, Blocks.CLAY, Blocks.HARDENED_CLAY, Blocks.STAINED_HARDENED_CLAY};
 	public static HashSet<Block> surfaceBlocks = new HashSet<Block>(Arrays.asList(listSurfaceBlocks));
 
 	public static HashSet<Block> treeReplaceableBlocks = new HashSet<Block>();

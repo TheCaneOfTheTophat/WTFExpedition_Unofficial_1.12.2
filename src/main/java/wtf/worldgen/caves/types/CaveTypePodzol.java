@@ -7,7 +7,7 @@ import net.minecraft.block.BlockDirt;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
-import wtf.init.WTFBlocks;
+import wtf.init.WTFContent;
 import wtf.init.BlockSets.Modifier;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
@@ -30,7 +30,7 @@ public class CaveTypePodzol extends AbstractCaveType{
 	@Override
 	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		if (simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.2) < 0.33){
-			gen.replaceBlock(pos.up(), WTFBlocks.podzol_patch.getDefaultState());
+			gen.replaceBlock(pos.up(), WTFContent.podzol_patch.getDefaultState());
 		}
 		else {
 			if (simplex.get3DNoise(gen.getWorld(), pos) > 0.66){

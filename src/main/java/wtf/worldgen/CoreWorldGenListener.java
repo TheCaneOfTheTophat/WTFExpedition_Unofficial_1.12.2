@@ -13,7 +13,7 @@ import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import wtf.Core;
-import wtf.init.WTFBlocks;
+import wtf.init.WTFContent;
 import wtf.utilities.wrappers.ChunkCoords;
 import wtf.utilities.wrappers.ChunkScan;
 
@@ -50,7 +50,7 @@ public class CoreWorldGenListener {
 		ChunkCoords coords = new ChunkCoords(event.getChunkX(), event.getChunkZ());
 
 		BlockPos pos = coords.getGenMarkerPos();
-		event.getWorld().setBlockState(pos, WTFBlocks.gen_marker.getDefaultState());
+		event.getWorld().setBlockState(pos, WTFContent.gen_marker.getDefaultState());
 		
 		for (ChunkCoords adjCoords : coords.getChunksInRadius(1)){
 			if (shouldScan(worldMap, adjCoords)){

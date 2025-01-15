@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import wtf.init.BlockSets.Modifier;
-import wtf.init.WTFBlocks;
+import wtf.init.WTFContent;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
 
@@ -44,7 +44,7 @@ public class NetherSoulDesert extends AbstractCaveType{
 	@Override
 	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		for (int rand = random.nextInt(3); rand > -1; rand--){
-			gen.replaceBlock(pos.up(rand), WTFBlocks.red_cactus.getDefaultState());
+			gen.replaceBlock(pos.up(rand), WTFContent.red_cactus.getDefaultState());
 		}
 		
 	}

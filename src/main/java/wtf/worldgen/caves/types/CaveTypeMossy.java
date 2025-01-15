@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import wtf.init.BlockSets.Modifier;
-import wtf.init.WTFBlocks;
+import wtf.init.WTFContent;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
 
@@ -30,10 +30,10 @@ public class CaveTypeMossy extends AbstractCaveType{
 		
 		if (noise < 0.33){
 			if (mossy){
-				gen.setPatch(pos, WTFBlocks.mossy_dirt_patch.getDefaultState());
+				gen.setPatch(pos, WTFContent.mossy_dirt_patch.getDefaultState());
 			}
 			else {
-				gen.setPatch(pos, WTFBlocks.dirt_patch.getDefaultState());
+				gen.setPatch(pos, WTFContent.dirt_patch.getDefaultState());
 			}
 		}
 		

@@ -15,9 +15,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import wtf.init.WTFBlocks;
+import wtf.init.WTFContent;
 import wtf.utilities.simplex.SimplexHelper;
-import wtf.utilities.wrappers.ChunkCoords;
 import wtf.utilities.wrappers.ChunkScan;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.trees.types.AbstractTreeType;
@@ -114,7 +113,7 @@ public class TreeInstance {
 			if (snow) {
 				setDeco(pos.up(), Blocks.SNOW_LAYER.getDefaultState());
 				if (random.nextInt(100) < 0) {
-					setDeco(pos.down(), WTFBlocks.icicle.getDefaultState());
+					setDeco(pos.down(), WTFContent.icicle.getDefaultState());
 				}
 			}
 		}

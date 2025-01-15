@@ -4,7 +4,6 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootEntry;
 import net.minecraft.world.storage.loot.LootEntryItem;
-import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
@@ -41,10 +40,10 @@ public class LootEventListener {
 	NameAndPool blacksmith = new NameAndPool(LootTableList.CHESTS_VILLAGE_BLACKSMITH, "main");
 	
 	NameAndPool[] teleportScrollList = {dungeonMain, pyramid, library};
-	LootEntry teleportScroll = new LootEntryItem(WTFItems.home_scroll, 15, 0, new LootFunction[] {new SetCount(new LootCondition[0],
+	LootEntry teleportScroll = new LootEntryItem(WTFContent.home_scroll, 15, 0, new LootFunction[] {new SetCount(new LootCondition[0],
 			new RandomValueRange(1, 3))}, new LootCondition[0], "loottable:teleportscroll");
 	
-	LootEntry wcicTable = new LootEntryItem(Item.getItemFromBlock(WTFBlocks.wcicTable), 20, 0, new LootFunction[0], new LootCondition[0], "loottable:wcicTable");
+	LootEntry wcicTable = new LootEntryItem(Item.getItemFromBlock(WTFContent.wcicTable), 20, 0, new LootFunction[0], new LootCondition[0], "loottable:wcicTable");
 	
 	
 	

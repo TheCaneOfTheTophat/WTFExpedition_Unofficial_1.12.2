@@ -15,7 +15,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import wtf.init.WTFBlocks;
+import wtf.init.WTFContent;
 
 
 public class BlockSpeleothem extends AbstractBlockDerivative {
@@ -27,7 +27,7 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 	public BlockSpeleothem(IBlockState state) {
 		super(state, state);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, SpType.stalactite_small));
-		WTFBlocks.speleothemMap.put(state, this);
+		WTFContent.speleothemMap.put(state, this);
 	}
 
 	protected BlockSpeleothem(IBlockState backState, IBlockState foreState) { //used for frozen speleothems
