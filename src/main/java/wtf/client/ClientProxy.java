@@ -5,9 +5,8 @@ import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import wtf.client.models.ModelDecoStatic;
+import wtf.client.models.ModelDecoration;
 import wtf.client.models.ModelDenseOre;
-import wtf.client.models.ModelDecoAnim;
 import wtf.client.models.ModelSpeleothem;
 import wtf.crafting.render.WCICTESR;
 import wtf.crafting.render.WCICTileEntity;
@@ -28,8 +27,7 @@ public class ClientProxy extends CommonProxy {
 	public void preInitialization() {
 		ModelLoaderRegistry.registerLoader(new ModelDenseOre.Loader());
 		ModelLoaderRegistry.registerLoader(new ModelSpeleothem.Loader());
-		ModelLoaderRegistry.registerLoader(new ModelDecoStatic.Loader());
-		ModelLoaderRegistry.registerLoader(new ModelDecoAnim.Loader());
+		ModelLoaderRegistry.registerLoader(new ModelDecoration.Loader());
 
 		MinecraftForge.EVENT_BUS.register(new OverlayStitchEventHandler());
 	}

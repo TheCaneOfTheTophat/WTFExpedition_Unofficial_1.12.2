@@ -30,18 +30,10 @@ public final class WTFStateMappers {
         }
     };
 
-    public static final IStateMapper STATIC_DECORATION_STATE_MAPPER = new StateMapperBase() {
+    public static final IStateMapper DECORATION_STATE_MAPPER = new StateMapperBase() {
         @Override
         protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-            BlockDecoStatic block = (BlockDecoStatic) state.getBlock();
-            return new DerivativeResourceLocation(block, "normal");
-        }
-    };
-
-    public static final IStateMapper ANIMATED_DECORATION_STATE_MAPPER = new StateMapperBase() {
-        @Override
-        protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-            BlockDecoAnim block = (BlockDecoAnim) state.getBlock();
+            AbstractBlockDerivative block = (AbstractBlockDerivative) state.getBlock();
             return new DerivativeResourceLocation(block, "normal");
         }
     };

@@ -9,7 +9,6 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import wtf.Core;
 import wtf.blocks.*;
 import wtf.init.WTFContent;
 
@@ -54,14 +53,9 @@ public class WTFModelRegistry {
             }
 
             // Set state mapper for decor
-            else if(block instanceof BlockDecoStatic) {
-                ModelLoader.setCustomStateMapper(block, WTFStateMappers.STATIC_DECORATION_STATE_MAPPER);
-                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new DerivativeResourceLocation((BlockDecoStatic) block, "normal"));
-            }
-
-            else if(block instanceof BlockDecoAnim) {
-                ModelLoader.setCustomStateMapper(block, WTFStateMappers.ANIMATED_DECORATION_STATE_MAPPER);
-                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new DerivativeResourceLocation((BlockDecoAnim) block, "normal"));
+            else if(block instanceof BlockDecoStatic || block instanceof BlockDecoAnim) {
+                ModelLoader.setCustomStateMapper(block, WTFStateMappers.DECORATION_STATE_MAPPER);
+                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new DerivativeResourceLocation((AbstractBlockDerivative) block, "normal"));
             }
         }
     }

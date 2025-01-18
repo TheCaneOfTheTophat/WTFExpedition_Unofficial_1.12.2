@@ -15,6 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import wtf.Core;
 import wtf.blocks.BlockDecoAnim;
+import wtf.blocks.BlockDecoStatic;
 import wtf.client.DerivativeResourceLocation;
 import wtf.config.BlockEntry;
 import wtf.init.JSONLoader;
@@ -22,19 +23,29 @@ import wtf.init.JSONLoader;
 import java.util.function.Function;
 
 @SideOnly(Side.CLIENT)
-public class ModelDecoAnim implements IModel {
+public class ModelDecoration implements IModel {
     private final ResourceLocation cubeTexture;
     private final ResourceLocation overlayTexture;
     private final String overlayName;
 
-    public ModelDecoAnim(DerivativeResourceLocation location) {
+    public ModelDecoration(DerivativeResourceLocation location) {
         IBlockState state = location.block.parentBackground;
-        BlockDecoAnim block = (BlockDecoAnim) location.block;
+        BlockDecoAnim decoAnim = null;
+        BlockDecoStatic decoStatic = null;
+
+        if(location.block instanceof BlockDecoAnim)
+            decoAnim = (BlockDecoAnim) location.block;
+        else
+            decoStatic = (BlockDecoStatic) location.block;
 
         BlockEntry entry = JSONLoader.identifierToBlockEntry.get(state.getBlock().getRegistryName().toString() + "@" + state.getBlock().getMetaFromState(state));
         cubeTexture = new ResourceLocation(entry.getTexture());
 
-        overlayName = block.getType().getOverlayName();
+        if(location.block instanceof BlockDecoAnim)
+            overlayName = decoAnim.getType().getOverlayName();
+        else
+            overlayName = decoStatic.getType().getOverlayName();
+
         overlayTexture = new ResourceLocation(Core.coreID + ":overlays/" + overlayName);
     }
 
@@ -59,15 +70,13 @@ public class ModelDecoAnim implements IModel {
     public static class Loader implements ICustomModelLoader {
         @Override
         public boolean accepts(ResourceLocation modelLocation) {
-            return modelLocation.getResourceDomain().equals(Core.coreID) && modelLocation.getResourcePath().contains("deco_animated") && modelLocation.getResourcePath().contains("hardcoded");
+            return modelLocation.getResourceDomain().equals(Core.coreID) && modelLocation.getResourcePath().contains("decoration") && modelLocation.getResourcePath().contains("hardcoded");
         }
 
         @Override
         public IModel loadModel(ResourceLocation modelLocation) {
-            if (this.accepts(modelLocation)) {
-                Core.coreLog.fatal(modelLocation);
-                return new ModelDecoAnim((DerivativeResourceLocation) modelLocation);
-            }
+            if (this.accepts(modelLocation))
+                return new ModelDecoration((DerivativeResourceLocation) modelLocation);
             throw new RuntimeException();
         }
 

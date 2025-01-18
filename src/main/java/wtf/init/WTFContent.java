@@ -186,7 +186,7 @@ public class WTFContent {
 			for(BlockDecoStatic.StaticDecoType decorType : BlockDecoStatic.StaticDecoType.values()) {
 				if(entry.getStaticDecorTypes().get(decorType)) {
 					BlockDecoStatic decor = new BlockDecoStatic(blockState, decorType);
-					decor.setRegistryName(Core.coreID, "deco_static_" + decorType.getName() + "_" + blockName);
+					decor.setRegistryName(Core.coreID, "decoration_" + decorType.getName() + "_" + blockName);
 					decor.setCreativeTab(Core.wtfTab);
 
 					blocks.add(decor);
@@ -198,7 +198,7 @@ public class WTFContent {
 			for(BlockDecoAnim.AnimatedDecoType decorType : BlockDecoAnim.AnimatedDecoType.values()) {
 				if(entry.getAnimatedDecorTypes().get(decorType)) {
 					BlockDecoAnim decor = new BlockDecoAnim(blockState, decorType);
-					decor.setRegistryName(Core.coreID, "deco_animated_" + decorType.getName() + "_" + blockName);
+					decor.setRegistryName(Core.coreID, "decoration_" + decorType.getName() + "_" + blockName);
 					decor.setCreativeTab(Core.wtfTab);
 
 					blocks.add(decor);
