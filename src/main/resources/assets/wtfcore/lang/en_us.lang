@@ -8,14 +8,21 @@ tile.wtfcore:gold_ore_sand.name=Gold Nugget Ore
 tile.torch_on.name=Lit Torch
 tile.torch_off.name=Unlit Torch
 
-tile.wtfcore:icicle.0.name=Icicle
-tile.wtfcore:icicle.1.name=Icicle
-tile.wtfcore:icicle.2.name=Icicle
-tile.wtfcore:icicle.3.name=Icicle
-tile.wtfcore:foxfire.name=Foxfire
+tile.wtfcore:icicle.0.name=Small Icicle
+tile.wtfcore:icicle.1.name=Icicle Base
+tile.wtfcore:icicle.2.name=Icicle Tip
+
+tile.wtfcore:speleothem.0.name=Small Stalactite
+tile.wtfcore:speleothem.1.name=Stalactite Base
+tile.wtfcore:speleothem.2.name=Stalactite Tip
+tile.wtfcore:speleothem.3.name=Column
+tile.wtfcore:speleothem.4.name=Small Stalagmite
+tile.wtfcore:speleothem.5.name=Stalagmite Base
+tile.wtfcore:speleothem.6.name=Stalagmite Tip
 
 tile.wtfcore:red_cactus.name=Red Cactus
 tile.wtfcore:mycorrack.name=Mycorrack
+tile.wtfcore:foxfire.name=Foxfire
 
 tile.wtfcore:dirt_patch.name=Dirt Patch
 tile.wtfcore:mossy_dirt_patch.name=Mossy Dirt Patch
@@ -58,15 +65,6 @@ tile.wtfcore:roots.5.name=Dark Oak Roots
 item.wtfcore:nitre.name=Saltpeter
 item.wtfcore:sulfur.name=Sulfur
 item.wtfcore:home_scroll.name=Home Scroll
-
-tile.ubcSand.0.name=Limestone Sand
-tile.ubcSand.1.name=Chalk Sand
-tile.ubcSand.2.name=Shale Sand
-tile.ubcSand.3.name=Siltstone Sand
-tile.ubcSand.4.name=Lignite Sand
-tile.ubcSand.5.name=Dolomite Sand
-tile.ubcSand.6.name=Greywacke Sand
-tile.ubcSand.7.name=Chert Sand
 
 entity.wtfcore.BlockHead.name=Steve
 entity.wtfcore.SkeletonMage.name=Skeleton Mage

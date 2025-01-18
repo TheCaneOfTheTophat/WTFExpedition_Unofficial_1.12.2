@@ -5,11 +5,12 @@ import wtf.blocks.BlockDecoStatic;
 
 public class BlockEntry {
     private String blockId;
-    private String facturedBlockId;
+    private String fracturedBlockId;
     private String name;
+    private String texture;
 
     private boolean fracturesFirstWhenMined;
-    private int percentageMineSpeedModiifier;
+    private int percentageMineSpeedModifier;
 
     private StaticDecor staticDecor = new StaticDecor();
     private AnimatedDecor animatedDecor = new AnimatedDecor();
@@ -20,20 +21,24 @@ public class BlockEntry {
         return blockId;
     }
 
-    public String getFacturedBlockId() {
-        return facturedBlockId;
+    public String getFracturedBlockId() {
+        return fracturedBlockId;
     }
 
     public String getName() {
         return name;
     }
 
+    public String getTexture() {
+        return texture;
+    }
+
     public boolean fracturesFirstWhenMined() {
         return fracturesFirstWhenMined;
     }
 
-    public int getPercentageMineSpeedModiifier() {
-        return percentageMineSpeedModiifier;
+    public int getPercentageMineSpeedModifier() {
+        return percentageMineSpeedModifier;
     }
 
     public boolean getStaticDecorType(BlockDecoStatic.DecoType type) {

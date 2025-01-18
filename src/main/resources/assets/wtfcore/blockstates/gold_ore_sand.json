@@ -3,7 +3,7 @@
     "defaults": {
         "model": "wtfcore:cube_overlay",
         "textures": {
-           	 "all": "blocks/sand"
+           	 "cube": "blocks/sand"
         }
     },
     "variants": {

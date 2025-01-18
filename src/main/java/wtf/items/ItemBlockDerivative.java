@@ -3,11 +3,13 @@ package wtf.items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import wtf.blocks.BlockDenseOre;
+import wtf.blocks.AbstractBlockDerivative;
 
-public class ItemBlockDenseOre extends ItemBlockState {
-    public ItemBlockDenseOre(BlockDenseOre block) {
+public class ItemBlockDerivative extends ItemBlockState {
+    AbstractBlockDerivative block;
+    public ItemBlockDerivative(AbstractBlockDerivative block) {
         super(block);
+        this.block = block;
     }
 
     @Override
@@ -17,6 +19,6 @@ public class ItemBlockDenseOre extends ItemBlockState {
 
     @SideOnly(Side.CLIENT)
     public String getItemStackDisplayName(ItemStack stack) {
-        return block.getLocalizedName();
+        return block.getDisplayName(stack);
     }
 }

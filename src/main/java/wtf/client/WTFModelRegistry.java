@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import wtf.blocks.BlockDenseOre;
+import wtf.blocks.BlockSpeleothem;
 import wtf.init.WTFContent;
 
 import java.util.HashMap;
@@ -34,11 +35,21 @@ public class WTFModelRegistry {
             }
         }
 
+        // Get all blocks
         for(Block block : WTFContent.blocks) {
+            // Set state mapper for dense ores
             if(block instanceof BlockDenseOre) {
                 ModelLoader.setCustomStateMapper(block, WTFStateMappers.DENSE_ORE_STATE_MAPPER);
                 for (int i = 0; i <= 2; i++) {
-                    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), i, new DenseOreResourceLocation((BlockDenseOre) block, i));
+                    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), i, new DerivativeResourceLocation((BlockDenseOre) block, "density", i));
+                }
+            }
+
+            // Set state mapper for speleothems
+            if(block instanceof BlockSpeleothem) {
+                ModelLoader.setCustomStateMapper(block, WTFStateMappers.SPELEOTHEM_STATE_MAPPER);
+                for (int i = 0; i <= 6; i++) {
+                    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), i, new DerivativeResourceLocation((BlockSpeleothem) block, "type", i));
                 }
             }
         }

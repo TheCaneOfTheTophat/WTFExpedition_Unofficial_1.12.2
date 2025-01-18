@@ -24,7 +24,7 @@ import wtf.blocks.*;
 import wtf.client.WTFModelRegistry;
 import wtf.config.*;
 import wtf.blocks.BlockOreSand;
-import wtf.items.ItemBlockDenseOre;
+import wtf.items.ItemBlockDerivative;
 import wtf.items.ItemHomeScroll;
 import wtf.items.ItemBlockState;
 
@@ -32,7 +32,7 @@ import wtf.items.ItemBlockState;
 @GameRegistry.ObjectHolder(Core.coreID)
 public class WTFContent {
 
-	public static HashMap<IBlockState, BlockSpeleothem> speleothemMap = new HashMap<IBlockState, BlockSpeleothem>();
+	public static HashMap<IBlockState, BlockSpeleothem> speleothemMap = new HashMap<>();
 
 	/*
 	====================================
@@ -109,7 +109,6 @@ public class WTFContent {
 		registerSimpleBlock(reg, new BlockIcicle().setCreativeTab(Core.wtfTab), "icicle", 2);
 		registerSimpleBlock(reg, new BlockRoots().setCreativeTab(Core.wtfTab), "roots", 5);
 
-		// BlockstateWriter.writeDecoStaticBlockstate(Blocks.DIRT.getDefaultState(), "dirt0DecoStatic");
 		// wcicTable = registerBlock(new WCICTable(), "wcic_table");
 		// GameRegistry.registerTileEntity(WCICTileEntity.class, "WCICTable");
 
@@ -126,36 +125,28 @@ public class WTFContent {
 	public static void registerConfigDependantBlocks(RegistryEvent.Register<Block> event) {
 		IForgeRegistry<Block> reg = event.getRegistry();
 
-		/*  ==================== ORES ==================== */
+		/*  ==============================================
+			==================== ORES ====================
+		    ============================================== */
+
 		for(OreEntry entry : JSONLoader.oreEntries) {
-			// Check if ore has dense block variants
 			if(entry.hasDenseBlocks()) {
-				// Split ore ID and meta
 				String[] oreSplit = entry.getBlockId().split("@");
-
-				// If the ore string has no meta, return 0, else return meta
 				int oreMeta = oreSplit.length > 1 ? Integer.parseInt(oreSplit[1]) : 0;
+				String oreId = oreSplit[0];
 
-				// Get ore state
-				IBlockState oreState = Block.getBlockFromName(oreSplit[0]).getDefaultState();
+				IBlockState oreState = Block.getBlockFromName(oreId).getStateFromMeta(oreMeta);
 
 				for (String stone : entry.getStoneList()) {
-					// Split stone ID and meta
-					String[] stoneSplit = stone.split("@");
-
-					// Get stone name
-					// TODO Use name defined in stone list instead from registry ID
-					String stoneName = stoneSplit[0].split(":")[1];
-
-					// If the ore string has no meta, return 0, else return meta
+					BlockEntry stoneEntry = JSONLoader.identifierToBlockEntry.get(stone);
+					String[] stoneSplit = stoneEntry.getBlockId().split("@");
 					int stoneMeta = stoneSplit.length > 1 ? Integer.parseInt(stoneSplit[1]) : 0;
+					String stoneId = stoneSplit[0];
 
-					// Get stone state
-					IBlockState stoneState = Block.getBlockFromName(stoneSplit[0]).getDefaultState();
+					IBlockState stoneState = Block.getBlockFromName(stoneId).getStateFromMeta(stoneMeta);
 
-					BlockDenseOre ore = new BlockDenseOre(stoneState, stoneMeta, oreState, oreMeta);
-					// TODO Use name defined in stone list instead from registry ID
-					ore.setRegistryName(Core.coreID, "dense_" + stoneName + stoneMeta + "_" + entry.getName());
+					BlockDenseOre ore = new BlockDenseOre(stoneState, oreState);
+					ore.setRegistryName(Core.coreID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
 					ore.setCreativeTab(Core.wtfTab);
 
 					blocks.add(ore);
@@ -163,6 +154,31 @@ public class WTFContent {
 
 					reg.register(ore);
 				}
+			}
+		}
+
+		/*  ==============================================
+			================= BLOCK BASED ================
+		    ============================================== */
+
+		for(BlockEntry entry : JSONLoader.blockEntries) {
+			String[] stoneSplit = entry.getBlockId().split("@");
+
+			String stoneName = entry.getName();
+
+			int stoneMeta = stoneSplit.length > 1 ? Integer.parseInt(stoneSplit[1]) : 0;
+			String stoneId = stoneSplit[0];
+
+			IBlockState stoneState = Block.getBlockFromName(stoneId).getStateFromMeta(stoneMeta);
+
+			if(entry.hasSpeleothems()) {
+				BlockSpeleothem speleothem = new BlockSpeleothem(stoneState);
+				speleothem.setRegistryName(Core.coreID, stoneName + "_speleothem");
+				speleothem.setCreativeTab(Core.wtfTab);
+
+				blocks.add(speleothem);
+				reg.register(speleothem);
+				// TODO Frozen speleothems
 			}
 		}
 	}
@@ -179,10 +195,15 @@ public class WTFContent {
 			registerItem(reg, new ItemHomeScroll(), "home_scroll");
 
 		for(Block block : blocks) {
-			if(block instanceof BlockDenseOre)
-				registerItemBlockNoModel(reg, new ItemBlockDenseOre((BlockDenseOre) block));
-			else if(WTFModelRegistry.metaMap.get(block.getRegistryName()) != null)
+			if (block instanceof BlockDenseOre)
+				registerItemBlockNoModel(reg, new ItemBlockDerivative((BlockDenseOre) block));
+
+			else if (block instanceof BlockSpeleothem)
+				registerItemBlockNoModel(reg, new ItemBlockDerivative((BlockSpeleothem) block));
+
+			else if (WTFModelRegistry.metaMap.get(block.getRegistryName()) != null)
 				registerItemBlock(reg, new ItemBlockState(block));
+
 			else
 				registerItemBlock(reg, new ItemBlock(block));
 		}
@@ -200,15 +221,6 @@ public class WTFContent {
 			
 			if (entry.getValue().speleothem){
 				// registerBlockItemSubblocks(new BlockSpeleothem(entry.getKey()).setFrozen(stoneName + "Speleothem"), 6, stoneName + "Speleothem");// .setFrozen("stoneSpeleothem");
-//				Core.proxy.writeSpeleothemBlockstate(entry.getKey(), stoneName + "Speleothem");
-//
-//				Core.proxy.addName(stoneName+"Speleothem.0", localisedName + " Small Stalactite");
-//				Core.proxy.addName(stoneName+"Speleothem.1", localisedName + " Stalactite Base");
-//				Core.proxy.addName(stoneName+"Speleothem.2", localisedName + " Stalactite Tip");
-//				Core.proxy.addName(stoneName+"Speleothem.3", localisedName + " Column");
-//				Core.proxy.addName(stoneName+"Speleothem.4", localisedName + " Small Stalagmite");
-//				Core.proxy.addName(stoneName+"Speleothem.5", localisedName + " Stalagmite Base");
-//				Core.proxy.addName(stoneName+"Speleothem.6", localisedName + " Stalagmite Tip");
 //
 //				Core.proxy.addName(stoneName+"SpeleothemFrozen.0", localisedName + " Icy Small Stalactite");
 //				Core.proxy.addName(stoneName+"SpeleothemFrozen.1", localisedName + " Icy Stalactite Base");

@@ -5,6 +5,8 @@ import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import wtf.client.models.ModelDenseOre;
+import wtf.client.models.ModelSpeleothem;
 import wtf.crafting.render.WCICTESR;
 import wtf.crafting.render.WCICTileEntity;
 import wtf.entities.customentities.EntityBlockHead;
@@ -22,7 +24,9 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void preInitialization() {
-		ModelLoaderRegistry.registerLoader(new ModelDenseOre.DenseOreLoader());
+		ModelLoaderRegistry.registerLoader(new ModelDenseOre.Loader());
+		ModelLoaderRegistry.registerLoader(new ModelSpeleothem.Loader());
+
 		MinecraftForge.EVENT_BUS.register(new OverlayStitchEventHandler());
 	}
 

@@ -1,7 +1,6 @@
 package wtf.blocks;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -10,15 +9,12 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
 import wtf.gameplay.fracturing.EntityStoneCrack;
 import wtf.init.BlockSets;
 import wtf.init.BlockSets.Modifier;
@@ -63,33 +59,20 @@ public class BlockDecoStatic extends AbstractBlockDerivative{
 	@Override
 	public void onBlockDestroyedByPlayer(World world, BlockPos pos, IBlockState state)
 	{
-		if (!world.isRemote && state.getValue(TYPE)==DecoType.CRACKED){
+		if (!world.isRemote && state.getValue(TYPE) == DecoType.CRACKED){
 			EntityStoneCrack.crackStone(world, pos);
 		}
 	}
 
 	@Override
-	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player)
-	{
+	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
 		return true;
 	}
 
 	@Override
-	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer)
-	{
-		switch (layer){
-		case CUTOUT:
-			return false;
-		case CUTOUT_MIPPED:
-			return false;
-		case SOLID:
+	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
+		if(layer == BlockRenderLayer.SOLID || layer == BlockRenderLayer.TRANSLUCENT)
 			return true;
-		case TRANSLUCENT:
-			return true;
-		default:
-			break;
-
-		}
 		return false;
 	}
 
@@ -103,7 +86,7 @@ public class BlockDecoStatic extends AbstractBlockDerivative{
 		private final String name;
 		public final BlockSets.Modifier modifier;
 
-		private DecoType(int ID, String name, BlockSets.Modifier mod) {
+		DecoType(int ID, String name, BlockSets.Modifier mod) {
 			this.ID = ID;
 			this.name = name;
 			this.modifier = mod;
@@ -126,30 +109,23 @@ public class BlockDecoStatic extends AbstractBlockDerivative{
 
 	@Override
 	public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> items) {
-		for (int loop = 0; loop < DecoType.values().length; loop++){
+		for (int loop = 0; loop < DecoType.values().length; loop++) {
 			items.add(new ItemStack(this, 1, loop));
 		}
 	}
 
 	@Override
-	public IBlockState getStateFromMeta(int meta)
-	{
-
+	public IBlockState getStateFromMeta(int meta) {
 		return this.getDefaultState().withProperty(TYPE, DecoType.values()[meta]);
 	}
 
-
 	@Override
-	public int getMetaFromState(IBlockState state)
-	{
+	public int getMetaFromState(IBlockState state) {
 		return state.getValue(TYPE).ID;
 	}
 
 	@Override
-	protected BlockStateContainer createBlockState()
-	{
-		return new BlockStateContainer(this, new IProperty[] {TYPE});
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, TYPE);
 	}
-
-
 }

@@ -1,11 +1,11 @@
 package wtf.blocks;
 
-import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -15,6 +15,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import wtf.Core;
 import wtf.init.WTFContent;
 
 
@@ -62,6 +63,11 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 		return state.getValue(TYPE).boundingBox;
 	}
 
+	@Override
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+		return state.getValue(TYPE).boundingBox;
+	}
+
 	public boolean canBlockStay(World world, BlockPos pos) {
 		switch (world.getBlockState(pos).getValue(TYPE)) {
 		case column:
@@ -70,14 +76,12 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 					hasProperty(world.getBlockState(pos.up()), SpType.stalactite_base) ||
 					hasProperty(world.getBlockState(pos.up()), SpType.column));
 		case stalactite_base:
-			return (world.getBlockState(pos.up()) == this.parentBackground);
 		case stalactite_small:
 			return (world.getBlockState(pos.up()) == this.parentBackground);
 		case stalactite_tip:
 			return (hasProperty(world.getBlockState(pos.up()), SpType.stalactite_base) ||
 					hasProperty(world.getBlockState(pos.up()),  SpType.column));
 		case stalagmite_base:
-			return (world.getBlockState(pos.down()) == this.parentBackground);
 		case stalagmite_small:
 			return (world.getBlockState(pos.down()) == this.parentBackground);
 		case stalagmite_tip:
@@ -100,7 +104,6 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 		return new BlockStateContainer(this, TYPE);
 	}
 
-
 	@Override
 	public IBlockState getStateFromMeta(int meta) {		
 		return getDefaultState().withProperty(TYPE, SpType.values()[meta]);
@@ -110,11 +113,6 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 	public int getMetaFromState(IBlockState state) {
 		SpType type = state.getValue(TYPE);
 		return type.getID();
-	}
-
-	@Override
-	public int damageDropped(IBlockState state) {
-		return getMetaFromState(state);
 	}
 
 	@Override
@@ -130,9 +128,13 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 	}
 
 	@Override
-	@Nullable
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-		return NULL_AABB;
+	public String getDisplayName(ItemStack stack) {
+		ItemStack stoneStack = new ItemStack(parentForeground.getBlock(), 1, parentForeground.getBlock().getMetaFromState(parentForeground));
+		return stoneStack.getDisplayName() + " " + I18n.format("tile." + Core.coreID + ":speleothem." + stack.getItemDamage() + ".name");
+	}
+
+	public IBlockState getBlockState(SpType type){
+		return this.getDefaultState().withProperty(TYPE, type);
 	}
 
 	@Override
@@ -153,7 +155,7 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 		private final String name;
 		public final AxisAlignedBB boundingBox;
 
-		private SpType(int ID, String name, AxisAlignedBB box) {
+		SpType(int ID, String name, AxisAlignedBB box) {
 			this.ID = ID;
 			this.name = name;
 			this.boundingBox = box;
@@ -173,14 +175,4 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 		}
 
 	}
-
-	public IBlockState getBlockState(SpType type){
-		return this.getDefaultState().withProperty(TYPE, type);
-	}
-
-
-
-
-
-
 }
