@@ -11,12 +11,14 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
@@ -32,7 +34,7 @@ public abstract class AbstractBlockDerivative extends Block{
 	public final IBlockState parentBackground;
 	public final IBlockState parentForeground;
 
-	/**
+    /**
 	 * This class is used to create blocks whose properties are derivative of other blocks
 	 * backState is used to determine the properties of the block
 	 * foreState is used to determine a block's harvesting and drops
@@ -53,9 +55,8 @@ public abstract class AbstractBlockDerivative extends Block{
         return parentForeground.getBlock().getItemDropped(parentForeground, rand, fortune);
     }
 
-    @Override
-    public int damageDropped(IBlockState state) {
-        return parentForeground.getBlock().getMetaFromState(parentForeground);
+    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+        return parentForeground.getBlock().canSilkHarvest(world, pos, parentForeground, player);
     }
 
     @Override
@@ -64,34 +65,42 @@ public abstract class AbstractBlockDerivative extends Block{
     }
 
     @Override
-    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, @Nullable ItemStack stack)
-    {
+    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, @Nullable ItemStack stack) {
         player.addStat(StatList.getBlockStats(this));
         player.addExhaustion(0.025F);
 
-        if (this.canSilkHarvest(worldIn, pos, state, player) && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0)
-        {
+        if (this.canSilkHarvest(worldIn, pos, state, player) && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0) {
             List<ItemStack> items = new ArrayList<ItemStack>();
             int meta = this.parentForeground.getBlock().getMetaFromState(this.parentForeground);
             ItemStack itemstack = new ItemStack(this.parentForeground.getBlock(),1, meta);
 
-            if (itemstack != null)
-            {
+            if (itemstack != null) {
                 items.add(itemstack);
             }
 
             ForgeEventFactory.fireBlockHarvesting(items, worldIn, pos, state, 0, 1.0f, true, player);
-            for (ItemStack item : items)
-            {
+            for (ItemStack item : items) {
                 spawnAsEntity(worldIn, pos, item);
             }
         }
-        else
-        {
+        else {
             harvesters.set(player);
             int i = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack);
-            this.dropBlockAsItem(worldIn, pos, state, i);
+            this.dropBlockAsItem(worldIn, pos, parentForeground, i);
             harvesters.set(null);
+        }
+    }
+
+    @Override
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+        Random rand = world instanceof World ? ((World)world).rand : RANDOM;
+
+        int count = quantityDropped(parentForeground, fortune, rand);
+        for (int i = 0; i < count; i++) {
+            Item item = this.getItemDropped(parentForeground, rand, fortune);
+            if (item != Items.AIR) {
+                drops.add(new ItemStack(item, 1, parentForeground.getBlock().damageDropped(state)));
+            }
         }
     }
 	

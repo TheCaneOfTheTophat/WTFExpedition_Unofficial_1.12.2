@@ -20,6 +20,15 @@ tile.wtfcore:speleothem.4.name=Small Stalagmite
 tile.wtfcore:speleothem.5.name=Stalagmite Base
 tile.wtfcore:speleothem.6.name=Stalagmite Tip
 
+wtfcore:deco_type.mossy.name=Mossy
+wtfcore:deco_type.soul.name=Soul
+wtfcore:deco_type.cracked.name=Cracked
+wtfcore:deco_type.lava_crust.name=Lava Crusted
+wtfcore:deco_type.wet.name=Wet
+wtfcore:deco_type.lava_dripping.name=Lava Dripping
+
+wtfcore:prefix.dense.name=Dense
+
 tile.wtfcore:red_cactus.name=Red Cactus
 tile.wtfcore:mycorrack.name=Mycorrack
 tile.wtfcore:foxfire.name=Foxfire

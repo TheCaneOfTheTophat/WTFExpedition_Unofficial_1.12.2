@@ -57,12 +57,11 @@ public class ModelSpeleothem implements IModel {
     public static class Loader implements ICustomModelLoader {
         @Override
         public boolean accepts(ResourceLocation modelLocation) {
-            return modelLocation.getResourceDomain().equals(Core.coreID) && modelLocation.getResourcePath().contains("speleothem");
+            return modelLocation.getResourceDomain().equals(Core.coreID) && modelLocation.getResourcePath().contains("speleothem") && modelLocation.getResourcePath().contains("hardcoded");
         }
 
         @Override
         public IModel loadModel(ResourceLocation modelLocation) {
-
             if (this.accepts(modelLocation))
                 return new ModelSpeleothem((DerivativeResourceLocation) modelLocation);
             throw new RuntimeException();

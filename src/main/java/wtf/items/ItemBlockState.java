@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ItemBlockState extends ItemBlock{
+public class ItemBlockState extends ItemBlock {
 
 	public ItemBlockState(Block block) {
 		super(block);

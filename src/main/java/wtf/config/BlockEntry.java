@@ -1,7 +1,10 @@
 package wtf.config;
 
+import com.google.common.collect.ImmutableMap;
 import wtf.blocks.BlockDecoAnim;
 import wtf.blocks.BlockDecoStatic;
+
+import java.util.Map;
 
 public class BlockEntry {
     private String blockId;
@@ -41,22 +44,14 @@ public class BlockEntry {
         return percentageMineSpeedModifier;
     }
 
-    public boolean getStaticDecorType(BlockDecoStatic.DecoType type) {
-        switch(type) {
-            case MOSS: return this.staticDecor.mossy;
-            case SOUL: return this.staticDecor.soul;
-            case CRACKED: return this.staticDecor.cracked;
-            default: return false;
-        }
+    public Map<BlockDecoStatic.StaticDecoType, Boolean> getStaticDecorTypes() {
+        Map<BlockDecoStatic.StaticDecoType, Boolean> map = ImmutableMap.of(BlockDecoStatic.StaticDecoType.MOSS, staticDecor.mossy, BlockDecoStatic.StaticDecoType.SOUL, staticDecor.soul, BlockDecoStatic.StaticDecoType.CRACKED, staticDecor.cracked);
+        return map;
     }
 
-    public boolean getAnimatedDecorType(BlockDecoAnim.ANIMTYPE type) {
-        switch(type) {
-            case LAVA_CRUST: return this.animatedDecor.lava_crust;
-            case DRIP_WATER: return this.animatedDecor.water_drip;
-            case DRIP_LAVA: return this.animatedDecor.lava_drip;
-            default: return false;
-        }
+    public Map<BlockDecoAnim.AnimatedDecoType, Boolean> getAnimatedDecorTypes() {
+        Map<BlockDecoAnim.AnimatedDecoType, Boolean> map = ImmutableMap.of(BlockDecoAnim.AnimatedDecoType.LAVA_CRUST, animatedDecor.lava_crust, BlockDecoAnim.AnimatedDecoType.DRIP_WATER, animatedDecor.water_drip, BlockDecoAnim.AnimatedDecoType.DRIP_LAVA, animatedDecor.lava_drip);
+        return map;
     }
 
     public boolean hasSpeleothems() {

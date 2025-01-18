@@ -4,6 +4,7 @@ package wtf.blocks;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -11,6 +12,7 @@ import net.minecraft.stats.StatList;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import wtf.Core;
 
 public class BlockDenseOre extends AbstractBlockDerivative {
 
@@ -73,7 +75,6 @@ public class BlockDenseOre extends AbstractBlockDerivative {
     public String getDisplayName(ItemStack stack) {
         ItemStack backStack = new ItemStack(parentBackground.getBlock(), 1, parentBackground.getBlock().getMetaFromState(parentBackground));
         ItemStack foreStack = new ItemStack(parentForeground.getBlock(), 1, parentForeground.getBlock().getMetaFromState(parentForeground));
-        // TODO Proper localization
-        return "Dense" + " " + backStack.getDisplayName() + " " + foreStack.getDisplayName();
+        return I18n.format(Core.coreID + ":prefix.dense.name") + " " + backStack.getDisplayName() + " " + foreStack.getDisplayName();
     }
 }

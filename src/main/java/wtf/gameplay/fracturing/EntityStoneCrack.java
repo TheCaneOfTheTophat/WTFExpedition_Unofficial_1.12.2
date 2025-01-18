@@ -168,12 +168,12 @@ public class EntityStoneCrack extends Entity{
 				IBlockState state = world.getBlockState(pos);
 				IBlockState cobble = BlockSets.getTransformedState(state, Modifier.COBBLE); //if it can be fractured
 				
-				if (state.getBlock() instanceof BlockDecoAnim && state.getValue(BlockDecoAnim.TYPE) == BlockDecoAnim.ANIMTYPE.LAVA_CRUST){
+				if (state.getBlock() instanceof BlockDecoAnim && ((BlockDecoAnim) state.getBlock()).getType() == BlockDecoAnim.AnimatedDecoType.LAVA_CRUST){
 					//if lava crust, frac to lava
 					world.setBlockState(pos, Blocks.LAVA.getDefaultState());
 
 				}
-				else if (state.getBlock() instanceof BlockDecoStatic && state.getValue(BlockDecoStatic.TYPE) == BlockDecoStatic.DecoType.CRACKED){
+				else if (state.getBlock() instanceof BlockDecoStatic && ((BlockDecoStatic) state.getBlock()).getType() == BlockDecoStatic.StaticDecoType.CRACKED){
 					BlockDecoStatic block = (BlockDecoStatic) state.getBlock();
 					cobble = BlockSets.getTransformedState(block.parentBackground, Modifier.COBBLE);
 					if (cobble != null){

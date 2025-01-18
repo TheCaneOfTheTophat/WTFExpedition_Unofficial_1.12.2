@@ -169,10 +169,10 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 		public int getID() {
 			return ID;
 		}
+
 		@Override
 		public String toString() {
 			return getName();
 		}
-
 	}
 }

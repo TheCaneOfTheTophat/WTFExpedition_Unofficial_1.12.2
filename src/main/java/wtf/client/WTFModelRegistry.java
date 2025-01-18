@@ -9,8 +9,8 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import wtf.blocks.BlockDenseOre;
-import wtf.blocks.BlockSpeleothem;
+import wtf.Core;
+import wtf.blocks.*;
 import wtf.init.WTFContent;
 
 import java.util.HashMap;
@@ -46,11 +46,22 @@ public class WTFModelRegistry {
             }
 
             // Set state mapper for speleothems
-            if(block instanceof BlockSpeleothem) {
+            else if(block instanceof BlockSpeleothem) {
                 ModelLoader.setCustomStateMapper(block, WTFStateMappers.SPELEOTHEM_STATE_MAPPER);
                 for (int i = 0; i <= 6; i++) {
                     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), i, new DerivativeResourceLocation((BlockSpeleothem) block, "type", i));
                 }
+            }
+
+            // Set state mapper for decor
+            else if(block instanceof BlockDecoStatic) {
+                ModelLoader.setCustomStateMapper(block, WTFStateMappers.STATIC_DECORATION_STATE_MAPPER);
+                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new DerivativeResourceLocation((BlockDecoStatic) block, "normal"));
+            }
+
+            else if(block instanceof BlockDecoAnim) {
+                ModelLoader.setCustomStateMapper(block, WTFStateMappers.ANIMATED_DECORATION_STATE_MAPPER);
+                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new DerivativeResourceLocation((BlockDecoAnim) block, "normal"));
             }
         }
     }

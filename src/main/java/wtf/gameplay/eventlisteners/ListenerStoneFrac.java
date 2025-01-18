@@ -57,7 +57,7 @@ public class ListenerStoneFrac {
 
 		IBlockState cobble = BlockSets.getTransformedState(state, Modifier.COBBLE); //if it can be fractured
 
-		if (state.getBlock() instanceof BlockDecoAnim && state.getValue(BlockDecoAnim.TYPE) == BlockDecoAnim.ANIMTYPE.LAVA_CRUST){
+		if (state.getBlock() instanceof BlockDecoAnim && ((BlockDecoAnim) state.getBlock()).getType() == BlockDecoAnim.AnimatedDecoType.LAVA_CRUST){
 			//if lava crust, frac to lava
 			world.setBlockState(pos, Blocks.LAVA.getDefaultState());
 		}

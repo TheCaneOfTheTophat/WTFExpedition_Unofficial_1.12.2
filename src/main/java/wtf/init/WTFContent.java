@@ -122,7 +122,7 @@ public class WTFContent {
 
 	@SuppressWarnings("unused")
 	@SubscribeEvent
-	public static void registerConfigDependantBlocks(RegistryEvent.Register<Block> event) {
+	public static void registerConfigDependentBlocks(RegistryEvent.Register<Block> event) {
 		IForgeRegistry<Block> reg = event.getRegistry();
 
 		/*  ==============================================
@@ -162,23 +162,48 @@ public class WTFContent {
 		    ============================================== */
 
 		for(BlockEntry entry : JSONLoader.blockEntries) {
-			String[] stoneSplit = entry.getBlockId().split("@");
+			String[] blockSplit = entry.getBlockId().split("@");
 
-			String stoneName = entry.getName();
+			String blockName = entry.getName();
 
-			int stoneMeta = stoneSplit.length > 1 ? Integer.parseInt(stoneSplit[1]) : 0;
-			String stoneId = stoneSplit[0];
+			int blockMeta = blockSplit.length > 1 ? Integer.parseInt(blockSplit[1]) : 0;
+			String blockId = blockSplit[0];
 
-			IBlockState stoneState = Block.getBlockFromName(stoneId).getStateFromMeta(stoneMeta);
+			IBlockState blockState = Block.getBlockFromName(blockId).getStateFromMeta(blockMeta);
 
+			// SPELEOTHEMS
 			if(entry.hasSpeleothems()) {
-				BlockSpeleothem speleothem = new BlockSpeleothem(stoneState);
-				speleothem.setRegistryName(Core.coreID, stoneName + "_speleothem");
+				BlockSpeleothem speleothem = new BlockSpeleothem(blockState);
+				speleothem.setRegistryName(Core.coreID, blockName + "_speleothem");
 				speleothem.setCreativeTab(Core.wtfTab);
 
 				blocks.add(speleothem);
 				reg.register(speleothem);
 				// TODO Frozen speleothems
+			}
+
+			// STATIC DECOR
+			for(BlockDecoStatic.StaticDecoType decorType : BlockDecoStatic.StaticDecoType.values()) {
+				if(entry.getStaticDecorTypes().get(decorType)) {
+					BlockDecoStatic decor = new BlockDecoStatic(blockState, decorType);
+					decor.setRegistryName(Core.coreID, "deco_static_" + decorType.getName() + "_" + blockName);
+					decor.setCreativeTab(Core.wtfTab);
+
+					blocks.add(decor);
+					reg.register(decor);
+				}
+			}
+
+			// ANIMATED DECOR
+			for(BlockDecoAnim.AnimatedDecoType decorType : BlockDecoAnim.AnimatedDecoType.values()) {
+				if(entry.getAnimatedDecorTypes().get(decorType)) {
+					BlockDecoAnim decor = new BlockDecoAnim(blockState, decorType);
+					decor.setRegistryName(Core.coreID, "deco_animated_" + decorType.getName() + "_" + blockName);
+					decor.setCreativeTab(Core.wtfTab);
+
+					blocks.add(decor);
+					reg.register(decor);
+				}
 			}
 		}
 	}
@@ -200,6 +225,12 @@ public class WTFContent {
 
 			else if (block instanceof BlockSpeleothem)
 				registerItemBlockNoModel(reg, new ItemBlockDerivative((BlockSpeleothem) block));
+
+			else if (block instanceof BlockDecoStatic)
+				registerItemBlockNoModel(reg, new ItemBlockDerivative((BlockDecoStatic) block));
+
+			else if (block instanceof BlockDecoAnim)
+				registerItemBlockNoModel(reg, new ItemBlockDerivative((BlockDecoAnim) block));
 
 			else if (WTFModelRegistry.metaMap.get(block.getRegistryName()) != null)
 				registerItemBlock(reg, new ItemBlockState(block));
@@ -229,24 +260,6 @@ public class WTFContent {
 //				Core.proxy.addName(stoneName+"SpeleothemFrozen.4", localisedName + " Icy Small Stalagmite");
 //				Core.proxy.addName(stoneName+"SpeleothemFrozen.5", localisedName + " Icy Stalagmite Base");
 //				Core.proxy.addName(stoneName+"SpeleothemFrozen.6", localisedName + " Icy Stalagmite Tip");
-			}
-			
-			if (entry.getValue().decoAnim){
-				// registerBlockItemSubblocks(new BlockDecoAnim(entry.getKey()), BlockDecoAnim.ANIMTYPE.values().length-1, stoneName+"DecoAnim");
-//				Core.proxy.writeDecoAnimBlockstate(entry.getKey(), stoneName+"DecoAnim");
-//
-//				Core.proxy.addName(stoneName+"DecoAnim.0", localisedName+ " Lava Crust");
-//				Core.proxy.addName(stoneName+"DecoAnim.1", "Wet " + localisedName);
-//				Core.proxy.addName(stoneName+"DecoAnim.2", "Dripping Lava " + localisedName);
-			}
-			
-			if (entry.getValue().decoStatic){
-				// registerBlockItemSubblocks(new BlockDecoStatic(entry.getKey()), BlockDecoStatic.DecoType.values().length-1, stoneName+"DecoStatic");
-//				Core.proxy.writeDecoStaticBlockstate(entry.getKey(), stoneName+"DecoStatic");
-//
-//				Core.proxy.addName(stoneName+"DecoStatic.0", "Mossy " + localisedName);
-//				Core.proxy.addName(stoneName+"DecoStatic.1", "Soul "+localisedName);
-//				Core.proxy.addName(stoneName+"DecoStatic.2", "Cracked "+localisedName);
 			}
 		}
 		

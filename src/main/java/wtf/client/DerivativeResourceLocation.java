@@ -8,8 +8,14 @@ public class DerivativeResourceLocation extends ModelResourceLocation {
     public final int meta;
 
     public DerivativeResourceLocation(AbstractBlockDerivative block, String variantIn, int meta) {
-        super(block.getRegistryName(), variantIn + "=" + meta);
+        super(block.getRegistryName() + "_hardcoded", variantIn + "=" + meta);
         this.block = block;
         this.meta = meta;
+    }
+
+    public DerivativeResourceLocation(AbstractBlockDerivative block, String variantIn) {
+        super(block.getRegistryName() + "_hardcoded", variantIn);
+        this.block = block;
+        this.meta = 0;
     }
 }
