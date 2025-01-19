@@ -214,6 +214,8 @@ public class WTFContent {
 					reg.register(decor);
 				}
 			}
+
+			// TODO Falling decor and ores
 		}
 	}
 

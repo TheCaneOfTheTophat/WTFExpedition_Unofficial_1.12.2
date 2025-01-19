@@ -4,7 +4,7 @@
         "textures": {
          	"particle": "blocks/dirt",
         	"texture": "blocks/dirt",
-        	"mask": "wtfcore:blocks/moss_overlay"
+        	"mask": "wtfcore:overlays/moss_overlay"
         },
         "model": "wtfcore:patch_overlaid",
         "uvlock": true
