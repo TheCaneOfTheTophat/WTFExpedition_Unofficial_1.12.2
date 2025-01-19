@@ -5,8 +5,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -14,21 +12,18 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.Logger;
 import wtf.config.MasterConfig;
 import wtf.config.GameplayConfig;
-import wtf.config.OreEntry;
 import wtf.init.JSONLoader;
 
 
 @Mod(modid = Core.coreID, name = "WTFs Expedition", dependencies = "after:undergroundbiomes")
 public class Core {
-	public static  final String coreID = "wtfcore";
+	public static final String coreID = "wtfcore";
 
 	@SidedProxy(clientSide="wtf.client.ClientProxy", serverSide="wtf.CommonProxy")
 	public static CommonProxy proxy;
-
 	public static Logger coreLog;
 
 	@Instance(coreID)

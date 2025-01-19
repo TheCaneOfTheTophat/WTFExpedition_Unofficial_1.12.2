@@ -29,9 +29,7 @@ public class BlockDenseOre extends AbstractBlockDerivative {
 	
 	@Override
 	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
-        if(layer == BlockRenderLayer.CUTOUT || layer == BlockRenderLayer.TRANSLUCENT)
-            return true;
-        return false;
+        return layer == BlockRenderLayer.CUTOUT || layer == BlockRenderLayer.TRANSLUCENT;
     }
     
     @Override

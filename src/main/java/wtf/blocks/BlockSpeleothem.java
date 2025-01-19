@@ -9,6 +9,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -21,41 +22,39 @@ import wtf.init.WTFContent;
 
 public class BlockSpeleothem extends AbstractBlockDerivative {
 
-	public static final IProperty<SpType> TYPE = PropertyEnum.create("type", SpType.class);
+	public static final IProperty<SpeleothemType> TYPE = PropertyEnum.create("type", SpeleothemType.class);
 
 	public BlockSpeleothem frozen;
 
 	public BlockSpeleothem(IBlockState state) {
 		super(state, state);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, SpType.stalactite_small));
+		this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, SpeleothemType.stalactite_small));
 		WTFContent.speleothemMap.put(state, this);
 	}
 
 	protected BlockSpeleothem(IBlockState backState, IBlockState foreState) { //used for frozen speleothems
 		super(backState, foreState);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, SpType.stalactite_small));
+		this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, SpeleothemType.stalactite_small));
 		//WTFBlocks.speleothemMap.put(state, this); //don't put it in the map
 	}
 
-	public Block setFrozen(String string) {
-		// frozen = (BlockSpeleothem) WTFBlocks.registerBlockItemSubblocks(new BlockSpeleothemFrozen(this), 6, string+"Frozen");
-		return this;
-	}
-/*
 	@Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn)
-	{
-		if(!canBlockStay(world, pos)){
+	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
+		if(!canBlockStay(world, pos, state)){
 			world.destroyBlock(pos, true);
 		}
 	}
-*/
 
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		if(!canBlockStay(world, pos)){
+		if(!canBlockStay(world, pos, state)) {
 			world.destroyBlock(pos, true);
 		}
+	}
+
+	@Override
+	public int damageDropped(IBlockState state) {
+		return getMetaFromState(state);
 	}
 
 	@Override
@@ -68,31 +67,30 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 		return state.getValue(TYPE).boundingBox;
 	}
 
-	public boolean canBlockStay(World world, BlockPos pos) {
-		switch (world.getBlockState(pos).getValue(TYPE)) {
-		case column:
-			return (hasProperty(world.getBlockState(pos.down()), SpType.stalagmite_base) ||
-					hasProperty(world.getBlockState(pos.down()), SpType.column) ||
-					hasProperty(world.getBlockState(pos.up()), SpType.stalactite_base) ||
-					hasProperty(world.getBlockState(pos.up()), SpType.column));
+	public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
+		switch (state.getValue(TYPE)) {
+		case speleothem_column:
+			return (hasProperty(world.getBlockState(pos.down()), SpeleothemType.stalagmite_base) ||
+					hasProperty(world.getBlockState(pos.down()), SpeleothemType.speleothem_column) ||
+					hasProperty(world.getBlockState(pos.up()), SpeleothemType.stalactite_base) ||
+					hasProperty(world.getBlockState(pos.up()), SpeleothemType.speleothem_column));
 		case stalactite_base:
 		case stalactite_small:
 			return (world.getBlockState(pos.up()) == this.parentBackground);
 		case stalactite_tip:
-			return (hasProperty(world.getBlockState(pos.up()), SpType.stalactite_base) ||
-					hasProperty(world.getBlockState(pos.up()),  SpType.column));
+			return (hasProperty(world.getBlockState(pos.up()), SpeleothemType.stalactite_base) ||
+					hasProperty(world.getBlockState(pos.up()),  SpeleothemType.speleothem_column));
 		case stalagmite_base:
 		case stalagmite_small:
 			return (world.getBlockState(pos.down()) == this.parentBackground);
 		case stalagmite_tip:
-			return (hasProperty(world.getBlockState(pos.down()),  SpType.stalagmite_base) ||
-					hasProperty(world.getBlockState(pos.down()), SpType.column));
-		default :
-			return true;
+			return (hasProperty(world.getBlockState(pos.down()),  SpeleothemType.stalagmite_base) ||
+					hasProperty(world.getBlockState(pos.down()), SpeleothemType.speleothem_column));
+		default: return false;
 		}
 	}
 
-	private boolean hasProperty(IBlockState state, SpType type) {
+	private boolean hasProperty(IBlockState state, SpeleothemType type) {
 		if (state.getBlock() instanceof BlockSpeleothem){
 			return state.getValue(TYPE) == type;
 		}
@@ -106,18 +104,18 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {		
-		return getDefaultState().withProperty(TYPE, SpType.values()[meta]);
+		return getDefaultState().withProperty(TYPE, SpeleothemType.values()[meta]);
 	}
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		SpType type = state.getValue(TYPE);
+		SpeleothemType type = state.getValue(TYPE);
 		return type.getID();
 	}
 
 	@Override
 	public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> items) {
-		for (int loop = 0; loop < SpType.values().length; loop++){
+		for (int loop = 0; loop < SpeleothemType.values().length; loop++){
 			items.add(new ItemStack(this, 1, loop));
 		}
 	}
@@ -133,8 +131,13 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 		return stoneStack.getDisplayName() + " " + I18n.format("tile." + Core.coreID + ":speleothem." + stack.getItemDamage() + ".name");
 	}
 
-	public IBlockState getBlockState(SpType type){
+	public IBlockState getBlockState(SpeleothemType type){
 		return this.getDefaultState().withProperty(TYPE, type);
+	}
+
+	@Override
+	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
+		return layer == BlockRenderLayer.CUTOUT || layer == BlockRenderLayer.TRANSLUCENT;
 	}
 
 	@Override
@@ -142,11 +145,11 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 		return false;
 	}
 
-	public enum SpType implements IStringSerializable {
+	public enum SpeleothemType implements IStringSerializable {
 		stalactite_small(0, "stalactite_small", new AxisAlignedBB(0.2F, 0.2F, 0.2F, 0.8F, 1F, 0.8F)),
 		stalactite_base(1, "stalactite_base", new AxisAlignedBB(0.2F, 0F, 0.2F, .8F, 1F, .8F)),
 		stalactite_tip(2, "stalactite_tip", new AxisAlignedBB(0.3F, 0.4F, 0.3F, 0.7F, 1F, 0.7F)),
-		column(3, "column", new AxisAlignedBB(0.3F, 0F, 0.3F, 0.7F, 1F, 0.7F)),
+		speleothem_column(3, "speleothem_column", new AxisAlignedBB(0.3F, 0F, 0.3F, 0.7F, 1F, 0.7F)),
 		stalagmite_small(4, "stalagmite_small", new AxisAlignedBB(0.2F, 0F, 0.2F, 0.8F, 0.8F, 0.8F)),
 		stalagmite_base(5, "stalagmite_base", new AxisAlignedBB(0.2F, 0F, 0.2F, .8F, 1F, .8F)),
 		stalagmite_tip(6, "stalagmite_tip", new AxisAlignedBB(0.3F, 0F, 0.3F, 0.7F, 0.7F, 0.7F));
@@ -155,7 +158,7 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 		private final String name;
 		public final AxisAlignedBB boundingBox;
 
-		SpType(int ID, String name, AxisAlignedBB box) {
+		SpeleothemType(int ID, String name, AxisAlignedBB box) {
 			this.ID = ID;
 			this.name = name;
 			this.boundingBox = box;

@@ -28,6 +28,7 @@ wtfcore:deco_type.wet.name=Wet
 wtfcore:deco_type.lava_dripping.name=Lava Dripping
 
 wtfcore:prefix.dense.name=Dense
+wtfcore:prefix.frozen.name=Frozen
 
 tile.wtfcore:red_cactus.name=Red Cactus
 tile.wtfcore:mycorrack.name=Mycorrack

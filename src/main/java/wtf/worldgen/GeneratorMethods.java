@@ -21,7 +21,7 @@ import wtf.blocks.BlockIcicle;
 import wtf.blocks.BlockRoots;
 import wtf.blocks.BlockSpeleothem;
 import wtf.blocks.BlockIcicle.IcicleType;
-import wtf.blocks.BlockSpeleothem.SpType;
+import wtf.blocks.BlockSpeleothem.SpeleothemType;
 import wtf.config.CaveBiomesConfig;
 import wtf.init.BlockSets;
 import wtf.init.WTFContent;
@@ -184,10 +184,10 @@ public class GeneratorMethods{
 			if (!nextQueued && remaining == size){//first block
 				if (isAir(pos.up(direction))){
 					if (size > 1){
-						set = direction == 1 ? speleothem.getBlockState(SpType.stalagmite_base) : speleothem.getBlockState(BlockSpeleothem.SpType.stalactite_base);
+						set = direction == 1 ? speleothem.getBlockState(SpeleothemType.stalagmite_base) : speleothem.getBlockState(SpeleothemType.stalactite_base);
 					}
 					else {
-						set = direction == 1 ? speleothem.getBlockState(SpType.stalagmite_small) : speleothem.getBlockState(BlockSpeleothem.SpType.stalactite_small);
+						set = direction == 1 ? speleothem.getBlockState(SpeleothemType.stalagmite_small) : speleothem.getBlockState(SpeleothemType.stalactite_small);
 					}
 				}
 				else {
@@ -196,18 +196,18 @@ public class GeneratorMethods{
 			}
 			else if (!nextQueued && remaining > 1){ //middle block
 				if (isAir(pos.up(direction))){
-					set = speleothem.getBlockState(SpType.column);
+					set = speleothem.getBlockState(SpeleothemType.speleothem_column);
 				}
 				else if (next.hashCode() == speleothem.parentBackground.hashCode()){
-					set = direction == 1 ? speleothem.getBlockState(SpType.stalactite_base) : speleothem.getBlockState(BlockSpeleothem.SpType.stalagmite_base);
+					set = direction == 1 ? speleothem.getBlockState(SpeleothemType.stalactite_base) : speleothem.getBlockState(SpeleothemType.stalagmite_base);
 					remaining = 0;
 				}
 				else {
-					set = direction == 1 ? speleothem.getBlockState(SpType.stalagmite_tip) : speleothem.getBlockState(BlockSpeleothem.SpType.stalactite_tip);
+					set = direction == 1 ? speleothem.getBlockState(SpeleothemType.stalagmite_tip) : speleothem.getBlockState(SpeleothemType.stalactite_tip);
 				}
 			}
 			else { //last block
-				set = direction == 1 ? speleothem.getBlockState(SpType.stalagmite_tip) : speleothem.getBlockState(BlockSpeleothem.SpType.stalactite_tip);
+				set = direction == 1 ? speleothem.getBlockState(SpeleothemType.stalagmite_tip) : speleothem.getBlockState(SpeleothemType.stalactite_tip);
 			}
 
 

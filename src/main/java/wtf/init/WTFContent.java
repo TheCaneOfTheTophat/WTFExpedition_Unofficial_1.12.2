@@ -179,7 +179,16 @@ public class WTFContent {
 
 				blocks.add(speleothem);
 				reg.register(speleothem);
-				// TODO Frozen speleothems
+
+				BlockSpeleothemFrozen frozenSpeleothem = new BlockSpeleothemFrozen(speleothem);
+				frozenSpeleothem.setRegistryName(Core.coreID, "frozen_" + blockName + "_speleothem");
+				frozenSpeleothem.setCreativeTab(Core.wtfTab);
+
+				blocks.add(frozenSpeleothem);
+				reg.register(frozenSpeleothem);
+
+				// TODO Give speleothems unique block item
+				// TODO Figure out how to make frozen speleothems less buggy
 			}
 
 			// STATIC DECOR
@@ -224,7 +233,10 @@ public class WTFContent {
 				registerItemBlockNoModel(reg, new ItemBlockDerivative((BlockDenseOre) block));
 
 			else if (block instanceof BlockSpeleothem)
-				registerItemBlockNoModel(reg, new ItemBlockDerivative((BlockSpeleothem) block));
+				if (block instanceof BlockSpeleothemFrozen)
+					registerItemBlockNoModel(reg, new ItemBlockDerivative((BlockSpeleothemFrozen) block));
+				else
+					registerItemBlockNoModel(reg, new ItemBlockDerivative((BlockSpeleothem) block));
 
 			else if (block instanceof BlockDecoStatic)
 				registerItemBlockNoModel(reg, new ItemBlockDerivative((BlockDecoStatic) block));

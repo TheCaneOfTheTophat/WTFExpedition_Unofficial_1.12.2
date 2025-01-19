@@ -16,6 +16,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import wtf.Core;
 import wtf.blocks.BlockSpeleothem;
+import wtf.blocks.BlockSpeleothemFrozen;
 import wtf.client.DerivativeResourceLocation;
 import wtf.init.JSONLoader;
 
@@ -24,16 +25,22 @@ import java.util.function.Function;
 @SideOnly(Side.CLIENT)
 public class ModelSpeleothem implements IModel {
     private final ResourceLocation blockTexture;
-    private final int meta;
     private final String typeName;
 
     public ModelSpeleothem(DerivativeResourceLocation location) {
-        IBlockState parentState = location.block.parentBackground;
+        IBlockState parentState;
+        Core.coreLog.fatal(location.block.getRegistryName());
+
+        if(location.block instanceof BlockSpeleothemFrozen)
+            parentState = ((BlockSpeleothem) location.block.parentForeground.getBlock()).parentBackground;
+        else
+            parentState = location.block.parentBackground;
+
         Block parentBlock = parentState.getBlock();
 
         blockTexture = new ResourceLocation(JSONLoader.identifierToBlockEntry.get(parentBlock.getRegistryName().toString() + "@" + parentBlock.getMetaFromState(parentState)).getTexture());
-        meta = location.meta;
-        typeName = location.block.getStateFromMeta(meta).getValue(BlockSpeleothem.TYPE).getName();
+
+        typeName = location.block.getStateFromMeta(location.meta).getValue(BlockSpeleothem.TYPE).getName() + (location.block instanceof BlockSpeleothemFrozen ? "_frozen" : "");
     }
 
     @Override
@@ -46,7 +53,7 @@ public class ModelSpeleothem implements IModel {
             throw new RuntimeException(e);
         }
 
-        IModel finalModel = model.retexture(ImmutableMap.of("texture", blockTexture.toString()));
+        IModel finalModel = model.retexture(ImmutableMap.of("texture", blockTexture.toString(), "ice", "minecraft:blocks/ice"));
         return finalModel.bake(state, format, bakedTextureGetter);
     }
 
@@ -70,4 +77,5 @@ public class ModelSpeleothem implements IModel {
         @Override
         public void onResourceManagerReload(IResourceManager resourceManager) {}
     }
+
 }
