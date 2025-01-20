@@ -13,10 +13,12 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockOreSand extends BlockFalling{
+public class BlockOreSand extends BlockFalling {
 
 	public BlockOreSand() {
 		this.setSoundType(SoundType.SAND);
+        this.setHardness(0.5F);
+        this.setHarvestLevel("shovel", 0);
 	}
 	
     @Nullable

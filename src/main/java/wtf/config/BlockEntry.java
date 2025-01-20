@@ -7,18 +7,18 @@ import wtf.blocks.BlockDecoStatic;
 import java.util.Map;
 
 public class BlockEntry {
-    private String blockId;
-    private String fracturedBlockId;
-    private String name;
-    private String texture;
+    private String blockId = "";
+    private String fracturedBlockId = "";
+    private String name = "";
+    private String texture = "";
 
-    private boolean fracturesFirstWhenMined;
-    private int percentageMineSpeedModifier;
+    private boolean fracturesFirstWhenMined = true;
+    private int percentageMineSpeedModifier = 100;
 
     private StaticDecor staticDecor = new StaticDecor();
     private AnimatedDecor animatedDecor = new AnimatedDecor();
 
-    private boolean speleothems;
+    private boolean speleothems = false;
 
     public String getBlockId() {
         return blockId;
@@ -59,14 +59,14 @@ public class BlockEntry {
     }
 
     private static class StaticDecor {
-        private boolean mossy;
-        private boolean soul;
-        private boolean cracked;
+        private boolean mossy = false;
+        private boolean soul = false;
+        private boolean cracked = false;
     }
 
     private static class AnimatedDecor {
-        private boolean lava_crust;
-        private boolean water_drip;
-        private boolean lava_drip;
+        private boolean lava_crust = false;
+        private boolean water_drip = false;
+        private boolean lava_drip = false;
     }
 }

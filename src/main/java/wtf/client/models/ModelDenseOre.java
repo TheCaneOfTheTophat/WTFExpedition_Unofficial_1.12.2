@@ -15,6 +15,7 @@ import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import wtf.Core;
+import wtf.client.DerivativeFallingResourceLocation;
 import wtf.client.DerivativeResourceLocation;
 import wtf.init.JSONLoader;
 import wtf.init.WTFContent;
@@ -31,10 +32,19 @@ public class ModelDenseOre implements IModel {
         IBlockState parentState = location.block.parentBackground;
         Block parentBlock = parentState.getBlock();
 
-        // Get cube texture from block entry
         cubeTexture = new ResourceLocation(JSONLoader.identifierToBlockEntry.get(parentBlock.getRegistryName().toString() + "@" + parentBlock.getMetaFromState(parentState)).getTexture());
 
-        // Get overlay texture from ore entry
+        overlayTexture = new ResourceLocation(WTFContent.oreEntryMap.get(location.block).getRawOverlayPath());
+
+        meta = location.meta;
+    }
+
+    public ModelDenseOre(DerivativeFallingResourceLocation location) {
+        IBlockState parentState = location.block.parentBackground;
+        Block parentBlock = parentState.getBlock();
+
+        cubeTexture = new ResourceLocation(JSONLoader.identifierToBlockEntry.get(parentBlock.getRegistryName().toString() + "@" + parentBlock.getMetaFromState(parentState)).getTexture());
+
         overlayTexture = new ResourceLocation(WTFContent.oreEntryMap.get(location.block).getRawOverlayPath());
 
         meta = location.meta;
@@ -66,9 +76,11 @@ public class ModelDenseOre implements IModel {
 
         @Override
         public IModel loadModel(ResourceLocation modelLocation) {
-
             if (this.accepts(modelLocation))
-                return new ModelDenseOre((DerivativeResourceLocation) modelLocation);
+                if(modelLocation instanceof DerivativeFallingResourceLocation)
+                    return new ModelDenseOre((DerivativeFallingResourceLocation) modelLocation);
+                else
+                    return new ModelDenseOre((DerivativeResourceLocation) modelLocation);
             throw new RuntimeException();
         }
 

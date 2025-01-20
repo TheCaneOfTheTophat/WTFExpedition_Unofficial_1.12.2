@@ -26,7 +26,7 @@ public class JSONLoader {
         List<Path> oreJsons = Files.walk(Paths.get(event.getModConfigurationDirectory().toString(), "WTF-Expedition", "ores"), 1).filter(Files::isRegularFile).filter(path -> path.getFileName().toString().endsWith(".json")).collect(Collectors.toList());
         List<Path> blockJsons =  Files.walk(Paths.get(event.getModConfigurationDirectory().toString(), "WTF-Expedition", "blocks"),1).filter(Files::isRegularFile).filter(path-> path.getFileName().toString().endsWith(".json")).collect(Collectors.toList());
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().serializeNulls().create();
 
         for(Path jsonPath : oreJsons) {
             OreEntry entry = gson.fromJson(new FileReader(jsonPath.toString()), OreEntry.class);

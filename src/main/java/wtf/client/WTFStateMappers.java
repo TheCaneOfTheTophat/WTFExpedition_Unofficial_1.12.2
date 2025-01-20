@@ -17,8 +17,13 @@ public final class WTFStateMappers {
     public static final IStateMapper DENSE_ORE_STATE_MAPPER = new StateMapperBase() {
         @Override
         protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-            BlockDenseOre ore = (BlockDenseOre) state.getBlock();
-            return new DerivativeResourceLocation(ore, "density", ore.getMetaFromState(state));
+            if(state.getBlock() instanceof BlockDenseOreFalling) {
+                BlockDenseOreFalling ore = (BlockDenseOreFalling) state.getBlock();
+                return new DerivativeFallingResourceLocation(ore, "density", ore.getMetaFromState(state));
+            } else {
+                BlockDenseOre ore = (BlockDenseOre) state.getBlock();
+                return new DerivativeResourceLocation(ore, "density", ore.getMetaFromState(state));
+            }
         }
     };
 

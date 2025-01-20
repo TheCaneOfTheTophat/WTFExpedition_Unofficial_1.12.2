@@ -4,16 +4,16 @@ package wtf.init;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
+import net.minecraft.block.BlockFalling;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
-import org.apache.commons.lang3.StringUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand;
@@ -74,7 +74,7 @@ public class WTFContent {
 	public static ArrayList<Item> items = new ArrayList<>();
 	public static ArrayList<Block> blocks = new ArrayList<>();
 
-	public static Map<BlockDenseOre, OreEntry> oreEntryMap = new HashMap<>();
+	public static Map<Block, OreEntry> oreEntryMap = new HashMap<>();
 
 	/*
 	====================================
@@ -83,7 +83,7 @@ public class WTFContent {
 	*/
 
 	@SuppressWarnings("unused")
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void registerSimpleBlocks(RegistryEvent.Register<Block> event) {
 		IForgeRegistry<Block> reg = event.getRegistry();
 
@@ -121,7 +121,7 @@ public class WTFContent {
 	}
 
 	@SuppressWarnings("unused")
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void registerConfigDependentBlocks(RegistryEvent.Register<Block> event) {
 		IForgeRegistry<Block> reg = event.getRegistry();
 
@@ -145,14 +145,25 @@ public class WTFContent {
 
 					IBlockState stoneState = Block.getBlockFromName(stoneId).getStateFromMeta(stoneMeta);
 
-					BlockDenseOre ore = new BlockDenseOre(stoneState, oreState);
-					ore.setRegistryName(Core.coreID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
-					ore.setCreativeTab(Core.wtfTab);
+					if(stoneState.getBlock() instanceof BlockFalling) {
+						BlockDenseOreFalling ore = new BlockDenseOreFalling(stoneState, oreState);
+						ore.setRegistryName(Core.coreID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
+						ore.setCreativeTab(Core.wtfTab);
 
-					blocks.add(ore);
-					oreEntryMap.put(ore, entry);
+						blocks.add(ore);
+						oreEntryMap.put(ore, entry);
 
-					reg.register(ore);
+						reg.register(ore);
+					} else {
+						BlockDenseOre ore = new BlockDenseOre(stoneState, oreState);
+						ore.setRegistryName(Core.coreID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
+						ore.setCreativeTab(Core.wtfTab);
+
+						blocks.add(ore);
+						oreEntryMap.put(ore, entry);
+
+						reg.register(ore);
+					}
 				}
 			}
 		}
@@ -214,8 +225,6 @@ public class WTFContent {
 					reg.register(decor);
 				}
 			}
-
-			// TODO Falling decor and ores
 		}
 	}
 
@@ -233,6 +242,9 @@ public class WTFContent {
 		for(Block block : blocks) {
 			if (block instanceof BlockDenseOre)
 				registerItemBlockNoModel(reg, new ItemBlockDerivative((BlockDenseOre) block));
+
+			else if (block instanceof BlockDenseOreFalling)
+				registerItemBlockNoModel(reg, new ItemBlockDerivative.ItemBlockDerivativeFalling((BlockDenseOreFalling) block));
 
 			else if (block instanceof BlockSpeleothem)
 				if (block instanceof BlockSpeleothemFrozen)
@@ -253,39 +265,6 @@ public class WTFContent {
 				registerItemBlock(reg, new ItemBlock(block));
 		}
 	}
-	
-	public static void initDependentBlocks(){	
-		
-		for(Entry<IBlockState, StoneRegEntry> entry : WTFStoneRegistry.stoneReg.entrySet()){
-			
-			String stoneName = entry.getKey().getBlock().getRegistryName().toString().split(":")[1] + entry.getKey().getBlock().getMetaFromState(entry.getKey());
-			//String cobbleName = entry.getValue().cobble.getBlock().getRegistryName().toString().split(":")[1] + entry.getValue().cobble.getBlock().getMetaFromState(entry.getValue().cobble);
-			
-			
-			String localisedName = StringUtils.capitalize(entry.getValue().textureLocation.split("/")[1].replaceAll("_", " "));
-			
-			if (entry.getValue().speleothem){
-				// registerBlockItemSubblocks(new BlockSpeleothem(entry.getKey()).setFrozen(stoneName + "Speleothem"), 6, stoneName + "Speleothem");// .setFrozen("stoneSpeleothem");
-//
-//				Core.proxy.addName(stoneName+"SpeleothemFrozen.0", localisedName + " Icy Small Stalactite");
-//				Core.proxy.addName(stoneName+"SpeleothemFrozen.1", localisedName + " Icy Stalactite Base");
-//				Core.proxy.addName(stoneName+"SpeleothemFrozen.2", localisedName + " Icy Stalactite Tip");
-//				Core.proxy.addName(stoneName+"SpeleothemFrozen.3", localisedName + " Icy Column");
-//				Core.proxy.addName(stoneName+"SpeleothemFrozen.4", localisedName + " Icy Small Stalagmite");
-//				Core.proxy.addName(stoneName+"SpeleothemFrozen.5", localisedName + " Icy Stalagmite Base");
-//				Core.proxy.addName(stoneName+"SpeleothemFrozen.6", localisedName + " Icy Stalagmite Tip");
-			}
-		}
-		
-		//registerBlockItemSubblocks(new RedstoneStalactite(false).setFrozen("redstoneSpeleothem"), 6, "redstoneSpeleothem");// .setFrozen("stoneSpeleothem");
-		//BlockstateWriter.writeSpeleothemBlockstate(Blocks.REDSTONE_ORE.getDefaultState(), "redstoneSpeleothem");
-		
-		//registerBlockItemSubblocks(new RedstoneStalactite(false).setFrozen("redstoneSpeleothem_on"), 6, "redstoneSpeleothem_on");// .setFrozen("stoneSpeleothem");
-		//BlockstateWriter.writeSpeleothemBlockstate(Blocks.LIT_REDSTONE_ORE.getDefaultState(), "redstoneSpeleothem_on");
-		
-	
-	}
-
 
 	/*
 	====================================

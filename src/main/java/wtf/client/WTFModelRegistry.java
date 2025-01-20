@@ -37,10 +37,11 @@ public class WTFModelRegistry {
         // Get all blocks
         for(Block block : WTFContent.blocks) {
             // Set state mapper for dense ores
-            if(block instanceof BlockDenseOre) {
+            if(block instanceof BlockDenseOre || block instanceof BlockDenseOreFalling) {
                 ModelLoader.setCustomStateMapper(block, WTFStateMappers.DENSE_ORE_STATE_MAPPER);
                 for (int i = 0; i <= 2; i++) {
-                    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), i, new DerivativeResourceLocation((BlockDenseOre) block, "density", i));
+                    ModelResourceLocation mrl = block instanceof BlockDenseOreFalling ? new DerivativeFallingResourceLocation((BlockDenseOreFalling) block, "density", i) : new DerivativeResourceLocation((BlockDenseOre) block, "density", i);
+                    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), i, mrl);
                 }
             }
 

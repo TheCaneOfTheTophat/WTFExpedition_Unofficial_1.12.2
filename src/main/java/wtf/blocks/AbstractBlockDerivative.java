@@ -29,7 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public abstract class AbstractBlockDerivative extends Block{
+public abstract class AbstractBlockDerivative extends Block {
 	
 	public final IBlockState parentBackground;
 	public final IBlockState parentForeground;
@@ -62,6 +62,11 @@ public abstract class AbstractBlockDerivative extends Block{
     @Override
     public int quantityDropped(Random random) {
         return parentForeground.getBlock().quantityDropped(random);
+    }
+
+    @Override
+    public int quantityDroppedWithBonus(int fortune, Random random) {
+        return parentForeground.getBlock().quantityDroppedWithBonus(fortune, random);
     }
 
     @Override

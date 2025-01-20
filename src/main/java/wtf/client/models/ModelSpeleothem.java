@@ -29,7 +29,6 @@ public class ModelSpeleothem implements IModel {
 
     public ModelSpeleothem(DerivativeResourceLocation location) {
         IBlockState parentState;
-        Core.coreLog.fatal(location.block.getRegistryName());
 
         if(location.block instanceof BlockSpeleothemFrozen)
             parentState = ((BlockSpeleothem) location.block.parentForeground.getBlock()).parentBackground;
