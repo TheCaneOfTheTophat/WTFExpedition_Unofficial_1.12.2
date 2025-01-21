@@ -39,10 +39,10 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 	}
 
 	@Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
-		if(!canBlockStay(world, pos, state)){
-			world.destroyBlock(pos, true);
-		}
+	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+		super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
+		if(!canBlockStay(worldIn, pos, state))
+			worldIn.destroyBlock(pos, true);
 	}
 
 	@Override
@@ -68,30 +68,32 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 	}
 
 	public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
-		switch (state.getValue(TYPE)) {
-		case speleothem_column:
-			return (hasProperty(world.getBlockState(pos.down()), SpeleothemType.stalagmite_base) ||
-					hasProperty(world.getBlockState(pos.down()), SpeleothemType.speleothem_column) ||
-					hasProperty(world.getBlockState(pos.up()), SpeleothemType.stalactite_base) ||
-					hasProperty(world.getBlockState(pos.up()), SpeleothemType.speleothem_column));
-		case stalactite_base:
-		case stalactite_small:
-			return (world.getBlockState(pos.up()) == this.parentBackground);
-		case stalactite_tip:
-			return (hasProperty(world.getBlockState(pos.up()), SpeleothemType.stalactite_base) ||
-					hasProperty(world.getBlockState(pos.up()),  SpeleothemType.speleothem_column));
-		case stalagmite_base:
-		case stalagmite_small:
-			return (world.getBlockState(pos.down()) == this.parentBackground);
-		case stalagmite_tip:
-			return (hasProperty(world.getBlockState(pos.down()),  SpeleothemType.stalagmite_base) ||
-					hasProperty(world.getBlockState(pos.down()), SpeleothemType.speleothem_column));
-		default: return false;
+		if(state.getBlock() == this) {
+			switch (state.getValue(TYPE)) {
+				case speleothem_column:
+					return (hasProperty(world.getBlockState(pos.down()), SpeleothemType.stalagmite_base) ||
+							hasProperty(world.getBlockState(pos.down()), SpeleothemType.speleothem_column) ||
+							hasProperty(world.getBlockState(pos.up()), SpeleothemType.stalactite_base) ||
+							hasProperty(world.getBlockState(pos.up()), SpeleothemType.speleothem_column));
+				case stalactite_base:
+				case stalactite_small:
+					return (world.getBlockState(pos.up()) == this.parentForeground);
+				case stalactite_tip:
+					return (hasProperty(world.getBlockState(pos.up()), SpeleothemType.stalactite_base) ||
+							hasProperty(world.getBlockState(pos.up()), SpeleothemType.speleothem_column));
+				case stalagmite_base:
+				case stalagmite_small:
+					return (world.getBlockState(pos.down()) == this.parentForeground);
+				case stalagmite_tip:
+					return (hasProperty(world.getBlockState(pos.down()), SpeleothemType.stalagmite_base) ||
+							hasProperty(world.getBlockState(pos.down()), SpeleothemType.speleothem_column));
+			}
 		}
+		return false;
 	}
 
-	private boolean hasProperty(IBlockState state, SpeleothemType type) {
-		if (state.getBlock() instanceof BlockSpeleothem){
+	protected boolean hasProperty(IBlockState state, SpeleothemType type) {
+		if (state.getBlock() instanceof BlockSpeleothem) {
 			return state.getValue(TYPE) == type;
 		}
 		return false;
@@ -137,7 +139,7 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 
 	@Override
 	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
-		return layer == BlockRenderLayer.CUTOUT || layer == BlockRenderLayer.TRANSLUCENT;
+		return layer == BlockRenderLayer.SOLID || layer == BlockRenderLayer.TRANSLUCENT;
 	}
 
 	@Override

@@ -25,6 +25,7 @@ import wtf.client.WTFModelRegistry;
 import wtf.config.*;
 import wtf.blocks.BlockOreSand;
 import wtf.items.ItemBlockDerivative;
+import wtf.items.ItemBlockSpeleothem;
 import wtf.items.ItemHomeScroll;
 import wtf.items.ItemBlockState;
 
@@ -198,8 +199,7 @@ public class WTFContent {
 				blocks.add(frozenSpeleothem);
 				reg.register(frozenSpeleothem);
 
-				// TODO Give speleothems unique block item
-				// TODO Figure out how to make frozen speleothems less buggy
+				// TODO Fix culling issues with frozen speleothems
 			}
 
 			// STATIC DECOR
@@ -248,9 +248,9 @@ public class WTFContent {
 
 			else if (block instanceof BlockSpeleothem)
 				if (block instanceof BlockSpeleothemFrozen)
-					registerItemBlockNoModel(reg, new ItemBlockDerivative((BlockSpeleothemFrozen) block));
+					registerItemBlockNoModel(reg, new ItemBlockSpeleothem((BlockSpeleothemFrozen) block));
 				else
-					registerItemBlockNoModel(reg, new ItemBlockDerivative((BlockSpeleothem) block));
+					registerItemBlockNoModel(reg, new ItemBlockSpeleothem((BlockSpeleothem) block));
 
 			else if (block instanceof BlockDecoStatic)
 				registerItemBlockNoModel(reg, new ItemBlockDerivative((BlockDecoStatic) block));

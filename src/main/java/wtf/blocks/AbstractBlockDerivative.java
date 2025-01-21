@@ -104,7 +104,7 @@ public abstract class AbstractBlockDerivative extends Block {
         for (int i = 0; i < count; i++) {
             Item item = this.getItemDropped(parentForeground, rand, fortune);
             if (item != Items.AIR) {
-                drops.add(new ItemStack(item, 1, parentForeground.getBlock().damageDropped(state)));
+                drops.add(new ItemStack(item, 1, parentForeground.getBlock().damageDropped(parentForeground)));
             }
         }
     }

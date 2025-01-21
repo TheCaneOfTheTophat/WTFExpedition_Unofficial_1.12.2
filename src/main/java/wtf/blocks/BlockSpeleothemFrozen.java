@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import net.minecraft.block.BlockIce;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
@@ -36,16 +37,15 @@ public class BlockSpeleothemFrozen extends BlockSpeleothem {
 	}
 
 	@Override
-	@Deprecated
 	@SideOnly(Side.CLIENT)
 	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
 		switch (side) {
-		case DOWN: return isFrozen(blockAccess.getBlockState(pos.down()));
-		case EAST: return isFrozen(blockAccess.getBlockState(pos.east()));
-		case NORTH: return isFrozen(blockAccess.getBlockState(pos.north()));
-		case SOUTH: return isFrozen(blockAccess.getBlockState(pos.south()));
-		case UP: return isFrozen(blockAccess.getBlockState(pos.up()));
-		case WEST: return isFrozen(blockAccess.getBlockState(pos.west()));
+			case DOWN: return isFrozen(blockAccess.getBlockState(pos.down()));
+			case EAST: return isFrozen(blockAccess.getBlockState(pos.east()));
+			case NORTH: return isFrozen(blockAccess.getBlockState(pos.north()));
+			case SOUTH: return isFrozen(blockAccess.getBlockState(pos.south()));
+			case UP: return isFrozen(blockAccess.getBlockState(pos.up()));
+			case WEST: return isFrozen(blockAccess.getBlockState(pos.west()));
 		}
 		return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
 	}
@@ -63,9 +63,19 @@ public class BlockSpeleothemFrozen extends BlockSpeleothem {
 	}
 
 	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
+
+	@Override
 	public String getDisplayName(ItemStack stack) {
 		ItemStack stoneStack = new ItemStack(speleothem.parentForeground.getBlock(), 1, speleothem.parentForeground.getBlock().getMetaFromState(speleothem.parentForeground));
 		return I18n.format(Core.coreID + ":prefix.frozen.name") + " " + stoneStack.getDisplayName() + " " + I18n.format("tile." + Core.coreID + ":speleothem." + stack.getItemDamage() + ".name");
+	}
+
+	@Override
+	public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
+		worldIn.setBlockState(pos, this.speleothem.getDefaultState().withProperty(TYPE, state.getValue(TYPE)));
 	}
 
 	@Override
@@ -90,12 +100,35 @@ public class BlockSpeleothemFrozen extends BlockSpeleothem {
 
 		for(BlockPos relpos : BlockPos.getAllInBoxMutable(pos.add(-1, -1, -1), pos.add(1, 1, 1)))
 			if(BlockSets.meltBlocks.contains(world.getBlockState(relpos).getBlock())) {
-				int meta = getMetaFromState(world.getBlockState(pos));
-				IBlockState newState = this.parentForeground.getBlock().getStateFromMeta(meta);
-
-				world.setBlockState(pos, newState);
+//				int meta = getMetaFromState(world.getBlockState(pos));
+//				IBlockState newState = speleothem.getStateFromMeta(meta);
+//
+//				world.setBlockState(pos, newState);
+				return false;
 			}
 
-		return super.canBlockStay(world, pos, state);
+		if(state.getBlock() == this) {
+			switch (state.getValue(TYPE)) {
+				case speleothem_column:
+					return (hasProperty(world.getBlockState(pos.down()), SpeleothemType.stalagmite_base) ||
+							hasProperty(world.getBlockState(pos.down()), SpeleothemType.speleothem_column) ||
+							hasProperty(world.getBlockState(pos.up()), SpeleothemType.stalactite_base) ||
+							hasProperty(world.getBlockState(pos.up()), SpeleothemType.speleothem_column));
+				case stalactite_base:
+				case stalactite_small:
+					return (world.getBlockState(pos.up()) == speleothem.parentForeground);
+				case stalactite_tip:
+					return (hasProperty(world.getBlockState(pos.up()), SpeleothemType.stalactite_base) ||
+							hasProperty(world.getBlockState(pos.up()), SpeleothemType.speleothem_column));
+				case stalagmite_base:
+				case stalagmite_small:
+					return (world.getBlockState(pos.down()) == speleothem.parentForeground);
+				case stalagmite_tip:
+					return (hasProperty(world.getBlockState(pos.down()), SpeleothemType.stalagmite_base) ||
+							hasProperty(world.getBlockState(pos.down()), SpeleothemType.speleothem_column));
+			}
+		}
+
+		return false;
 	}
 }
