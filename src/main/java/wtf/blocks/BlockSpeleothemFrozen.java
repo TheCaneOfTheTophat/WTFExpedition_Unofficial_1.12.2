@@ -2,10 +2,10 @@ package wtf.blocks;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockIce;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
@@ -39,20 +39,24 @@ public class BlockSpeleothemFrozen extends BlockSpeleothem {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-		switch (side) {
-			case DOWN: return isFrozen(blockAccess.getBlockState(pos.down()));
-			case EAST: return isFrozen(blockAccess.getBlockState(pos.east()));
-			case NORTH: return isFrozen(blockAccess.getBlockState(pos.north()));
-			case SOUTH: return isFrozen(blockAccess.getBlockState(pos.south()));
-			case UP: return isFrozen(blockAccess.getBlockState(pos.up()));
-			case WEST: return isFrozen(blockAccess.getBlockState(pos.west()));
+		Block block = blockAccess.getBlockState(pos.offset(side)).getBlock();
+
+		if (block instanceof BlockSpeleothemFrozen || block instanceof BlockIce) {
+			return false;
 		}
+
 		return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
 	}
+	@Override
+	public boolean doesSideBlockRendering(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+		Block block = blockAccess.getBlockState(pos.offset(side)).getBlock();
 
-	private Boolean isFrozen(IBlockState state) {
-        return !(state.getBlock() instanceof BlockSpeleothemFrozen) && !(state.getBlock() instanceof BlockIce);
-    }
+		if (block instanceof BlockSpeleothemFrozen || block instanceof BlockIce) {
+			return true;
+		}
+
+		return super.doesSideBlockRendering(blockState, blockAccess, pos, side);
+	}
 
 	@Override
 	public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {}
@@ -62,25 +66,25 @@ public class BlockSpeleothemFrozen extends BlockSpeleothem {
 		return true;
 	}
 
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
-	}
-
-	@Override
+    @Override
 	public String getDisplayName(ItemStack stack) {
 		ItemStack stoneStack = new ItemStack(speleothem.parentForeground.getBlock(), 1, speleothem.parentForeground.getBlock().getMetaFromState(speleothem.parentForeground));
 		return I18n.format(Core.coreID + ":prefix.frozen.name") + " " + stoneStack.getDisplayName() + " " + I18n.format("tile." + Core.coreID + ":speleothem." + stack.getItemDamage() + ".name");
 	}
 
 	@Override
-	public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
+	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
 		worldIn.setBlockState(pos, this.speleothem.getDefaultState().withProperty(TYPE, state.getValue(TYPE)));
+		worldIn.scheduleUpdate(pos, this.speleothem, 0);
 	}
 
 	@Override
-	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
-		worldIn.setBlockState(pos, this.speleothem.getDefaultState().withProperty(TYPE, state.getValue(TYPE)));
+	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+		super.neighborChanged(state, worldIn, pos, blockIn, fromPos);
+		if(!canBlockStay(worldIn, pos, state)) {
+			worldIn.setBlockState(pos, this.speleothem.getDefaultState().withProperty(TYPE, state.getValue(TYPE)));
+			worldIn.scheduleUpdate(pos, this.speleothem, 0);
+		}
 	}
 
 	@Override
@@ -100,15 +104,12 @@ public class BlockSpeleothemFrozen extends BlockSpeleothem {
 
 		for(BlockPos relpos : BlockPos.getAllInBoxMutable(pos.add(-1, -1, -1), pos.add(1, 1, 1)))
 			if(BlockSets.meltBlocks.contains(world.getBlockState(relpos).getBlock())) {
-//				int meta = getMetaFromState(world.getBlockState(pos));
-//				IBlockState newState = speleothem.getStateFromMeta(meta);
-//
-//				world.setBlockState(pos, newState);
 				return false;
 			}
 
 		if(state.getBlock() == this) {
 			switch (state.getValue(TYPE)) {
+				// TODO Make columns not be able to float by just having two columns in the air
 				case speleothem_column:
 					return (hasProperty(world.getBlockState(pos.down()), SpeleothemType.stalagmite_base) ||
 							hasProperty(world.getBlockState(pos.down()), SpeleothemType.speleothem_column) ||
@@ -126,9 +127,9 @@ public class BlockSpeleothemFrozen extends BlockSpeleothem {
 				case stalagmite_tip:
 					return (hasProperty(world.getBlockState(pos.down()), SpeleothemType.stalagmite_base) ||
 							hasProperty(world.getBlockState(pos.down()), SpeleothemType.speleothem_column));
+				default: return false;
 			}
 		}
-
 		return false;
 	}
 }

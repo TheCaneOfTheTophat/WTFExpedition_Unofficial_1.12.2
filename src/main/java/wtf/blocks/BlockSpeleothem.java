@@ -19,6 +19,8 @@ import net.minecraft.world.World;
 import wtf.Core;
 import wtf.init.WTFContent;
 
+import java.util.Random;
+
 
 public class BlockSpeleothem extends AbstractBlockDerivative {
 
@@ -32,10 +34,9 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 		WTFContent.speleothemMap.put(state, this);
 	}
 
-	protected BlockSpeleothem(IBlockState backState, IBlockState foreState) { //used for frozen speleothems
+	protected BlockSpeleothem(IBlockState backState, IBlockState foreState) {
 		super(backState, foreState);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, SpeleothemType.stalactite_small));
-		//WTFBlocks.speleothemMap.put(state, this); //don't put it in the map
 	}
 
 	@Override
@@ -49,6 +50,13 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		if(!canBlockStay(world, pos, state)) {
 			world.destroyBlock(pos, true);
+		}
+	}
+
+	@Override
+	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+		if(!canBlockStay(worldIn, pos, state)) {
+			worldIn.destroyBlock(pos, true);
 		}
 	}
 
@@ -70,6 +78,7 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 	public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
 		if(state.getBlock() == this) {
 			switch (state.getValue(TYPE)) {
+				// TODO Make columns not be able to float by just having two columns in the air
 				case speleothem_column:
 					return (hasProperty(world.getBlockState(pos.down()), SpeleothemType.stalagmite_base) ||
 							hasProperty(world.getBlockState(pos.down()), SpeleothemType.speleothem_column) ||

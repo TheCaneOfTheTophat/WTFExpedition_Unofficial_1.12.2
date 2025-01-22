@@ -14,11 +14,10 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
-import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.common.model.IModelState;
-import net.minecraftforge.common.model.TRSRTransformation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import wtf.Core;
 import wtf.blocks.BlockSpeleothem;
@@ -71,12 +70,14 @@ public class ModelSpeleothem implements IModel {
         IModel finalModelSpeleothem = modelSpeleothem.retexture(ImmutableMap.of("texture", blockTexture.toString()));
         if(frozen) {
             try {
-                modelIce = ModelLoaderRegistry.getModel(new ModelResourceLocation("ice#normal"));
+                modelIce = ModelLoaderRegistry.getModel(new ResourceLocation(Core.coreID + ":block/overlay"));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
 
-            return new FrozenSpeleothemBakedModel(modelIce.bake(state, format, bakedTextureGetter), finalModelSpeleothem.bake(state, format, bakedTextureGetter), PerspectiveMapWrapper.getTransforms(state));
+            IModel finalModelIce = modelIce.retexture(ImmutableMap.of("mask", new ResourceLocation("blocks/ice").toString()));
+
+            return new FrozenSpeleothemBakedModel(finalModelIce.bake(state, format, bakedTextureGetter), finalModelSpeleothem.bake(state, format, bakedTextureGetter));
         } else
             return finalModelSpeleothem.bake(state, format, bakedTextureGetter);
     }
@@ -106,14 +107,12 @@ public class ModelSpeleothem implements IModel {
                       BAKED MODEL
        =========================================== */
     private static final class FrozenSpeleothemBakedModel implements IBakedModel {
-        private final ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> cameraTransforms;
         private final IBakedModel ice;
         private final IBakedModel speleothem;
 
-        public FrozenSpeleothemBakedModel(IBakedModel ice, IBakedModel speleothem, ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> cameraTransforms) {
+        public FrozenSpeleothemBakedModel(IBakedModel ice, IBakedModel speleothem) {
             this.ice = ice;
             this.speleothem = speleothem;
-            this.cameraTransforms = cameraTransforms;
         }
 
         @Override
@@ -156,7 +155,7 @@ public class ModelSpeleothem implements IModel {
 
         @Override
         public Pair<? extends IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
-            return PerspectiveMapWrapper.handlePerspective(this, cameraTransforms, cameraTransformType);
+            return new ImmutablePair<IBakedModel, Matrix4f>(this, speleothem.handlePerspective(cameraTransformType).getRight());
         }
 
         @Override
