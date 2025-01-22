@@ -147,7 +147,26 @@ public class WTFContent {
 
 					IBlockState stoneState = Block.getBlockFromName(stoneId).getStateFromMeta(stoneMeta);
 
-					if(stoneState.getBlock() instanceof BlockFalling) {
+					if(oreState == Blocks.REDSTONE_ORE.getDefaultState()) {
+						BlockDenseRedstoneOre oreOff = new BlockDenseRedstoneOre(stoneState, false);
+						oreOff.setRegistryName(Core.coreID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
+						oreOff.setCreativeTab(Core.wtfTab);
+
+						BlockDenseRedstoneOre oreOn = new BlockDenseRedstoneOre(stoneState, true);
+						oreOn.setRegistryName(Core.coreID, "lit_dense_" + stoneEntry.getName() + "_" + entry.getName());
+
+						oreOff.setToggled(oreOn);
+						oreOn.setToggled(oreOff);
+
+						blocks.add(oreOff);
+						blocks.add(oreOn);
+
+						oreEntryMap.put(oreOn, entry);
+						oreEntryMap.put(oreOff, entry);
+
+						reg.register(oreOff);
+						reg.register(oreOn);
+					} else if(stoneState.getBlock() instanceof BlockFalling) {
 						// Sadly, there is no such thing as a falling redstone ore since both redstone logic and falling block logic depend on ticking. :(
 						BlockDenseOreFalling ore = new BlockDenseOreFalling(stoneState, oreState);
 						ore.setRegistryName(Core.coreID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
@@ -158,36 +177,15 @@ public class WTFContent {
 
 						reg.register(ore);
 					} else {
-						if(oreState == Blocks.REDSTONE_ORE.getDefaultState()) {
-							BlockDenseRedstoneOre oreOff = new BlockDenseRedstoneOre(stoneState, false);
-							oreOff.setRegistryName(Core.coreID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
-							oreOff.setCreativeTab(Core.wtfTab);
-
-							BlockDenseRedstoneOre oreOn = new BlockDenseRedstoneOre(stoneState, true);
-							oreOn.setRegistryName(Core.coreID, "lit_dense_" + stoneEntry.getName() + "_" + entry.getName());
-
-							oreOff.setToggled(oreOn);
-							oreOn.setToggled(oreOff);
-
-							blocks.add(oreOff);
-							blocks.add(oreOn);
-
-							oreEntryMap.put(oreOn, entry);
-							oreEntryMap.put(oreOff, entry);
-
-							reg.register(oreOff);
-							reg.register(oreOn);
-						} else {
-							BlockDenseOre ore = new BlockDenseOre(stoneState, oreState);
-							ore.setRegistryName(Core.coreID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
-							ore.setCreativeTab(Core.wtfTab);
+						BlockDenseOre ore = new BlockDenseOre(stoneState, oreState);
+						ore.setRegistryName(Core.coreID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
+						ore.setCreativeTab(Core.wtfTab);
 
 
-							blocks.add(ore);
-							oreEntryMap.put(ore, entry);
+						blocks.add(ore);
+						oreEntryMap.put(ore, entry);
 
-							reg.register(ore);
-						}
+						reg.register(ore);
 					}
 				}
 			}
