@@ -7,15 +7,11 @@
         	"top": "blocks/crafting_table_top",
         	"side": "blocks/crafting_table_side"
         },
-        "model": "wtfcore:shortBlock"
+        "model": "enchanting_table_base"
         
     },
     "variants": {
-        "normal": [{
-
-        }],
-        "inventory": [{
-        
-        }]
+        "normal": [{}],
+        "inventory": [{}]
     }
 }
