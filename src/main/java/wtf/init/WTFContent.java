@@ -21,6 +21,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import wtf.Core;
 import wtf.blocks.*;
+import wtf.blocks.redstone.BlockDenseRedstoneOre;
 import wtf.client.WTFModelRegistry;
 import wtf.config.*;
 import wtf.blocks.BlockOreSand;
@@ -147,6 +148,7 @@ public class WTFContent {
 					IBlockState stoneState = Block.getBlockFromName(stoneId).getStateFromMeta(stoneMeta);
 
 					if(stoneState.getBlock() instanceof BlockFalling) {
+						// Sadly, there is no such thing as a falling redstone ore since both redstone logic and falling block logic depend on ticking. :(
 						BlockDenseOreFalling ore = new BlockDenseOreFalling(stoneState, oreState);
 						ore.setRegistryName(Core.coreID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
 						ore.setCreativeTab(Core.wtfTab);
@@ -156,14 +158,36 @@ public class WTFContent {
 
 						reg.register(ore);
 					} else {
-						BlockDenseOre ore = new BlockDenseOre(stoneState, oreState);
-						ore.setRegistryName(Core.coreID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
-						ore.setCreativeTab(Core.wtfTab);
+						if(oreState == Blocks.REDSTONE_ORE.getDefaultState()) {
+							BlockDenseRedstoneOre oreOff = new BlockDenseRedstoneOre(stoneState, false);
+							oreOff.setRegistryName(Core.coreID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
+							oreOff.setCreativeTab(Core.wtfTab);
 
-						blocks.add(ore);
-						oreEntryMap.put(ore, entry);
+							BlockDenseRedstoneOre oreOn = new BlockDenseRedstoneOre(stoneState, true);
+							oreOn.setRegistryName(Core.coreID, "lit_dense_" + stoneEntry.getName() + "_" + entry.getName());
 
-						reg.register(ore);
+							oreOff.setToggled(oreOn);
+							oreOn.setToggled(oreOff);
+
+							blocks.add(oreOff);
+							blocks.add(oreOn);
+
+							oreEntryMap.put(oreOn, entry);
+							oreEntryMap.put(oreOff, entry);
+
+							reg.register(oreOff);
+							reg.register(oreOn);
+						} else {
+							BlockDenseOre ore = new BlockDenseOre(stoneState, oreState);
+							ore.setRegistryName(Core.coreID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
+							ore.setCreativeTab(Core.wtfTab);
+
+
+							blocks.add(ore);
+							oreEntryMap.put(ore, entry);
+
+							reg.register(ore);
+						}
 					}
 				}
 			}
@@ -198,8 +222,6 @@ public class WTFContent {
 
 				blocks.add(frozenSpeleothem);
 				reg.register(frozenSpeleothem);
-
-				// TODO Fix culling issues with frozen speleothems
 			}
 
 			// STATIC DECOR
