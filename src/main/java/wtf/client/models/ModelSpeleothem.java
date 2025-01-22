@@ -19,7 +19,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.blocks.BlockSpeleothem;
 import wtf.blocks.BlockSpeleothemFrozen;
 import wtf.client.DerivativeResourceLocation;
@@ -62,7 +62,7 @@ public class ModelSpeleothem implements IModel {
         IModel modelIce;
 
         try {
-            modelSpeleothem = ModelLoaderRegistry.getModel(new ResourceLocation(Core.coreID + ":block/" + typeName));
+            modelSpeleothem = ModelLoaderRegistry.getModel(new ResourceLocation(WTFExpedition.modID + ":block/" + typeName));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -70,7 +70,7 @@ public class ModelSpeleothem implements IModel {
         IModel finalModelSpeleothem = modelSpeleothem.retexture(ImmutableMap.of("texture", blockTexture.toString()));
         if(frozen) {
             try {
-                modelIce = ModelLoaderRegistry.getModel(new ResourceLocation(Core.coreID + ":block/overlay"));
+                modelIce = ModelLoaderRegistry.getModel(new ResourceLocation(WTFExpedition.modID + ":block/overlay"));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -89,7 +89,7 @@ public class ModelSpeleothem implements IModel {
     public static class Loader implements ICustomModelLoader {
         @Override
         public boolean accepts(ResourceLocation modelLocation) {
-            return modelLocation.getResourceDomain().equals(Core.coreID) && modelLocation.getResourcePath().contains("speleothem") && modelLocation.getResourcePath().contains("hardcoded");
+            return modelLocation.getResourceDomain().equals(WTFExpedition.modID) && modelLocation.getResourcePath().contains("speleothem") && modelLocation.getResourcePath().contains("hardcoded");
         }
 
         @Override

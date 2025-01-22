@@ -14,7 +14,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import wtf.Core;
+import wtf.WTFExpedition;
 
 import javax.annotation.Nullable;
 
@@ -26,7 +26,7 @@ public class BlockPatch extends BlockFalling{
 	public BlockPatch(IBlockState state) {
 		super(state.getMaterial());
 		this.state = state;
-		this.setCreativeTab(Core.wtfTab);
+		this.setCreativeTab(WTFExpedition.wtfTab);
 	}
 	
 	@Override

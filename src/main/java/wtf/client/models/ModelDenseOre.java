@@ -14,7 +14,7 @@ import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.client.DerivativeFallingResourceLocation;
 import wtf.client.DerivativeResourceLocation;
 import wtf.init.JSONLoader;
@@ -55,7 +55,7 @@ public class ModelDenseOre implements IModel {
         IModel model;
 
         try {
-            model = ModelLoaderRegistry.getModel(new ResourceLocation(Core.coreID + ":block/cube_overlay"));
+            model = ModelLoaderRegistry.getModel(new ResourceLocation(WTFExpedition.modID + ":block/cube_overlay"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -71,7 +71,7 @@ public class ModelDenseOre implements IModel {
     public static class Loader implements ICustomModelLoader {
         @Override
         public boolean accepts(ResourceLocation modelLocation) {
-            return modelLocation.getResourceDomain().equals(Core.coreID) && modelLocation.getResourcePath().contains("dense") && modelLocation.getResourcePath().contains("hardcoded");
+            return modelLocation.getResourceDomain().equals(WTFExpedition.modID) && modelLocation.getResourcePath().contains("dense") && modelLocation.getResourcePath().contains("hardcoded");
         }
 
         @Override

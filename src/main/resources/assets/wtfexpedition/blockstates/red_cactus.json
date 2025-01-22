@@ -1,17 +1,19 @@
 {
     "forge_marker": 1,
     "defaults": {
+        "model": "cactus",
         "textures": {
-            "all": "blocks/water_still"
-        },
-        "model": "wtfcore:patch",
-        "uvlock": true
+        	"particle": "wtfexpedition:blocks/red_cactus_side",
+        	"bottom": "wtfexpedition:blocks/red_cactus_bottom",
+        	"top": "wtfexpedition:blocks/red_cactus_top",
+        	"side": "wtfexpedition:blocks/red_cactus_side"
+        }
     },
     "variants": {
         "normal": [{}],
         "inventory": [{}],
-        "level" : {
-			"0" : { },
+	   	"age" : {
+   			"0" : { },
 			"1" : { },
 			"2" : { },
 			"3" : { },
@@ -27,6 +29,6 @@
 			"13" : { },
 			"14" : { },
 			"15" : { }
-    	}
+		}
     }
 }

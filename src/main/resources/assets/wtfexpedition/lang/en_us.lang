@@ -1,0 +1,91 @@
+itemGroup.WTFBlocks=WTF's Blocks
+
+tile.wcic_table.name=Recipe Guide Crafting Table
+
+tile.wtfexpedition:nitre_ore.name=Nitre Ore
+tile.wtfexpedition:gold_ore_sand.name=Gold Nugget Ore
+
+tile.torch_on.name=Lit Torch
+tile.torch_off.name=Unlit Torch
+
+tile.wtfexpedition:icicle.0.name=Small Icicle
+tile.wtfexpedition:icicle.1.name=Icicle Base
+tile.wtfexpedition:icicle.2.name=Icicle Tip
+
+tile.wtfexpedition:speleothem.0.name=Small Stalactite
+tile.wtfexpedition:speleothem.1.name=Stalactite Base
+tile.wtfexpedition:speleothem.2.name=Stalactite Tip
+tile.wtfexpedition:speleothem.3.name=Column
+tile.wtfexpedition:speleothem.4.name=Small Stalagmite
+tile.wtfexpedition:speleothem.5.name=Stalagmite Base
+tile.wtfexpedition:speleothem.6.name=Stalagmite Tip
+
+wtfexpedition:deco_type.mossy.name=Mossy
+wtfexpedition:deco_type.soul.name=Soul
+wtfexpedition:deco_type.cracked.name=Cracked
+wtfexpedition:deco_type.lava_crust.name=Lava Crusted
+wtfexpedition:deco_type.wet.name=Wet
+wtfexpedition:deco_type.lava_dripping.name=Lava Dripping
+
+wtfexpedition:prefix.dense.name=Dense
+wtfexpedition:prefix.frozen.name=Frozen
+
+tile.wtfexpedition:red_cactus.name=Red Cactus
+tile.wtfexpedition:mycorrack.name=Mycorrack
+tile.wtfexpedition:foxfire.name=Foxfire
+
+tile.wtfexpedition:dirt_patch.name=Dirt Patch
+tile.wtfexpedition:mossy_dirt_patch.name=Mossy Dirt Patch
+tile.wtfexpedition:sand_patch.name=Sand Patch
+tile.wtfexpedition:red_sand_patch.name=Red Sand Patch
+tile.wtfexpedition:gravel_patch.name=Gravel Patch
+tile.wtfexpedition:podzol_patch.name=Podzol Patch
+tile.wtfexpedition:ice_patch.name=Ice Patch
+
+tile.wtfexpedition:terracotta_patch.name=Terracotta Patch
+tile.wtfexpedition:terracotta_patch_stained.0.name=White Terracotta Patch
+tile.wtfexpedition:terracotta_patch_stained.1.name=Orange Terracotta Patch
+tile.wtfexpedition:terracotta_patch_stained.2.name=Magenta Terracotta Patch
+tile.wtfexpedition:terracotta_patch_stained.3.name=Light Blue Terracotta Patch
+tile.wtfexpedition:terracotta_patch_stained.4.name=Yellow Terracotta Patch
+tile.wtfexpedition:terracotta_patch_stained.5.name=Lime Terracotta Patch
+tile.wtfexpedition:terracotta_patch_stained.6.name=Pink Terracotta Patch
+tile.wtfexpedition:terracotta_patch_stained.7.name=Gray Terracotta Patch
+tile.wtfexpedition:terracotta_patch_stained.8.name=Silver Terracotta Patch
+tile.wtfexpedition:terracotta_patch_stained.9.name=Cyan Terracotta Patch
+tile.wtfexpedition:terracotta_patch_stained.10.name=Purple Terracotta Patch
+tile.wtfexpedition:terracotta_patch_stained.11.name=Blue Terracotta Patch
+tile.wtfexpedition:terracotta_patch_stained.12.name=Brown Terracotta Patch
+tile.wtfexpedition:terracotta_patch_stained.13.name=Green Terracotta Patch
+tile.wtfexpedition:terracotta_patch_stained.14.name=Red Terracotta Patch
+tile.wtfexpedition:terracotta_patch_stained.15.name=Black Terracotta Patch
+
+tile.wtfexpedition:puddle.name=Puddle
+
+tile.wtfexpedition:natural_sandstone.name=Natural Sandstone
+tile.wtfexpedition:natural_red_sandstone.name=Natural Red Sandstone
+
+tile.wtfexpedition:roots.0.name=Oak Roots
+tile.wtfexpedition:roots.1.name=Spruce Roots
+tile.wtfexpedition:roots.2.name=Birch Roots
+tile.wtfexpedition:roots.3.name=Jungle Roots
+tile.wtfexpedition:roots.4.name=Acacia Roots
+tile.wtfexpedition:roots.5.name=Dark Oak Roots
+
+item.wtfexpedition:nitre.name=Saltpeter
+item.wtfexpedition:sulfur.name=Sulfur
+item.wtfexpedition:home_scroll.name=Home Scroll
+
+entity.wtfexpedition.BlockHead.name=Steve
+entity.wtfexpedition.SkeletonMage.name=Skeleton Mage
+entity.wtfexpedition.DerangedIronGolem.name=Defective Iron Golem
+entity.wtfexpedition.FlyingFlame.name=Bog Lantern
+entity.wtfexpedition.Ghost.name=Cursed Armour
+entity.wtfexpedition.FireElemental.name=Fire Elemental
+entity.wtfexpedition.Mummy.name=Mummy
+entity.wtfexpedition.Husk.name=Husk
+entity.wtfexpedition.ZombieMiner.name=Zombie Miner
+entity.wtfexpedition.Stray.name=Stray
+entity.wtfexpedition.Wither.name=Wither Skeleton
+entity.wtfexpedition.SkeletonKnight.name=Skeleton Knight
+entity.wtfexpedition.ZombieFarmer.name=ZombieFarmer

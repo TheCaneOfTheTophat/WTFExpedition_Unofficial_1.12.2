@@ -8,7 +8,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.config.WTFStoneRegistry;
 import wtf.init.BlockSets;
 import wtf.init.WTFContent;
@@ -37,7 +37,7 @@ public class UBCCompat {
 
 	public static void loadUBCStone(){
 
-		Core.coreLog.info("Getting UBC stones");
+		WTFExpedition.coreLog.info("Getting UBC stones");
 		
 		//new ReplacerVanillaStone();
 		

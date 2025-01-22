@@ -3,14 +3,11 @@ package wtf.blocks.substitution;
 
 import java.util.Random;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
@@ -18,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.config.GameplayConfig;
 
 public class BlockWTFTorch extends BlockTorch
@@ -29,7 +26,7 @@ public class BlockWTFTorch extends BlockTorch
 	public static Block torch_on;
 	
 	public BlockWTFTorch(boolean lit){
-		this.setCreativeTab(Core.wtfTab);
+		this.setCreativeTab(WTFExpedition.wtfTab);
 		this.isLit = lit;
 		this.lightValue = lit ? 14 : 0;
 		

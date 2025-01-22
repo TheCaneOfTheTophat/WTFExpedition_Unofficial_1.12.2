@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.blocks.BlockFoxfire;
 import wtf.init.WTFContent;
 import wtf.utilities.wrappers.CaveListWrapper;
@@ -35,7 +35,7 @@ public class DungeonZombieFarmer extends AbstractDungeonType{
 	
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(Core.coreID,"zombiefarmer"), 2);
+		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID,"zombiefarmer"), 2);
 	}
 
 	@Override

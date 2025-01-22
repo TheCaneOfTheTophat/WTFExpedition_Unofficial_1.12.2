@@ -6,7 +6,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.init.BlockSets;
 import wtf.init.BlockSets.Modifier;
 import wtf.utilities.wrappers.CaveListWrapper;
@@ -33,7 +33,7 @@ IBlockState block = null;
 	
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(Core.coreID, "skeletonknight"), 5);
+		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID, "skeletonknight"), 5);
 	}
 
 	public void generate(GeneratorMethods gen, Random random, BlockPos pos) {

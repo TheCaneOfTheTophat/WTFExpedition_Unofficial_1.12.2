@@ -6,7 +6,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import wtf.Core;
 import wtf.init.BlockSets;
 import wtf.init.BlockSets.Modifier;
 import wtf.utilities.wrappers.CaveListWrapper;

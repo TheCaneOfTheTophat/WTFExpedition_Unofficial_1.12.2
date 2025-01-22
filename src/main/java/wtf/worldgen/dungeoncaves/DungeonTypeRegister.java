@@ -2,11 +2,7 @@ package wtf.worldgen.dungeoncaves;
 
 import java.util.ArrayList;
 
-import net.minecraft.block.BlockSandStone;
-import net.minecraft.init.Blocks;
-import wtf.Core;
 import wtf.config.CaveBiomesConfig;
-import wtf.init.BlockSets.Modifier;
 import wtf.worldgen.dungeoncaves.ambient.DungeonJungleTemple;
 import wtf.worldgen.dungeoncaves.ambient.DungeonSpeleothemGrotto;
 import wtf.worldgen.dungeoncaves.ambient.DungeonTypeBatCave;

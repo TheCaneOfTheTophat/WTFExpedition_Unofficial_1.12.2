@@ -4,7 +4,7 @@ import java.io.File;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.config.Configuration;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.init.BlockSets;
 import wtf.init.WTFContent;
 import wtf.utilities.UBC.UBCCompat;
@@ -108,7 +108,7 @@ public class GameplayConfig extends AbstractConfig {
 	
 	String[] deffall = {"minecraft:dirt@50", "minecraft:cobblestone@75", "minecraft:mossy_cobblestone@90","minecraft:sand@10", "minecraft:soul_sand@10","minecraft:gravel@20", "minecraft:snow@40"};
 	
-	if (Core.UBC){
+	if (WTFExpedition.UBC){
 		String[] UBCdeffall = {"minecraft:dirt@50", "minecraft:cobblestone@75", "minecraft:mossy_cobblestone@90","minecraft:sand@10", "minecraft:soul_sand@10","minecraft:gravel@20", "minecraft:snow@40", 
 				UBCCompat.IgneousCobblestone[0].getBlock().getRegistryName()+"@90", UBCCompat.MetamorphicCobblestone[0].getBlock().getRegistryName()+"@85", WTFContent.ubcSand.getRegistryName()+"@10"};
 		

@@ -2,9 +2,9 @@
     "forge_marker": 1,
     "defaults": {
         "textures": {
-        	"all": "blocks/sand"
+         	"all": "blocks/dirt"
         },
-        "model": "wtfcore:patch",
+        "model": "wtfexpedition:patch",
         "uvlock": true
     },
     "variants": {

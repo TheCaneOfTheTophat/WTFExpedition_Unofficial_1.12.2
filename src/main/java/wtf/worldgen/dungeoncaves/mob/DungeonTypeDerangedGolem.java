@@ -6,7 +6,7 @@ import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.utilities.wrappers.CaveListWrapper;
 import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
@@ -29,7 +29,7 @@ public class DungeonTypeDerangedGolem extends AbstractDungeonType {
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
 		//anvil in center, with golem spawner underneath
 		//gen.spawnVanillaSpawner(pos.getFloorPos(), Core.coreID+".ZombieMummy", 3);
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(Core.coreID, "derangedirongolem"), 1);
+		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID, "derangedirongolem"), 1);
 		gen.replaceBlock(pos.getFloorPos().up(2), Blocks.ANVIL.getDefaultState());
 		
 	}

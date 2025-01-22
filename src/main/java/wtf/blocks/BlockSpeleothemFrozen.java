@@ -16,7 +16,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.init.BlockSets;
 
 public class BlockSpeleothemFrozen extends BlockSpeleothem {
@@ -69,7 +69,7 @@ public class BlockSpeleothemFrozen extends BlockSpeleothem {
     @Override
 	public String getDisplayName(ItemStack stack) {
 		ItemStack stoneStack = new ItemStack(speleothem.parentForeground.getBlock(), 1, speleothem.parentForeground.getBlock().getMetaFromState(speleothem.parentForeground));
-		return I18n.format(Core.coreID + ":prefix.frozen.name") + " " + stoneStack.getDisplayName() + " " + I18n.format("tile." + Core.coreID + ":speleothem." + stack.getItemDamage() + ".name");
+		return I18n.format(WTFExpedition.modID + ":prefix.frozen.name") + " " + stoneStack.getDisplayName() + " " + I18n.format("tile." + WTFExpedition.modID + ":speleothem." + stack.getItemDamage() + ".name");
 	}
 
 	@Override

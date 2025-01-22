@@ -2,7 +2,7 @@ package wtf.config.ore;
 
 import java.util.HashMap;
 
-import wtf.Core;
+import wtf.WTFExpedition;
 
 public class OreConfigHelper {
 
@@ -15,7 +15,7 @@ public class OreConfigHelper {
 			defPresets.put("tconstruct:ore@1", new OreDefReg("minecraft:netherrack@0", "cloud", new int[]{5, 95}, new int[]{-30, 60}, true).setDensity(15).setCloudDiameter(14).setTextureLoc("ore_ardite").setDimensionIDs(-1)); 
 	
 		String defStone = "minecraft:stone@0";
-		if (Core.UBC){
+		if (WTFExpedition.UBC){
 			defStone += ", igneous, metamorphic, sedimentary";
 		}
 		

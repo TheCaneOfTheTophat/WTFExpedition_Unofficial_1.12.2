@@ -1,8 +1,8 @@
 [
 {
-  "modid": "wtfcore",
-  "name": "WTFs Expedition for 1.12.2",
-  "description": "An \\u00A7l\\u00A7cUNOFFICIAL\\u00A7r port of WTFExpedition by TheCaneOfTheTophat.",
+  "modid": "wtfexpedition",
+  "name": "WTF's Expedition",
+  "description": "An \\u00A7l\\u00A7cUNOFFICIAL\\u00A7r port of WTF's Expedition to 1.12.2 by TheCaneOfTheTophat. All credit goes to WhiskeyTangoFox.",
   "version": "${version}",
   "mcversion": "1.12.2",
   "url": "",

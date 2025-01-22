@@ -2,8 +2,6 @@ package wtf.crafting;
 
 import java.util.Random;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -21,7 +19,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.crafting.render.WCICTileEntity;
 
 public class WCICTable extends BlockContainer{
@@ -31,7 +29,7 @@ public class WCICTable extends BlockContainer{
 	public WCICTable() {
 		super(Material.WOOD);
 		this.setHarvestLevel(null, 0);
-		this.setCreativeTab(Core.wtfTab);
+		this.setCreativeTab(WTFExpedition.wtfTab);
 			
 	}
 
@@ -39,7 +37,7 @@ public class WCICTable extends BlockContainer{
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
 		if (worldIn.isRemote){
-			playerIn.openGui(Core.instance, 0, worldIn, 0, 0, 0);
+			playerIn.openGui(WTFExpedition.instance, 0, worldIn, 0, 0, 0);
 		}
 
 		return true;

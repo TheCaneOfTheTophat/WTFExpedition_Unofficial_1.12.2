@@ -2,7 +2,7 @@
 {
     "forge_marker": 1,
     "defaults": {
-        "model": "wtfcore:root_block"
+        "model": "wtfexpedition:root_block"
     },
     "variants": {
         "normal": [{}],

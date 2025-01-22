@@ -13,7 +13,7 @@ import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.blocks.BlockDecoAnim;
 import wtf.blocks.BlockDecoStatic;
 import wtf.client.DerivativeResourceLocation;
@@ -46,7 +46,7 @@ public class ModelDecoration implements IModel {
         else
             overlayName = decoStatic.getType().getOverlayName();
 
-        overlayTexture = new ResourceLocation(Core.coreID + ":overlays/" + overlayName);
+        overlayTexture = new ResourceLocation(WTFExpedition.modID + ":overlays/" + overlayName);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class ModelDecoration implements IModel {
         IModel model;
 
         try {
-            model = ModelLoaderRegistry.getModel(new ResourceLocation(overlayName == null ? "minecraft:block/cube_all" : Core.coreID + ":block/cube_overlay"));
+            model = ModelLoaderRegistry.getModel(new ResourceLocation(overlayName == null ? "minecraft:block/cube_all" : WTFExpedition.modID + ":block/cube_overlay"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -70,7 +70,7 @@ public class ModelDecoration implements IModel {
     public static class Loader implements ICustomModelLoader {
         @Override
         public boolean accepts(ResourceLocation modelLocation) {
-            return modelLocation.getResourceDomain().equals(Core.coreID) && modelLocation.getResourcePath().contains("decoration") && modelLocation.getResourcePath().contains("hardcoded");
+            return modelLocation.getResourceDomain().equals(WTFExpedition.modID) && modelLocation.getResourcePath().contains("decoration") && modelLocation.getResourcePath().contains("hardcoded");
         }
 
         @Override

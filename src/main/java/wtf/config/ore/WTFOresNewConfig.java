@@ -14,7 +14,7 @@ import net.minecraft.init.Blocks;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Loader;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.config.AbstractConfig;
 import wtf.config.WTFStoneRegistry;
 import wtf.init.BlockSets;
@@ -241,7 +241,7 @@ public class WTFOresNewConfig extends AbstractConfig{
 					}
 					else if (modifier == null){
 						BlockSets.stoneAndOre.put(new StoneAndOre(stone, oreState), oreState);
-						if (Core.UBC){
+						if (WTFExpedition.UBC){
 							new UBCOreReplacer(oreState.getBlock());
 						}
 						else {
@@ -252,7 +252,7 @@ public class WTFOresNewConfig extends AbstractConfig{
 
 				OreGenerator.oreGenRegister.add(generator);
 				VanillOreGenCatcher.vanillaCanceler(oreState);
-				Core.coreLog.info("Ore Generator Added for " + oreGenString);
+				WTFExpedition.coreLog.info("Ore Generator Added for " + oreGenString);
 			}
 
 		}

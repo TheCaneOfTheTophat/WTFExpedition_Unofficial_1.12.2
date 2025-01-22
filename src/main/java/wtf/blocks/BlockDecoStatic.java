@@ -9,7 +9,7 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.gameplay.fracturing.EntityStoneCrack;
 import wtf.init.BlockSets;
 
@@ -67,7 +67,7 @@ public class BlockDecoStatic extends AbstractBlockDerivative {
 	@Override
 	public String getDisplayName(ItemStack stack) {
 		ItemStack blockStack = new ItemStack(parentForeground.getBlock(), 1, parentForeground.getBlock().getMetaFromState(parentForeground));
-		return I18n.format(Core.coreID + ":deco_type." + getType().getName() + ".name") + " " + blockStack.getDisplayName();
+		return I18n.format(WTFExpedition.modID + ":deco_type." + getType().getName() + ".name") + " " + blockStack.getDisplayName();
 	}
 
 	public enum StaticDecoType implements IStringSerializable {

@@ -4,7 +4,7 @@
         "textures": {
          	"all": "blocks/dirt_podzol_top"
         },
-        "model": "wtfcore:patch",
+        "model": "wtfexpedition:patch",
         "uvlock": true
     },
     "variants": {

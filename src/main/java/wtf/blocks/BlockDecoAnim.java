@@ -16,7 +16,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.init.BlockSets;
 
 public class BlockDecoAnim extends AbstractBlockDerivative{
@@ -120,7 +120,7 @@ public class BlockDecoAnim extends AbstractBlockDerivative{
 	@Override
 	public String getDisplayName(ItemStack stack) {
 		ItemStack blockStack = new ItemStack(parentForeground.getBlock(), 1, parentForeground.getBlock().getMetaFromState(parentForeground));
-		return I18n.format(Core.coreID + ":deco_type." + getType().getName() + ".name") + " " + blockStack.getDisplayName();
+		return I18n.format(WTFExpedition.modID + ":deco_type." + getType().getName() + ".name") + " " + blockStack.getDisplayName();
 	}
 
 	public enum AnimatedDecoType implements IStringSerializable {

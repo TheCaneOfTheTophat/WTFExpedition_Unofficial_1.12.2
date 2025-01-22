@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.utilities.wrappers.AdjPos;
 import wtf.utilities.wrappers.CaveListWrapper;
 import wtf.utilities.wrappers.CavePosition;
@@ -26,7 +26,7 @@ public class DungeonMine extends AbstractDungeonType{
 
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(Core.coreID, "zombieminer"), 5);
+		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID, "zombieminer"), 5);
 		gen.replaceBlock(pos.getFloorPos().up(2), Blocks.TNT.getDefaultState());
 	}
 

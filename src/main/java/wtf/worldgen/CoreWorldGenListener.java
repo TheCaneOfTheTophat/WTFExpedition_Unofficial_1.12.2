@@ -12,7 +12,7 @@ import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.init.WTFContent;
 import wtf.utilities.wrappers.ChunkCoords;
 import wtf.utilities.wrappers.ChunkScan;
@@ -188,7 +188,7 @@ public class CoreWorldGenListener {
 			return worldMap.getChunkScan(coords);
 		}
 		else {
-			Core.coreLog.info("Trying to get a chunkscan for a chunk that isn't ready to be scanned");
+			WTFExpedition.coreLog.info("Trying to get a chunkscan for a chunk that isn't ready to be scanned");
 		}
 		
 		return scan;

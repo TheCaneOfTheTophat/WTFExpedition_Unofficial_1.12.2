@@ -4,9 +4,8 @@ import java.io.File;
 
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.config.Configuration;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.utilities.UBC.ReplacerUBCSand;
-import wtf.utilities.UBC.ReplacerUBCSandstone;
 
 public class OverworldGenConfig extends AbstractConfig{
 
@@ -71,7 +70,7 @@ public class OverworldGenConfig extends AbstractConfig{
 		autumnForestColorScale = config.get(af, "Autumn Color Scaling- setting smaller will give faster changes in colour", 10).getInt();
 		
 
-		if (Core.UBC){
+		if (WTFExpedition.UBC){
 			UBCSandReplacer = config.get("UBC Options", "Replace some of the world's sand and sandstone with UBC sedimentary sand", true).getBoolean();
 			if (UBCSandReplacer){
 				new ReplacerUBCSand(Blocks.SAND);

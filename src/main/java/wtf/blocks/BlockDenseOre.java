@@ -12,7 +12,7 @@ import net.minecraft.stats.StatList;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import wtf.Core;
+import wtf.WTFExpedition;
 
 public class BlockDenseOre extends AbstractBlockDerivative {
 
@@ -73,6 +73,6 @@ public class BlockDenseOre extends AbstractBlockDerivative {
     public String getDisplayName(ItemStack stack) {
         ItemStack backStack = new ItemStack(parentBackground.getBlock(), 1, parentBackground.getBlock().getMetaFromState(parentBackground));
         ItemStack foreStack = new ItemStack(parentForeground.getBlock(), 1, parentForeground.getBlock().getMetaFromState(parentForeground));
-        return I18n.format(Core.coreID + ":prefix.dense.name") + " " + backStack.getDisplayName() + " " + foreStack.getDisplayName();
+        return I18n.format(WTFExpedition.modID + ":prefix.dense.name") + " " + backStack.getDisplayName() + " " + foreStack.getDisplayName();
     }
 }

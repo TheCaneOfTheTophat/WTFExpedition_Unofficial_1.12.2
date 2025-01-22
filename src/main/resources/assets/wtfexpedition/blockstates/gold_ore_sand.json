@@ -1,0 +1,21 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "wtfexpedition:cube_overlay",
+        "textures": {
+           	 "cube": "blocks/sand"
+        }
+    },
+    "variants": {
+        "normal": [{
+			"textures" : { "mask" : "wtfexpedition:overlays/gold_ore0"}
+        }],
+        "inventory": [{
+     		"textures" : { "mask" : "wtfexpedition:overlays/gold_ore0"}
+        }],
+		"variant" : {
+			"sand" : { "textures" : { "mask" : "wtfexpedition:overlays/gold_ore0"}},
+			"red_sand" : { "textures" : { "mask" : "wtfexpedition:overlays/gold_ore0"}}
+    	}
+    }
+}

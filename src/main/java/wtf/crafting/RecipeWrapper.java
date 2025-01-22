@@ -1,19 +1,5 @@
 package wtf.crafting;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.ShapedRecipes;
-import net.minecraft.item.crafting.ShapelessRecipes;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
-import wtf.Core;
-
 public class RecipeWrapper {
 //
 //	private final ArrayList<ArrayList<ItemStack>> wrappedRecipe = new ArrayList<ArrayList<ItemStack>>();

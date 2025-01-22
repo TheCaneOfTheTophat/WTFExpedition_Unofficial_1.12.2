@@ -3,7 +3,7 @@ package wtf.init;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.entities.customentities.EntityBlockHead;
 import wtf.entities.customentities.EntityDerangedGolem;
 import wtf.entities.customentities.EntityFireElemental;
@@ -38,7 +38,7 @@ public class WTFEntities {
 		registerEntity(Wither.class, "Wither");
 		registerEntity(SkeletonKnight.class, "SkeletonKnight");
 		
-		Core.proxy.registerEntityRenderers();
+		WTFExpedition.proxy.registerEntityRenderers();
 	
 	}
 
@@ -49,7 +49,7 @@ public class WTFEntities {
 		int entityId = counter;
 		counter++;
 		
-		EntityRegistry.registerModEntity(new ResourceLocation(Core.coreID, name), entityClass, name, entityId, Core.instance, 64, 1, true, counter*31, counter*62);
+		EntityRegistry.registerModEntity(new ResourceLocation(WTFExpedition.modID, name), entityClass, name, entityId, WTFExpedition.instance, 64, 1, true, counter*31, counter*62);
 		
 	}
 

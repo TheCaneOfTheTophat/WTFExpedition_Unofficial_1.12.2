@@ -16,7 +16,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.init.WTFContent;
 
 import java.util.Random;
@@ -139,7 +139,7 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 	@Override
 	public String getDisplayName(ItemStack stack) {
 		ItemStack stoneStack = new ItemStack(parentForeground.getBlock(), 1, parentForeground.getBlock().getMetaFromState(parentForeground));
-		return stoneStack.getDisplayName() + " " + I18n.format("tile." + Core.coreID + ":speleothem." + stack.getItemDamage() + ".name");
+		return stoneStack.getDisplayName() + " " + I18n.format("tile." + WTFExpedition.modID + ":speleothem." + stack.getItemDamage() + ".name");
 	}
 
 	public IBlockState getBlockState(SpeleothemType type){

@@ -1,0 +1,22 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+      "model": "forge:multi-layer",
+      "custom": {
+        "base": "netherrack#normal",
+        "Solid": "netherrack#normal",
+        "Translucent": "wtfexpedition:mycorrack#overlay"
+      },
+      "transform": "forge:default-block"
+    },
+    "variants": {
+      "normal": [{}],
+      "inventory": [{}],
+	  "overlay": [{
+        "model": "wtfexpedition:overlay_top", "textures": { "top": "wtfexpedition:blocks/mycelium_top_overlay", "sides": "wtfexpedition:blocks/mycelium_side_overlay" },
+        "model": "wtfexpedition:overlay_top", "y":90, "textures": { "top": "wtfexpedition:blocks/mycelium_top_overlay", "sides": "wtfexpedition:blocks/mycelium_side_overlay" },
+        "model": "wtfexpedition:overlay_top", "y":180, "textures": { "top": "wtfexpedition:blocks/mycelium_top_overlay", "sides": "wtfexpedition:blocks/mycelium_side_overlay" },
+        "model": "wtfexpedition:overlay_top", "y":270, "textures": { "top": "wtfexpedition:blocks/mycelium_top_overlay", "sides": "wtfexpedition:blocks/mycelium_side_overlay" }
+      }]
+    }
+}

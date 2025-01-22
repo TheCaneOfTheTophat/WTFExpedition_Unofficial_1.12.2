@@ -15,7 +15,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.config.Configuration;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.init.BlockSets;
 import wtf.init.BlockSets.Modifier;
 import wtf.init.WTFContent;
@@ -71,7 +71,7 @@ public class WTFStoneRegistry extends AbstractConfig {
 		defSpeed.put(Blocks.STONE, 15);
 		defSpeed.put(WTFContent.natural_sandstone, 30);
 		defSpeed.put(WTFContent.natural_red_sandstone, 30);
-		if (Core.UBC){
+		if (WTFExpedition.UBC){
 			defSpeed.put(UBCCompat.IgneousStone[0].getBlock(), 5);
 			defSpeed.put(UBCCompat.MetamorphicStone[0].getBlock(), 20);
 			defSpeed.put(UBCCompat.SedimentaryStone[0].getBlock(), 30);
@@ -87,7 +87,7 @@ public class WTFStoneRegistry extends AbstractConfig {
 				
 		
 		
-		if (Core.UBC){
+		if (WTFExpedition.UBC){
 			for (String string : UBCCompat.UBCStoneList){
 				defstone = appendArray(defstone, string);
 			}

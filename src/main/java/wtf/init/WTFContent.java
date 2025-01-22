@@ -19,7 +19,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.blocks.*;
 import wtf.blocks.redstone.BlockDenseRedstoneOre;
 import wtf.client.WTFModelRegistry;
@@ -31,7 +31,7 @@ import wtf.items.ItemHomeScroll;
 import wtf.items.ItemBlockState;
 
 @Mod.EventBusSubscriber
-@GameRegistry.ObjectHolder(Core.coreID)
+@GameRegistry.ObjectHolder(WTFExpedition.modID)
 public class WTFContent {
 
 	public static HashMap<IBlockState, BlockSpeleothem> speleothemMap = new HashMap<>();
@@ -90,12 +90,12 @@ public class WTFContent {
 		IForgeRegistry<Block> reg = event.getRegistry();
 
 		// Blocks in the Creative tab
-		registerSimpleBlock(reg, new BlockNitreOre().setCreativeTab(Core.wtfTab), "nitre_ore");
-		registerSimpleBlock(reg, new BlockOreSand().setCreativeTab(Core.wtfTab), "gold_ore_sand");
-		registerSimpleBlock(reg, new BlockRedCactus().setCreativeTab(Core.wtfTab), "red_cactus");
-		registerSimpleBlock(reg, new BlockMycorrack().setCreativeTab(Core.wtfTab), "mycorrack");
+		registerSimpleBlock(reg, new BlockNitreOre().setCreativeTab(WTFExpedition.wtfTab), "nitre_ore");
+		registerSimpleBlock(reg, new BlockOreSand().setCreativeTab(WTFExpedition.wtfTab), "gold_ore_sand");
+		registerSimpleBlock(reg, new BlockRedCactus().setCreativeTab(WTFExpedition.wtfTab), "red_cactus");
+		registerSimpleBlock(reg, new BlockMycorrack().setCreativeTab(WTFExpedition.wtfTab), "mycorrack");
 
-		registerSimpleBlock(reg, new BlockFoxfire().setCreativeTab(Core.wtfTab), "foxfire");
+		registerSimpleBlock(reg, new BlockFoxfire().setCreativeTab(WTFExpedition.wtfTab), "foxfire");
 
 		registerSimpleBlock(reg, new BlockPatch(Blocks.DIRT.getDefaultState()), "dirt_patch");
 		registerSimpleBlock(reg, new BlockPatch(Blocks.DIRT.getDefaultState()), "mossy_dirt_patch");
@@ -103,13 +103,13 @@ public class WTFContent {
 		registerSimpleBlock(reg, new BlockPatch(Blocks.SAND.getDefaultState().withProperty(BlockSand.VARIANT, BlockSand.EnumType.RED_SAND)), "red_sand_patch");
 		registerSimpleBlock(reg, new BlockPatch(Blocks.GRAVEL.getDefaultState()), "gravel_patch");
 		registerSimpleBlock(reg, new BlockPatch(Blocks.DIRT.getDefaultState()), "podzol_patch");
-		registerSimpleBlock(reg, new BlockPuddle().setCreativeTab(Core.wtfTab), "puddle");
-		registerSimpleBlock(reg, new BlockIcePatch().setCreativeTab(Core.wtfTab), "ice_patch");
+		registerSimpleBlock(reg, new BlockPuddle().setCreativeTab(WTFExpedition.wtfTab), "puddle");
+		registerSimpleBlock(reg, new BlockIcePatch().setCreativeTab(WTFExpedition.wtfTab), "ice_patch");
 		registerSimpleBlock(reg, new BlockPatch(Blocks.HARDENED_CLAY.getDefaultState()), "terracotta_patch");
-		registerSimpleBlock(reg, new BlockStainedTerracottaPatch().setCreativeTab(Core.wtfTab), "terracotta_patch_stained", 15);
+		registerSimpleBlock(reg, new BlockStainedTerracottaPatch().setCreativeTab(WTFExpedition.wtfTab), "terracotta_patch_stained", 15);
 
-		registerSimpleBlock(reg, new BlockIcicle().setCreativeTab(Core.wtfTab), "icicle", 2);
-		registerSimpleBlock(reg, new BlockRoots().setCreativeTab(Core.wtfTab), "roots", 5);
+		registerSimpleBlock(reg, new BlockIcicle().setCreativeTab(WTFExpedition.wtfTab), "icicle", 2);
+		registerSimpleBlock(reg, new BlockRoots().setCreativeTab(WTFExpedition.wtfTab), "roots", 5);
 
 		// wcicTable = registerBlock(new WCICTable(), "wcic_table");
 		// GameRegistry.registerTileEntity(WCICTileEntity.class, "WCICTable");
@@ -149,11 +149,11 @@ public class WTFContent {
 
 					if(oreState == Blocks.REDSTONE_ORE.getDefaultState()) {
 						BlockDenseRedstoneOre oreOff = new BlockDenseRedstoneOre(stoneState, false);
-						oreOff.setRegistryName(Core.coreID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
-						oreOff.setCreativeTab(Core.wtfTab);
+						oreOff.setRegistryName(WTFExpedition.modID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
+						oreOff.setCreativeTab(WTFExpedition.wtfTab);
 
 						BlockDenseRedstoneOre oreOn = new BlockDenseRedstoneOre(stoneState, true);
-						oreOn.setRegistryName(Core.coreID, "lit_dense_" + stoneEntry.getName() + "_" + entry.getName());
+						oreOn.setRegistryName(WTFExpedition.modID, "lit_dense_" + stoneEntry.getName() + "_" + entry.getName());
 
 						oreOff.setToggled(oreOn);
 						oreOn.setToggled(oreOff);
@@ -169,8 +169,8 @@ public class WTFContent {
 					} else if(stoneState.getBlock() instanceof BlockFalling) {
 						// Sadly, there is no such thing as a falling redstone ore since both redstone logic and falling block logic depend on ticking. :(
 						BlockDenseOreFalling ore = new BlockDenseOreFalling(stoneState, oreState);
-						ore.setRegistryName(Core.coreID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
-						ore.setCreativeTab(Core.wtfTab);
+						ore.setRegistryName(WTFExpedition.modID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
+						ore.setCreativeTab(WTFExpedition.wtfTab);
 
 						blocks.add(ore);
 						oreEntryMap.put(ore, entry);
@@ -178,8 +178,8 @@ public class WTFContent {
 						reg.register(ore);
 					} else {
 						BlockDenseOre ore = new BlockDenseOre(stoneState, oreState);
-						ore.setRegistryName(Core.coreID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
-						ore.setCreativeTab(Core.wtfTab);
+						ore.setRegistryName(WTFExpedition.modID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
+						ore.setCreativeTab(WTFExpedition.wtfTab);
 
 
 						blocks.add(ore);
@@ -208,15 +208,15 @@ public class WTFContent {
 			// SPELEOTHEMS
 			if(entry.hasSpeleothems()) {
 				BlockSpeleothem speleothem = new BlockSpeleothem(blockState);
-				speleothem.setRegistryName(Core.coreID, blockName + "_speleothem");
-				speleothem.setCreativeTab(Core.wtfTab);
+				speleothem.setRegistryName(WTFExpedition.modID, blockName + "_speleothem");
+				speleothem.setCreativeTab(WTFExpedition.wtfTab);
 
 				blocks.add(speleothem);
 				reg.register(speleothem);
 
 				BlockSpeleothemFrozen frozenSpeleothem = new BlockSpeleothemFrozen(speleothem);
-				frozenSpeleothem.setRegistryName(Core.coreID, "frozen_" + blockName + "_speleothem");
-				frozenSpeleothem.setCreativeTab(Core.wtfTab);
+				frozenSpeleothem.setRegistryName(WTFExpedition.modID, "frozen_" + blockName + "_speleothem");
+				frozenSpeleothem.setCreativeTab(WTFExpedition.wtfTab);
 
 				blocks.add(frozenSpeleothem);
 				reg.register(frozenSpeleothem);
@@ -226,8 +226,8 @@ public class WTFContent {
 			for(BlockDecoStatic.StaticDecoType decorType : BlockDecoStatic.StaticDecoType.values()) {
 				if(entry.getStaticDecorTypes().get(decorType)) {
 					BlockDecoStatic decor = new BlockDecoStatic(blockState, decorType);
-					decor.setRegistryName(Core.coreID, "decoration_" + decorType.getName() + "_" + blockName);
-					decor.setCreativeTab(Core.wtfTab);
+					decor.setRegistryName(WTFExpedition.modID, "decoration_" + decorType.getName() + "_" + blockName);
+					decor.setCreativeTab(WTFExpedition.wtfTab);
 
 					blocks.add(decor);
 					reg.register(decor);
@@ -238,8 +238,8 @@ public class WTFContent {
 			for(BlockDecoAnim.AnimatedDecoType decorType : BlockDecoAnim.AnimatedDecoType.values()) {
 				if(entry.getAnimatedDecorTypes().get(decorType)) {
 					BlockDecoAnim decor = new BlockDecoAnim(blockState, decorType);
-					decor.setRegistryName(Core.coreID, "decoration_" + decorType.getName() + "_" + blockName);
-					decor.setCreativeTab(Core.wtfTab);
+					decor.setRegistryName(WTFExpedition.modID, "decoration_" + decorType.getName() + "_" + blockName);
+					decor.setCreativeTab(WTFExpedition.wtfTab);
 
 					blocks.add(decor);
 					reg.register(decor);
@@ -293,7 +293,7 @@ public class WTFContent {
 	*/
 
 	public static <T extends Block> Block registerBlockWithoutItem(IForgeRegistry<Block> registry, T block, String name) {
-		block.setRegistryName(Core.coreID, name);
+		block.setRegistryName(WTFExpedition.modID, name);
 		block.setUnlocalizedName(block.getRegistryName().toString());
 
 		registry.register(block);
@@ -315,8 +315,8 @@ public class WTFContent {
 	}
 
 	public static <T extends Item> Item registerItem(IForgeRegistry<Item> registry, T item, String name) {
-		item.setCreativeTab(Core.wtfTab);
-		item.setRegistryName(Core.coreID, name);
+		item.setCreativeTab(WTFExpedition.wtfTab);
+		item.setRegistryName(WTFExpedition.modID, name);
 		item.setUnlocalizedName(item.getRegistryName().toString());
 
 		items.add(item);

@@ -18,16 +18,16 @@ import wtf.config.GameplayConfig;
 import wtf.init.JSONLoader;
 
 
-@Mod(modid = Core.coreID, name = "WTFs Expedition", dependencies = "after:undergroundbiomes")
-public class Core {
-	public static final String coreID = "wtfcore";
+@Mod(modid = WTFExpedition.modID, name = "WTF's Expedition", dependencies = "after:undergroundbiomes")
+public class WTFExpedition {
+	public static final String modID = "wtfexpedition";
 
 	@SidedProxy(clientSide="wtf.client.ClientProxy", serverSide="wtf.CommonProxy")
 	public static CommonProxy proxy;
 	public static Logger coreLog;
 
-	@Instance(coreID)
-	public static Core instance;
+	@Instance(modID)
+	public static WTFExpedition instance;
 	
 	public static boolean UBC;
 

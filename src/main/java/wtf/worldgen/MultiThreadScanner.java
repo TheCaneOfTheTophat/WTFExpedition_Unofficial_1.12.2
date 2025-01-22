@@ -3,7 +3,7 @@ package wtf.worldgen;
 import java.util.concurrent.CountDownLatch;
 
 import net.minecraft.world.World;
-import wtf.Core;
+import wtf.WTFExpedition;
 import wtf.utilities.UBC.UBCGenMethods;
 import wtf.utilities.wrappers.ChunkCoords;
 import wtf.utilities.wrappers.ChunkScan;
@@ -49,7 +49,7 @@ public class MultiThreadScanner  implements Runnable{
 		}
 
 		if (scanner != null){
-			GeneratorMethods gen = Core.UBC ? new UBCGenMethods(world, coords, world.rand) : new GeneratorMethods(world, coords, world.rand);
+			GeneratorMethods gen = WTFExpedition.UBC ? new UBCGenMethods(world, coords, world.rand) : new GeneratorMethods(world, coords, world.rand);
 			ChunkScan scan = scanner.getChunkScan(world, coords, gen);
 			CoreWorldGenListener.storeScan(world, coords, scan);
 			
