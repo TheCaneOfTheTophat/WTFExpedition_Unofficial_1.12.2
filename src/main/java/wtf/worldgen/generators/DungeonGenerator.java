@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
-import wtf.config.CaveBiomesConfig;
+import wtf.config.WTFExpeditionConfig;
 import wtf.utilities.wrappers.AdjPos;
 import wtf.utilities.wrappers.CaveListWrapper;
 import wtf.utilities.wrappers.CavePosition;
@@ -23,7 +23,7 @@ public class DungeonGenerator {
 	public void generate(World world, ChunkCoords coords, Random random, ChunkScan chunkscan, GeneratorMethods gen) {
 
 		if (world.provider.getDimensionType() == DimensionType.OVERWORLD 
-				&& random.nextFloat() < CaveBiomesConfig.dungeonChance){
+				&& random.nextFloat() < WTFExpeditionConfig.subtypeChance){
 
 			for (ChunkCoords adj : coords.getChunksInRadius(1)){
 				if (spawned.contains(adj)){

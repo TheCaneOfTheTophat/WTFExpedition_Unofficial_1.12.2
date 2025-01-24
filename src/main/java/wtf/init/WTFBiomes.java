@@ -9,8 +9,7 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.BiomeManager.BiomeEntry;
 import net.minecraftforge.common.BiomeManager.BiomeType;
-import wtf.config.MasterConfig;
-import wtf.config.OverworldGenConfig;
+import wtf.config.WTFExpeditionConfig;
 import wtf.worldgen.caves.CaveTypeRegister;
 import wtf.worldgen.generators.SubBiomeGenerator;
 import wtf.worldgen.subbiomes.BiomeAutumnForest;
@@ -37,13 +36,13 @@ public class WTFBiomes {
 			CaveTypeRegister.getCaveProfile(biome);
 		}
 
-		if (MasterConfig.enableOverworldGeneration && OverworldGenConfig.autumnForestID > 0){
+		if (WTFExpeditionConfig.overworldGenerationEnabled && WTFExpeditionConfig.autumnForestID > 0){
 			autumnForest = new BiomeAutumnForest(Type.NORMAL, new BiomeProperties("Autumn Forest").setTemperature(0.4F).setRainfall(0.8F), Biomes.FOREST);
-			registerSubBiome(autumnForest, "AutumnForest", OverworldGenConfig.autumnForestID, 4);
+			registerSubBiome(autumnForest, "AutumnForest", WTFExpeditionConfig.autumnForestID, 4);
 			BiomeDictionary.addTypes(autumnForest, BiomeDictionary.Type.FOREST);
 
 			autumnHills = new BiomeAutumnForest(Type.NORMAL, new BiomeProperties("Autumn Hills").setTemperature(0.3F).setRainfall(0.8F), Biomes.FOREST_HILLS);
-			registerSubBiome(autumnHills, "AutumnHills", OverworldGenConfig.autumnHillsID, 18);
+			registerSubBiome(autumnHills, "AutumnHills", WTFExpeditionConfig.autumnHillsID, 18);
 			BiomeDictionary.addTypes(autumnHills, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.HILLS);
 			
 			/*autumnBirchForest = new BiomeAutumnForest(Type.NORMAL, new BiomeProperties("Autumn Birch Forest").setTemperature(0.4F).setRainfall(0.8F), Biomes.BIRCH_FOREST);

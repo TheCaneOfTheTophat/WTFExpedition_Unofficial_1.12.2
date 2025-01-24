@@ -5,7 +5,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.MapGenCaves;
-import wtf.config.CaveBiomesConfig;
+import wtf.config.WTFExpeditionConfig;
 import wtf.init.WTFContent;
 
 public class MapGenWTFCave extends MapGenCaves{
@@ -30,7 +30,7 @@ public class MapGenWTFCave extends MapGenCaves{
 							if (hash == sandstoneID){
 								primer.setBlockState(x, y, z, BLK_SANDSTONE);
 								//System.out.println("Replacing Sandstone");
-								if (CaveBiomesConfig.updateSandstone){
+								if (WTFExpeditionConfig.updateSandstone){
 									//world.notifyBlockUpdate(entry.getKey().pos, oldstate, oldstate, 3);
 								}
 							}

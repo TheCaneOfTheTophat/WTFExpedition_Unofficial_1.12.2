@@ -188,7 +188,7 @@ public class CoreWorldGenListener {
 			return worldMap.getChunkScan(coords);
 		}
 		else {
-			WTFExpedition.coreLog.info("Trying to get a chunkscan for a chunk that isn't ready to be scanned");
+			WTFExpedition.wtfLog.info("Trying to get a chunkscan for a chunk that isn't ready to be scanned");
 		}
 		
 		return scan;

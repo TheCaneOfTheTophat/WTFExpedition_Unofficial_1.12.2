@@ -2,7 +2,7 @@ package wtf.worldgen.dungeoncaves;
 
 import java.util.ArrayList;
 
-import wtf.config.CaveBiomesConfig;
+import wtf.config.WTFExpeditionConfig;
 import wtf.worldgen.dungeoncaves.ambient.DungeonJungleTemple;
 import wtf.worldgen.dungeoncaves.ambient.DungeonSpeleothemGrotto;
 import wtf.worldgen.dungeoncaves.ambient.DungeonTypeBatCave;
@@ -67,13 +67,13 @@ public class DungeonTypeRegister {
 	
 	public static ArrayList<AbstractDungeonType> defaultList(){
 		ArrayList<AbstractDungeonType> list = new ArrayList<AbstractDungeonType>();
-		if (CaveBiomesConfig.enableAmbientDungeons){
+		if (WTFExpeditionConfig.enableSubtypes){
 			list.add(CaveIn);
 			list.add(Grotto);
 			list.add(Bat);
 					
 		}
-		if (CaveBiomesConfig.enableMobDungeons){
+		if (WTFExpeditionConfig.enableDungeons){
 			list.add(Skeleton);
 			list.add(Zombie);
 		}
@@ -82,11 +82,11 @@ public class DungeonTypeRegister {
 	
 	public static ArrayList<AbstractDungeonType> forestList(){
 		ArrayList<AbstractDungeonType> list = new ArrayList<AbstractDungeonType>();
-		if (CaveBiomesConfig.enableAmbientDungeons){
+		if (WTFExpeditionConfig.enableSubtypes){
 			
 			list.add(Foxfire);
 		}
-		if (CaveBiomesConfig.enableMobDungeons){
+		if (WTFExpeditionConfig.enableDungeons){
 			list.add(Spider);
 			list.add(ZombieFarm);
 		}
@@ -95,13 +95,13 @@ public class DungeonTypeRegister {
 	
 	public static ArrayList<AbstractDungeonType> lushList(){
 		ArrayList<AbstractDungeonType> list = new ArrayList<AbstractDungeonType>();
-		if (CaveBiomesConfig.enableAmbientDungeons){
+		if (WTFExpeditionConfig.enableSubtypes){
 			
 			list.add(Foxfire);
 			list.add(JungleTemple);
 			list.add(Rainstone);
 		}
-		if (CaveBiomesConfig.enableMobDungeons){
+		if (WTFExpeditionConfig.enableDungeons){
 			list.add(Spider);
 			
 		}
@@ -110,10 +110,10 @@ public class DungeonTypeRegister {
 	
 	public static ArrayList<AbstractDungeonType> coldList(){
 		ArrayList<AbstractDungeonType> list = new ArrayList<AbstractDungeonType>();
-		if (CaveBiomesConfig.enableAmbientDungeons){
+		if (WTFExpeditionConfig.enableSubtypes){
 			list.add(Frozen);
 		}
-		if (CaveBiomesConfig.enableMobDungeons){
+		if (WTFExpeditionConfig.enableDungeons){
 			list.add(Stray);
 		}
 		return list;
@@ -121,12 +121,12 @@ public class DungeonTypeRegister {
 	
 	public static ArrayList<AbstractDungeonType> wetList(){
 		ArrayList<AbstractDungeonType> list = new ArrayList<AbstractDungeonType>();
-		if (CaveBiomesConfig.enableAmbientDungeons){
+		if (WTFExpeditionConfig.enableSubtypes){
 			list.add(Rainstone);
 			list.add(Prismarine);
 			list.add(BogLantern);
 		}
-		if (CaveBiomesConfig.enableMobDungeons){
+		if (WTFExpeditionConfig.enableDungeons){
 			list.add(Slime);
 		}
 		return list;
@@ -134,10 +134,10 @@ public class DungeonTypeRegister {
 	
 	public static ArrayList<AbstractDungeonType> volcanicList(){
 		ArrayList<AbstractDungeonType> list = new ArrayList<AbstractDungeonType>();
-		if (CaveBiomesConfig.enableAmbientDungeons){
+		if (WTFExpeditionConfig.enableSubtypes){
 			list.add(JungleTemple);
 		}
-		if (CaveBiomesConfig.enableMobDungeons){
+		if (WTFExpeditionConfig.enableDungeons){
 			list.add(MagmaSlime);
 			list.add(FireElemental);
 		}
@@ -146,10 +146,10 @@ public class DungeonTypeRegister {
 	
 	public static ArrayList<AbstractDungeonType> desertList(){
 		ArrayList<AbstractDungeonType> list = new ArrayList<AbstractDungeonType>();
-		if (CaveBiomesConfig.enableAmbientDungeons){
+		if (WTFExpeditionConfig.enableSubtypes){
 			list.add(Soulsand);
 		}
-		if (CaveBiomesConfig.enableMobDungeons){
+		if (WTFExpeditionConfig.enableDungeons){
 			list.add(Husk);
 			list.add(Mummy);
 		}
@@ -158,10 +158,10 @@ public class DungeonTypeRegister {
 	
 	public static ArrayList<AbstractDungeonType> netherList(){
 		ArrayList<AbstractDungeonType> list = new ArrayList<AbstractDungeonType>();
-		if (CaveBiomesConfig.enableAmbientDungeons){
+		if (WTFExpeditionConfig.enableSubtypes){
 			list.add(Soulsand);
 		}
-		if (CaveBiomesConfig.enableMobDungeons){
+		if (WTFExpeditionConfig.enableDungeons){
 			list.add(NetherPortal);
 			list.add(Blaze);
 			list.add(SkeletonKnight);
@@ -172,10 +172,10 @@ public class DungeonTypeRegister {
 	
 	public static ArrayList<AbstractDungeonType> mountainList(){
 		ArrayList<AbstractDungeonType> list = new ArrayList<AbstractDungeonType>();
-		if (CaveBiomesConfig.enableAmbientDungeons){
+		if (WTFExpeditionConfig.enableSubtypes){
 
 		}
-		if (CaveBiomesConfig.enableMobDungeons){
+		if (WTFExpeditionConfig.enableDungeons){
 			list.add(Golem);
 			list.add(Mine);			
 		}

@@ -9,7 +9,7 @@ import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import wtf.config.GameplayConfig;
+import wtf.config.WTFExpeditionConfig;
 import wtf.init.BlockSets;
 
 public class GravityMethods {
@@ -49,7 +49,7 @@ public class GravityMethods {
 		//start check for tower conditions : all adjacent are air, and unstable block below
 		BlockPos downpos = pos.down();
 		Block downBlock = world.getBlockState(downpos).getBlock();
-		if (GameplayConfig.antiNerdPole 
+		if (WTFExpeditionConfig.antiNerdPole
 				&& BlockSets.fallingBlocks.containsKey(downBlock)
 				&& unstableTowerPos(world, pos.down())
 				&& !fenceNear(world, pos, 1, 2)){ //we check for fences down two blocks at the start, then in each posCheck it checks down 1 level
@@ -67,7 +67,7 @@ public class GravityMethods {
 
 			if (random.nextFloat()*count > BlockSets.fallingBlocks.get(downBlock)){
 				EntityFallingBlock entityfallingblock = new EntityWTFSlidingBlock(world, pos, getRandomAdj(pos), state);
-				entityfallingblock.setHurtEntities(GameplayConfig.fallingBlocksDamage);
+				entityfallingblock.setHurtEntities(WTFExpeditionConfig.fallingBlocksDamage);
 			}
 			//downward iteration is within the sliding block class
 		}
@@ -95,7 +95,7 @@ public class GravityMethods {
 			}
 
 			EntityFallingBlock entityfallingblock = new EntityWTFFallingBlock(world, pos, world.getBlockState(pos));
-			entityfallingblock.setHurtEntities(GameplayConfig.fallingBlocksDamage);
+			entityfallingblock.setHurtEntities(WTFExpeditionConfig.fallingBlocksDamage);
 			if (!world.isRemote && world.spawnEntity(entityfallingblock)){
 
 			}

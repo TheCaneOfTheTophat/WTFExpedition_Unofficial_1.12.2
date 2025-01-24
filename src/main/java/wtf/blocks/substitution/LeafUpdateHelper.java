@@ -7,7 +7,6 @@ import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import wtf.config.OverworldGenConfig;
 
 public class LeafUpdateHelper {
 

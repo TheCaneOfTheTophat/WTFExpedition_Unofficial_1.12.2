@@ -48,7 +48,6 @@ public abstract class AbstractBlockDerivativeFalling extends BlockFalling {
         super(backState.getMaterial());
         this.parentBackground = backState;
         this.parentForeground = foreState;
-
         this.setHarvestLevel(foreState.getBlock().getHarvestTool(foreState), foreState.getBlock().getHarvestLevel(foreState));
     }
 

@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import wtf.config.OverworldGenConfig;
+import wtf.config.WTFExpeditionConfig;
 import wtf.init.BlockSets.Modifier;
 import wtf.utilities.simplex.SimplexHelper;
 import wtf.utilities.wrappers.ChunkCoords;
@@ -24,20 +24,20 @@ public class SurfaceGenerator {
 			for (SurfacePos pos : posArray){
 				Biome biome = world.getBiome(pos);
 				if (BiomeDictionary.hasType(biome, Type.RIVER)){
-					if (simplex.get2DNoise(world, pos.getX()*16, pos.getZ()*16) > OverworldGenConfig.riverFracChunkPercent &&
-							simplex.get3DNoise(world, pos) > OverworldGenConfig.riverFracFreq){
+					if (simplex.get2DNoise(world, pos.getX()*16, pos.getZ()*16) > WTFExpeditionConfig.riverFracturedBlockPercent &&
+							simplex.get3DNoise(world, pos) > WTFExpeditionConfig.riverFracturedBlockPercent){
 						gen.transformBlock(pos, Modifier.COBBLE);
 					}
 				}
 				else if (BiomeDictionary.hasType(biome, Type.MOUNTAIN)){
-					if (simplex.get2DNoise(world, pos.getX()*16, pos.getZ()*16) > OverworldGenConfig.mountainFracChunkPercent &&
-							simplex.get3DNoise(world, pos) > OverworldGenConfig.mountainFracFreq){
+					if (simplex.get2DNoise(world, pos.getX()*16, pos.getZ()*16) > WTFExpeditionConfig.mountainFracturedChunkPercent &&
+							simplex.get3DNoise(world, pos) > WTFExpeditionConfig.mountainFracturedBlockPercent){
 						gen.transformBlock(pos, Modifier.COBBLE);
 					}
 				}
 				else if (BiomeDictionary.hasType(biome, Type.FOREST )){
-					if (simplex.get2DNoise(world, pos.getX()*16, pos.getZ()*16) > OverworldGenConfig.forestMossChunkPercent &&
-							simplex.get3DNoise(world, pos) > OverworldGenConfig.ForestMossFreq){
+					if (simplex.get2DNoise(world, pos.getX()*16, pos.getZ()*16) > WTFExpeditionConfig.forestMossyChunkPercent &&
+							simplex.get3DNoise(world, pos) > WTFExpeditionConfig.forestMossyBlockPercent){
 						gen.transformBlock(pos, Modifier.MOSSY);
 					}
 				}

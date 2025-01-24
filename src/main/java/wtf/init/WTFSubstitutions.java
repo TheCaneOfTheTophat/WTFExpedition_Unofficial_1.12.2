@@ -1,19 +1,5 @@
 package wtf.init;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.feature.WorldGenTrees;
-import net.minecraftforge.fml.common.registry.ExistingSubstitutionException;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import wtf.blocks.substitution.BlockWTFTorch;
-import wtf.blocks.substitution.CustomNewLeaves;
-import wtf.blocks.substitution.CustomOldLeaves;
-import wtf.config.MasterConfig;
-import wtf.config.GameplayConfig;
-import wtf.config.OverworldGenConfig;
-
 public class WTFSubstitutions {
 	
 	public static void init(){

@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import wtf.config.GameplayConfig;
+import wtf.config.WTFExpeditionConfig;
 import wtf.gameplay.fracturing.EntityStoneCrack;
 import wtf.init.BlockSets;
 
@@ -38,7 +38,7 @@ public class ListenerOreFrac {
 			if (BlockSets.oreAndFractures.contains(block))
 			{
 				
-				if (GameplayConfig.fracSimple){
+				if (WTFExpeditionConfig.simpleFracturing){
 					EntityStoneCrack.FracOreSmple(event.getWorld(), event.getPos());
 				}
 				else {

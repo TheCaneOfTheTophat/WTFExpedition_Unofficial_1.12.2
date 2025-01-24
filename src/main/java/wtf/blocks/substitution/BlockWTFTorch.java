@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import wtf.WTFExpedition;
-import wtf.config.GameplayConfig;
+import wtf.config.WTFExpeditionConfig;
 
 public class BlockWTFTorch extends BlockTorch
 {
@@ -35,8 +35,8 @@ public class BlockWTFTorch extends BlockTorch
 
 	@Override
 	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand){
-		if (isLit && rand.nextInt(100) < GameplayConfig.torchLifespan){
-			if (!world.isAnyPlayerWithinRangeAt(pos.getX(), pos.getY(), pos.getZ(), GameplayConfig.torchRange)){
+		if (isLit && rand.nextInt(100) < WTFExpeditionConfig.torchLifespan){
+			if (!world.isAnyPlayerWithinRangeAt(pos.getX(), pos.getY(), pos.getZ(), WTFExpeditionConfig.torchRange)){
 				IBlockState newState = torch_off.getStateFromMeta(state.getBlock().getMetaFromState(state));
 				world.setBlockState(pos, newState);
 			}
@@ -48,7 +48,7 @@ public class BlockWTFTorch extends BlockTorch
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
 		if (!isLit){
-			if(GameplayConfig.relightTorchByHand) {
+			if(WTFExpeditionConfig.relightTorchByHand) {
 				IBlockState newState = torch_on.getStateFromMeta(state.getBlock().getMetaFromState(state));
 				return worldIn.setBlockState(pos, newState);
 				}

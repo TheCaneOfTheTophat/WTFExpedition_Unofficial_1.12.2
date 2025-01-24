@@ -1,12 +1,5 @@
 package wtf.init;
 
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import wtf.config.GameplayConfig;
-
-
 
 public class WTFRecipes {
 	

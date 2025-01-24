@@ -256,7 +256,7 @@ public class WTFContent {
 		registerItem(reg, new Item(), "nitre");
 		registerItem(reg, new Item(), "sulfur");
 
-		if(MasterConfig.gameplaytweaks && GameplayConfig.homescroll)
+		if(WTFExpeditionConfig.gameplayTweaksEnabled && WTFExpeditionConfig.homeScrollsEnabled)
 			registerItem(reg, new ItemHomeScroll(), "home_scroll");
 
 		for(Block block : blocks) {

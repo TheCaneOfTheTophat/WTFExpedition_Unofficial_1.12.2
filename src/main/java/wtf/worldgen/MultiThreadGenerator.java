@@ -5,8 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
-import wtf.config.MasterConfig;
-import wtf.config.OverworldGenConfig;
+import wtf.config.WTFExpeditionConfig;
 import wtf.utilities.wrappers.ChunkCoords;
 import wtf.utilities.wrappers.ChunkScan;
 import wtf.worldgen.generators.DungeonGenerator;
@@ -63,23 +62,23 @@ public class MultiThreadGenerator implements Runnable{
 			
 		gen.overrideBlock(scan.coords.getGenMarkerPos(), Blocks.BEDROCK.getDefaultState());
 		
-		try {	
-			if (MasterConfig.enableOreGen){
+		try {
+			if (WTFExpeditionConfig.oreGenEnabled){
 				oreGen.generate(world, coords, random, scan, gen);
 			}
-			if (MasterConfig.dungeonGeneration){
+			if (WTFExpeditionConfig.dungeonGenerationEnabled){
 				dungeonGen.generate(world, coords, random, scan, gen);
 			}
-			if (MasterConfig.caveGeneration){
+			if (WTFExpeditionConfig.caveGenerationEnabled){
 				caveGen.generate(world, coords, random, scan, gen);
 			}
-			if (MasterConfig.enableOverworldGeneration && OverworldGenConfig.genTrees){
+			if (WTFExpeditionConfig.overworldGenerationEnabled && WTFExpeditionConfig.bigTreesEnabled){
 				treeGen.generate(world, coords, random, scan, gen);
 			}
-			if (OverworldGenConfig.modifySurface){ // I don't have this under a config a the moment
+			if (WTFExpeditionConfig.enableSurfaceModification){ // I don't have this under a config a the moment
 				subGen.generate(world, coords, random, scan, gen);
 			}
-			if (OverworldGenConfig.modifySurface && MasterConfig.enableOverworldGeneration){
+			if (WTFExpeditionConfig.enableSurfaceModification && WTFExpeditionConfig.overworldGenerationEnabled){
 				surfaceGen.generate(world, coords, random, scan, gen);
 			}
 		}

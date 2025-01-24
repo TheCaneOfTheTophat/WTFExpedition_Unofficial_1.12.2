@@ -13,7 +13,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import wtf.blocks.BlockDecoAnim;
 import wtf.blocks.BlockDecoStatic;
-import wtf.config.GameplayConfig;
+import wtf.config.WTFExpeditionConfig;
 import wtf.gameplay.GravityMethods;
 import wtf.init.BlockSets;
 import wtf.init.BlockSets.Modifier;
@@ -178,7 +178,7 @@ public class EntityStoneCrack extends Entity{
 					cobble = BlockSets.getTransformedState(block.parentBackground, Modifier.COBBLE);
 					if (cobble != null){
 						world.setBlockState(pos, cobble);
-						if (GameplayConfig.gravity){
+						if (WTFExpeditionConfig.additionalBlockGravity){
 							GravityMethods.dropBlock(world, pos, true);
 						}
 						addAllAdj(pos);
@@ -187,7 +187,7 @@ public class EntityStoneCrack extends Entity{
 				else if (cobble != null){
 					//if has cobble, then frac and drop the block
 					world.setBlockState(pos, cobble);
-					if (GameplayConfig.gravity){
+					if (WTFExpeditionConfig.additionalBlockGravity){
 						GravityMethods.dropBlock(world, pos, true);
 					}
 				}

@@ -25,7 +25,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
-import wtf.config.GameplayConfig;
+import wtf.config.WTFExpeditionConfig;
 import wtf.utilities.wrappers.ExpVec;
 
 public class CustomExplosion extends Explosion{
@@ -82,7 +82,7 @@ public class CustomExplosion extends Explosion{
 		float xpos = getModifier(origin.east());
 		float xneg = getModifier(origin.west());
 		float ypos = getModifier(origin.up());
-		float yneg = this.sourceEntity instanceof EntityCreeper ? (float) (getModifier(origin.down())/GameplayConfig.creeperUpConstant) :  getModifier(origin.down()); 
+		float yneg = this.sourceEntity instanceof EntityCreeper ? (float) (getModifier(origin.down())/ WTFExpeditionConfig.creeperUpwardModifier) :  getModifier(origin.down());
 		float zpos = getModifier(origin.north());
 		float zneg = getModifier(origin.south());
 
@@ -180,11 +180,11 @@ public class CustomExplosion extends Explosion{
 							if (entity instanceof EntityLivingBase){
 								d11 = EnchantmentProtection.getBlastDamageReduction((EntityLivingBase)entity, damage);
 								if (vec.getStr() > 0.5){
-									entity.attackEntityFrom(DamageSource.causeExplosionDamage(this), (float) (d11*damage*GameplayConfig.explosionDamageMod));
+									entity.attackEntityFrom(DamageSource.causeExplosionDamage(this), (float) (d11*damage*WTFExpeditionConfig.explosionDamageModifier));
 								}
 							}
 													
-							entity.addVelocity(vec.strX()/10*GameplayConfig.explosionForceMod, vec.strY()/10*GameplayConfig.explosionForceMod, vec.strZ()/10*GameplayConfig.explosionForceMod);
+							entity.addVelocity(vec.strX()/10*WTFExpeditionConfig.explosionForceModifier, vec.strY()/10*WTFExpeditionConfig.explosionForceModifier, vec.strZ()/10*WTFExpeditionConfig.explosionForceModifier);
 							entity.velocityChanged=true;
 
 						}
@@ -271,7 +271,7 @@ public class CustomExplosion extends Explosion{
 			IBlockState iblockstate = world.getBlockState(pos);
 			// Also unsure about this one
 			iblockstate.neighborChanged(world, pos, iblockstate.getBlock(), pos);
-			if (GameplayConfig.gravity){
+			if (WTFExpeditionConfig.additionalBlockGravity){
 				GravityMethods.checkPos(world, pos);
 			}
 		}

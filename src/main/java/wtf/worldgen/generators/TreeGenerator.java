@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.WorldGenShrub;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import wtf.config.OverworldGenConfig;
+import wtf.config.WTFExpeditionConfig;
 import wtf.utilities.simplex.SimplexHelper;
 import wtf.utilities.wrappers.ChunkCoords;
 import wtf.utilities.wrappers.ChunkScan;
@@ -40,7 +40,7 @@ public class TreeGenerator {
 	public static boolean shouldTreePosGenerate(World world, Random random, BlockPos pos){
 		double noise = (treeSimplex.get2DNoise(world, pos.getX()/32, pos.getZ()/32)); 
 		double rand = random.nextFloat(); 
-		double noise2 = noise - (noise - OverworldGenConfig.treeReplacementRate)*OverworldGenConfig.simplexTreeScale;	
+		double noise2 = noise - (noise - WTFExpeditionConfig.bigTreeReplacementPercentage)*WTFExpeditionConfig.simplexBigTreeScale;
 		return rand < noise2;
 	}
 	

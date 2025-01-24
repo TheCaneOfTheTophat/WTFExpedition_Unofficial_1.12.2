@@ -22,7 +22,7 @@ import wtf.blocks.BlockRoots;
 import wtf.blocks.BlockSpeleothem;
 import wtf.blocks.BlockIcicle.IcicleType;
 import wtf.blocks.BlockSpeleothem.SpeleothemType;
-import wtf.config.CaveBiomesConfig;
+import wtf.config.WTFExpeditionConfig;
 import wtf.init.BlockSets;
 import wtf.init.WTFContent;
 import wtf.utilities.wrappers.BlockMap;
@@ -102,7 +102,7 @@ public class GeneratorMethods{
 	}
 	
 	public void setWaterPatch(BlockPos pos){
-		if (CaveBiomesConfig.enablePuddles){
+		if (WTFExpeditionConfig.enablePuddles){
 			setPatch(pos, WTFContent.puddle.getDefaultState());
 		}
 	}

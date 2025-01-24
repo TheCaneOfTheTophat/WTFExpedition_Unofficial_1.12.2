@@ -14,7 +14,7 @@ import net.minecraftforge.event.world.BlockEvent.CropGrowEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
-import wtf.config.GameplayConfig;
+import wtf.config.WTFExpeditionConfig;
 
 public class ListenerPlantGrowth {
 
@@ -46,7 +46,7 @@ public class ListenerPlantGrowth {
 	public void growthTickAllowed(CropGrowEvent event)
 	{	
 		//System.out.println(event.block.getLocalizedName());
-		double growthPercent = GameplayConfig.appleCoreConstant*2;
+		double growthPercent = WTFExpeditionConfig.cropGrowthPercentModifier *2;
 		float chance = random.nextFloat();
 		if (chance > growthPercent){
 			event.setResult(Result.DENY);
@@ -57,7 +57,7 @@ public class ListenerPlantGrowth {
 		if (type != null){
 			Biome biome = event.getWorld().getBiome(event.getPos());
 			if (BiomeDictionary.hasType(biome, type)){
-				if (chance > GameplayConfig.appleCoreConstant){
+				if (chance > WTFExpeditionConfig.cropGrowthPercentModifier){
 					event.setResult(Result.DENY);
 					return;
 				}

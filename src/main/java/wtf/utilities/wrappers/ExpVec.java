@@ -8,8 +8,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import wtf.config.GameplayConfig;
 import wtf.config.StoneRegEntry;
+import wtf.config.WTFExpeditionConfig;
 import wtf.config.WTFStoneRegistry;
 import wtf.gameplay.CustomExplosion;
 import wtf.gameplay.ExploderEntity;
@@ -62,7 +62,7 @@ public class ExpVec extends Vec{
 				world.spawnEntity(entity);
 			}
 
-			double atomize = resistance * GameplayConfig.expLvlAatomize;
+			double atomize = resistance * WTFExpeditionConfig.atomizingExplosionLevel;
 
 			float chance = (float) ((atomize-str)/atomize);
 			if (chance > 1F) {
@@ -71,7 +71,7 @@ public class ExpVec extends Vec{
 				world.setBlockState(pos, air, 2);
 				explosion.spawnExtraParticles(pos, 2F, pos.getX(),pos.getY(), pos.getZ());
 			} 
-			else if (str > resistance*GameplayConfig.expLvlDrop) {
+			else if (str > resistance*WTFExpeditionConfig.droppingExplosionLevel) {
 				str -= resistance;
 				block.onBlockDestroyedByExplosion(world, pos, explosion);
 				if (block.canDropFromExplosion(explosion)) {
@@ -87,7 +87,7 @@ public class ExpVec extends Vec{
 					world.setBlockState(pos, air, 2);
 				}
 			} 
-			else if (GameplayConfig.explosionFractures){
+			else if (WTFExpeditionConfig.explosionsFracture){
 				str -= resistance/3;
 				StoneRegEntry entry = WTFStoneRegistry.stoneReg.get(state);
 				if (entry != null && entry.fractures){

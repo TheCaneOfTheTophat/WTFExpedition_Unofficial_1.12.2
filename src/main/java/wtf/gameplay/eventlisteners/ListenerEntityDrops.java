@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import wtf.config.GameplayConfig;
+import wtf.config.WTFExpeditionConfig;
 
 public class ListenerEntityDrops {
 
@@ -18,7 +18,7 @@ public class ListenerEntityDrops {
 		}
 		int r = random.nextInt(100);
 		//System.out.println("Mob drop event caught " + r + " > " + GameplayConfig.mobDropsReqPlayer);
-		if (r > GameplayConfig.mobDropsReqPlayer){
+		if (r > WTFExpeditionConfig.playerlessMobDropPercentage){
 			//event.setCanceled(true);
 			//System.out.println("Canceling drops");
 		}

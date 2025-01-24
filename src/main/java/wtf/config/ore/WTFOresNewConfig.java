@@ -15,7 +15,6 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Loader;
 import wtf.WTFExpedition;
-import wtf.config.AbstractConfig;
 import wtf.config.WTFStoneRegistry;
 import wtf.init.BlockSets;
 import wtf.init.BlockSets.Modifier;
@@ -33,7 +32,7 @@ import wtf.utilities.UBC.UBCOreReplacer;
 import wtf.utilities.wrappers.StoneAndOre;
 import wtf.worldgen.generators.OreGenerator;
 
-public class WTFOresNewConfig extends AbstractConfig{
+public class WTFOresNewConfig {
 
 
 	public static HashSet<IBlockState> cancelOres = new HashSet<IBlockState>(); 
@@ -52,7 +51,7 @@ public class WTFOresNewConfig extends AbstractConfig{
 
 	public static void loadConfig() throws Exception {
 
-		Configuration config = new Configuration(new File(configPath+"WTFOresConfigV2.cfg"));
+		Configuration config = new Configuration(new File("WTFOresConfigV2.cfg"));
 
 		config.load();
 
@@ -63,8 +62,8 @@ public class WTFOresNewConfig extends AbstractConfig{
 				"minecraft:quartz_ore@0 #cave&cluster", "wtfcore:nitre_ore@0 #cave&single", "wtfcore:oreSandGold@0 #underwater&single", "WTFBlockType:cracked #vein"};
 
 		if (Loader.isModLoaded("tconstruct")){
-			defOres = appendArray(defOres, "tconstruct:ore@0 #vein" );
-			defOres = appendArray(defOres, "tconstruct:ore@1 #cloud" );
+//			defOres = appendArray(defOres, "tconstruct:ore@0 #vein" );
+//			defOres = appendArray(defOres, "tconstruct:ore@1 #cloud" );
 			
 		}
 		
@@ -110,7 +109,7 @@ public class WTFOresNewConfig extends AbstractConfig{
 					}
 				}
 				else {
-					oreState = getBlockState(oreString);
+					oreState = null; // getBlockState(oreString)
 				}
 
 				if (oreState == null){
@@ -131,7 +130,7 @@ public class WTFOresNewConfig extends AbstractConfig{
 				//Background stones
 				String stoneStringList = config.get(category, "0 List of background stones", preset.stoneList).getString().replaceAll("\\s","");
 
-				ArrayList<IBlockState> stoneArray = getBlockStateArray(stoneStringList);
+				ArrayList<IBlockState> stoneArray = null; //getBlockStateArray(stoneStringList);
 	
 				int[] genRange = config.get(category, "2 Generation height range (min % surface height, max % surface height)", preset.genRange).getIntList();
 				try {
@@ -172,7 +171,7 @@ public class WTFOresNewConfig extends AbstractConfig{
 					for (String biomestring : biomeModTags){
 						if (biomestring.length() > 0){
 							float f = Integer.parseInt(biomestring.split("@")[1])/100F;
-							generator.biomeModifier.put(getBiomeTypeFromString(biomestring.split("@")[0]), f);
+							// generator.biomeModifier.put(getBiomeTypeFromString(biomestring.split("@")[0]), f);
 						}
 					}
 				}
@@ -182,7 +181,7 @@ public class WTFOresNewConfig extends AbstractConfig{
 
 					for (String biomestring : reqBiomes){
 						if (biomestring.length() > 0){
-							generator.reqBiomeTypes.add(getBiomeTypeFromString(biomestring));
+							// generator.reqBiomeTypes.add(getBiomeTypeFromString(biomestring));
 						}
 					}
 				}
@@ -252,7 +251,7 @@ public class WTFOresNewConfig extends AbstractConfig{
 
 				OreGenerator.oreGenRegister.add(generator);
 				VanillOreGenCatcher.vanillaCanceler(oreState);
-				WTFExpedition.coreLog.info("Ore Generator Added for " + oreGenString);
+				WTFExpedition.wtfLog.info("Ore Generator Added for " + oreGenString);
 			}
 
 		}

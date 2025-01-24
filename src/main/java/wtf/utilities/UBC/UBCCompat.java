@@ -37,7 +37,7 @@ public class UBCCompat {
 
 	public static void loadUBCStone(){
 
-		WTFExpedition.coreLog.info("Getting UBC stones");
+		WTFExpedition.wtfLog.info("Getting UBC stones");
 		
 		//new ReplacerVanillaStone();
 		

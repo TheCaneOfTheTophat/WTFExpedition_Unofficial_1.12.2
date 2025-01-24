@@ -4,8 +4,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import wtf.blocks.AbstractBlockDerivative;
-import wtf.config.GameplayConfig;
 import wtf.init.BlockSets;
 
 public class ListenerMiningSpeed {

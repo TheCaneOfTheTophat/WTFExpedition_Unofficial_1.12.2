@@ -2,10 +2,7 @@ package wtf.init;
 
 import net.minecraftforge.common.MinecraftForge;
 import wtf.WTFExpedition;
-import wtf.config.MasterConfig;
-import wtf.config.CaveBiomesConfig;
-import wtf.config.GameplayConfig;
-import wtf.config.OverworldGenConfig;
+import wtf.config.WTFExpeditionConfig;
 import wtf.gameplay.eventlisteners.ListenerBlockNameGetter;
 import wtf.gameplay.eventlisteners.ListenerChickenDrops;
 import wtf.gameplay.eventlisteners.ListenerCustomExplosion;
@@ -33,79 +30,76 @@ public class EventListenerRegistry {
 		
 		MinecraftForge.EVENT_BUS.register(new TickGenBuffer());
 		
-		if (MasterConfig.gameplaytweaks){
-			if (GameplayConfig.miningSpeedEnabled){
+		if (WTFExpeditionConfig.gameplayTweaksEnabled){
+			if (WTFExpeditionConfig.miningSpeedModificationEnabled){
 				MinecraftForge.EVENT_BUS.register(new ListenerMiningSpeed());
-				WTFExpedition.coreLog.info("mining speed listener registered");
+				WTFExpedition.wtfLog.info("mining speed listener registered");
 			}
-			if (GameplayConfig.miningOreFractures){
+			if (WTFExpeditionConfig.miningOreFractures){
 				MinecraftForge.EVENT_BUS.register(new ListenerOreFrac());
-				WTFExpedition.coreLog.info("ore fracturing listener registered");
+				WTFExpedition.wtfLog.info("ore fracturing listener registered");
 			}
-			if (GameplayConfig.miningStoneFractures){
+			if (WTFExpeditionConfig.miningStoneFractures){
 				MinecraftForge.EVENT_BUS.register(new ListenerStoneFrac());
-				WTFExpedition.coreLog.info("stone fracturing listener registered");
+				WTFExpedition.wtfLog.info("stone fracturing listener registered");
 			}
 
-			if (GameplayConfig.customExplosion){
+			if (WTFExpeditionConfig.customExplosions){
 				MinecraftForge.EVENT_BUS.register(new ListenerCustomExplosion());
-				WTFExpedition.coreLog.info("custom explosion listener registered");
+				WTFExpedition.wtfLog.info("custom explosion listener registered");
 			}
-			if (GameplayConfig.gravity){
+			if (WTFExpeditionConfig.additionalBlockGravity){
 				MinecraftForge.EVENT_BUS.register(new ListenerGravity());
-				WTFExpedition.coreLog.info("block gravity listener registered");
+				WTFExpedition.wtfLog.info("block gravity listener registered");
 			}
-			if (GameplayConfig.stickDrop > 0){
+			if (WTFExpeditionConfig.stickDropPercentage > 0){
 				MinecraftForge.EVENT_BUS.register(new ListenerLeafDrops());
-				WTFExpedition.coreLog.info("Leaves drop sticks listener registered");
+				WTFExpedition.wtfLog.info("Leaves drop sticks listener registered");
 			}
-			if (GameplayConfig.featherDrop > 0){
+			if (WTFExpeditionConfig.featherDropRate > 0){
 				MinecraftForge.EVENT_BUS.register(new ListenerChickenDrops());
-				WTFExpedition.coreLog.info("Chickens drop feathers listener registered");
+				WTFExpedition.wtfLog.info("Chickens drop feathers listener registered");
 			}
-			if (GameplayConfig.waterControl){
+			if (WTFExpeditionConfig.waterSourceControl){
 				MinecraftForge.EVENT_BUS.register(new ListenerWaterSpawn());
-				WTFExpedition.coreLog.info("Water spawn controller listener registered");
+				WTFExpedition.wtfLog.info("Water spawn controller listener registered");
 			}
-			if (GameplayConfig.plantGrowthMod){
+			if (WTFExpeditionConfig.modifyCropGrowth){
 				MinecraftForge.EVENT_BUS.register(new ListenerPlantGrowth());
-				WTFExpedition.coreLog.info("Plang growth speed modifier listener registered");
+				WTFExpedition.wtfLog.info("Plang growth speed modifier listener registered");
 			}
-			if (GameplayConfig.mobDropsReqPlayer > 0){
+			if (WTFExpeditionConfig.playerlessMobDropPercentage > 0){
 				MinecraftForge.EVENT_BUS.register(new ListenerEntityDrops());
 			}		
 			
 			MinecraftForge.EVENT_BUS.register(new LootEventListener());
 		}
 		
-		if (MasterConfig.enableOreGen){
+		if (WTFExpeditionConfig.oreGenEnabled){
 			MinecraftForge.ORE_GEN_BUS.register(new VanillOreGenCatcher());
 		}
 
-		if (GameplayConfig.childZombie){
+		if (WTFExpeditionConfig.preventBabyZombies){
 			MinecraftForge.EVENT_BUS.register(new ZombieListener());
 		}
 
 	
-		if (MasterConfig.enableOverworldGeneration){
-			if (OverworldGenConfig.genTrees){
+		if (WTFExpeditionConfig.overworldGenerationEnabled){
+			if (WTFExpeditionConfig.bigTreesEnabled){
 				MinecraftForge.TERRAIN_GEN_BUS.register(new WorldGenTreeCancel());
 			}
 		}
 		
-		if (CaveBiomesConfig.replaceSandstone){
-
-			
+		if (WTFExpeditionConfig.replaceSandstone) {
 			MinecraftForge.TERRAIN_GEN_BUS.register(new SandstoneNaturaliser());
 			MinecraftForge.EVENT_BUS.register(new SandstoneNaturaliser());
 			//GameRegistry.registerWorldGenerator(new SandstoneNaturaliser(), 0);
 			//Core.coreLog.info("Sandstone Naturaliser Registered");
-			
 		}
 
-		if(MasterConfig.enableNameGetter){
+		if(WTFExpeditionConfig.enableNameGetter){
 			MinecraftForge.EVENT_BUS.register(new ListenerBlockNameGetter());
-			WTFExpedition.coreLog.info("Registery name getter enabled");
+			WTFExpedition.wtfLog.info("Registery name getter enabled");
 		}
 		
 

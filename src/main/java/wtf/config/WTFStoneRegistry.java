@@ -22,10 +22,10 @@ import wtf.init.WTFContent;
 import wtf.utilities.UBC.UBCCompat;
 import wtf.utilities.wrappers.StateAndModifier;
 
-public class WTFStoneRegistry extends AbstractConfig {
+public class WTFStoneRegistry {
 
 	static Random rand = new Random();
-	public static Configuration config = new Configuration(new File(configPath+"WTFStoneRegistry.cfg"));
+	public static Configuration config = new Configuration(new File("WTFStoneRegistry.cfg"));
 
 	public static HashMap<IBlockState, String> defBlockStateLocations = new HashMap<IBlockState, String>();
 	public static HashMap<IBlockState, String> defTextureLocations = new HashMap<IBlockState, String>();
@@ -87,11 +87,11 @@ public class WTFStoneRegistry extends AbstractConfig {
 				
 		
 		
-		if (WTFExpedition.UBC){
-			for (String string : UBCCompat.UBCStoneList){
-				defstone = appendArray(defstone, string);
-			}
-		}
+//		if (WTFExpedition.UBC){
+//			for (String string : UBCCompat.UBCStoneList){
+//				defstone = appendArray(defstone, string);
+//			}
+//		}
 			
 
 		
@@ -103,7 +103,7 @@ public class WTFStoneRegistry extends AbstractConfig {
 
 		for (String stateString : stoneTreeSet){
 
-			IBlockState state = getBlockState(stateString);
+			IBlockState state /* = getBlockState(stateString)*/ = null;
 
 			if (state != null){
 				
@@ -130,14 +130,14 @@ public class WTFStoneRegistry extends AbstractConfig {
 				
 				cobblestring = config.get (stateString, "Cobblestone version of block", cobblestring).getString();
 				
-				IBlockState cobblestone = getBlockState(cobblestring);
+				IBlockState cobblestone /* = getBlockState(cobblestring) */ = null;
 				
 				boolean speleothems =  config.get(stateString, "Generate stalactite and stalagmites", state.getMaterial() ==Material.ROCK && !state.getBlock().getRegistryName().toString().contains("cobble")).getBoolean();
 				boolean staticDeco =  config.get(stateString, "Generate static deco blocks (moss, cracked, ect)", true).getBoolean();
 				boolean animDeco =  config.get(stateString, "Generate animated deco blocks (Lava crust, dripping, ect)", state.getMaterial() ==Material.ROCK).getBoolean();
 				boolean cracked = config.get(stateString, "Allow cracked version to spawn in world (requires static deco blocks, and cracked stone ore generation)", state.getMaterial() ==Material.ROCK && !state.getBlock().getRegistryName().toString().contains("cobble")).getBoolean();
 				boolean frac = false;
-				if (MasterConfig.gameplaytweaks){
+				if (WTFExpeditionConfig.gameplayTweaksEnabled){
 					int speed = config.get(stateString, "Gameplay: Percentage speed modifier to mine (100% disables)", defSpeed.get(state.getBlock())!= null ? defSpeed.get(state.getBlock()) : 100 ).getInt();
 					BlockSets.blockMiningSpeed.put(state, speed/100F);
 				

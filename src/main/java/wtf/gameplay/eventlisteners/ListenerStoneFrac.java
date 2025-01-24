@@ -11,8 +11,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import wtf.blocks.BlockDecoAnim;
-import wtf.config.GameplayConfig;
 import wtf.config.StoneRegEntry;
+import wtf.config.WTFExpeditionConfig;
 import wtf.config.WTFStoneRegistry;
 import wtf.gameplay.GravityMethods;
 import wtf.gameplay.fracturing.EntityStoneCrack;
@@ -38,7 +38,7 @@ public class ListenerStoneFrac {
 				event.setCanceled(true);
 				doFrac(event.getWorld(), event.getPos(), event.getState());
 
-				if (ListenerHelper.isHammer(event.getPlayer().getHeldItemMainhand()) && GameplayConfig.modifyHammer){
+				if (ListenerHelper.isHammer(event.getPlayer().getHeldItemMainhand()) && WTFExpeditionConfig.modifyHammerBehaviour){
 					int toolLevel = tool == null ? 0 : tool.getItem().getHarvestLevel(tool, "pickaxe", event.getPlayer(), event.getState());
 					EntityStoneCrack.cracHammer(event.getWorld(), event.getPos(), toolLevel);
 				}
@@ -64,7 +64,7 @@ public class ListenerStoneFrac {
 		else {
 			//if has cobble, then frac and drop the block
 			world.setBlockState(pos, cobble);
-			if (GameplayConfig.gravity){
+			if (WTFExpeditionConfig.additionalBlockGravity){
 				GravityMethods.dropBlock(world, pos, true);
 			}
 		}

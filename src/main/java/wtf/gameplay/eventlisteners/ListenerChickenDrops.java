@@ -4,7 +4,7 @@ import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.init.Items;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import wtf.config.GameplayConfig;
+import wtf.config.WTFExpeditionConfig;
 
 public class ListenerChickenDrops {
 
@@ -14,7 +14,7 @@ public class ListenerChickenDrops {
 			EntityChicken chicken = (EntityChicken) event.getEntity();
 			if (!chicken.isChild()){
 
-				if(event.getEntity().getEntityWorld().rand.nextInt(GameplayConfig.featherDrop) == 1){
+				if(event.getEntity().getEntityWorld().rand.nextInt(WTFExpeditionConfig.featherDropRate) == 1){
 					chicken.dropItem(Items.FEATHER, 1);
 				}
 			}

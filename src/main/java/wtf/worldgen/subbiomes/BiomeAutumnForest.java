@@ -9,10 +9,9 @@ import net.minecraft.world.biome.BiomeForest;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import wtf.config.OverworldGenConfig;
+import wtf.config.WTFExpeditionConfig;
 import wtf.utilities.simplex.Simplex;
 import wtf.utilities.wrappers.ChunkScan;
-import wtf.worldgen.generators.TreeGenerator;
 
 public class BiomeAutumnForest extends BiomeForest implements SubBiome{
 
@@ -30,7 +29,7 @@ public class BiomeAutumnForest extends BiomeForest implements SubBiome{
 	@SideOnly(Side.CLIENT)
     public int getFoliageColorAtPos(BlockPos pos)
     {
-    	int noise = (int) (simplex.noise(pos.getX()/OverworldGenConfig.autumnForestColorScale, pos.getZ()/OverworldGenConfig.autumnForestColorScale)*9+9);
+    	int noise = (int) (simplex.noise(pos.getX()/ WTFExpeditionConfig.autumnForestColorScale, pos.getZ()/WTFExpeditionConfig.autumnForestColorScale)*9+9);
     	return autumnLeaf[noise];
     	
     	//Leaves are coloured by returning a value from a range of 18 colours, based on the last digits of the x/y position
@@ -52,7 +51,7 @@ public class BiomeAutumnForest extends BiomeForest implements SubBiome{
 	@Override
 	public double scale() {
 		// TODO Auto-generated method stub
-		return OverworldGenConfig.autumnForestSize;
+		return WTFExpeditionConfig.autumnForestSize;
 	}
 
 
@@ -60,7 +59,7 @@ public class BiomeAutumnForest extends BiomeForest implements SubBiome{
 	@Override
 	public double freq() {
 		// TODO Auto-generated method stub
-		return (double)OverworldGenConfig.autumnForestPercent/100;
+		return WTFExpeditionConfig.autumnForestPercentageFrequency / 100D;
 	}
 
 
