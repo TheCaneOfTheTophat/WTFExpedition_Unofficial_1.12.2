@@ -1,16 +1,12 @@
 package wtf.init;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 import wtf.WTFExpedition;
 import wtf.config.BlockEntry;
 import wtf.config.OreEntry;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -29,38 +25,66 @@ public class JSONLoader {
         List<Path> blockJsons;
 
         try {
-            oreJsons = Files.walk(Paths.get(WTFExpedition.configDirectory, "ores"), 1).filter(Files::isRegularFile).filter(path -> path.getFileName().toString().endsWith(".json")).collect(Collectors.toList());
-            blockJsons =  Files.walk(Paths.get(WTFExpedition.configDirectory, "blocks"),1).filter(Files::isRegularFile).filter(path-> path.getFileName().toString().endsWith(".json")).collect(Collectors.toList());
+            oreJsons = Files.walk(Paths.get(WTFExpedition.configDirectory, "ores"), 4).filter(Files::isRegularFile).filter(path -> path.getFileName().toString().endsWith(".json")).collect(Collectors.toList());
+            blockJsons =  Files.walk(Paths.get(WTFExpedition.configDirectory, "blocks"),4).filter(Files::isRegularFile).filter(path-> path.getFileName().toString().endsWith(".json")).collect(Collectors.toList());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().serializeNulls().create();
+        JsonParser parser = new JsonParser();
+        JsonElement root;
 
         for(Path jsonPath : oreJsons) {
-            OreEntry entry = null;
+            OreEntry entry;
 
             try {
-                entry = gson.fromJson(new FileReader(jsonPath.toString()), OreEntry.class);
+                root = parser.parse(new BufferedReader(new FileReader(jsonPath.toString())));
             } catch (FileNotFoundException e) {
-                WTFExpedition.wtfLog.error("Path \"" + jsonPath + "\" of ore definition JSON file somehow does not exist or cannot be read");
+                throw new RuntimeException("Path \"" + jsonPath + "\" of ore definition JSON file somehow does not exist or cannot be read", e);
+            } catch (JsonSyntaxException e) {
+                throw new RuntimeException("Incorrect JSON syntax in JSON file at path: " + jsonPath, e);
+            } catch (JsonParseException e) {
+                throw new RuntimeException("Error parsing JSON at path: " + jsonPath, e);
             }
 
-            oreEntries.add(entry);
+            if(root.isJsonArray()) {
+                for (JsonElement element : (JsonArray) root) {
+                    entry = gson.fromJson(element.toString(), OreEntry.class);
+                    oreEntries.add(entry);
+                }
+            } else {
+                entry = gson.fromJson(root.toString(), OreEntry.class);
+                oreEntries.add(entry);
+            }
         }
 
         for(Path jsonPath : blockJsons) {
-            BlockEntry entry = null;
+            BlockEntry entry;
 
             try {
-                entry = gson.fromJson(new FileReader(jsonPath.toString()), BlockEntry.class);
+                root = parser.parse(new BufferedReader(new FileReader(jsonPath.toString())));
             } catch (FileNotFoundException e) {
-                WTFExpedition.wtfLog.error("Path \"" + jsonPath + "\" of block definition JSON file somehow does not exist or cannot be read");
+                throw new RuntimeException("Path \"" + jsonPath + "\" of block definition JSON file somehow does not exist or cannot be read", e);
+            } catch (JsonSyntaxException e) {
+                throw new RuntimeException("Incorrect JSON syntax in JSON file at path: " + jsonPath, e);
+            }  catch (JsonParseException e) {
+                throw new RuntimeException("Error parsing JSON at path: " + jsonPath, e);
             }
 
-            blockEntries.add(entry);
-            identifierToBlockEntry.put(entry.getName(), entry);
-            identifierToBlockEntry.put(entry.getBlockId().contains("@") ? entry.getBlockId() : entry.getBlockId() + "@0", entry);
+            if(root.isJsonArray()) {
+                for (JsonElement element : (JsonArray) root) {
+                    entry = gson.fromJson(element.toString(), BlockEntry.class);
+                    blockEntries.add(entry);
+                    identifierToBlockEntry.put(entry.getName(), entry);
+                    identifierToBlockEntry.put(entry.getBlockId().contains("@") ? entry.getBlockId() : entry.getBlockId() + "@0", entry);
+                }
+            } else {
+                entry = gson.fromJson(root.toString(), BlockEntry.class);
+                blockEntries.add(entry);
+                identifierToBlockEntry.put(entry.getName(), entry);
+                identifierToBlockEntry.put(entry.getBlockId().contains("@") ? entry.getBlockId() : entry.getBlockId() + "@0", entry);
+            }
         }
     }
 }
