@@ -32,6 +32,7 @@ import wtf.items.ItemBlockState;
 
 @Mod.EventBusSubscriber
 @GameRegistry.ObjectHolder(WTFExpedition.modID)
+@SuppressWarnings({"unused", "deprecation", "ConstantConditions"})
 public class WTFContent {
 
 	public static HashMap<IBlockState, BlockSpeleothem> speleothemMap = new HashMap<>();
@@ -89,7 +90,6 @@ public class WTFContent {
 	public static void registerSimpleBlocks(RegistryEvent.Register<Block> event) {
 		IForgeRegistry<Block> reg = event.getRegistry();
 
-		// Blocks in the Creative tab
 		registerSimpleBlock(reg, new BlockNitreOre().setCreativeTab(WTFExpedition.wtfTab), "nitre_ore");
 		registerSimpleBlock(reg, new BlockOreSand().setCreativeTab(WTFExpedition.wtfTab), "gold_ore_sand");
 		registerSimpleBlock(reg, new BlockRedCactus().setCreativeTab(WTFExpedition.wtfTab), "red_cactus");
@@ -122,7 +122,6 @@ public class WTFContent {
 		registerSimpleBlock(reg, new BlockNaturalSandstone(Blocks.RED_SANDSTONE.getDefaultState()), "natural_red_sandstone");
 	}
 
-	@SuppressWarnings("unused")
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void registerConfigDependentBlocks(RegistryEvent.Register<Block> event) {
 		IForgeRegistry<Block> reg = event.getRegistry();
@@ -292,29 +291,25 @@ public class WTFContent {
 	====================================
 	*/
 
-	public static <T extends Block> Block registerBlockWithoutItem(IForgeRegistry<Block> registry, T block, String name) {
+	public static <T extends Block> void registerBlockWithoutItem(IForgeRegistry<Block> registry, T block, String name) {
 		block.setRegistryName(WTFExpedition.modID, name);
 		block.setUnlocalizedName(block.getRegistryName().toString());
 
 		registry.register(block);
-		return block;
 	}
 
-	public static <T extends Block> Block registerSimpleBlock(IForgeRegistry<Block> registry, T block, String name) {
+	public static <T extends Block> void registerSimpleBlock(IForgeRegistry<Block> registry, T block, String name) {
 		blocks.add(block);
 
 		registerBlockWithoutItem(registry, block, name);
-        return block;
-    }
-
-	public static <T extends Block> Block registerSimpleBlock(IForgeRegistry<Block> registry, T block, String name, int meta) {
-		registerSimpleBlock(registry, block, name);
-		WTFModelRegistry.metaMap.put(block.getRegistryName(), meta);
-
-		return block;
 	}
 
-	public static <T extends Item> Item registerItem(IForgeRegistry<Item> registry, T item, String name) {
+	public static <T extends Block> void registerSimpleBlock(IForgeRegistry<Block> registry, T block, String name, int meta) {
+		registerSimpleBlock(registry, block, name);
+		WTFModelRegistry.metaMap.put(block.getRegistryName(), meta);
+	}
+
+	public static <T extends Item> void registerItem(IForgeRegistry<Item> registry, T item, String name) {
 		item.setCreativeTab(WTFExpedition.wtfTab);
 		item.setRegistryName(WTFExpedition.modID, name);
 		item.setUnlocalizedName(item.getRegistryName().toString());
@@ -322,23 +317,20 @@ public class WTFContent {
 		items.add(item);
 
 		registry.register(item);
-		return item;
 	}
 
-	public static <T extends ItemBlock> ItemBlock registerItemBlockNoModel(IForgeRegistry<Item> registry, T itemBlock) {
+	public static <T extends ItemBlock> void registerItemBlockNoModel(IForgeRegistry<Item> registry, T itemBlock) {
 		itemBlock.setRegistryName(itemBlock.getBlock().getRegistryName());
 		itemBlock.setUnlocalizedName(itemBlock.getBlock().getUnlocalizedName());
 		itemBlock.setHasSubtypes(true);
 		itemBlock.setMaxDamage(0);
 
 		registry.register(itemBlock);
-		return itemBlock;
 	}
 
-	public static <T extends ItemBlock> ItemBlock registerItemBlock(IForgeRegistry<Item> registry, T itemBlock) {
+	public static <T extends ItemBlock> void registerItemBlock(IForgeRegistry<Item> registry, T itemBlock) {
 		items.add(itemBlock);
 
 		registerItemBlockNoModel(registry, itemBlock);
-		return itemBlock;
 	}
 }

@@ -17,11 +17,13 @@ import org.apache.logging.log4j.Logger;
 import wtf.config.WTFExpeditionConfig;
 import wtf.init.JSONLoader;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.nio.file.Paths;
 
 
 @Mod(modid = WTFExpedition.modID, dependencies = "after:undergroundbiomes")
+@SuppressWarnings({"unused", "ConstantConditions"})
 public class WTFExpedition {
 	public static final String modID = "wtfexpedition";
 	public static String configDirectory;
@@ -38,6 +40,7 @@ public class WTFExpedition {
 
 	public static CreativeTabs wtfTab = new CreativeTabs("WTFExpedition") {
 		@Override
+		@Nonnull
 		public ItemStack getTabIconItem() {
 			return new ItemStack(Item.getItemFromBlock(Blocks.COBBLESTONE));
 		}
