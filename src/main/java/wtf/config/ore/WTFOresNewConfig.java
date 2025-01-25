@@ -15,7 +15,6 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Loader;
 import wtf.WTFExpedition;
-import wtf.config.WTFStoneRegistry;
 import wtf.init.BlockSets;
 import wtf.init.BlockSets.Modifier;
 import wtf.ores.OreGenAbstract;
@@ -35,11 +34,9 @@ import wtf.worldgen.generators.OreGenerator;
 public class WTFOresNewConfig {
 
 
-	public static HashSet<IBlockState> cancelOres = new HashSet<IBlockState>(); 
+	public static HashSet<IBlockState> cancelOres = new HashSet<IBlockState>();
 
-	public static boolean simplexGen;
-
-	public static enum GENTYPE{
+	public enum GENTYPE{
 		vanilla,
 		vein,
 		cloud,
@@ -54,9 +51,6 @@ public class WTFOresNewConfig {
 		Configuration config = new Configuration(new File("WTFOresConfigV2.cfg"));
 
 		config.load();
-
-		simplexGen = config.get("0 General Options", "Use simplex noise instead of random for ore generation", true).getBoolean();
-
 
 		String[] defOres = {"minecraft:coal_ore@0 #vein", "minecraft:iron_ore@0 #vein", "minecraft:gold_ore@0 #cloud", "minecraft:lapis_ore@0 #cluster", "minecraft:redstone_ore@0 #vein", "minecraft:emerald_ore@0 #single", "minecraft:diamond_ore@0 #single",
 				"minecraft:quartz_ore@0 #cave&cluster", "wtfcore:nitre_ore@0 #cave&single", "wtfcore:oreSandGold@0 #underwater&single", "WTFBlockType:cracked #vein"};
@@ -200,43 +194,18 @@ public class WTFOresNewConfig {
 						String stoneName = stoneblock.getRegistryName().toString().split(":")[1]+meta;
 						String regName = "dense_"+stoneName+ oreBlockName;
 						
-						String locStoneName =  WordUtils.capitalize(WTFStoneRegistry.stoneReg.get(stone).textureLocation.split("/")[1].replaceAll("_", " "));
+						String locStoneName;
 						String locOreName = WordUtils.capitalize(textureLoc.replaceAll("_", " "));
 						
 						//if (Block.getBlockFromName(dense_"+blockName) == null){
 						if (oreState.getBlock() != Blocks.REDSTONE_ORE){
 							if (stone.getBlock() instanceof BlockFalling){
-								// TODO Uncomment this
-//								block = WTFBlocks.registerBlock(new BlockDenseOreFalling(stone, oreState), regName);
-//								Core.proxy.writeDenseOreBlockstate(stone, regName, textureLoc, stoneName);
-//								Core.proxy.addName(regName,  "Dense " + locStoneName + " " + locOreName);
 							}
 							else {
-								// TODO Uncomment this
-							//	block = WTFBlocks.registerBlock(new BlockDenseOre(stone, oreState), regName);
-//								Core.proxy.writeDenseOreBlockstate(stone, regName, textureLoc, stoneName);
-//								Core.proxy.addName(regName,  "Dense " + locStoneName + " " + locOreName);
 							}
 						}
 						else {
-
-							// TODO Uncomment this
-							// block = WTFBlocks.registerBlock(new DenseRedstoneOre(false), regName);
-//							Core.proxy.writeDenseOreBlockstate(stone, regName, textureLoc, stoneName);
-//							Core.proxy.addName(regName,  "Dense " + locStoneName + " " + locOreName);
-
-							// TODO Uncomment this
-							// DenseRedstoneOre.denseRedstone_off = block;
-							// DenseRedstoneOre.denseRedstone_on = WTFBlocks.registerBlock(new DenseRedstoneOre(true), regName+"_on");
-//							Core.proxy.writeDenseOreBlockstate(stone, regName+"_on", textureLoc, stoneName);
-//							Core.proxy.addName(regName+"_on",  "Dense " + locStoneName + " " + locOreName);
-							
 						}
-
-						// TODO Uncomment this
-						// BlockSets.stoneAndOre.put(new StoneAndOre(stone, oreState), block.getDefaultState());
-						//Ore ubification/densification of existing ores- removed because it was crashing
-						//new OreReplacer(blockstate.getBlock());
 					}
 					else if (modifier == null){
 						BlockSets.stoneAndOre.put(new StoneAndOre(stone, oreState), oreState);

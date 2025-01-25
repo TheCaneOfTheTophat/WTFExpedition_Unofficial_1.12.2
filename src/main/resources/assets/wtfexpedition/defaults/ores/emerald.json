@@ -1,0 +1,22 @@
+{
+  "blockId": "minecraft:emerald_ore@0",
+  "name": "emerald_ore",
+  "stoneList": ["stone"],
+  "minAmountPerChunk": -10,
+  "maxAmountPerChunk": 10,
+  "surfaceHeightMinPercentage": 1,
+  "surfaceHeightMaxPercentage": 35,
+  "dimensionList": [0],
+  "useDenseBlock": true,
+  "overlayPath": "wtfexpedition:overlays/emerald_ore",
+  "veinPercentDensity": 100,
+  "percentGenerationPerBiomeType": {
+    "hills": 150,
+    "wet": 50
+  },
+  "generation_settings": {
+    "generation_types": {
+      "single": true
+    }
+  }
+}

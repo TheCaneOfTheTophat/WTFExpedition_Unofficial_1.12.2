@@ -1,0 +1,14 @@
+[
+  {
+    "blockId": "minecraft:cobblestone",
+    "name": "cobblestone",
+    "texture": "minecraft:blocks/cobblestone",
+    "percentageStability": 75
+  },
+  {
+    "blockId": "minecraft:mossy_cobblestone",
+    "name": "mossy_cobblestone",
+    "texture": "minecraft:blocks/mossy_cobblestone",
+    "percentageStability": 90
+  }
+]

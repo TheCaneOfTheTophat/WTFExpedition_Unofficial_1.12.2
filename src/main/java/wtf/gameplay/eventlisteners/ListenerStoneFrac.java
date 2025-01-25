@@ -11,13 +11,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import wtf.blocks.BlockDecoAnim;
-import wtf.config.StoneRegEntry;
+import wtf.config.BlockEntry;
 import wtf.config.WTFExpeditionConfig;
-import wtf.config.WTFStoneRegistry;
 import wtf.gameplay.GravityMethods;
 import wtf.gameplay.fracturing.EntityStoneCrack;
 import wtf.init.BlockSets;
 import wtf.init.BlockSets.Modifier;
+import wtf.init.JSONLoader;
 
 public class ListenerStoneFrac {
 
@@ -32,8 +32,8 @@ public class ListenerStoneFrac {
 
 			
 
-			StoneRegEntry entry = WTFStoneRegistry.stoneReg.get(event.getState());
-			if (entry != null && entry.fractures)	{
+			BlockEntry entry = JSONLoader.identifierToBlockEntry.get(event.getState().getBlock().getRegistryName() + "@" + event.getState().getBlock().getMetaFromState(event.getState()));
+			if (entry != null && entry.fracturesFirstWhenMined())	{
 				
 				event.setCanceled(true);
 				doFrac(event.getWorld(), event.getPos(), event.getState());

@@ -1,0 +1,24 @@
+{
+  "blockId": "minecraft:quartz_ore@0",
+  "name": "quartz_ore",
+  "stoneList": ["netherrack"],
+  "minAmountPerChunk": 60,
+  "maxAmountPerChunk": 120,
+  "surfaceHeightMinPercentage": 5,
+  "surfaceHeightMaxPercentage": 95,
+  "dimensionList": [-1],
+  "useDenseBlock": true,
+  "overlayPath": "wtfexpedition:overlays/quartz_ore",
+  "veinPercentDensity": 75,
+  "generation_settings": {
+    "generation_types": {
+      "cave": true,
+      "cluster": true
+    },
+    "cave_generation": {
+      "ceiling": true,
+      "wall": true,
+      "floor": true
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "blockId": "minecraft:dirt",
+  "name": "dirt",
+  "texture": "minecraft:blocks/dirt",
+  "percentageStability": 50
+}

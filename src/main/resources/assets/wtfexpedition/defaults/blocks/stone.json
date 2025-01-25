@@ -1,0 +1,63 @@
+[
+  {
+    "blockId": "minecraft:stone@0",
+    "fracturedBlockId": "minecraft:cobblestone",
+    "name": "stone",
+    "texture": "minecraft:blocks/stone",
+    "percentageMineSpeedModifier": 15,
+    "decoration": {
+      "mossy": true,
+      "soul": true,
+      "cracked": true,
+      "lava_crust": true,
+      "water_drip": true,
+      "lava_drip": true
+    },
+    "speleothems": true
+  },
+  {
+    "blockId": "minecraft:stone@1",
+    "name": "granite",
+    "texture": "minecraft:blocks/stone_granite",
+    "percentageMineSpeedModifier": 15,
+    "decoration": {
+      "mossy": true,
+      "soul": true,
+      "cracked": true,
+      "lava_crust": true,
+      "water_drip": true,
+      "lava_drip": true
+    },
+    "speleothems": true
+  },
+  {
+    "blockId": "minecraft:stone@3",
+    "name": "diorite",
+    "texture": "minecraft:blocks/stone_diorite",
+    "percentageMineSpeedModifier": 15,
+    "decoration": {
+      "mossy": true,
+      "soul": true,
+      "cracked": true,
+      "lava_crust": true,
+      "water_drip": true,
+      "lava_drip": true
+    },
+    "speleothems": true
+  },
+  {
+    "blockId": "minecraft:stone@5",
+    "name": "andesite",
+    "texture": "minecraft:blocks/stone_andesite",
+    "percentageMineSpeedModifier": 15,
+    "decoration": {
+      "mossy": true,
+      "soul": true,
+      "cracked": true,
+      "lava_crust": true,
+      "water_drip": true,
+      "lava_drip": true
+    },
+    "speleothems": true
+  }
+]

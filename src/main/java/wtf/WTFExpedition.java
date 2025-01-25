@@ -50,7 +50,7 @@ public class WTFExpedition {
 	public void preInitialization(FMLPreInitializationEvent event) {
 		wtfLog = event.getModLog();
 
-		WTFExpedition.configDirectory = Paths.get(event.getModConfigurationDirectory().toString(), "WTFExpedition").toString();
+		configDirectory = Paths.get(event.getModConfigurationDirectory().toString(), "WTFExpedition").toString();
 
 		WTFExpeditionConfig.config = new Configuration(new File(configDirectory, "WTFExpedition.cfg"), true);
 		WTFExpeditionConfig.syncConfig();

@@ -9,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import wtf.WTFExpedition;
-import wtf.config.WTFStoneRegistry;
 import wtf.init.BlockSets;
 import wtf.init.WTFContent;
 import wtf.utilities.wrappers.StateAndModifier;
@@ -57,8 +56,8 @@ public class UBCCompat {
 		for (int loop = 0; loop < 8; loop++){
 			IgneousStone[loop] = API.IGNEOUS_STONE.getBlock().getStateFromMeta(loop);
 			UBCStoneList.add(IgneousStone[loop].getBlock().getRegistryName()+"@"+loop);
-			WTFStoneRegistry.defTextureLocations.put(IgneousStone[loop], "undergroundbiomes:blocks/"+IgneousStoneList[loop]);
-			WTFStoneRegistry.defBlockStateLocations.put(IgneousStone[loop], "undergroundbiomes:igneous_stone#type="+IgneousStoneList[loop]);
+
+
 			
 		}
 
@@ -66,9 +65,9 @@ public class UBCCompat {
 		for (int loop = 0; loop < 8; loop++){
 			IgneousCobblestone[loop] = API.IGNEOUS_COBBLE.getBlock().getStateFromMeta(loop);
 			UBCStoneList.add(IgneousCobblestone[loop].getBlock().getRegistryName()+"@"+loop);
-			WTFStoneRegistry.defCobble.put(IgneousStone[loop], IgneousCobblestone[loop].getBlock().getRegistryName().toString()+"@"+loop);
-			WTFStoneRegistry.defTextureLocations.put(IgneousCobblestone[loop], "undergroundbiomes:blocks/"+IgneousStoneList[loop]+"_cobble");
-			WTFStoneRegistry.defBlockStateLocations.put(IgneousCobblestone[loop], "undergroundbiomes:igneous_cobble#type="+IgneousStoneList[loop]);
+
+
+
 		}
 		
 		IgneousBrick = new IBlockState[8];
@@ -81,17 +80,17 @@ public class UBCCompat {
 		for (int loop = 0; loop < 8; loop++){
 			MetamorphicStone[loop] = API.METAMORPHIC_STONE.getBlock().getStateFromMeta(loop);
 			UBCStoneList.add(MetamorphicStone[loop].getBlock().getRegistryName()+"@"+loop);
-			WTFStoneRegistry.defTextureLocations.put(MetamorphicStone[loop], "undergroundbiomes:blocks/"+MetamorphicStoneList[loop]);
-			WTFStoneRegistry.defBlockStateLocations.put(MetamorphicStone[loop], "undergroundbiomes:metamorphic_stone#type="+MetamorphicStoneList[loop]);
+
+
 		}
 
 		MetamorphicCobblestone = new IBlockState[8];
 		for (int loop = 0; loop < 8; loop++){
 			MetamorphicCobblestone[loop] = API.METAMORPHIC_COBBLE.getBlock().getStateFromMeta(loop);
-			WTFStoneRegistry.defCobble.put(MetamorphicStone[loop], MetamorphicCobblestone[loop].getBlock().getRegistryName().toString()+"@"+loop);
+
 			UBCStoneList.add(MetamorphicCobblestone[loop].getBlock().getRegistryName()+"@"+loop);
-			WTFStoneRegistry.defTextureLocations.put(MetamorphicCobblestone[loop], "undergroundbiomes:blocks/"+IgneousStoneList[loop]+"_cobble");
-			WTFStoneRegistry.defBlockStateLocations.put(MetamorphicCobblestone[loop], "undergroundbiomes:metamorphic_cobble#type="+MetamorphicStoneList[loop]);
+
+
 		}
 		
 		MetamorphicBrick = new IBlockState[8];
@@ -105,13 +104,13 @@ public class UBCCompat {
 			SedimentaryStone[loop] = API.SEDIMENTARY_STONE.getBlock().getStateFromMeta(loop);
 
 
-			WTFStoneRegistry.defCobble.put(SedimentaryStone[loop], "wtfcore:ubcSand@"+loop);
+
 			// Also not sure about this one either, chief
 			GameRegistry.addShapelessRecipe(API.SEDIMENTARY_STONE.getItemBlock().getRegistryName(), null, new ItemStack(API.SEDIMENTARY_STONE.getBlock(), 4, loop), Ingredient.fromStacks(new ItemStack(WTFContent.ubcSand, 1, loop), new ItemStack(WTFContent.ubcSand, 1, loop), new ItemStack(WTFContent.ubcSand, 1, loop), new ItemStack(WTFContent.ubcSand, 1, loop)));
 
 			UBCStoneList.add(SedimentaryStone[loop].getBlock().getRegistryName()+"@"+loop);
-			WTFStoneRegistry.defTextureLocations.put(SedimentaryStone[loop], "undergroundbiomes:blocks/"+SedimentaryStoneList[loop]);
-			WTFStoneRegistry.defBlockStateLocations.put(SedimentaryStone[loop], "undergroundbiomes:sedimentary_stone#type="+SedimentaryStoneList[loop]);
+
+
 		}
 
 		

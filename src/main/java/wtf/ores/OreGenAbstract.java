@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import wtf.config.ore.WTFOresNewConfig;
+import wtf.config.WTFExpeditionConfig;
 import wtf.utilities.simplex.SimplexHelper;
 import wtf.utilities.wrappers.ChunkCoords;
 import wtf.utilities.wrappers.ChunkScan;
@@ -70,7 +70,7 @@ public abstract class OreGenAbstract{
 	
 	protected int getBlocksPerChunk(World world, ChunkCoords coords, Random random, double surfaceAvg){
 				
-		int genNum = WTFOresNewConfig.simplexGen ? (int) getSimplexOres(world, coords.getWorldX(), coords.getWorldZ()) : (int)(random.nextFloat()*(maxPerChunk-minPerChunk)+minPerChunk);
+		int genNum = WTFExpeditionConfig.simplexOreGen ? (int) getSimplexOres(world, coords.getWorldX(), coords.getWorldZ()) : (int)(random.nextFloat()*(maxPerChunk-minPerChunk)+minPerChunk);
 
 
 		Set<Type> biomeTypes = BiomeDictionary.getTypes(world.getBiome(new BlockPos(coords.getWorldX()+8, surfaceAvg, coords.getWorldZ()+8)));

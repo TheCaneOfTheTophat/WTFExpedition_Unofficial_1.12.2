@@ -52,7 +52,6 @@ public class WTFExpeditionConfig {
 	public static boolean additionalBlockGravity;
 	public static boolean fallingBlocksDamage;
 	public static boolean antiNerdPole;
-	public static String[] blockStabilityList;
 
 	// Tweaks: Loot and Crafting
 	public static int featherDropRate;
@@ -68,6 +67,9 @@ public class WTFExpeditionConfig {
 	public static int torchLifespan;
 	public static int torchRange;
 	public static boolean relightTorchByHand;
+	
+	// Ores
+	public static boolean simplexOreGen;
 
 	// Overworld : Miscellaneous
 	public static boolean enableSurfaceModification;
@@ -267,10 +269,6 @@ public class WTFExpeditionConfig {
 		antiNerdPole = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3d : tweaks - gravity", "Block stability list. Format is blockName@percentStability", new String[] {"minecraft:dirt@50", "minecraft:cobblestone@75", "minecraft:mossy_cobblestone@90","minecraft:sand@10", "minecraft:soul_sand@10","minecraft:gravel@20", "minecraft:snow@40"});
-		blockStabilityList = property.getStringList();
-		propertyOrder.add(property.getName());
-
 		config.setCategoryPropertyOrder("3d : tweaks - gravity", propertyOrder);
 
 		/* #####################################
@@ -332,89 +330,100 @@ public class WTFExpeditionConfig {
 		config.setCategoryPropertyOrder("3e : tweaks - torches", propertyOrder);
 		
 		/* #####################################
-		              OVERWORLD: MISC
+		                   ORES
 		   ##################################### */
-
 		propertyOrder = new ArrayList<>();
 
-		config.setCategoryComment("4a : overworld", "Configurations for the Overworld module of WTFExpedition.");
+		config.setCategoryComment("4 : ores", "Configurations for the Ores module of WTFExpedition.");
 
-		property = config.get("4a : overworld", "Enable all surface modification", true);
+		property = config.get("4 : ores", "Use simplex noise instead of random for ore generation", true);
+		simplexOreGen = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		config.setCategoryPropertyOrder("4 : ores", propertyOrder);
+		
+		/* #####################################
+		              OVERWORLD: MISC
+		   ##################################### */
+		propertyOrder = new ArrayList<>();
+
+		config.setCategoryComment("5a : overworld", "Configurations for the Overworld module of WTFExpedition.");
+
+		property = config.get("5a : overworld", "Enable all surface modification", true);
 		enableSurfaceModification = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("4a : overworld", "Percentage of chunks which will have mossy surfaces in forests", 50);
+		property = config.get("5a : overworld", "Percentage of chunks which will have mossy surfaces in forests", 50);
 		forestMossyChunkPercent = property.getDouble() / 100;
 		propertyOrder.add(property.getName());
 
-		property = config.get("4a : overworld", "Percentage of mossy blocks in mossy forest chunks", 50);
+		property = config.get("5a : overworld", "Percentage of mossy blocks in mossy forest chunks", 50);
 		forestMossyBlockPercent = property.getDouble() / 100;
 		propertyOrder.add(property.getName());
 
-		property = config.get("4a : overworld", "Percentage of chunks which will have fractured surfaces in mountains", 50);
+		property = config.get("5a : overworld", "Percentage of chunks which will have fractured surfaces in mountains", 50);
 		mountainFracturedChunkPercent = property.getDouble() / 100;
 		propertyOrder.add(property.getName());
 
-		property = config.get("4a : overworld", "Percentage of fractured blocks in fractured mountain chunks", 20);
+		property = config.get("5a : overworld", "Percentage of fractured blocks in fractured mountain chunks", 20);
 		mountainFracturedBlockPercent = property.getDouble() / 100;
 		propertyOrder.add(property.getName());
 
-		property = config.get("4a : overworld", "Percentage of chunks which will have fractured surfaces in rivers", 50);
+		property = config.get("5a : overworld", "Percentage of chunks which will have fractured surfaces in rivers", 50);
 		riverFracturedChunkPercent = property.getDouble() / 100;
 		propertyOrder.add(property.getName());
 
-		property = config.get("4a : overworld", "Percentage of fractured blocks in fractured river chunks", 20);
+		property = config.get("5a : overworld", "Percentage of fractured blocks in fractured river chunks", 20);
 		riverFracturedBlockPercent = property.getDouble() / 100;
 		propertyOrder.add(property.getName());
 
-		config.setCategoryPropertyOrder("4a : overworld", propertyOrder);
+		config.setCategoryPropertyOrder("5a : overworld", propertyOrder);
 		
 		/* #####################################
 		   OVERWORLD: SUB-BIOMES - AUTUMN FOREST
 		   ##################################### */
 		propertyOrder = new ArrayList<>();
 
-		property = config.get("4b : overworld - sub biomes - autumn forest", "Autumn Forest ID, set to -1 to disable", 40);
+		property = config.get("5b : overworld - sub biomes - autumn forest", "Autumn Forest ID, set to -1 to disable", 40);
 		autumnForestID = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get("4b : overworld - sub biomes - autumn forest", "Autumn Hills ID, set to -1 to disable", 41);
+		property = config.get("5b : overworld - sub biomes - autumn forest", "Autumn Hills ID, set to -1 to disable", 41);
 		autumnHillsID = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get("4b : overworld - sub biomes - autumn forest", "Percentage frequency of Autumn Forest sub biomes within their parent biomes", 15);
+		property = config.get("5b : overworld - sub biomes - autumn forest", "Percentage frequency of Autumn Forest sub biomes within their parent biomes", 15);
 		autumnForestPercentageFrequency = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get("4b : overworld - sub biomes - autumn forest", "Autumn forest size - setting smaller will give isolated patches, larger gives large swathes", 30);
+		property = config.get("5b : overworld - sub biomes - autumn forest", "Autumn forest size - setting smaller will give isolated patches, larger gives large swathes", 30);
 		autumnForestSize = property.getInt() * 32;
 		propertyOrder.add(property.getName());
 
-		property = config.get("4b : overworld - sub biomes - autumn forest", "Autumn Color Scaling- setting smaller will give faster changes in colour", 10);
+		property = config.get("5b : overworld - sub biomes - autumn forest", "Autumn Color Scaling- setting smaller will give faster changes in colour", 10);
 		autumnForestColorScale = property.getInt();
 		propertyOrder.add(property.getName());
 
-		config.setCategoryPropertyOrder("4b : overworld - sub biomes - autumn forest", propertyOrder);
+		config.setCategoryPropertyOrder("5b : overworld - sub biomes - autumn forest", propertyOrder);
 
 		/* #####################################
 		           OVERWORLD: BIG TREES
 		   ##################################### */
-
 		propertyOrder = new ArrayList<>();
 
-		property = config.get("4c : overworld - big trees", "Enable custom tree generation (required for the rest of the tree configs to have effect)", true);
+		property = config.get("5c : overworld - big trees", "Enable custom tree generation (required for the rest of the tree configs to have effect)", true);
 		bigTreesEnabled = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("4c : overworld - big trees", "Percentage of trees generated that this mod will attempt to replace with custom big trees", 50);
+		property = config.get("5c : overworld - big trees", "Percentage of trees generated that this mod will attempt to replace with custom big trees", 50);
 		bigTreeReplacementPercentage = property.getDouble() / 100;
 		propertyOrder.add(property.getName());
 
-		property = config.get("4c : overworld - big trees", "Scale for the simplex tree replacement - smaller values allow more mixing of tree types, larger values separate them out more", 3.0D);
+		property = config.get("5c : overworld - big trees", "Scale for the simplex tree replacement - smaller values allow more mixing of tree types, larger values separate them out more", 3.0D);
 		simplexBigTreeScale = property.getDouble();
 		propertyOrder.add(property.getName());
 
-		config.setCategoryPropertyOrder("4c : overworld - big trees", propertyOrder);
+		config.setCategoryPropertyOrder("5c : overworld - big trees", propertyOrder);
 		
 		if (config.hasChanged()) {
 			config.save();

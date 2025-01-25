@@ -21,6 +21,7 @@ public class BlockDenseOre extends AbstractBlockDerivative {
 	public BlockDenseOre(IBlockState backState, IBlockState foreState) {
 		super(backState, foreState);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(DENSITY, 0));
+		this.setHarvestLevel(backState.getBlock().getHarvestTool(backState), foreState.getBlock().getHarvestLevel(foreState));
 //		BlockSets.stoneAndOre.put(new StoneAndOre(backState, foreState), this.getDefaultState());
 //		BlockSets.oreAndFractures.add(this);
 //		BlockSets.surfaceBlocks.add(this);

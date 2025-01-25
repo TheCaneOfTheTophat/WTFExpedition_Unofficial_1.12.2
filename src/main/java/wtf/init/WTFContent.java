@@ -131,7 +131,7 @@ public class WTFContent {
 		    ============================================== */
 
 		for(OreEntry entry : JSONLoader.oreEntries) {
-			if(entry.hasDenseBlocks()) {
+			if(entry.usesDenseBlocks()) {
 				String[] oreSplit = entry.getBlockId().split("@");
 				int oreMeta = oreSplit.length > 1 ? Integer.parseInt(oreSplit[1]) : 0;
 				String oreId = oreSplit[0];

@@ -1,0 +1,6 @@
+{
+  "blockId": "minecraft:snow",
+  "name": "snow",
+  "texture": "minecraft:blocks/snow",
+  "percentageStability": 40
+}

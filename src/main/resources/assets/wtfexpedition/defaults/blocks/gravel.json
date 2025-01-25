@@ -1,0 +1,6 @@
+{
+  "blockId": "minecraft:gravel",
+  "name": "gravel",
+  "texture": "minecraft:blocks/gravel",
+  "percentageStability": 20
+}

@@ -1,0 +1,28 @@
+{
+  "blockId": "minecraft:iron_ore@0",
+  "name": "iron_ore",
+  "stoneList": ["stone"],
+  "minAmountPerChunk": 30,
+  "maxAmountPerChunk": 120,
+  "surfaceHeightMinPercentage": 10,
+  "surfaceHeightMaxPercentage": 105,
+  "dimensionList": [0],
+  "useDenseBlock": true,
+  "overlayPath": "wtfexpedition:overlays/iron_ore",
+  "veinPercentDensity": 50,
+  "percentGenerationPerBiomeType": {
+    "mountain": 150,
+    "savanna": 50
+  },
+  "generation_settings": {
+    "generation_types": {
+      "vein": true
+    },
+    "vein_generation": {
+      "veinPitchAverage": 1.5,
+      "veinLength": 12,
+      "veinWidth": 2,
+      "veinVerticalThickness": 2
+    }
+  }
+}

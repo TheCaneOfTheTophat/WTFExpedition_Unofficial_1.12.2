@@ -1,0 +1,10 @@
+{
+  "blockId": "minecraft:obsidian",
+  "name": "obsidian",
+  "texture": "minecraft:blocks/obsidian",
+  "decoration": {
+    "lava_crust": true,
+    "lava_drip": true
+  },
+  "speleothems": true
+}

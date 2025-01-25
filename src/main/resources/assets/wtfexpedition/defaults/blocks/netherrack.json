@@ -1,0 +1,12 @@
+{
+  "blockId": "minecraft:netherrack",
+  "name": "netherrack",
+  "texture": "minecraft:blocks/netherrack",
+  "decoration": {
+    "soul": true,
+    "cracked": true,
+    "lava_crust": true,
+    "lava_drip": true
+  },
+  "speleothems": true
+}
