@@ -92,6 +92,9 @@ public class WTFExpeditionConfig {
 	public static double bigTreeReplacementPercentage;
 	public static double simplexBigTreeScale;
 	
+	// General Miscellaneous
+	public static boolean loadDefaultFiles;
+	
 	public static Configuration config;
 
 	// TODO Bring back block state rotations
@@ -168,12 +171,12 @@ public class WTFExpeditionConfig {
 
 		config.setCategoryComment("3a : tweaks", "Configurations for the Tweaks module of WTFExpedition.");
 
-		property = config.get("3a : tweaks", "Growth rate percent modifier for crops", 10);
-		cropGrowthPercentModifier = property.getDouble() / 100;
-		propertyOrder.add(property.getName());
-
 		property = config.get("3a : tweaks", "Modify crop growth rates", true);
 		modifyCropGrowth = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		property = config.get("3a : tweaks", "Growth rate percent modifier for crops", 10);
+		cropGrowthPercentModifier = property.getDouble() / 100;
 		propertyOrder.add(property.getName());
 
 		property = config.get("3a : tweaks", "Prevent infinite water source blocks outside biomes with the WET type", false);
@@ -424,6 +427,19 @@ public class WTFExpeditionConfig {
 		propertyOrder.add(property.getName());
 
 		config.setCategoryPropertyOrder("5c : overworld - big trees", propertyOrder);
+		
+		/* #####################################
+		               MISCELLANEOUS
+		   ##################################### */
+		propertyOrder = new ArrayList<>();
+
+		config.setCategoryComment("6 : miscellaneous", "Miscellaneous settings. These usually will not interfere with gameplay.");
+
+		property = config.get("6 : miscellaneous", "Load default JSON data and guide into the configuration folder if they do not exist", true);
+		loadDefaultFiles = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		config.setCategoryPropertyOrder("6 : miscellaneous", propertyOrder);
 		
 		if (config.hasChanged()) {
 			config.save();

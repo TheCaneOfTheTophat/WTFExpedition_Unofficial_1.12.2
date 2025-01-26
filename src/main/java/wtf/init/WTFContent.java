@@ -140,6 +140,12 @@ public class WTFContent {
 
 				for (String stone : entry.getStoneList()) {
 					BlockEntry stoneEntry = JSONLoader.identifierToBlockEntry.get(stone);
+
+					if(stoneEntry == null) {
+						WTFExpedition.wtfLog.error("Stone entry \"" + stone + "\" does not exist! (encountered while registering blocks for ore \"" + entry.getName() + "\")");
+						continue;
+					}
+
 					String[] stoneSplit = stoneEntry.getBlockId().split("@");
 					int stoneMeta = stoneSplit.length > 1 ? Integer.parseInt(stoneSplit[1]) : 0;
 					String stoneId = stoneSplit[0];

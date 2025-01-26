@@ -4,6 +4,7 @@ import com.google.gson.*;
 import wtf.WTFExpedition;
 import wtf.config.BlockEntry;
 import wtf.config.OreEntry;
+import wtf.config.WTFExpeditionConfig;
 
 import java.io.*;
 import java.net.URI;
@@ -40,56 +41,58 @@ public class JSONLoader {
         JsonParser parser = new JsonParser();
         JsonElement root;
 
-        try {
-            URL classUrl = WTFExpedition.class.getProtectionDomain().getCodeSource().getLocation(); // Get URL of this class
+        if (WTFExpeditionConfig.loadDefaultFiles) {
+            try {
+                URL classUrl = WTFExpedition.class.getProtectionDomain().getCodeSource().getLocation(); // Get URL of this class
 
-            if (classUrl.getProtocol().equals("jar")) { // Use jar as filesystem if it's loaded as a jar file
-                fileSystem = FileSystems.newFileSystem(URI.create(classUrl.toString()), Collections.emptyMap());
-                fromJar = true;
-                defaultsDirectory = fileSystem.getPath("assets", WTFExpedition.modID, "defaults");
-            } else { // Remain with original filesystem
-                fileSystem = FileSystems.getDefault();
-                Path pathFromUri = Paths.get(classUrl.toURI());
-                defaultsDirectory = Paths.get(pathFromUri.getRoot().toString(), pathFromUri.subpath(0, pathFromUri.getNameCount() - 2).toString(), "assets", WTFExpedition.modID, "defaults");
-            }
+                if (classUrl.getProtocol().equals("jar")) { // Use jar as filesystem if it's loaded as a jar file
+                    fileSystem = FileSystems.newFileSystem(URI.create(classUrl.toString()), Collections.emptyMap());
+                    fromJar = true;
+                    defaultsDirectory = fileSystem.getPath("assets", WTFExpedition.modID, "defaults");
+                } else { // Remain with original filesystem
+                    fileSystem = FileSystems.getDefault();
+                    Path pathFromUri = Paths.get(classUrl.toURI());
+                    defaultsDirectory = Paths.get(pathFromUri.getRoot().toString(), pathFromUri.subpath(0, pathFromUri.getNameCount() - 2).toString(), "assets", WTFExpedition.modID, "defaults");
+                }
 
-            // Get default files
-            try (Stream<Path> defaults = Files.walk(fileSystem.getPath(defaultsDirectory.toString()))) {
-                defaultFiles = defaults.filter(Files::isRegularFile).collect(Collectors.toList());
+                // Get default files
+                try (Stream<Path> defaults = Files.walk(fileSystem.getPath(defaultsDirectory.toString()))) {
+                    defaultFiles = defaults.filter(Files::isRegularFile).collect(Collectors.toList());
 
-                // Copy over default files
-                for (Path file : defaultFiles) {
-                    String filename = fileSystem.getPath(file.getName(file.getNameCount() - 2).toString(), file.getFileName().toString()).toString();
-                    Path configEquivalent = Paths.get(WTFExpedition.configDirectoryString, file.getFileName().toString().equals(guideFilename) ? guideFilename : filename);
+                    // Copy over default files
+                    for (Path file : defaultFiles) {
+                        String filename = fileSystem.getPath(file.getName(file.getNameCount() - 2).toString(), file.getFileName().toString()).toString();
+                        Path configEquivalent = Paths.get(WTFExpedition.configDirectoryString, file.getFileName().toString().equals(guideFilename) ? guideFilename : filename);
 
-                    if (Files.notExists(configEquivalent)) {
-                        if (fromJar) {
-                            try (Reader reader = new BufferedReader(new InputStreamReader(WTFExpedition.class.getClassLoader().getResourceAsStream(file.toString().substring(1)))); Writer writer = new BufferedWriter(new FileWriter(configEquivalent.toString()))) {
-                                int data;
+                        if (Files.notExists(configEquivalent)) {
+                            if (fromJar) {
+                                try (Reader reader = new BufferedReader(new InputStreamReader(WTFExpedition.class.getClassLoader().getResourceAsStream(file.toString().substring(1)))); Writer writer = new BufferedWriter(new FileWriter(configEquivalent.toString()))) {
+                                    int data;
 
-                                while ((data = reader.read()) != -1)
-                                    writer.write(data);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        } else {
-                            try (Reader reader = new BufferedReader(new FileReader(file.toString())); Writer writer = new BufferedWriter(new FileWriter(configEquivalent.toString()))) {
-                                int data;
+                                    while ((data = reader.read()) != -1)
+                                        writer.write(data);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            } else {
+                                try (Reader reader = new BufferedReader(new FileReader(file.toString())); Writer writer = new BufferedWriter(new FileWriter(configEquivalent.toString()))) {
+                                    int data;
 
-                                while ((data = reader.read()) != -1)
-                                    writer.write(data);
+                                    while ((data = reader.read()) != -1)
+                                        writer.write(data);
+                                }
                             }
                         }
                     }
                 }
-            }
-        } catch (IOException | URISyntaxException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if(fromJar && fileSystem != null) {
-                try { // Close JAR filesystem
-                    fileSystem.close();
-                } catch (IOException ignored) {}
+            } catch (IOException | URISyntaxException e) {
+                throw new RuntimeException(e);
+            } finally {
+                if(fromJar && fileSystem != null) {
+                    try { // Close JAR filesystem
+                        fileSystem.close();
+                    } catch (IOException ignored) {}
+                }
             }
         }
 
@@ -117,9 +120,6 @@ public class JSONLoader {
             }
 
             String parent = jsonPath.getParent().subpath(WTFExpedition.configDirectory.getNameCount(), jsonPath.getParent().getNameCount()).getName(0).toString();
-
-            WTFExpedition.wtfLog.fatal(jsonPath);
-            WTFExpedition.wtfLog.fatal(parent);
 
             for (JsonElement element : (JsonArray) root) {
                 if(parent.contains("ores")) {
