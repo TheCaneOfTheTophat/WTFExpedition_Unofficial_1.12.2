@@ -1,21 +1,23 @@
-{
-  "blockId": "wtfexpedition:gold_ore_sand@0",
-  "name": "gold_nugget_ore",
-  "stoneList": ["sand", "red_sand"],
-  "minAmountPerChunk": -10,
-  "maxAmountPerChunk": 10,
-  "surfaceHeightMinPercentage": 90,
-  "surfaceHeightMaxPercentage": 110,
-  "dimensionList": [0],
-  "useDenseBlock": true,
-  "overlayPath": "wtfexpedition:overlays/gold_ore",
-  "veinPercentDensity": 100,
-  "biomeTypeList": ["river"],
-  "biomeTypeListWhitelist": true,
-  "generation_settings": {
-    "generation_types": {
-      "underwater": true,
-      "single": true
+[
+  {
+    "blockId": "wtfexpedition:gold_ore_sand@0",
+    "name": "gold_nugget_ore",
+    "stoneList": ["sand", "red_sand"],
+    "minAmountPerChunk": -10,
+    "maxAmountPerChunk": 10,
+    "surfaceHeightMinPercentage": 90,
+    "surfaceHeightMaxPercentage": 110,
+    "dimensionList": [0],
+    "useDenseBlock": true,
+    "overlayPath": "wtfexpedition:overlays/gold_ore",
+    "veinPercentDensity": 100,
+    "biomeTypeList": ["river"],
+    "biomeTypeListWhitelist": true,
+    "generation_settings": {
+      "generation_types": {
+        "underwater": true,
+        "single": true
+      }
     }
   }
-}
+]

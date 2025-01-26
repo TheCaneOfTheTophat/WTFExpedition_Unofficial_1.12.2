@@ -1,22 +1,24 @@
-{
-  "blockId": "minecraft:diamond_ore@0",
-  "name": "diamond_ore",
-  "stoneList": ["stone", "obsidian"],
-  "minAmountPerChunk": -17,
-  "maxAmountPerChunk": 23,
-  "surfaceHeightMinPercentage": 1,
-  "surfaceHeightMaxPercentage": 25,
-  "dimensionList": [0],
-  "useDenseBlock": true,
-  "overlayPath": "wtfexpedition:overlays/diamond_ore",
-  "veinPercentDensity": 50,
-  "percentGenerationPerBiomeType": {
-    "jungle": 150,
-    "swamp": 50
-  },
-  "generation_settings": {
-    "generation_types": {
-      "single": true
+[
+  {
+    "blockId": "minecraft:diamond_ore@0",
+    "name": "diamond_ore",
+    "stoneList": ["stone", "obsidian"],
+    "minAmountPerChunk": -17,
+    "maxAmountPerChunk": 23,
+    "surfaceHeightMinPercentage": 1,
+    "surfaceHeightMaxPercentage": 25,
+    "dimensionList": [0],
+    "useDenseBlock": true,
+    "overlayPath": "wtfexpedition:overlays/diamond_ore",
+    "veinPercentDensity": 50,
+    "percentGenerationPerBiomeType": {
+      "jungle": 150,
+      "swamp": 50
+    },
+    "generation_settings": {
+      "generation_types": {
+        "single": true
+      }
     }
   }
-}
+]

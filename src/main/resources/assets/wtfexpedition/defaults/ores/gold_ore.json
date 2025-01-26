@@ -1,25 +1,27 @@
-{
-  "blockId": "minecraft:gold_ore@0",
-  "name": "gold_ore",
-  "stoneList": ["stone"],
-  "minAmountPerChunk": -12,
-  "maxAmountPerChunk": 20,
-  "surfaceHeightMinPercentage": 5,
-  "surfaceHeightMaxPercentage": 45,
-  "dimensionList": [0],
-  "useDenseBlock": true,
-  "overlayPath": "wtfexpedition:overlays/gold_ore",
-  "veinPercentDensity": 10,
-  "percentGenerationPerBiomeType": {
-    "river": 150,
-    "forest": 50
-  },
-  "generation_settings": {
-    "generation_types": {
-      "cloud": true
+[
+  {
+    "blockId": "minecraft:gold_ore@0",
+    "name": "gold_ore",
+    "stoneList": ["stone"],
+    "minAmountPerChunk": -12,
+    "maxAmountPerChunk": 20,
+    "surfaceHeightMinPercentage": 5,
+    "surfaceHeightMaxPercentage": 45,
+    "dimensionList": [0],
+    "useDenseBlock": true,
+    "overlayPath": "wtfexpedition:overlays/gold_ore",
+    "veinPercentDensity": 10,
+    "percentGenerationPerBiomeType": {
+      "river": 150,
+      "forest": 50
     },
-    "cloud_generation": {
-      "cloudDiameter": 14
+    "generation_settings": {
+      "generation_types": {
+        "cloud": true
+      },
+      "cloud_generation": {
+        "cloudDiameter": 14
+      }
     }
   }
-}
+]

@@ -19,6 +19,7 @@ import wtf.init.JSONLoader;
 
 import javax.annotation.Nonnull;
 import java.io.File;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 
@@ -26,7 +27,8 @@ import java.nio.file.Paths;
 @SuppressWarnings({"unused", "ConstantConditions"})
 public class WTFExpedition {
 	public static final String modID = "wtfexpedition";
-	public static String configDirectory;
+	public static String configDirectoryString;
+	public static Path configDirectory;
 
 	@SidedProxy(clientSide="wtf.client.ClientProxy", serverSide="wtf.CommonProxy")
 	public static CommonProxy proxy;
@@ -50,9 +52,10 @@ public class WTFExpedition {
 	public void preInitialization(FMLPreInitializationEvent event) {
 		wtfLog = event.getModLog();
 
-		configDirectory = Paths.get(event.getModConfigurationDirectory().toString(), "WTFExpedition").toString();
+		configDirectory = Paths.get(event.getModConfigurationDirectory().toString(), "WTFExpedition");
+		configDirectoryString = configDirectory.toString();
 
-		WTFExpeditionConfig.config = new Configuration(new File(configDirectory, "WTFExpedition.cfg"), true);
+		WTFExpeditionConfig.config = new Configuration(new File(configDirectoryString, "WTFExpedition.cfg"), true);
 		WTFExpeditionConfig.syncConfig();
 
 		JSONLoader.loadJsonContent();

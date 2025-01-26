@@ -1,22 +1,24 @@
-{
-  "blockId": "wtfexpedition:nitre_ore@0",
-  "name": "nitre_ore",
-  "stoneList": ["stone"],
-  "minAmountPerChunk": -10,
-  "maxAmountPerChunk": 10,
-  "surfaceHeightMinPercentage": 15,
-  "surfaceHeightMaxPercentage": 95,
-  "dimensionList": [0],
-  "useDenseBlock": true,
-  "overlayPath": "wtfexpedition:overlays/nitre_ore",
-  "veinPercentDensity": 100,
-  "generation_settings": {
-    "generation_types": {
-      "cave": true,
-      "single": true
-    },
-    "cave_generation": {
-      "floor": true
+[
+  {
+    "blockId": "wtfexpedition:nitre_ore@0",
+    "name": "nitre_ore",
+    "stoneList": ["stone"],
+    "minAmountPerChunk": -10,
+    "maxAmountPerChunk": 10,
+    "surfaceHeightMinPercentage": 15,
+    "surfaceHeightMaxPercentage": 95,
+    "dimensionList": [0],
+    "useDenseBlock": true,
+    "overlayPath": "wtfexpedition:overlays/nitre_ore",
+    "veinPercentDensity": 100,
+    "generation_settings": {
+      "generation_types": {
+        "cave": true,
+        "single": true
+      },
+      "cave_generation": {
+        "floor": true
+      }
     }
   }
-}
+]
