@@ -109,12 +109,8 @@ public class BlockSpeleothemFrozen extends BlockSpeleothem {
 
 		if(state.getBlock() == this) {
 			switch (state.getValue(TYPE)) {
-				// TODO Make columns not be able to float by just having two columns in the air
 				case speleothem_column:
-					return (hasProperty(world.getBlockState(pos.down()), SpeleothemType.stalagmite_base) ||
-							hasProperty(world.getBlockState(pos.down()), SpeleothemType.speleothem_column) ||
-							hasProperty(world.getBlockState(pos.up()), SpeleothemType.stalactite_base) ||
-							hasProperty(world.getBlockState(pos.up()), SpeleothemType.speleothem_column));
+					return traverseColumn(world, pos);
 				case stalactite_base:
 				case stalactite_small:
 					return (world.getBlockState(pos.up()) == speleothem.parentForeground);

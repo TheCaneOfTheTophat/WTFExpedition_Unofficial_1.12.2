@@ -78,12 +78,8 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 	public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
 		if(state.getBlock() == this) {
 			switch (state.getValue(TYPE)) {
-				// TODO Make columns not be able to float by just having two columns in the air
 				case speleothem_column:
-					return (hasProperty(world.getBlockState(pos.down()), SpeleothemType.stalagmite_base) ||
-							hasProperty(world.getBlockState(pos.down()), SpeleothemType.speleothem_column) ||
-							hasProperty(world.getBlockState(pos.up()), SpeleothemType.stalactite_base) ||
-							hasProperty(world.getBlockState(pos.up()), SpeleothemType.speleothem_column));
+					return traverseColumn(world, pos);
 				case stalactite_base:
 				case stalactite_small:
 					return (world.getBlockState(pos.up()) == this.parentForeground);
@@ -98,6 +94,36 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 							hasProperty(world.getBlockState(pos.down()), SpeleothemType.speleothem_column));
 			}
 		}
+		return false;
+	}
+
+	protected boolean traverseColumn(World world, BlockPos pos) {
+		BlockPos modPos = pos;
+		boolean search = true;
+
+		// Traverse down first
+		while (search) {
+			modPos = modPos.down();
+			if(hasProperty(world.getBlockState(modPos), SpeleothemType.stalagmite_base))
+				return true;
+			else
+				search = hasProperty(world.getBlockState(modPos), SpeleothemType.speleothem_column);
+		}
+
+		// Reset values
+		modPos = pos;
+		search = true;
+
+		// Traverse up
+		while (search) {
+			modPos = modPos.up();
+			if(hasProperty(world.getBlockState(modPos), SpeleothemType.stalactite_base))
+				return true;
+			else
+				search = hasProperty(world.getBlockState(modPos), SpeleothemType.speleothem_column);
+		}
+
+		// Return false if no bases found
 		return false;
 	}
 
