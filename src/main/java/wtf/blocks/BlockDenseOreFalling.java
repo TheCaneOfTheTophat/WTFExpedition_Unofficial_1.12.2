@@ -11,9 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import wtf.WTFExpedition;
 
@@ -71,20 +69,10 @@ public class BlockDenseOreFalling extends AbstractBlockDerivativeFalling {
             List<ItemStack> drops = getDrops(worldIn, pos, state, fortune);
             chance = net.minecraftforge.event.ForgeEventFactory.fireBlockHarvesting(drops, worldIn, pos, state, fortune, chance, false, harvesters.get());
 
-            EntityPlayer player = worldIn.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 5, false);
+            EntityPlayer player = harvesters.get();
 
             if(player != null && worldIn.getBlockState(pos).getBlock() == this) {
-                float pitch = player.rotationPitch;
-                float yaw = player.rotationYaw;
-                Vec3d vec3d = new Vec3d(player.posX, player.posY + (double) player.getEyeHeight(), player.posZ);
-                float f2 = MathHelper.cos(-yaw * 0.017453292F - (float) Math.PI);
-                float f3 = MathHelper.sin(-yaw * 0.017453292F - (float) Math.PI);
-                float f4 = -MathHelper.cos(-pitch * 0.017453292F);
-                float f5 = MathHelper.sin(-pitch * 0.017453292F);
-                double reach = player.getEntityAttribute(EntityPlayer.REACH_DISTANCE).getAttributeValue();
-                Vec3d vec3d1 = vec3d.addVector((double) (f3 * f4) * reach, (double) f5 * reach, (double) (f2 * f4) * reach);
-
-                RayTraceResult result = worldIn.rayTraceBlocks(vec3d, vec3d1);
+                RayTraceResult result = player.rayTrace(player.getEntityAttribute(EntityPlayer.REACH_DISTANCE).getAttributeValue(), 1.0F);
 
                 if(result != null)
                     pos = pos.offset(result.sideHit);

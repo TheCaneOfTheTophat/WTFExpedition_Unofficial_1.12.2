@@ -10,18 +10,13 @@ import wtf.config.WTFExpeditionConfig;
 public class ListenerEntityDrops {
 
 	Random random = new Random();
-	
+
 	@SubscribeEvent
-	public void entityDrops(LivingDropsEvent event){
-		if (event.getEntity() instanceof EntityPlayer || event.getSource().getTrueSource() instanceof EntityPlayer){
+	public void entityDrops(LivingDropsEvent event) {
+		if (event.getEntity() instanceof EntityPlayer || event.getSource().getTrueSource() instanceof EntityPlayer)
 			return;
-		}
-		int r = random.nextInt(100);
-		//System.out.println("Mob drop event caught " + r + " > " + GameplayConfig.mobDropsReqPlayer);
-		if (r > WTFExpeditionConfig.playerlessMobDropPercentage){
-			//event.setCanceled(true);
-			//System.out.println("Canceling drops");
-		}
+
+		if (random.nextInt(100) > WTFExpeditionConfig.playerlessMobDropPercentage)
+			event.setCanceled(true);
 	}
-	
 }

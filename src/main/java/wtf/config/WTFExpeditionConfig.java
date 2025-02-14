@@ -7,8 +7,6 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
 public class WTFExpeditionConfig {
-	
-	public static boolean enableNameGetter = false;
 
 	// Master
 	public static boolean gameplayTweaksEnabled;
@@ -29,7 +27,6 @@ public class WTFExpeditionConfig {
 	public static double cropGrowthPercentModifier;
 	public static boolean modifyCropGrowth;
 	public static boolean waterSourceControl;
-	public static boolean preventBabyZombies;
 
 	// Tweaks: Mining
 	public static boolean miningStoneFractures;
@@ -171,7 +168,7 @@ public class WTFExpeditionConfig {
 
 		config.setCategoryComment("3a : tweaks", "Configurations for the Tweaks module of WTFExpedition.");
 
-		property = config.get("3a : tweaks", "Modify crop growth rates", true);
+		property = config.get("3a : tweaks", "Modify crop growth rates and harvest according to biome type", true);
 		modifyCropGrowth = property.getBoolean();
 		propertyOrder.add(property.getName());
 
@@ -181,10 +178,6 @@ public class WTFExpeditionConfig {
 
 		property = config.get("3a : tweaks", "Prevent infinite water source blocks outside biomes with the WET type", false);
 		waterSourceControl = property.getBoolean();
-		propertyOrder.add(property.getName());
-
-		property = config.get("3a : tweaks", "Prevent spawning of baby zombies", false);
-		preventBabyZombies = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		config.setCategoryPropertyOrder("3a : tweaks", propertyOrder);
@@ -283,7 +276,7 @@ public class WTFExpeditionConfig {
 		featherDropRate = property.getInt() * 20 * 60;
 		propertyOrder.add(property.getName());
 
-		property = config.get("3d : tweaks - loot & crafting", "Percentage of leaf blocks that drop sticks", 50);
+		property = config.get("3d : tweaks - loot & crafting", "Percentage of leaf blocks that drop extra sticks when broken", 50);
 		stickDropPercentage = property.getInt();
 		propertyOrder.add(property.getName());
 

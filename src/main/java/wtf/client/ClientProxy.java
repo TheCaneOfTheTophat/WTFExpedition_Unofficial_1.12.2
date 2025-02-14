@@ -5,7 +5,6 @@ import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import wtf.client.models.ModelDecoration;
 import wtf.client.models.ModelDenseOre;
 import wtf.client.models.ModelSpeleothem;

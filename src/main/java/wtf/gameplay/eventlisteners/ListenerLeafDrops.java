@@ -10,13 +10,8 @@ import wtf.config.WTFExpeditionConfig;
 public class ListenerLeafDrops {
 
 	@SubscribeEvent
-	public void BlockHarvestEvent(HarvestDropsEvent event){
-		if (event.getState().getBlock() instanceof BlockLeaves){
-			if (event.getWorld().rand.nextInt(100) < WTFExpeditionConfig.stickDropPercentage){
-				event.getDrops().add(new ItemStack(Items.STICK, 1));
-			}
-		}
-
+	public void BlockHarvestEvent(HarvestDropsEvent event) {
+		if (event.getState().getBlock() instanceof BlockLeaves && event.getWorld().rand.nextInt(100) < WTFExpeditionConfig.stickDropPercentage)
+			event.getDrops().add(new ItemStack(Items.STICK, 1));
 	}
-	
 }

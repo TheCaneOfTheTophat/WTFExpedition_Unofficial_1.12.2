@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -15,6 +16,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
 import wtf.config.WTFExpeditionConfig;
+import wtf.gameplay.eventlisteners.*;
 import wtf.init.JSONLoader;
 
 import javax.annotation.Nonnull;
@@ -83,7 +85,70 @@ public class WTFExpedition {
 	
 	@EventHandler
 	public void initialization(FMLInitializationEvent event) {
-//		EventListenerRegistry.initListeners();
+//		MinecraftForge.EVENT_BUS.register(new CoreWorldGenListener());
+//		MinecraftForge.TERRAIN_GEN_BUS.register(new CoreWorldGenListener());
+
+//		MinecraftForge.EVENT_BUS.register(new TickGenBuffer());
+
+		// GAMEPLAY TWEAKS
+		if (WTFExpeditionConfig.gameplayTweaksEnabled) {
+			if (WTFExpeditionConfig.modifyCropGrowth) {
+				MinecraftForge.EVENT_BUS.register(new ListenerPlantGrowth());
+				WTFExpedition.wtfLog.info("Plant growth modification enabled!");
+			}
+			if (WTFExpeditionConfig.waterSourceControl) {
+				MinecraftForge.EVENT_BUS.register(new ListenerWaterSpawn());
+				WTFExpedition.wtfLog.info("Water source control enabled!");
+			}
+			if (WTFExpeditionConfig.miningStoneFractures) {
+//				MinecraftForge.EVENT_BUS.register(new ListenerStoneFrac());
+//				WTFExpedition.wtfLog.info("Stone fracturing enabled!");
+			}
+			if (WTFExpeditionConfig.miningOreFractures) {
+//				MinecraftForge.EVENT_BUS.register(new ListenerOreFrac());
+//				WTFExpedition.wtfLog.info("Ore fracturing enabled!");
+			}
+			if (WTFExpeditionConfig.miningSpeedModificationEnabled) {
+				MinecraftForge.EVENT_BUS.register(new ListenerMiningSpeed());
+				WTFExpedition.wtfLog.info("Mining speed modification enabled!");
+			}
+			if (WTFExpeditionConfig.customExplosions) {
+//				MinecraftForge.EVENT_BUS.register(new ListenerCustomExplosion());
+//				WTFExpedition.wtfLog.info("Custom explosions enabled!");
+			}
+			if (WTFExpeditionConfig.additionalBlockGravity) {
+//				MinecraftForge.EVENT_BUS.register(new ListenerGravity());
+//				WTFExpedition.wtfLog.info("Additional block gravity enabled!");
+			}
+			if (WTFExpeditionConfig.featherDropRate > 0) {
+				MinecraftForge.EVENT_BUS.register(new ListenerChickenDrops());
+				WTFExpedition.wtfLog.info("Chicken feather drops enabled!");
+			}
+			if (WTFExpeditionConfig.stickDropPercentage > 0) {
+				MinecraftForge.EVENT_BUS.register(new ListenerLeafDrops());
+				WTFExpedition.wtfLog.info("Stick drop modifier enabled!");
+			}
+			if (WTFExpeditionConfig.playerlessMobDropPercentage > 0) {
+				MinecraftForge.EVENT_BUS.register(new ListenerEntityDrops());
+				WTFExpedition.wtfLog.info("Non-player killed mob loot modifier enabled!");
+			}
+//			MinecraftForge.EVENT_BUS.register(new LootEventListener());
+		}
+
+//		if (WTFExpeditionConfig.oreGenEnabled) {
+//			MinecraftForge.ORE_GEN_BUS.register(new VanillOreGenCatcher());
+//		}
+//
+//		if (WTFExpeditionConfig.overworldGenerationEnabled){
+//			if (WTFExpeditionConfig.bigTreesEnabled){
+//				MinecraftForge.TERRAIN_GEN_BUS.register(new WorldGenTreeCancel());
+//			}
+//		}
+//
+//		if (WTFExpeditionConfig.replaceSandstone) {
+//			MinecraftForge.TERRAIN_GEN_BUS.register(new SandstoneNaturaliser());
+//			MinecraftForge.EVENT_BUS.register(new SandstoneNaturaliser());
+//		}
 	}
 	
 	@EventHandler

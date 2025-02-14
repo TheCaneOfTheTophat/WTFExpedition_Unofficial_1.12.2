@@ -40,8 +40,8 @@ public class BlockEntry {
         return fracturesFirstWhenMined;
     }
 
-    public int getPercentageMineSpeedModifier() {
-        return percentageMineSpeedModifier;
+    public float getPercentageMineSpeedModifier() {
+        return percentageMineSpeedModifier / 100F;
     }
 
     public int getPercentageStability() {
