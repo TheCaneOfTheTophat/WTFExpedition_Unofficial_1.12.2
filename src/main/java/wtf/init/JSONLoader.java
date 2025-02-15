@@ -1,6 +1,8 @@
 package wtf.init;
 
 import com.google.gson.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import wtf.WTFExpedition;
 import wtf.config.BlockEntry;
 import wtf.config.OreEntry;
@@ -133,5 +135,14 @@ public class JSONLoader {
                 }
             }
         }
+    }
+
+    public static BlockEntry getEntryFromState(IBlockState state) {
+        return identifierToBlockEntry.get(state.getBlock().getRegistryName() + "@" + state.getBlock().getMetaFromState(state));
+    }
+
+    public static IBlockState getStateFromId(String id) {
+        String[] idSplit = id.split("@");
+        return Block.getBlockFromName(idSplit[0]).getStateFromMeta(idSplit.length > 1 ? Integer.parseInt(idSplit[1]) : 0);
     }
 }

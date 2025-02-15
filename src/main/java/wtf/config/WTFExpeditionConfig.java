@@ -1,10 +1,12 @@
 package wtf.config;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import wtf.WTFExpedition;
 
 public class WTFExpeditionConfig {
 
@@ -34,7 +36,7 @@ public class WTFExpeditionConfig {
 	public static boolean simpleFracturing;
 	public static boolean miningSpeedModificationEnabled;
 	public static boolean modifyHammerBehaviour;
-	public static String[] blockFractureList;
+	public static ArrayList<String> blockFractureList = new ArrayList<>();
 
 	// Tweaks: Explosives
 	public static boolean customExplosions;
@@ -208,7 +210,7 @@ public class WTFExpeditionConfig {
 		propertyOrder.add(property.getName());
 
 		property = config.get("3b : tweaks - mining", "Blocks that fracture adjacent stone when mined", new String[] {"minecraft:coal_ore", "minecraft:iron_ore", "minecraft:gold_ore", "minecraft:lapis_ore", "minecraft:diamond_ore", "minecraft:redstone_ore", "minecraft:lit_redstone_ore", "minecraft:emerald_ore"});
-		blockFractureList = property.getStringList();
+        blockFractureList.addAll(Arrays.asList(property.getStringList()));
 		propertyOrder.add(property.getName());
 
 		config.setCategoryPropertyOrder("3b : tweaks - mining", propertyOrder);

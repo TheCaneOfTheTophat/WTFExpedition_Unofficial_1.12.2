@@ -49,9 +49,7 @@ public class ModelSpeleothem implements IModel {
             frozen = false;
         }
 
-        Block parentBlock = parentState.getBlock();
-
-        blockTexture = new ResourceLocation(JSONLoader.identifierToBlockEntry.get(parentBlock.getRegistryName().toString() + "@" + parentBlock.getMetaFromState(parentState)).getTexture());
+        blockTexture = new ResourceLocation(JSONLoader.getEntryFromState(parentState).getTexture());
 
         typeName = location.block.getStateFromMeta(location.meta).getValue(BlockSpeleothem.TYPE).getName();
     }

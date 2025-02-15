@@ -13,12 +13,11 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import wtf.blocks.BlockDecoAnim;
 import wtf.blocks.BlockDecoStatic;
+import wtf.config.BlockEntry;
 import wtf.config.WTFExpeditionConfig;
-import wtf.gameplay.GravityMethods;
-import wtf.init.BlockSets;
-import wtf.init.BlockSets.Modifier;
+import wtf.init.JSONLoader;
 
-public class EntityStoneCrack extends Entity{
+public class EntityStoneCrack extends Entity {
 
 	private int count;
 	Random random = new Random();
@@ -32,31 +31,31 @@ public class EntityStoneCrack extends Entity{
 		this.ori = pos;
 	}
 	
-	public static void crackStone(World world, BlockPos pos){
+	public static void crackStone(World world, BlockPos pos) {
 		EntityStoneCrack crack = new EntityStoneCrack(world, pos);
 		crack.addAllAdj(pos);
 		world.spawnEntity(crack);
 	}
 	
-	public static void FracOreSmple(World world, BlockPos pos){
+	public static void FracOreSmple(World world, BlockPos pos) {
 		EntityStoneCrack crack = new EntityStoneCrack(world, pos);
 		crack.addAdj(pos);
 		world.spawnEntity(crack);
 	}
 	
-	public static void FracOre(World world, BlockPos pos, int toolLevel){
+	public static void FracOre(World world, BlockPos pos, int toolLevel) {
 		EntityStoneCrack crack = new EntityStoneCrack(world, pos);
 		crack.crackOre(world, pos, toolLevel);
 		world.spawnEntity(crack);
 	}
 	
-	public static void cracHammer(World world, BlockPos pos, int toolLevel){
+	public static void cracHammer(World world, BlockPos pos, int toolLevel) {
 		EntityStoneCrack crack = new EntityStoneCrack(world, pos);
 		crack.crackHammer(world, pos, toolLevel);
 		world.spawnEntity(crack);
 	}
 	
-	public void crackOre(World world, BlockPos pos, int toolLevel){
+	public void crackOre(World world, BlockPos pos, int toolLevel) {
 		//tool level determines how many cracks happen
 		//ore level determines how strong those cracks are
 		
@@ -160,80 +159,61 @@ public class EntityStoneCrack extends Entity{
 	}
 
 
-	private void doVec(FracVec vec){
-		for (int fracloop = 0; fracloop <= vec.blocksToFrac; fracloop++){
+	private void doVec(FracVec vec) {
+		for (int fracloop = 0; fracloop <= vec.blocksToFrac; fracloop++) {
 			for (int dist = 1; dist <= vec.maxDist; dist++){
 
 				BlockPos pos = vec.getPos(dist);
 				IBlockState state = world.getBlockState(pos);
-				IBlockState cobble = BlockSets.getTransformedState(state, Modifier.COBBLE); //if it can be fractured
-				
-				if (state.getBlock() instanceof BlockDecoAnim && ((BlockDecoAnim) state.getBlock()).getType() == BlockDecoAnim.AnimatedDecoType.LAVA_CRUST){
-					//if lava crust, frac to lava
-					world.setBlockState(pos, Blocks.LAVA.getDefaultState());
+				BlockEntry entry = JSONLoader.getEntryFromState(state);
+				IBlockState cobble;
 
-				}
+				if(entry != null && !entry.getFracturedBlockId().isEmpty())
+					cobble = JSONLoader.getStateFromId(entry.getFracturedBlockId());
+				else
+					return;
+				
+				if (state.getBlock() instanceof BlockDecoAnim && ((BlockDecoAnim) state.getBlock()).getType() == BlockDecoAnim.AnimatedDecoType.LAVA_CRUST)
+					world.setBlockState(pos, Blocks.LAVA.getDefaultState());
 				else if (state.getBlock() instanceof BlockDecoStatic && ((BlockDecoStatic) state.getBlock()).getType() == BlockDecoStatic.StaticDecoType.CRACKED){
 					BlockDecoStatic block = (BlockDecoStatic) state.getBlock();
-					cobble = BlockSets.getTransformedState(block.parentBackground, Modifier.COBBLE);
-					if (cobble != null){
+					entry = JSONLoader.getEntryFromState(block.parentBackground);
+					cobble = JSONLoader.getStateFromId(entry.getFracturedBlockId());
+
+					if (cobble != null) {
 						world.setBlockState(pos, cobble);
-						if (WTFExpeditionConfig.additionalBlockGravity){
-							GravityMethods.dropBlock(world, pos, true);
+						if (WTFExpeditionConfig.additionalBlockGravity) {
+							// GravityMethods.dropBlock(world, pos, true);
 						}
 						addAllAdj(pos);
 					}
 				}
 				else if (cobble != null){
-					//if has cobble, then frac and drop the block
 					world.setBlockState(pos, cobble);
-					if (WTFExpeditionConfig.additionalBlockGravity){
-						GravityMethods.dropBlock(world, pos, true);
+					if (WTFExpeditionConfig.additionalBlockGravity) {
+//						GravityMethods.dropBlock(world, pos, true);
 					}
-				}
-
-				else if (!BlockSets.isFractured(state)){//if the block isn't already fractured, and thus cannot propogate
-					return; //the vec is dead, so return out completely
 				}
 			}
 		}
 	}
 
-
-
-	/**
-	 * returns if this entity triggers Block.onEntityWalking on the blocks they walk on. used for spiders and wolves to
-	 * prevent them from trampling crops
-	 */
 	@Override
-	protected boolean canTriggerWalking()
-	{
-		return false;
-	}
-
-	/**
-	 * Returns true if other Entities should be prevented from moving through this Entity.
-	 */
-	@Override
-	public boolean canBeCollidedWith()
-	{
+	protected boolean canTriggerWalking() {
 		return false;
 	}
 
 	@Override
-	protected void entityInit() {
-
+	public boolean canBeCollidedWith() {
+		return false;
 	}
 
 	@Override
-	protected void readEntityFromNBT(NBTTagCompound compound) {
-
-	}
+	protected void entityInit() {}
 
 	@Override
-	protected void writeEntityToNBT(NBTTagCompound compound) {
+	protected void readEntityFromNBT(NBTTagCompound compound) {}
 
-	}
-
-
+	@Override
+	protected void writeEntityToNBT(NBTTagCompound compound) {}
 }

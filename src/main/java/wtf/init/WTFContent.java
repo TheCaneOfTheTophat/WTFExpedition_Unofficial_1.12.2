@@ -132,11 +132,7 @@ public class WTFContent {
 
 		for(OreEntry entry : JSONLoader.oreEntries) {
 			if(entry.usesDenseBlocks()) {
-				String[] oreSplit = entry.getBlockId().split("@");
-				int oreMeta = oreSplit.length > 1 ? Integer.parseInt(oreSplit[1]) : 0;
-				String oreId = oreSplit[0];
-
-				IBlockState oreState = Block.getBlockFromName(oreId).getStateFromMeta(oreMeta);
+				IBlockState oreState = JSONLoader.getStateFromId(entry.getBlockId());
 
 				for (String stone : entry.getStoneList()) {
 					BlockEntry stoneEntry = JSONLoader.identifierToBlockEntry.get(stone);
@@ -146,11 +142,7 @@ public class WTFContent {
 						continue;
 					}
 
-					String[] stoneSplit = stoneEntry.getBlockId().split("@");
-					int stoneMeta = stoneSplit.length > 1 ? Integer.parseInt(stoneSplit[1]) : 0;
-					String stoneId = stoneSplit[0];
-
-					IBlockState stoneState = Block.getBlockFromName(stoneId).getStateFromMeta(stoneMeta);
+					IBlockState stoneState = JSONLoader.getStateFromId(stoneEntry.getBlockId());
 
 					if(oreState == Blocks.REDSTONE_ORE.getDefaultState()) {
 						BlockDenseRedstoneOre oreOff = new BlockDenseRedstoneOre(stoneState, false);
@@ -171,6 +163,10 @@ public class WTFContent {
 
 						reg.register(oreOff);
 						reg.register(oreOn);
+
+						WTFExpeditionConfig.blockFractureList.add(oreOff.getRegistryName().toString());
+						WTFExpeditionConfig.blockFractureList.add(oreOn.getRegistryName().toString());
+
 					} else if(stoneState.getBlock() instanceof BlockFalling) {
 						// Sadly, there is no such thing as a falling redstone ore since both redstone logic and falling block logic depend on ticking. :(
 						BlockDenseOreFalling ore = new BlockDenseOreFalling(stoneState, oreState);
@@ -179,6 +175,7 @@ public class WTFContent {
 
 						blocks.add(ore);
 						oreEntryMap.put(ore, entry);
+						WTFExpeditionConfig.blockFractureList.add(ore.getRegistryName().toString());
 
 						reg.register(ore);
 					} else {
@@ -186,9 +183,9 @@ public class WTFContent {
 						ore.setRegistryName(WTFExpedition.modID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
 						ore.setCreativeTab(WTFExpedition.wtfTab);
 
-
 						blocks.add(ore);
 						oreEntryMap.put(ore, entry);
+						WTFExpeditionConfig.blockFractureList.add(ore.getRegistryName().toString());
 
 						reg.register(ore);
 					}
@@ -201,14 +198,9 @@ public class WTFContent {
 		    ============================================== */
 
 		for(BlockEntry entry : JSONLoader.blockEntries) {
-			String[] blockSplit = entry.getBlockId().split("@");
 
 			String blockName = entry.getName();
-
-			int blockMeta = blockSplit.length > 1 ? Integer.parseInt(blockSplit[1]) : 0;
-			String blockId = blockSplit[0];
-
-			IBlockState blockState = Block.getBlockFromName(blockId).getStateFromMeta(blockMeta);
+			IBlockState blockState = JSONLoader.getStateFromId(entry.getBlockId());
 
 			// SPELEOTHEMS
 			if(entry.hasSpeleothems()) {

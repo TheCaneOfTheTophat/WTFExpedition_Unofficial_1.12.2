@@ -38,7 +38,7 @@ public class ModelDecoration implements IModel {
         else
             decoStatic = (BlockDecoStatic) location.block;
 
-        BlockEntry entry = JSONLoader.identifierToBlockEntry.get(state.getBlock().getRegistryName().toString() + "@" + state.getBlock().getMetaFromState(state));
+        BlockEntry entry = JSONLoader.getEntryFromState(state);
         cubeTexture = new ResourceLocation(entry.getTexture());
 
         if(location.block instanceof BlockDecoAnim)

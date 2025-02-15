@@ -19,7 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import wtf.WTFExpedition;
 import wtf.init.BlockSets;
 
-public class BlockDecoAnim extends AbstractBlockDerivative{
+public class BlockDecoAnim extends AbstractBlockDerivative {
 	private final AnimatedDecoType type;
 
 	public static final PropertyBool FAST = PropertyBool.create("fast");

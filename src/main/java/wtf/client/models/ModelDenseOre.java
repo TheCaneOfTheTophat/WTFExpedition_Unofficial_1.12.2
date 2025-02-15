@@ -30,9 +30,8 @@ public class ModelDenseOre implements IModel {
 
     public ModelDenseOre(DerivativeResourceLocation location) {
         IBlockState parentState = location.block.parentBackground;
-        Block parentBlock = parentState.getBlock();
 
-        cubeTexture = new ResourceLocation(JSONLoader.identifierToBlockEntry.get(parentBlock.getRegistryName().toString() + "@" + parentBlock.getMetaFromState(parentState)).getTexture());
+        cubeTexture = new ResourceLocation(JSONLoader.getEntryFromState(parentState).getTexture());
 
         overlayTexture = new ResourceLocation(WTFContent.oreEntryMap.get(location.block).getRawOverlayPath());
 
@@ -41,9 +40,8 @@ public class ModelDenseOre implements IModel {
 
     public ModelDenseOre(DerivativeFallingResourceLocation location) {
         IBlockState parentState = location.block.parentBackground;
-        Block parentBlock = parentState.getBlock();
 
-        cubeTexture = new ResourceLocation(JSONLoader.identifierToBlockEntry.get(parentBlock.getRegistryName().toString() + "@" + parentBlock.getMetaFromState(parentState)).getTexture());
+        cubeTexture = new ResourceLocation(JSONLoader.getEntryFromState(parentState).getTexture());
 
         overlayTexture = new ResourceLocation(WTFContent.oreEntryMap.get(location.block).getRawOverlayPath());
 

@@ -91,7 +91,7 @@ public class ExpVec extends Vec{
 				str -= resistance/3;
 				BlockEntry entry = JSONLoader.identifierToBlockEntry.get(state.getBlock().getRegistryName() + "@" + state.getBlock().getMetaFromState(state));
 				if (entry != null && entry.fracturesFirstWhenMined()){
-					ListenerStoneFrac.doFrac(world, pos, state);
+					ListenerStoneFrac.fracture(world, pos, state);
 				}
 			}
 		}

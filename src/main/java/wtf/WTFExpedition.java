@@ -101,12 +101,12 @@ public class WTFExpedition {
 				WTFExpedition.wtfLog.info("Water source control enabled!");
 			}
 			if (WTFExpeditionConfig.miningStoneFractures) {
-//				MinecraftForge.EVENT_BUS.register(new ListenerStoneFrac());
-//				WTFExpedition.wtfLog.info("Stone fracturing enabled!");
+				MinecraftForge.EVENT_BUS.register(new ListenerStoneFrac());
+				WTFExpedition.wtfLog.info("Stone fracturing enabled!");
 			}
 			if (WTFExpeditionConfig.miningOreFractures) {
-//				MinecraftForge.EVENT_BUS.register(new ListenerOreFrac());
-//				WTFExpedition.wtfLog.info("Ore fracturing enabled!");
+				MinecraftForge.EVENT_BUS.register(new ListenerOreFrac());
+				WTFExpedition.wtfLog.info("Ore fracturing enabled!");
 			}
 			if (WTFExpeditionConfig.miningSpeedModificationEnabled) {
 				MinecraftForge.EVENT_BUS.register(new ListenerMiningSpeed());
