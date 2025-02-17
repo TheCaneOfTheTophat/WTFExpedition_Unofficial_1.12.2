@@ -10,7 +10,7 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import wtf.WTFExpedition;
-import wtf.gameplay.fracturing.EntityStoneCrack;
+import wtf.gameplay.fracturing.EntityFracture;
 import wtf.init.BlockSets;
 
 public class BlockDecoStatic extends AbstractBlockDerivative {
@@ -50,7 +50,7 @@ public class BlockDecoStatic extends AbstractBlockDerivative {
 	@Override
 	public void onBlockDestroyedByPlayer(World world, BlockPos pos, IBlockState state) {
 		if (!world.isRemote && type == StaticDecoType.CRACKED)
-			EntityStoneCrack.fractureAdjacent(world, pos);
+			EntityFracture.fractureAdjacent(world, pos);
 	}
 
 	@Override

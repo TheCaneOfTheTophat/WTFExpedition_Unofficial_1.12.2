@@ -8,10 +8,10 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBloc
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import wtf.config.WTFExpeditionConfig;
-import wtf.gameplay.fracturing.EntityStoneCrack;
+import wtf.gameplay.fracturing.EntityFracture;
 import wtf.init.BlockSets;
 
-public class ListenerOreFrac {
+public class ListenerOreFracture {
 
 	@SubscribeEvent
 	public void rightClick(RightClickBlock event) {
@@ -32,10 +32,10 @@ public class ListenerOreFrac {
 			Block block = event.getState().getBlock();
 			if (BlockSets.adjacentFracturingBlocks.contains(block.getRegistryName().toString())) {
 				if (WTFExpeditionConfig.simpleFracturing)
-					EntityStoneCrack.fractureAdjacentSimple(event.getWorld(), event.getPos());
+					EntityFracture.fractureAdjacentSimple(event.getWorld(), event.getPos());
 				else {
 					int toolLevel = tool == null ? 0 : tool.getItem().getHarvestLevel(tool, "pickaxe", event.getPlayer(), event.getState());
-					EntityStoneCrack.fractureOre(event.getWorld(), event.getPos(), toolLevel);
+					EntityFracture.fractureOre(event.getWorld(), event.getPos(), toolLevel);
 				}
 			}
 		}

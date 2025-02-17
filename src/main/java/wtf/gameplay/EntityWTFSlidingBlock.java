@@ -5,7 +5,7 @@ import net.minecraft.entity.MoverType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class EntityWTFSlidingBlock extends EntityWTFFallingBlock{
+public class EntityWTFSlidingBlock extends EntityWTFFallingBlock {
 
 	public final int oriY;
 	
@@ -18,27 +18,19 @@ public class EntityWTFSlidingBlock extends EntityWTFFallingBlock{
 		
 		worldIn.spawnEntity(this);
 		worldIn.setBlockToAir(pos);
-	
 	}
 
 	@Override
-	public boolean canBeCollidedWith()
-	{
+	public boolean canBeCollidedWith() {
 		return true;
 	}
-
     
 	@Override
-	public void onUpdate()
-    {
-		if (this.fallTime++ > 18){
+	public void onUpdate() {
+		if (this.fallTime++ > 18)
     		super.onUpdate();
-    	}
     	else {
     		this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
     	}
     }
-	
-	
-	
 }

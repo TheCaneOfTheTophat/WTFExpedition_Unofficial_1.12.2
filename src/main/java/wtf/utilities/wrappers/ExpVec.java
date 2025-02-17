@@ -8,13 +8,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import wtf.config.BlockEntry;
 import wtf.config.WTFExpeditionConfig;
 import wtf.gameplay.CustomExplosion;
 import wtf.gameplay.ExploderEntity;
-import wtf.gameplay.eventlisteners.ListenerStoneFrac;
+import wtf.gameplay.fracturing.EntityFracture;
 import wtf.init.BlockSets;
-import wtf.init.JSONLoader;
 
 public class ExpVec extends Vec{
 
@@ -89,10 +87,7 @@ public class ExpVec extends Vec{
 			} 
 			else if (WTFExpeditionConfig.explosionsFracture){
 				str -= resistance/3;
-				BlockEntry entry = JSONLoader.identifierToBlockEntry.get(state.getBlock().getRegistryName() + "@" + state.getBlock().getMetaFromState(state));
-				if (entry != null && entry.fracturesFirstWhenMined()){
-					ListenerStoneFrac.fracture(world, pos, state);
-				}
+				EntityFracture.fractureBlock(world, pos, true);
 			}
 		}
 		str -= attenuation;

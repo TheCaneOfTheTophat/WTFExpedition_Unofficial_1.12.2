@@ -18,14 +18,15 @@ import wtf.blocks.BlockDecoAnim;
 import wtf.blocks.BlockDecoStatic;
 import wtf.config.BlockEntry;
 import wtf.config.WTFExpeditionConfig;
+import wtf.gameplay.GravityMethods;
 import wtf.init.JSONLoader;
 
-public class EntityStoneCrack extends Entity {
+public class EntityFracture extends Entity {
 
 	private int count;
 	ArrayList<FracVec> cracking = new ArrayList<>();
 
-	private EntityStoneCrack(World worldIn, BlockPos pos) {
+	private EntityFracture(World worldIn, BlockPos pos) {
 		super(worldIn);
 		this.posX=pos.getX();
 		this.posY=pos.getY();
@@ -33,25 +34,25 @@ public class EntityStoneCrack extends Entity {
 	}
 	
 	public static void fractureAdjacent(World world, BlockPos pos) {
-		EntityStoneCrack crack = new EntityStoneCrack(world, pos);
+		EntityFracture crack = new EntityFracture(world, pos);
 		crack.addAllAdj(pos);
 		world.spawnEntity(crack);
 	}
 	
 	public static void fractureAdjacentSimple(World world, BlockPos pos) {
-		EntityStoneCrack crack = new EntityStoneCrack(world, pos);
+		EntityFracture crack = new EntityFracture(world, pos);
 		crack.addDirectlyAdj(pos);
 		world.spawnEntity(crack);
 	}
 	
 	public static void fractureOre(World world, BlockPos pos, int toolLevel) {
-		EntityStoneCrack crack = new EntityStoneCrack(world, pos);
+		EntityFracture crack = new EntityFracture(world, pos);
 		crack.crackOre(world, pos, toolLevel);
 		world.spawnEntity(crack);
 	}
 	
 	public static void fractureHammer(World world, BlockPos pos, int toolLevel) {
-		EntityStoneCrack crack = new EntityStoneCrack(world, pos);
+		EntityFracture crack = new EntityFracture(world, pos);
 		crack.crackHammer(world, pos, toolLevel);
 		world.spawnEntity(crack);
 	}
@@ -64,9 +65,9 @@ public class EntityStoneCrack extends Entity {
 		
 		int blockLevel = world.getBlockState(pos).getBlock().getHarvestLevel(world.getBlockState(pos)); 
 		
-		EntityStoneCrack crack = new EntityStoneCrack(world, pos);
+		EntityFracture crack = new EntityFracture(world, pos);
 				
-		int numLoop = (toolLevel+1) * 4;
+		int numLoop = (toolLevel + 1) * 4;
 		int maxDist = 1 + blockLevel;
 		
 		for (int loop = 0; loop < numLoop; loop++) {
@@ -84,7 +85,7 @@ public class EntityStoneCrack extends Entity {
 	}
 	
 	public void crackHammer(World world, BlockPos pos, int toolLevel) {
-		EntityStoneCrack crack = new EntityStoneCrack(world, pos);
+		EntityFracture crack = new EntityFracture(world, pos);
 		Random posRandom = new Random(pos.hashCode());
 		
 		int numLoop = toolLevel + 1;
@@ -143,37 +144,43 @@ public class EntityStoneCrack extends Entity {
 	private void doVec(FracVec vec) {
 		for (int fracloop = 0; fracloop <= vec.blocksToFrac; fracloop++) {
 			for (int dist = 1; dist <= vec.maxDist; dist++) {
-
-				BlockPos pos = vec.getPos(dist);
-				IBlockState state = world.getBlockState(pos);
-				Block block = state.getBlock();
-				BlockEntry entry;
-				IBlockState cobble;
-
-				if (state.getMaterial() == Material.AIR || block instanceof BlockFluidBase)
-					return;
-				else if (block instanceof BlockDecoAnim && ((BlockDecoAnim) block).getType() == BlockDecoAnim.AnimatedDecoType.LAVA_CRUST) {
-					world.setBlockState(pos, Blocks.LAVA.getDefaultState());
-					world.playEvent(2001, pos, Block.getStateId(state));
-					return;
-				} else if (block instanceof BlockDecoStatic && ((BlockDecoStatic) block).getType() == BlockDecoStatic.StaticDecoType.CRACKED) {
-					entry = JSONLoader.getEntryFromState(((BlockDecoStatic) block).parentBackground);
-					addAllAdj(pos);
-				} else
-					entry = JSONLoader.getEntryFromState(state);
-
-				if(entry != null && !entry.getFracturedBlockId().isEmpty())
-					cobble = JSONLoader.getStateFromId(entry.getFracturedBlockId());
-				else
-					return;
-
-				world.playEvent(2001, pos, Block.getStateId(state));
-                world.setBlockState(pos, cobble);
-
-                if (WTFExpeditionConfig.additionalBlockGravity) {
-//						GravityMethods.dropBlock(world, pos, true);
-                }
+				fractureBlock(world, vec.getPos(dist), true);
             }
+		}
+	}
+
+	public static void fractureBlock(World world, BlockPos pos, boolean indirectFracture) {
+		IBlockState state = world.getBlockState(pos);
+		Block block = state.getBlock();
+		BlockEntry entry;
+		IBlockState cobble;
+
+		if (state.getMaterial() == Material.AIR || block instanceof BlockFluidBase)
+			return;
+		else if (block instanceof BlockDecoAnim && ((BlockDecoAnim) block).getType() == BlockDecoAnim.AnimatedDecoType.LAVA_CRUST) {
+			if(indirectFracture) {
+				world.setBlockState(pos, Blocks.LAVA.getDefaultState());
+				world.playEvent(2001, pos, Block.getStateId(state));
+			}
+			return;
+		} else if (block instanceof BlockDecoStatic && ((BlockDecoStatic) block).getType() == BlockDecoStatic.StaticDecoType.CRACKED) {
+			entry = JSONLoader.getEntryFromState(((BlockDecoStatic) block).parentBackground);
+			if(indirectFracture)
+				fractureAdjacent(world, pos);
+		} else
+			entry = JSONLoader.getEntryFromState(state);
+
+		if(entry != null && !entry.getFracturedBlockId().isEmpty())
+			cobble = JSONLoader.getStateFromId(entry.getFracturedBlockId());
+		else
+			return;
+
+		if(indirectFracture)
+			world.playEvent(2001, pos, Block.getStateId(state));
+		world.setBlockState(pos, cobble);
+
+		if (WTFExpeditionConfig.additionalBlockGravity) {
+			GravityMethods.dropBlock(world, pos, true);
 		}
 	}
 

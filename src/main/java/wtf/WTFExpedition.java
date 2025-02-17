@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
 import wtf.config.WTFExpeditionConfig;
 import wtf.gameplay.eventlisteners.*;
+import wtf.init.BlockSets;
 import wtf.init.JSONLoader;
 
 import javax.annotation.Nonnull;
@@ -70,8 +71,7 @@ public class WTFExpedition {
 //		else
 //			coreLog.info("Underground Biomes Construct not detected");
 //
-//		WTFStoneRegistry.loadStoneReg();
-//		BlockSets.initBlockSets();
+		BlockSets.initBlockSets();
 //		proxy.initWCICRender();
 //		WTFEntities.initEntites();
 //		WTFRecipes.initRecipes();
@@ -101,11 +101,11 @@ public class WTFExpedition {
 				WTFExpedition.wtfLog.info("Water source control enabled!");
 			}
 			if (WTFExpeditionConfig.miningStoneFractures) {
-				MinecraftForge.EVENT_BUS.register(new ListenerStoneFrac());
+				MinecraftForge.EVENT_BUS.register(new ListenerBreakFracture());
 				WTFExpedition.wtfLog.info("Stone fracturing enabled!");
 			}
 			if (WTFExpeditionConfig.miningOreFractures) {
-				MinecraftForge.EVENT_BUS.register(new ListenerOreFrac());
+				MinecraftForge.EVENT_BUS.register(new ListenerOreFracture());
 				WTFExpedition.wtfLog.info("Ore fracturing enabled!");
 			}
 			if (WTFExpeditionConfig.miningSpeedModificationEnabled) {
@@ -117,8 +117,8 @@ public class WTFExpedition {
 //				WTFExpedition.wtfLog.info("Custom explosions enabled!");
 			}
 			if (WTFExpeditionConfig.additionalBlockGravity) {
-//				MinecraftForge.EVENT_BUS.register(new ListenerGravity());
-//				WTFExpedition.wtfLog.info("Additional block gravity enabled!");
+				MinecraftForge.EVENT_BUS.register(new ListenerGravity());
+				WTFExpedition.wtfLog.info("Additional block gravity enabled!");
 			}
 			if (WTFExpeditionConfig.featherDropRate > 0) {
 				MinecraftForge.EVENT_BUS.register(new ListenerChickenDrops());
