@@ -34,8 +34,8 @@ public class ListenerStoneFrac {
 				fracture(event.getWorld(), event.getPos(), state);
 
 				if (ListenerHelper.isHammer(player.getHeldItemMainhand()) && WTFExpeditionConfig.modifyHammerBehaviour) {
-					int toolLevel = tool == null ? 0 : tool.getItem().getHarvestLevel(tool, "pickaxe", event.getPlayer(), state);
-					EntityStoneCrack.cracHammer(event.getWorld(), event.getPos(), toolLevel);
+					int toolLevel = tool == null ? 0 : tool.getItem().getHarvestLevel(tool, "pickaxe", player, state);
+					EntityStoneCrack.fractureHammer(event.getWorld(), event.getPos(), toolLevel);
 				}
 
 				if (tool != null) {
@@ -50,9 +50,8 @@ public class ListenerStoneFrac {
 	public static void fracture(World world, BlockPos pos, IBlockState state) {
 		BlockEntry entry = JSONLoader.getEntryFromState(state);
 
-		if (state.getBlock() instanceof BlockDecoAnim && ((BlockDecoAnim) state.getBlock()).getType() == BlockDecoAnim.AnimatedDecoType.LAVA_CRUST) {
+		if (state.getBlock() instanceof BlockDecoAnim && ((BlockDecoAnim) state.getBlock()).getType() == BlockDecoAnim.AnimatedDecoType.LAVA_CRUST)
 			world.setBlockState(pos, Blocks.LAVA.getDefaultState());
-		}
 		else {
 			world.setBlockState(pos, JSONLoader.getStateFromId(entry.getFracturedBlockId()));
 			if (WTFExpeditionConfig.additionalBlockGravity) {

@@ -7,7 +7,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import wtf.WTFExpedition;
 import wtf.config.WTFExpeditionConfig;
 import wtf.gameplay.fracturing.EntityStoneCrack;
 import wtf.init.BlockSets;
@@ -18,7 +17,7 @@ public class ListenerOreFrac {
 	public void rightClick(RightClickBlock event) {
 		if (!event.getEntityPlayer().capabilities.isCreativeMode && event.getItemStack() != null) {
 			Block block = Block.getBlockFromItem(event.getItemStack().getItem());
-			if (WTFExpeditionConfig.blockFractureList.contains(block.getRegistryName().toString())) {
+			if (BlockSets.adjacentFracturingBlocks.contains(block.getRegistryName().toString())) {
 				event.setCanceled(true);
 			}
 		}
@@ -31,12 +30,12 @@ public class ListenerOreFrac {
 		
 		if (!event.getPlayer().capabilities.isCreativeMode && !silk) {
 			Block block = event.getState().getBlock();
-			if (WTFExpeditionConfig.blockFractureList.contains(block.getRegistryName().toString())) {
+			if (BlockSets.adjacentFracturingBlocks.contains(block.getRegistryName().toString())) {
 				if (WTFExpeditionConfig.simpleFracturing)
-					EntityStoneCrack.FracOreSmple(event.getWorld(), event.getPos());
+					EntityStoneCrack.fractureAdjacentSimple(event.getWorld(), event.getPos());
 				else {
 					int toolLevel = tool == null ? 0 : tool.getItem().getHarvestLevel(tool, "pickaxe", event.getPlayer(), event.getState());
-					EntityStoneCrack.FracOre(event.getWorld(), event.getPos(), toolLevel);
+					EntityStoneCrack.fractureOre(event.getWorld(), event.getPos(), toolLevel);
 				}
 			}
 		}

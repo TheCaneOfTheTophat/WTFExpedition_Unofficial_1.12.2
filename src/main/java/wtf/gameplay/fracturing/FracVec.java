@@ -18,7 +18,7 @@ public class FracVec{
 	public final double vecY;
 	public final double vecZ;
 	
-	float pi = (float)Math.PI*2;
+	float tau = (float) Math.PI * 2;
 	
 	public FracVec(BlockPos pos, int str, int maxDist, double x, double y, double z) {
 		this.oriX = pos.getX() + 0.5;
@@ -27,17 +27,17 @@ public class FracVec{
 		this.vecX = x;
 		this.vecY = y;
 		this.vecZ = z;
-		this.maxDist=maxDist;
-		this.blocksToFrac=str;
+		this.maxDist = maxDist;
+		this.blocksToFrac = str;
 	}
 	
-	public FracVec(BlockPos pos, int str, int maxDist, Random random){
+	public FracVec(BlockPos pos, int str, int maxDist, Random random) {
 		this.oriX = pos.getX() + 0.5;
 		this.oriY = pos.getY() + 0.5;
 		this.oriZ = pos.getZ() + 0.5;
 		
-		float pitchX = random.nextFloat()*pi;
-		float pitchY = random.nextFloat()*pi;
+		float pitchX = random.nextFloat() * tau;
+		float pitchY = random.nextFloat() * tau;
 		float sinY = MathHelper.sin(pitchY);
 		vecY = MathHelper.cos(pitchY);
 		vecX = MathHelper.cos(pitchX) * sinY;
@@ -47,8 +47,7 @@ public class FracVec{
 		this.blocksToFrac=str;
 	}
 	
-	public BlockPos getPos(int dist){
-		return new BlockPos(oriX+vecX*dist, oriY+vecY*dist, oriZ+vecZ*dist);
+	public BlockPos getPos(int dist) {
+		return new BlockPos(oriX + vecX * dist, oriY + vecY * dist, oriZ + vecZ * dist);
 	}
-
 }

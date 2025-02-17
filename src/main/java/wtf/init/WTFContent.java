@@ -164,8 +164,8 @@ public class WTFContent {
 						reg.register(oreOff);
 						reg.register(oreOn);
 
-						WTFExpeditionConfig.blockFractureList.add(oreOff.getRegistryName().toString());
-						WTFExpeditionConfig.blockFractureList.add(oreOn.getRegistryName().toString());
+						BlockSets.adjacentFracturingBlocks.add(oreOff.getRegistryName().toString());
+						BlockSets.adjacentFracturingBlocks.add(oreOn.getRegistryName().toString());
 
 					} else if(stoneState.getBlock() instanceof BlockFalling) {
 						// Sadly, there is no such thing as a falling redstone ore since both redstone logic and falling block logic depend on ticking. :(
@@ -175,7 +175,7 @@ public class WTFContent {
 
 						blocks.add(ore);
 						oreEntryMap.put(ore, entry);
-						WTFExpeditionConfig.blockFractureList.add(ore.getRegistryName().toString());
+						BlockSets.adjacentFracturingBlocks.add(ore.getRegistryName().toString());
 
 						reg.register(ore);
 					} else {
@@ -185,7 +185,7 @@ public class WTFContent {
 
 						blocks.add(ore);
 						oreEntryMap.put(ore, entry);
-						WTFExpeditionConfig.blockFractureList.add(ore.getRegistryName().toString());
+						BlockSets.adjacentFracturingBlocks.add(ore.getRegistryName().toString());
 
 						reg.register(ore);
 					}

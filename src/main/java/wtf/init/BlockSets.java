@@ -1,9 +1,6 @@
 package wtf.init;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.*;
 import java.util.Map.Entry;
 
 import net.minecraft.block.Block;
@@ -27,18 +24,17 @@ public class BlockSets {
 	}
 
 	
-	public static HashMap<Block, Float> fallingBlocks = new HashMap<Block, Float>();
+	public static HashMap<Block, Float> fallingBlocks = new HashMap<>();
 
-	private static Block[] defOres = {Blocks.IRON_ORE, Blocks.DIAMOND_ORE, Blocks.LAPIS_ORE, Blocks.GOLD_ORE, Blocks.EMERALD_ORE, Blocks.REDSTONE_ORE, Blocks.LIT_REDSTONE_ORE, Blocks.COAL_ORE};
-	public static HashSet<Block> oreAndFractures = new HashSet<Block>(Arrays.asList(defOres));
+	public static Set<String> adjacentFracturingBlocks = new HashSet<>();
 
 	//private static IBlockState[] defOreStates = {Blocks.IRON_ORE.getDefaultState(), Blocks.DIAMOND_ORE.getDefaultState(), Blocks.LAPIS_ORE.getDefaultState(), Blocks.GOLD_ORE.getDefaultState(),
 	//		Blocks.EMERALD_ORE.getDefaultState(), Blocks.REDSTONE_ORE.getDefaultState(), Blocks.LIT_REDSTONE_ORE.getDefaultState(), Blocks.COAL_ORE.getDefaultState()};
 	public static HashMap<StoneAndOre, IBlockState> stoneAndOre = new HashMap<StoneAndOre, IBlockState>();
 
-	public static HashMap<Block, Float> explosiveBlocks = new HashMap<Block, Float>();
+	public static HashMap<Block, Float> explosiveBlocks = new HashMap<>();
 
-	public static HashMap<Item, Item> itemReplacer = new HashMap<Item, Item>();
+	public static HashMap<Item, Item> itemReplacer = new HashMap<>();
 
 
 
