@@ -27,7 +27,7 @@ public class ListenerBreakFracture {
 
 			if (entry != null && !entry.getFracturedBlockId().isEmpty() && entry.fracturesFirstWhenMined()) {
 				event.setCanceled(true);
-				EntityFracture.fractureBlock(event.getWorld(), event.getPos(), false);
+				EntityFracture.fractureBlock(event.getWorld(), event.getPos(), false, false);
 
 				if (ListenerHelper.isHammer(player.getHeldItemMainhand()) && WTFExpeditionConfig.modifyHammerBehaviour) {
 					int toolLevel = tool == null ? 0 : tool.getItem().getHarvestLevel(tool, "pickaxe", player, state);

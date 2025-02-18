@@ -1,20 +1,15 @@
 package wtf.gameplay;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentProtection;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
@@ -25,39 +20,24 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import wtf.config.WTFExpeditionConfig;
 import wtf.utilities.wrappers.ExpVec;
 
-public class CustomExplosion extends Explosion{
+public class CustomExplosion extends Explosion {
 
 	private final World world;
 
 	Random random = new Random();
 	public Entity sourceEntity;
-	boolean isSmoking = false;
-	public boolean flaming = false;
-
-	public HashMap<BlockPos, Block> fluids = new HashMap<BlockPos, Block>(); 
+	boolean isSmoking;
+	public boolean flaming;
 
 	int counterMod;
 
 	//create a list of explosion vectors
-	HashSet<ExpVec> vecList = new HashSet<ExpVec>();
+	HashSet<ExpVec> vecList = new HashSet<>();
 
-	float motionFactor = 2F;
-	protected Map<Entity, Vec3d> affectedPlayers = new HashMap<Entity, Vec3d>();
-
-	public CustomExplosion(Entity entity, World world, Vec3d vec3d, float str) {
-		super(world, entity, vec3d.x, vec3d.y, vec3d.z, str, false, false);
-		this.world = world;
-		BlockPos origin = new BlockPos(vec3d.x, vec3d.y, vec3d.z);
-		this.sourceEntity = entity;
-		this.counterMod = 0;
-		populateVectorList(new BlockPos(vec3d.x, vec3d.y, vec3d.z), str);
-		doExplosionB(origin, str);
-
-	}
-	
 	public CustomExplosion(Entity entity, World world, Vec3d vec3d, float str, boolean fire) {
 		super(world, entity, vec3d.x, vec3d.y, vec3d.z, str, false, false);
 		flaming = fire;
@@ -66,11 +46,8 @@ public class CustomExplosion extends Explosion{
 		BlockPos origin = new BlockPos(vec3d.x, vec3d.y, vec3d.z);
 		this.sourceEntity = entity;
 		this.counterMod = 0;
-		populateVectorList(new BlockPos(vec3d.x, vec3d.y, vec3d.z), str);
+		populateVectorList(origin, str);
 		doExplosionB(origin, str);
-		
-		
-		
 	}
 
 	/**
@@ -78,7 +55,6 @@ public class CustomExplosion extends Explosion{
 	 * by this explosion
 	 */
 	protected void populateVectorList(BlockPos origin, float baseStr) {
-
 		float xpos = getModifier(origin.east());
 		float xneg = getModifier(origin.west());
 		float ypos = getModifier(origin.up());
@@ -114,8 +90,7 @@ public class CustomExplosion extends Explosion{
 				for (int zloop = zMin; zloop < zMax + 1; zloop++) {
 
 					// This checks if it's an edge of the cube
-					if (xloop == xMin || xloop == xMax || yloop == yMin || yloop == yMax || zloop == zMin
-							|| zloop == zMax) {
+					if (xloop == xMin || xloop == xMax || yloop == yMin || yloop == yMax || zloop == zMin || zloop == zMax) {
 
 						// the values to increment along the ray each loop
 
@@ -146,8 +121,6 @@ public class CustomExplosion extends Explosion{
 
 						//add the vector info to a vector list
 						vecList.add(new ExpVec(world, origin, incX, incY, incZ, vector, this));
-						//System.out.println("vector created");
-
 					}
 				}
 			}
@@ -155,68 +128,58 @@ public class CustomExplosion extends Explosion{
 	}
 
 	public void incrementVectorList() {
-		
-			//System.out.println("List shuffled");
-			Iterator<ExpVec> iterator = vecList.iterator();
-			while (iterator.hasNext()){
-				ExpVec vec = iterator.next();
-				
-				if (vec.increment()){
-					this.getAffectedBlockPositions().add(vec.pos());
-					this.getAffectedBlockPositions().add(vec.pos().up());
-					this.getAffectedBlockPositions().add(vec.pos().down());
-					this.getAffectedBlockPositions().add(vec.pos().east());
-					this.getAffectedBlockPositions().add(vec.pos().west());
-					this.getAffectedBlockPositions().add(vec.pos().north());
-					this.getAffectedBlockPositions().add(vec.pos().south());
-					BlockPos end = vec.pos();
-					List<Entity> list = world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(end));
+		Iterator<ExpVec> iterator = vecList.iterator();
+		while (iterator.hasNext()) {
+			ExpVec vec = iterator.next();
 
-					float damage = (float)vec.getStr()*7.5F;
-					if (list.size() > 0 && vec.getStr() > 0){
+			if (vec.increment()) {
+				this.getAffectedBlockPositions().add(vec.pos());
+				this.getAffectedBlockPositions().add(vec.pos().up());
+				this.getAffectedBlockPositions().add(vec.pos().down());
+				this.getAffectedBlockPositions().add(vec.pos().east());
+				this.getAffectedBlockPositions().add(vec.pos().west());
+				this.getAffectedBlockPositions().add(vec.pos().north());
+				this.getAffectedBlockPositions().add(vec.pos().south());
+				BlockPos end = vec.pos();
+				List<Entity> list = world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(end));
 
-						for (Entity entity : list){
-							double d11 = 1;
-							if (entity instanceof EntityLivingBase){
-								d11 = EnchantmentProtection.getBlastDamageReduction((EntityLivingBase)entity, damage);
-								if (vec.getStr() > 0.5){
-									entity.attackEntityFrom(DamageSource.causeExplosionDamage(this), (float) (d11*damage*WTFExpeditionConfig.explosionDamageModifier));
-								}
-							}
-													
-							entity.addVelocity(vec.strX()/10*WTFExpeditionConfig.explosionForceModifier, vec.strY()/10*WTFExpeditionConfig.explosionForceModifier, vec.strZ()/10*WTFExpeditionConfig.explosionForceModifier);
-							entity.velocityChanged=true;
-
+				float damage = (float) vec.getStr() * 7.5F;
+				if (!list.isEmpty() && vec.getStr() > 0) {
+					for (Entity entity : list) {
+						if (entity instanceof EntityLivingBase) {
+							double d11 = EnchantmentProtection.getBlastDamageReduction((EntityLivingBase)entity, damage);
+							if (vec.getStr() > 0.5)
+								entity.attackEntityFrom(DamageSource.causeExplosionDamage(this), (float) (d11*damage*WTFExpeditionConfig.explosionDamageModifier));
 						}
 
+						entity.addVelocity(vec.strX() / 10 * WTFExpeditionConfig.explosionForceModifier, vec.strY() / 10 * WTFExpeditionConfig.explosionForceModifier, vec.strZ() / 10 * WTFExpeditionConfig.explosionForceModifier);
+						entity.velocityChanged = true;
 					}
 				}
-				else {
-					iterator.remove();
-				}
-			}
-				
-	}
-	
-		public void doExplosionB(BlockPos origin, float baseStr) {
-		this.world.playSound((EntityPlayer)null, origin.getX(), origin.getY(), origin.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F) * 0.7F);
-		if (baseStr >= 2.0F && isSmoking) {
-			this.world.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, origin.getX(), origin.getY(), origin.getZ(), 1.0D, 0.0D, 0.0D, new int[0]);
-
-		} else {
-			this.world.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, origin.getX(), origin.getY(), origin.getZ(), 1.0D, 0.0D, 0.0D, new int[0]);
+			} else
+				iterator.remove();
 		}
-		/*
-		 * if (isFlaming) { iterator = affectedBlockPositions.iterator(); while
-		 * (iterator.hasNext()) { chunkposition =
-		 * (BlockPos)iterator.next(); i = chunkposition.getX(); j =
-		 * chunkposition.getY(); k = chunkposition.getZ(); block =
-		 * worldObj.getBlockState(new BlockPos(i, j, k); Block block1 = worldObj.getBlockState(new BlockPos(i, j -
-		 * 1, k); // func_149730_j() returns block.opaque if (block ==
-		 * Blocks.air && block1.func_149730_j() && rand.nextInt(3) == 0) {
-		 * worldObj.setBlock(i, j, k, Blocks.fire); } } }
-		 */
+	}
 
+	public void doExplosionB(BlockPos origin, float baseStr) {
+		this.world.playSound(null, origin.getX(), origin.getY(), origin.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F) * 0.7F);
+
+		if(!this.world.isRemote) {
+			WorldServer worldServer = ((WorldServer) this.world);
+			EnumParticleTypes type = baseStr >= 2.0F && isSmoking ? EnumParticleTypes.EXPLOSION_HUGE : EnumParticleTypes.EXPLOSION_LARGE;
+			worldServer.spawnParticle(type, origin.getX(), origin.getY(), origin.getZ(), 0, 0, 0, 0, 1.0D);
+		}
+
+		/*
+			if (isFlaming) { iterator = affectedBlockPositions.iterator(); while
+			(iterator.hasNext()) { chunkposition =
+			(BlockPos)iterator.next(); i = chunkposition.getX(); j =
+			chunkposition.getY(); k = chunkposition.getZ(); block =
+			worldObj.getBlockState(new BlockPos(i, j, k); Block block1 = worldObj.getBlockState(new BlockPos(i, j -
+			1, k); // func_149730_j() returns block.opaque if (block ==
+			Blocks.air && block1.func_149730_j() && rand.nextInt(3) == 0) {
+			worldObj.setBlock(i, j, k, Blocks.fire); } } }
+		*/
 	}
 
 
@@ -224,25 +187,28 @@ public class CustomExplosion extends Explosion{
 	 * Actually explodes the block and spawns particles if allowed
 	 */
 	public void spawnExtraParticles(BlockPos origin, float baseStr, int i, int j, int k) {
-		double d0 = i + world.rand.nextFloat();
-		double d1 = j + world.rand.nextFloat();
-		double d2 = k + world.rand.nextFloat();
-		double d3 = d0 - origin.getX();
-		double d4 = d1 - origin.getY();
-		double d5 = d2 - origin.getZ();
-		double d6 = MathHelper.sqrt(d3 * d3 + d4 * d4 + d5 * d5);
-		d3 /= d6;
-		d4 /= d6;
-		d5 /= d6;
-		double d7 = 0.5D / (d6 / baseStr + 0.1D);
-		d7 *= world.rand.nextFloat() * world.rand.nextFloat() + 0.3F;
-		d3 *= d7;
-		d4 *= d7;
-		d5 *= d7;
-		this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, (d0 + origin.getX() * 1.0D) / 2.0D, (d1 + origin.getY() * 1.0D) / 2.0D, (d2 + origin.getZ() * 1.0D) / 2.0D, d3, d4, d5);
+		if(!this.world.isRemote) {
+			WorldServer worldServer = ((WorldServer) this.world);
 
-		world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, d0, d1, d2, d3, d4, d5);
+			double d0 = i + world.rand.nextFloat();
+			double d1 = j + world.rand.nextFloat();
+			double d2 = k + world.rand.nextFloat();
+			double d3 = d0 - origin.getX();
+			double d4 = d1 - origin.getY();
+			double d5 = d2 - origin.getZ();
+			double d6 = MathHelper.sqrt(d3 * d3 + d4 * d4 + d5 * d5);
+			d3 /= d6;
+			d4 /= d6;
+			d5 /= d6;
+			double d7 = 0.5D / (d6 / baseStr + 0.1D);
+			d7 *= world.rand.nextFloat() * world.rand.nextFloat() + 0.3F;
+			d3 *= d7;
+			d4 *= d7;
+			d5 *= d7;
 
+			worldServer.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, (d0 + origin.getX() * 1.0D) / 2.0D, (d1 + origin.getY() * 1.0D) / 2.0D,  (d2 + origin.getZ() * 1.0D) / 2.0D, 0, d3, d4, d5, 1.0D);
+			worldServer.spawnParticle(EnumParticleTypes.SMOKE_LARGE, d0, d1, d2, 0, d3, d4, d5, 1.0D);
+		}
 	}
 
 
@@ -252,32 +218,22 @@ public class CustomExplosion extends Explosion{
 		if (mod < 1) {
 			counterMod++;
 			return mod;
-		} else {
+		} else
 			return 0.95F;
-		}
 	}
 
 	private float setModifier(float dir, float totalAssigned) {
 		float ret  = dir / (totalAssigned/6F);
 		return ret;
 	}
-
-	int airHash = Blocks.AIR.hashCode();
 	
-	
-	void update(){
-		for (BlockPos pos: this.getAffectedBlockPositions()){
-			//System.out.println("neightbor changed");
+	void update() {
+		for (BlockPos pos : this.getAffectedBlockPositions()) {
 			IBlockState iblockstate = world.getBlockState(pos);
-			// Also unsure about this one
 			iblockstate.neighborChanged(world, pos, iblockstate.getBlock(), pos);
-			if (WTFExpeditionConfig.additionalBlockGravity){
+			if (WTFExpeditionConfig.additionalBlockGravity)
 				GravityMethods.checkPos(world, pos);
-			}
 		}
 		this.clearAffectedBlockPositions();
 	}
-
-
-
 }

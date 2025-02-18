@@ -144,12 +144,12 @@ public class EntityFracture extends Entity {
 	private void doVec(FracVec vec) {
 		for (int fracloop = 0; fracloop <= vec.blocksToFrac; fracloop++) {
 			for (int dist = 1; dist <= vec.maxDist; dist++) {
-				fractureBlock(world, vec.getPos(dist), true);
+				fractureBlock(world, vec.getPos(dist), true, true);
             }
 		}
 	}
 
-	public static void fractureBlock(World world, BlockPos pos, boolean indirectFracture) {
+	public static void fractureBlock(World world, BlockPos pos, boolean indirectFracture, boolean breakBlockEffect) {
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
 		BlockEntry entry;
@@ -158,10 +158,10 @@ public class EntityFracture extends Entity {
 		if (state.getMaterial() == Material.AIR || block instanceof BlockFluidBase)
 			return;
 		else if (block instanceof BlockDecoAnim && ((BlockDecoAnim) block).getType() == BlockDecoAnim.AnimatedDecoType.LAVA_CRUST) {
-			if(indirectFracture) {
+			if(indirectFracture)
 				world.setBlockState(pos, Blocks.LAVA.getDefaultState());
+			if(breakBlockEffect)
 				world.playEvent(2001, pos, Block.getStateId(state));
-			}
 			return;
 		} else if (block instanceof BlockDecoStatic && ((BlockDecoStatic) block).getType() == BlockDecoStatic.StaticDecoType.CRACKED) {
 			entry = JSONLoader.getEntryFromState(((BlockDecoStatic) block).parentBackground);
@@ -175,7 +175,7 @@ public class EntityFracture extends Entity {
 		else
 			return;
 
-		if(indirectFracture)
+		if(breakBlockEffect)
 			world.playEvent(2001, pos, Block.getStateId(state));
 		world.setBlockState(pos, cobble);
 

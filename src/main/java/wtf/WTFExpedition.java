@@ -113,8 +113,8 @@ public class WTFExpedition {
 				WTFExpedition.wtfLog.info("Mining speed modification enabled!");
 			}
 			if (WTFExpeditionConfig.customExplosions) {
-//				MinecraftForge.EVENT_BUS.register(new ListenerCustomExplosion());
-//				WTFExpedition.wtfLog.info("Custom explosions enabled!");
+				MinecraftForge.EVENT_BUS.register(new ListenerCustomExplosion());
+				WTFExpedition.wtfLog.info("Custom explosions enabled!");
 			}
 			if (WTFExpeditionConfig.additionalBlockGravity) {
 				MinecraftForge.EVENT_BUS.register(new ListenerGravity());
