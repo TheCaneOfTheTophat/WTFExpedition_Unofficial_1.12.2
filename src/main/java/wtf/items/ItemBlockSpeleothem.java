@@ -15,6 +15,7 @@ import wtf.blocks.BlockSpeleothem;
 
 public class ItemBlockSpeleothem extends ItemBlockDerivative {
     BlockSpeleothem block;
+
     public ItemBlockSpeleothem(BlockSpeleothem block) {
         super(block);
         this.block = block;

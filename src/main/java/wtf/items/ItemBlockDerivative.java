@@ -8,6 +8,7 @@ import wtf.blocks.AbstractBlockDerivativeFalling;
 
 public class ItemBlockDerivative extends ItemBlockState {
     AbstractBlockDerivative block;
+
     public ItemBlockDerivative(AbstractBlockDerivative block) {
         super(block);
         this.block = block;

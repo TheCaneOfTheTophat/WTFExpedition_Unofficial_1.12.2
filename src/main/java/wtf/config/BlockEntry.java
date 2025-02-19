@@ -1,8 +1,8 @@
 package wtf.config;
 
 import com.google.common.collect.ImmutableMap;
-import wtf.blocks.BlockDecoAnim;
-import wtf.blocks.BlockDecoStatic;
+import wtf.blocks.enums.StaticDecoType;
+import wtf.blocks.enums.AnimatedDecoType;
 
 import java.util.Map;
 
@@ -48,13 +48,13 @@ public class BlockEntry {
         return percentageStability;
     }
 
-    public Map<BlockDecoStatic.StaticDecoType, Boolean> getStaticDecorTypes() {
-        Map<BlockDecoStatic.StaticDecoType, Boolean> map = ImmutableMap.of(BlockDecoStatic.StaticDecoType.MOSS, decoration.mossy, BlockDecoStatic.StaticDecoType.SOUL, decoration.soul, BlockDecoStatic.StaticDecoType.CRACKED, decoration.cracked);
+    public Map<StaticDecoType, Boolean> getStaticDecorTypes() {
+        Map<StaticDecoType, Boolean> map = ImmutableMap.of(StaticDecoType.MOSS, decoration.mossy, StaticDecoType.SOUL, decoration.soul, StaticDecoType.CRACKED, decoration.cracked);
         return map;
     }
 
-    public Map<BlockDecoAnim.AnimatedDecoType, Boolean> getAnimatedDecorTypes() {
-        Map<BlockDecoAnim.AnimatedDecoType, Boolean> map = ImmutableMap.of(BlockDecoAnim.AnimatedDecoType.LAVA_CRUST, decoration.lava_crust, BlockDecoAnim.AnimatedDecoType.DRIP_WATER, decoration.water_drip, BlockDecoAnim.AnimatedDecoType.DRIP_LAVA, decoration.lava_drip);
+    public Map<AnimatedDecoType, Boolean> getAnimatedDecorTypes() {
+        Map<AnimatedDecoType, Boolean> map = ImmutableMap.of(AnimatedDecoType.LAVA_CRUST, decoration.lava_crust, AnimatedDecoType.DRIP_WATER, decoration.water_drip, AnimatedDecoType.DRIP_LAVA, decoration.lava_drip);
         return map;
     }
 

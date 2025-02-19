@@ -97,9 +97,9 @@ public class ChunkCoords {
 		return true;
 	}
 	public boolean isWTFGenerated(World world) {
-		if (world.getBlockState(this.getGenMarkerPos()).getBlock() == WTFContent.gen_marker){
-			return false;
-		}
+//		if (world.getBlockState(this.getGenMarkerPos()).getBlock() == WTFContent.gen_marker){
+//			return false;
+//		}
 		return true;
 	}
 

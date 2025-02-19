@@ -10,16 +10,15 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import wtf.WTFExpedition;
-import wtf.init.BlockSets;
+import wtf.blocks.enums.AnimatedDecoType;
 
-public class BlockDecoAnim extends AbstractBlockDerivative {
+public class BlockDecoAnim extends AbstractBlockDerivative implements IDeco {
 	private final AnimatedDecoType type;
 
 	public static final PropertyBool FAST = PropertyBool.create("fast");
@@ -123,33 +122,4 @@ public class BlockDecoAnim extends AbstractBlockDerivative {
 		return I18n.format(WTFExpedition.modID + ":deco_type." + getType().getName() + ".name") + " " + blockStack.getDisplayName();
 	}
 
-	public enum AnimatedDecoType implements IStringSerializable {
-		LAVA_CRUST("lava_crust", BlockSets.Modifier.LAVA_CRUST, "lava_overlay"),
-		DRIP_WATER("wet", BlockSets.Modifier.WATER_DRIP, null),
-		DRIP_LAVA("lava_dripping", BlockSets.Modifier.LAVA_DRIP, null);
-
-		private final String name;
-		public final BlockSets.Modifier modifier;
-        private final String overlayName;
-
-        AnimatedDecoType(String name, BlockSets.Modifier mod, String overlayName) {
-			this.name = name;
-			this.modifier = mod;
-            this.overlayName = overlayName;
-        }
-
-		@Override
-		public String getName() {
-			return name;
-		}
-
-		public String getOverlayName() {
-			return overlayName;
-		}
-
-		@Override
-		public String toString() {
-			return getName();
-		}
-    }
 }

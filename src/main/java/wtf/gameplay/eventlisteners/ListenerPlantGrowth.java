@@ -58,10 +58,9 @@ public class ListenerPlantGrowth {
 			Biome biome = event.getWorld().getBiome(event.getPos());
 			if (!BiomeDictionary.hasType(biome, plantmods.get(plant))) {
 				List<ItemStack> drops = event.getDrops();
-				for (int loop = 0; loop < drops.size() && drops.size() > 1; loop++) {
+				for (int loop = 0; loop < drops.size() && drops.size() > 1; loop++)
 					if (random.nextFloat() < 0.33)
 						drops.remove(loop);
-				}
 			}
 		}
 	}

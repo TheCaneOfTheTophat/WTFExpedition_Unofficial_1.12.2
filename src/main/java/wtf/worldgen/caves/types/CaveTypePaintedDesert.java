@@ -20,19 +20,19 @@ public class CaveTypePaintedDesert extends AbstractCaveType{
 	//Red, orange, yellow, brown, white, light gray and unstained hardened c
 
 	IBlockState[] slabs = { 
-			//WTFBlocks.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.BLUE),
-			//WTFBlocks.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.CYAN),
-			//WTFBlocks.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.LIGHT_BLUE),
-			//WTFBlocks.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.SILVER),
-			WTFContent.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.WHITE),
-			//WTFBlocks.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.GRAY),
-			WTFContent.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.YELLOW),
-			WTFContent.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.BLACK),
-			WTFContent.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.BROWN),
-			WTFContent.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.RED),
-			WTFContent.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.ORANGE),
-			WTFContent.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.PINK),
-			//WTFBlocks.stained_terracotta_patch.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.PURPLE),
+			//WTFBlocks.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.BLUE),
+			//WTFBlocks.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.CYAN),
+			//WTFBlocks.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.LIGHT_BLUE),
+			//WTFBlocks.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.SILVER),
+			WTFContent.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.WHITE),
+			//WTFBlocks.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.GRAY),
+			WTFContent.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.YELLOW),
+			WTFContent.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.BLACK),
+			WTFContent.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.BROWN),
+			WTFContent.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.RED),
+			WTFContent.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.ORANGE),
+			WTFContent.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.PINK),
+			//WTFBlocks.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.PURPLE),
 			
 	};
 	

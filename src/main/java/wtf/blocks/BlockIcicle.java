@@ -15,7 +15,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -23,6 +22,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import wtf.blocks.enums.IcicleType;
 import wtf.init.BlockSets;
 
 
@@ -122,37 +122,7 @@ public class BlockIcicle extends AbstractBlockDerivative{
     public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
         return null;
     }
-	
-	public enum IcicleType implements IStringSerializable {
-		icicle_small(0, "stalactite_small", new AxisAlignedBB(0.2F, 0.2F, 0.2F, 0.8F, 1F, 0.8F)),
-		icicle_base(1, "stalactite_base", new AxisAlignedBB(0.2F, 0F, 0.2F, .8F, 1F, .8F)),
-		icicle_tip(2, "stalactite_tip", new AxisAlignedBB(0.3F, 0.4F, 0.3F, 0.7F, 1F, 0.7F));
-		
-		private final int ID;
-		private final String name;
-		public final AxisAlignedBB boundingBox;
 
-		private IcicleType(int ID, String name, AxisAlignedBB box) {
-			this.ID = ID;
-			this.name = name;
-			this.boundingBox = box;
-		}
-
-		@Override
-		public String getName() {
-			return name;
-		}
-
-		public int getID() {
-			return ID;
-		}
-		@Override
-		public String toString() {
-			return getName();
-		}
-		
-	}
-	
 	public IBlockState getBlockState(IcicleType type) {
 		return this.getDefaultState().withProperty(TYPE, type);
 	}

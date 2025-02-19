@@ -3,6 +3,9 @@
     "blockId": "minecraft:dirt",
     "name": "dirt",
     "texture": "minecraft:blocks/dirt",
-    "percentageStability": 50
+    "percentageStability": 50,
+    "decoration": {
+      "mossy": true
+    }
   }
 ]

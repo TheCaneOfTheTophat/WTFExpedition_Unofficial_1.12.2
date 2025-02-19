@@ -1,6 +1,6 @@
 package wtf.init;
 
-import net.minecraft.item.Item;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootEntry;
 import net.minecraft.world.storage.loot.LootEntryItem;
@@ -11,55 +11,35 @@ import net.minecraft.world.storage.loot.functions.LootFunction;
 import net.minecraft.world.storage.loot.functions.SetCount;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import wtf.config.WTFExpeditionConfig;
+
+import java.util.List;
 
 public class LootEventListener {
 
-	public class NameAndPool {
-		public final ResourceLocation name;
-		public final String pool;
-		public NameAndPool(ResourceLocation name, String pool){
-			this.name = name;
-			this.pool = pool;
-		}
-		
-		public boolean trySet(LootTableLoadEvent event, LootEntry entry){
-			if (event.getName() == name && event.getTable().getPool(pool) != null){
-				event.getTable().getPool(pool).addEntry(entry);
-				return true;
-			}
-			return false;
-		}
-		
-	}
-	
-	NameAndPool dungeonMain = new NameAndPool(LootTableList.CHESTS_SIMPLE_DUNGEON, "main");
-	NameAndPool pyramid = new NameAndPool(LootTableList.CHESTS_DESERT_PYRAMID, "main");
-	NameAndPool library = new NameAndPool(LootTableList.CHESTS_STRONGHOLD_LIBRARY, "main");
-	NameAndPool blacksmith = new NameAndPool(LootTableList.CHESTS_VILLAGE_BLACKSMITH, "main");
-	
-	NameAndPool[] teleportScrollList = {dungeonMain, pyramid, library};
+	Pair<ResourceLocation, String> dungeonMain = new ImmutablePair<>(LootTableList.CHESTS_SIMPLE_DUNGEON, "main");
+	Pair<ResourceLocation, String> pyramid = new ImmutablePair<>(LootTableList.CHESTS_DESERT_PYRAMID, "main");
+	Pair<ResourceLocation, String> library = new ImmutablePair<>(LootTableList.CHESTS_STRONGHOLD_LIBRARY, "main");
+	Pair<ResourceLocation, String> blacksmith = new ImmutablePair<>(LootTableList.CHESTS_VILLAGE_BLACKSMITH, "main");
+
+	List<Pair<ResourceLocation, String>> teleportScrollList = new ImmutableList.Builder<Pair<ResourceLocation, String>>().add(dungeonMain).add(pyramid).add(library).build();
 	LootEntry teleportScroll = new LootEntryItem(WTFContent.home_scroll, 15, 0, new LootFunction[] {new SetCount(new LootCondition[0],
 			new RandomValueRange(1, 3))}, new LootCondition[0], "loottable:teleportscroll");
 	
-	LootEntry wcicTable = new LootEntryItem(Item.getItemFromBlock(WTFContent.wcicTable), 20, 0, new LootFunction[0], new LootCondition[0], "loottable:wcicTable");
-	
-	
+	// LootEntry wcicTable = new LootEntryItem(Item.getItemFromBlock(WTFContent.wcicTable), 20, 0, new LootFunction[0], new LootCondition[0], "loottable:wcicTable");
 	
 	@SubscribeEvent
-	public void lootTableLoad(LootTableLoadEvent event){
-		
-		if (WTFExpeditionConfig.homeScrollsEnabled && WTFExpeditionConfig.gameplayTweaksEnabled){
-			for (NameAndPool entry : teleportScrollList){
-				entry.trySet(event, teleportScroll);
-			}
-		}
-		
-		if (WTFExpeditionConfig.wcicTableEnabled && WTFExpeditionConfig.gameplayTweaksEnabled){
-			blacksmith.trySet(event, wcicTable);
-		}
-	}
+	public void lootTableLoad(LootTableLoadEvent event) {
+		if (WTFExpeditionConfig.homeScrollsEnabled)
+			for (Pair<ResourceLocation, String> entry : teleportScrollList)
+				if (event.getName() == entry.getLeft() && event.getTable().getPool(entry.getRight()) != null)
+					event.getTable().getPool(entry.getRight()).addEntry(teleportScroll);
 
-	
-	
+		if (WTFExpeditionConfig.wcicTableEnabled)
+			if (event.getName() == blacksmith.getLeft() && event.getTable().getPool(blacksmith.getRight()) != null) {
+//				event.getTable().getPool(blacksmith.getRight()).addEntry(wcicTable);
+			}
+	}
 }

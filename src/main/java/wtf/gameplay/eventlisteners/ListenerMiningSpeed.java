@@ -15,9 +15,8 @@ public class ListenerMiningSpeed {
 		IBlockState state = event.getState();
 		Block block = state.getBlock();
 
-		if(block instanceof AbstractBlockDerivative) {
+		if(block instanceof AbstractBlockDerivative)
 			state = ((AbstractBlockDerivative) block).parentForeground;
-		}
 
 		BlockEntry entry = JSONLoader.getEntryFromState(state);
 

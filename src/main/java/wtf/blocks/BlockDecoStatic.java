@@ -6,17 +6,16 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import wtf.WTFExpedition;
+import wtf.blocks.enums.StaticDecoType;
 import wtf.gameplay.fracturing.EntityFracture;
-import wtf.init.BlockSets;
 
-public class BlockDecoStatic extends AbstractBlockDerivative {
+public class BlockDecoStatic extends AbstractBlockDerivative implements IDeco {
 	private final StaticDecoType type;
 
-	public static ArrayList<BlockDecoStatic> crackedList = new ArrayList<BlockDecoStatic>();
+	public static ArrayList<BlockDecoStatic> crackedList = new ArrayList<>();
 
 	public BlockDecoStatic(IBlockState state, StaticDecoType type) {
 		super(state, state);
@@ -70,34 +69,4 @@ public class BlockDecoStatic extends AbstractBlockDerivative {
 		return I18n.format(WTFExpedition.modID + ":deco_type." + getType().getName() + ".name") + " " + blockStack.getDisplayName();
 	}
 
-	public enum StaticDecoType implements IStringSerializable {
-		MOSS("mossy", BlockSets.Modifier.MOSSY, "moss_overlay"),
-		SOUL("soul", BlockSets.Modifier.SOUL, "soul_overlay"),
-		CRACKED("cracked", BlockSets.Modifier.CRACKED, "cracked_overlay");
-
-
-		private final String name;
-		public final BlockSets.Modifier modifier;
-        private final String overlayName;
-
-        StaticDecoType(String name, BlockSets.Modifier mod, String overlayName) {
-			this.name = name;
-			this.modifier = mod;
-            this.overlayName = overlayName;
-        }
-
-		@Override
-		public String getName() {
-			return name;
-		}
-
-		public String getOverlayName() {
-			return overlayName;
-		}
-
-		@Override
-		public String toString() {
-			return getName();
-		}
-    }
 }

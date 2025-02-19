@@ -11,7 +11,7 @@ public class EntityWTFFallingBlock extends EntityFallingBlock {
 		super(worldIn, pos.getX()+0.5, pos.getY(), pos.getZ()+0.5, fallingBlockState);
 	}
 
-	  @Override
+	@Override
 	public void onUpdate() {
 		if (this.fallTime > 20 && Math.abs(this.motionX) + Math.abs(this.motionY) + Math.abs(this.motionZ) < 0.1)
 			setDead();

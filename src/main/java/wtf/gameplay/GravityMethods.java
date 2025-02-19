@@ -9,25 +9,35 @@ import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import wtf.blocks.AbstractBlockDerivative;
+import wtf.blocks.IDeco;
 import wtf.config.BlockEntry;
 import wtf.config.WTFExpeditionConfig;
 import wtf.init.BlockSets;
 import wtf.init.JSONLoader;
 
 public class GravityMethods {
-
-	// TODO Grass-to-dirt
-	// TODO Anti-nerd pole shouldn't annihilate the block
-
 	private final static Random random = new Random();
 
 	private static final int grassHash = Blocks.GRASS.hashCode();
 	private static final int airHash = Blocks.AIR.hashCode();
 
 	public static void checkPos(World world, BlockPos pos) {
-		IBlockState state = world.getBlockState(pos); 
+
+		if(world.isAirBlock(pos))
+			return;
+
+		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
-		BlockEntry entry = JSONLoader.getEntryFromState(state);
+		BlockEntry entry = JSONLoader.getEntryFromState(state.getBlock() instanceof IDeco ? ((AbstractBlockDerivative) state.getBlock()).parentForeground : state);
+		boolean grass = false;
+
+		if (block.hashCode() == grassHash) {
+			block = Blocks.DIRT;
+			state = block.getDefaultState();
+			entry = JSONLoader.getEntryFromState(state);
+			grass = true;
+		}
 
 		if (entry == null || entry.getPercentageStability() >= 100)
 			return;
@@ -39,8 +49,11 @@ public class GravityMethods {
 				for (int loop = 1; loop < 6 && blockhash == world.getBlockState(pos.up(loop)).getBlock().hashCode(); loop++) {
 					fallchance *= (1 - entry.getPercentageStability() / 100F);
 				}
-				if (random.nextFloat() < fallchance)
+				if (random.nextFloat() < fallchance) {
+					if (grass)
+						world.setBlockState(pos, state);
 					dropBlock(world, pos, true);
+				}
 				return;
 		}
 
@@ -48,7 +61,13 @@ public class GravityMethods {
 		//start check for tower conditions : all adjacent are air, and unstable block below
 		BlockPos downpos = pos.down();
 		IBlockState downBlockState = world.getBlockState(downpos);
-		BlockEntry downBlockEntry = JSONLoader.getEntryFromState(downBlockState);
+		BlockEntry downBlockEntry = JSONLoader.getEntryFromState(downBlockState.getBlock() instanceof IDeco ? ((AbstractBlockDerivative) downBlockState.getBlock()).parentForeground : downBlockState);
+
+		if (downBlockState.getBlock().hashCode() == grassHash) {
+			downBlockState = Blocks.DIRT.getDefaultState();
+			downBlockEntry = JSONLoader.getEntryFromState(downBlockState);
+		}
+
 		if (WTFExpeditionConfig.antiNerdPole
 				&& (downBlockEntry != null && !(downBlockEntry.getPercentageStability() >= 100))
 				&& unstableTowerPos(world, pos.down())
@@ -63,6 +82,9 @@ public class GravityMethods {
 			}
 
 			if (random.nextFloat() * count > downBlockEntry.getPercentageStability() / 100F) {
+				if (grass)
+					world.setBlockState(pos, state);
+
 				EntityFallingBlock entityfallingblock = new EntityWTFSlidingBlock(world, pos, getRandomAdj(pos), state);
 				entityfallingblock.setHurtEntities(WTFExpeditionConfig.fallingBlocksDamage);
 			}
@@ -82,13 +104,17 @@ public class GravityMethods {
 				&& !fenceNear(world, pos.down(2), 1, 0);
 	}
 
-	public static boolean dropBlock(World world, BlockPos pos, Boolean checkSupport) {
-		IBlockState state = world.getBlockState(pos);
+	public static void dropBlock(World world, BlockPos pos, Boolean checkSupport) {
 
-		BlockEntry entry = JSONLoader.getEntryFromState(state);
+		if(world.isAirBlock(pos))
+			return;
+
+		IBlockState state = world.getBlockState(pos);
+		BlockEntry entry = JSONLoader.getEntryFromState(state.getBlock() instanceof IDeco ? ((AbstractBlockDerivative) state.getBlock()).parentForeground : state);
+
 		if (entry != null && !(entry.getPercentageStability() >= 100)) {
 			if (checkSupport && fenceNear(world, pos, 1, 1))
-				return false;
+				return;
 
 			EntityFallingBlock entityfallingblock = new EntityWTFFallingBlock(world, pos, state);
 			entityfallingblock.setHurtEntities(WTFExpeditionConfig.fallingBlocksDamage);
@@ -98,11 +124,8 @@ public class GravityMethods {
 				checkPos(world, pos.up());
 			else
 				dropBlock(world, pos.up(), false);
-
-			return true;
-		}
-		return false;
-	}
+        }
+    }
 
 
 	public static boolean fenceNear(World world, BlockPos pos, int radius, int down) {
@@ -115,7 +138,7 @@ public class GravityMethods {
 
 	public static BlockPos getRandomAdj(BlockPos pos) {
 		int chance = random.nextInt(4);
-		switch (chance){
+		switch (chance) {
 		case 0:
 			return pos.north();
 		case 1:

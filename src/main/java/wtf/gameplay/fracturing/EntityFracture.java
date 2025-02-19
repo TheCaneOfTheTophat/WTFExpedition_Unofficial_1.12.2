@@ -14,8 +14,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidBase;
-import wtf.blocks.BlockDecoAnim;
-import wtf.blocks.BlockDecoStatic;
+import wtf.blocks.*;
+import wtf.blocks.enums.AnimatedDecoType;
+import wtf.blocks.enums.StaticDecoType;
 import wtf.config.BlockEntry;
 import wtf.config.WTFExpeditionConfig;
 import wtf.gameplay.GravityMethods;
@@ -75,11 +76,9 @@ public class EntityFracture extends Entity {
 
 			if (rand.nextBoolean())
 				cracking.add(new FracVec(pos, blockToFrac, maxDist, rand));
-			else {
-				for (int vecLoop = 0; vecLoop < blockToFrac; vecLoop++) {
+			else
+				for (int vecLoop = 0; vecLoop < blockToFrac; vecLoop++)
 					cracking.add(new FracVec(pos, 1, maxDist, rand));
-				}
-			}
 		}
 		world.spawnEntity(crack);
 	}
@@ -142,11 +141,9 @@ public class EntityFracture extends Entity {
 
 
 	private void doVec(FracVec vec) {
-		for (int fracloop = 0; fracloop <= vec.blocksToFrac; fracloop++) {
-			for (int dist = 1; dist <= vec.maxDist; dist++) {
+		for (int fracloop = 0; fracloop <= vec.blocksToFrac; fracloop++)
+			for (int dist = 1; dist <= vec.maxDist; dist++)
 				fractureBlock(world, vec.getPos(dist), true, true);
-            }
-		}
 	}
 
 	public static void fractureBlock(World world, BlockPos pos, boolean indirectFracture, boolean breakBlockEffect) {
@@ -157,16 +154,19 @@ public class EntityFracture extends Entity {
 
 		if (state.getMaterial() == Material.AIR || block instanceof BlockFluidBase)
 			return;
-		else if (block instanceof BlockDecoAnim && ((BlockDecoAnim) block).getType() == BlockDecoAnim.AnimatedDecoType.LAVA_CRUST) {
-			if(indirectFracture)
-				world.setBlockState(pos, Blocks.LAVA.getDefaultState());
-			if(breakBlockEffect)
-				world.playEvent(2001, pos, Block.getStateId(state));
-			return;
-		} else if (block instanceof BlockDecoStatic && ((BlockDecoStatic) block).getType() == BlockDecoStatic.StaticDecoType.CRACKED) {
-			entry = JSONLoader.getEntryFromState(((BlockDecoStatic) block).parentBackground);
-			if(indirectFracture)
+		else if (block instanceof IDeco) {
+			if(((IDeco) block).getType() == AnimatedDecoType.LAVA_CRUST) {
+				if (indirectFracture)
+					world.setBlockState(pos, Blocks.LAVA.getDefaultState());
+				if (breakBlockEffect)
+					world.playEvent(2001, pos, Block.getStateId(state));
+				return;
+			}
+
+			if(indirectFracture && ((IDeco) block).getType() == StaticDecoType.CRACKED)
 				fractureAdjacent(world, pos);
+
+			entry = JSONLoader.getEntryFromState(((AbstractBlockDerivative) block).parentBackground);
 		} else
 			entry = JSONLoader.getEntryFromState(state);
 
@@ -179,9 +179,8 @@ public class EntityFracture extends Entity {
 			world.playEvent(2001, pos, Block.getStateId(state));
 		world.setBlockState(pos, cobble);
 
-		if (WTFExpeditionConfig.additionalBlockGravity) {
+		if (WTFExpeditionConfig.additionalBlockGravity)
 			GravityMethods.dropBlock(world, pos, true);
-		}
 	}
 
 	@Override

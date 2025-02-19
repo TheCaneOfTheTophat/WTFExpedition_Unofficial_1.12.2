@@ -15,6 +15,7 @@ public class ExploderEntity extends Entity {
 	private boolean flaming = false;
 	private float str;
 	private int fuse;
+	CustomExplosion explosion;
 
 	public ExploderEntity(World worldIn, BlockPos pos, float str) {
 		super(worldIn);
@@ -37,8 +38,6 @@ public class ExploderEntity extends Entity {
 
 	//I should be able to modify this to actually do the explosion as well-
 	//which allows me to modify the time between increments, and overall slow the explosion dow
-
-	CustomExplosion explosion;
 
 	@Override
 	public void onUpdate() {

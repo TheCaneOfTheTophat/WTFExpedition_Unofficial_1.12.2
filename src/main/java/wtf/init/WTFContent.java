@@ -21,6 +21,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import wtf.WTFExpedition;
 import wtf.blocks.*;
+import wtf.blocks.enums.AnimatedDecoType;
+import wtf.blocks.enums.StaticDecoType;
 import wtf.blocks.redstone.BlockDenseRedstoneOre;
 import wtf.client.WTFModelRegistry;
 import wtf.config.*;
@@ -51,7 +53,6 @@ public class WTFContent {
 	public static final Block foxfire = null;
 
 	public static Block wcicTable;
-	public static final Block ubcSand = null;
 	public static final Block dirt_patch = null;
 	public static final Block mossy_dirt_patch = null;
 	public static final Block sand_patch = null;
@@ -60,12 +61,11 @@ public class WTFContent {
 	public static final Block podzol_patch = null;
 	public static final Block puddle = null;
 	public static final Block ice_patch = null;
-	public static final Block stained_terracotta_patch = null;
+	public static final Block terracotta_patch = null;
+	public static final Block terracotta_patch_stained = null;
 
 	public static final Block icicle = null;
 	public static final Block roots = null;
-
-	public static final Block gen_marker = null;
 	
 	public static final Block natural_sandstone = null;
 	public static final Block natural_red_sandstone = null;
@@ -220,7 +220,7 @@ public class WTFContent {
 			}
 
 			// STATIC DECOR
-			for(BlockDecoStatic.StaticDecoType decorType : BlockDecoStatic.StaticDecoType.values()) {
+			for(StaticDecoType decorType : StaticDecoType.values()) {
 				if(entry.getStaticDecorTypes().get(decorType)) {
 					BlockDecoStatic decor = new BlockDecoStatic(blockState, decorType);
 					decor.setRegistryName(WTFExpedition.modID, "decoration_" + decorType.getName() + "_" + blockName);
@@ -232,7 +232,7 @@ public class WTFContent {
 			}
 
 			// ANIMATED DECOR
-			for(BlockDecoAnim.AnimatedDecoType decorType : BlockDecoAnim.AnimatedDecoType.values()) {
+			for(AnimatedDecoType decorType : AnimatedDecoType.values()) {
 				if(entry.getAnimatedDecorTypes().get(decorType)) {
 					BlockDecoAnim decor = new BlockDecoAnim(blockState, decorType);
 					decor.setRegistryName(WTFExpedition.modID, "decoration_" + decorType.getName() + "_" + blockName);
@@ -252,9 +252,7 @@ public class WTFContent {
 
 		registerItem(reg, new Item(), "nitre");
 		registerItem(reg, new Item(), "sulfur");
-
-		if(WTFExpeditionConfig.gameplayTweaksEnabled && WTFExpeditionConfig.homeScrollsEnabled)
-			registerItem(reg, new ItemHomeScroll(), "home_scroll");
+		registerItem(reg, new ItemHomeScroll(), "home_scroll");
 
 		for(Block block : blocks) {
 			if (block instanceof BlockDenseOre)

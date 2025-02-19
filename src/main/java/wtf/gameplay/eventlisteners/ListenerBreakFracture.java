@@ -1,5 +1,6 @@
 package wtf.gameplay.eventlisteners;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,6 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import wtf.blocks.*;
+import wtf.blocks.enums.AnimatedDecoType;
+import wtf.blocks.enums.StaticDecoType;
 import wtf.config.BlockEntry;
 import wtf.config.WTFExpeditionConfig;
 import wtf.gameplay.fracturing.EntityFracture;
@@ -23,6 +27,13 @@ public class ListenerBreakFracture {
 
 		if (!player.capabilities.isCreativeMode && !silk) {
 			IBlockState state = event.getState();
+			Block block = state.getBlock();
+
+			if((block instanceof IDeco && (((IDeco) block).getType() != StaticDecoType.CRACKED && ((IDeco) block).getType() != AnimatedDecoType.LAVA_CRUST))) {
+				state = ((AbstractBlockDerivative) event.getState().getBlock()).parentBackground;
+				block = state.getBlock();
+			}
+
 			BlockEntry entry = JSONLoader.getEntryFromState(state);
 
 			if (entry != null && !entry.getFracturedBlockId().isEmpty() && entry.fracturesFirstWhenMined()) {
@@ -36,7 +47,7 @@ public class ListenerBreakFracture {
 
 				if (tool != null) {
 					tool.damageItem(1, player);
-					player.addStat(StatList.getBlockStats(state.getBlock()));
+					player.addStat(StatList.getBlockStats(block));
 					player.addExhaustion(0.025F);
 				}
 			}

@@ -10,13 +10,13 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import wtf.WTFExpedition;
+import wtf.blocks.enums.SpeleothemType;
 import wtf.init.WTFContent;
 
 import java.util.Random;
@@ -182,37 +182,4 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 		return false;
 	}
 
-	public enum SpeleothemType implements IStringSerializable {
-		stalactite_small(0, "stalactite_small", new AxisAlignedBB(0.2F, 0.2F, 0.2F, 0.8F, 1F, 0.8F)),
-		stalactite_base(1, "stalactite_base", new AxisAlignedBB(0.2F, 0F, 0.2F, .8F, 1F, .8F)),
-		stalactite_tip(2, "stalactite_tip", new AxisAlignedBB(0.3F, 0.4F, 0.3F, 0.7F, 1F, 0.7F)),
-		speleothem_column(3, "speleothem_column", new AxisAlignedBB(0.3F, 0F, 0.3F, 0.7F, 1F, 0.7F)),
-		stalagmite_small(4, "stalagmite_small", new AxisAlignedBB(0.2F, 0F, 0.2F, 0.8F, 0.8F, 0.8F)),
-		stalagmite_base(5, "stalagmite_base", new AxisAlignedBB(0.2F, 0F, 0.2F, .8F, 1F, .8F)),
-		stalagmite_tip(6, "stalagmite_tip", new AxisAlignedBB(0.3F, 0F, 0.3F, 0.7F, 0.7F, 0.7F));
-
-		private final int ID;
-		private final String name;
-		public final AxisAlignedBB boundingBox;
-
-		SpeleothemType(int ID, String name, AxisAlignedBB box) {
-			this.ID = ID;
-			this.name = name;
-			this.boundingBox = box;
-		}
-
-		@Override
-		public String getName() {
-			return name;
-		}
-
-		public int getID() {
-			return ID;
-		}
-
-		@Override
-		public String toString() {
-			return getName();
-		}
-	}
 }
