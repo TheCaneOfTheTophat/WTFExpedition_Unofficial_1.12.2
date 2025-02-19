@@ -19,7 +19,6 @@ import wtf.config.WTFExpeditionConfig;
 import wtf.gameplay.eventlisteners.*;
 import wtf.init.BlockSets;
 import wtf.init.JSONLoader;
-import wtf.init.LootEventListener;
 
 import javax.annotation.Nonnull;
 import java.io.File;
@@ -134,7 +133,8 @@ public class WTFExpedition {
 				WTFExpedition.wtfLog.info("Non-player killed mob loot modifier enabled!");
 			}
 
-			MinecraftForge.EVENT_BUS.register(new LootEventListener());
+			MinecraftForge.EVENT_BUS.register(new ListenerLoot());
+			MinecraftForge.EVENT_BUS.register(new ListenerDenseOreHarvest());
 		}
 
 //		if (WTFExpeditionConfig.oreGenEnabled) {

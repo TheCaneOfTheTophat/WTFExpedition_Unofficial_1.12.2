@@ -2,6 +2,7 @@ package wtf.gameplay.eventlisteners;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
@@ -38,7 +39,8 @@ public class ListenerBreakFracture {
 
 			if (entry != null && !entry.getFracturedBlockId().isEmpty() && entry.fracturesFirstWhenMined()) {
 				event.setCanceled(true);
-				EntityFracture.fractureBlock(event.getWorld(), event.getPos(), false, false);
+				// TODO Use packets to send block break effect to every other player but the harvester.
+				EntityFracture.fractureBlock(event.getWorld(), event.getPos(), false, true);
 
 				if (ListenerHelper.isHammer(player.getHeldItemMainhand()) && WTFExpeditionConfig.modifyHammerBehaviour) {
 					int toolLevel = tool == null ? 0 : tool.getItem().getHarvestLevel(tool, "pickaxe", player, state);

@@ -11,11 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import wtf.WTFExpedition;
-
-import java.util.List;
 
 public class BlockDenseOreFalling extends AbstractBlockDerivativeFalling {
 
@@ -60,28 +57,6 @@ public class BlockDenseOreFalling extends AbstractBlockDerivativeFalling {
 
         player.addStat(StatList.getBlockStats(this.parentForeground.getBlock()));
         return world.setBlockState(pos, state, world.isRemote ? 11 : 3);
-    }
-
-    @Override
-    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
-        if (!worldIn.isRemote && !worldIn.restoringBlockSnapshots) {
-            List<ItemStack> drops = getDrops(worldIn, pos, state, fortune);
-            chance = net.minecraftforge.event.ForgeEventFactory.fireBlockHarvesting(drops, worldIn, pos, state, fortune, chance, false, harvesters.get());
-
-            EntityPlayer player = harvesters.get();
-
-            if(player != null && worldIn.getBlockState(pos).getBlock() == this) {
-                RayTraceResult result = player.rayTrace(player.getEntityAttribute(EntityPlayer.REACH_DISTANCE).getAttributeValue(), 1.0F);
-
-                if(result != null)
-                    pos = pos.offset(result.sideHit);
-            }
-
-            for (ItemStack drop : drops) {
-                if (worldIn.rand.nextFloat() <= chance)
-                    spawnAsEntity(worldIn, pos, drop);
-            }
-        }
     }
 
     @Override

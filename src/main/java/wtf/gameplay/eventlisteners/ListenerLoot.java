@@ -1,4 +1,4 @@
-package wtf.init;
+package wtf.gameplay.eventlisteners;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.util.ResourceLocation;
@@ -14,10 +14,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import wtf.config.WTFExpeditionConfig;
+import wtf.init.WTFContent;
 
 import java.util.List;
 
-public class LootEventListener {
+public class ListenerLoot {
 
 	Pair<ResourceLocation, String> dungeonMain = new ImmutablePair<>(LootTableList.CHESTS_SIMPLE_DUNGEON, "main");
 	Pair<ResourceLocation, String> pyramid = new ImmutablePair<>(LootTableList.CHESTS_DESERT_PYRAMID, "main");
