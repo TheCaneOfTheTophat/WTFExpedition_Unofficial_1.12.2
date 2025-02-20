@@ -156,10 +156,11 @@ public class EntityFracture extends Entity {
 			return;
 		else if (block instanceof IDeco) {
 			if(((IDeco) block).getType() == AnimatedDecoType.LAVA_CRUST) {
-				if (indirectFracture)
+				if (indirectFracture) {
 					world.setBlockState(pos, Blocks.LAVA.getDefaultState());
-				if (breakBlockEffect)
-					world.playEvent(2001, pos, Block.getStateId(state));
+					if (breakBlockEffect)
+						world.playEvent(2001, pos, Block.getStateId(state));
+				}
 				return;
 			}
 

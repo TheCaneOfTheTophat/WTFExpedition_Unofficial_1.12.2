@@ -2,14 +2,15 @@ package wtf.gameplay.eventlisteners;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import wtf.WTFExpedition;
 import wtf.blocks.*;
 import wtf.blocks.enums.AnimatedDecoType;
 import wtf.blocks.enums.StaticDecoType;
@@ -17,6 +18,7 @@ import wtf.config.BlockEntry;
 import wtf.config.WTFExpeditionConfig;
 import wtf.gameplay.fracturing.EntityFracture;
 import wtf.init.JSONLoader;
+import wtf.network.WTFMessageBlockCrackEvent;
 
 public class ListenerBreakFracture {
 
@@ -39,8 +41,12 @@ public class ListenerBreakFracture {
 
 			if (entry != null && !entry.getFracturedBlockId().isEmpty() && entry.fracturesFirstWhenMined()) {
 				event.setCanceled(true);
-				// TODO Use packets to send block break effect to every other player but the harvester.
-				EntityFracture.fractureBlock(event.getWorld(), event.getPos(), false, true);
+				EntityFracture.fractureBlock(event.getWorld(), event.getPos(), false, false);
+
+				if(!event.getWorld().isRemote)
+					for(EntityPlayer mplayer : event.getWorld().playerEntities)
+						if(mplayer != player)
+							WTFExpedition.CHANNEL_INSTANCE.sendTo(new WTFMessageBlockCrackEvent(Block.getStateId(state), event.getPos()), ((EntityPlayerMP) mplayer));
 
 				if (ListenerHelper.isHammer(player.getHeldItemMainhand()) && WTFExpeditionConfig.modifyHammerBehaviour) {
 					int toolLevel = tool == null ? 0 : tool.getItem().getHarvestLevel(tool, "pickaxe", player, state);

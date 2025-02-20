@@ -14,11 +14,15 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
 import wtf.config.WTFExpeditionConfig;
 import wtf.gameplay.eventlisteners.*;
 import wtf.init.BlockSets;
 import wtf.init.JSONLoader;
+import wtf.network.WTFMessageBlockCrackEvent;
 
 import javax.annotation.Nonnull;
 import java.io.File;
@@ -40,6 +44,8 @@ public class WTFExpedition {
 
 	@Instance(modID)
 	public static WTFExpedition instance;
+
+	public static final SimpleNetworkWrapper CHANNEL_INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(modID);
 	
 	public static boolean UBC;
 
@@ -89,6 +95,8 @@ public class WTFExpedition {
 //		MinecraftForge.TERRAIN_GEN_BUS.register(new CoreWorldGenListener());
 
 //		MinecraftForge.EVENT_BUS.register(new TickGenBuffer());
+
+		CHANNEL_INSTANCE.registerMessage(WTFMessageBlockCrackEvent.Handler.class, WTFMessageBlockCrackEvent.class, 0, Side.CLIENT);
 
 		// GAMEPLAY TWEAKS
 		if (WTFExpeditionConfig.gameplayTweaksEnabled) {

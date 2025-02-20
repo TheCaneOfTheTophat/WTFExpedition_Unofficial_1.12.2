@@ -9,7 +9,6 @@ public class OreEntry {
     private String name = "";
 
     private String[] stoneList = {};
-    private boolean stoneListWhitelist = true;
 
     private int minAmountPerChunk = 0;
     private int maxAmountPerChunk = 0;
@@ -86,10 +85,6 @@ public class OreEntry {
 
     public int getMinAmountPerChunk() {
         return minAmountPerChunk;
-    }
-
-    public boolean isStoneListWhitelist() {
-        return stoneListWhitelist;
     }
 
     public String[] getStoneList() {
