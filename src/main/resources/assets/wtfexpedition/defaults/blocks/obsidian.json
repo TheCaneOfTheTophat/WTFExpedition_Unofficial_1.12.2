@@ -5,8 +5,8 @@
     "texture": "minecraft:blocks/obsidian",
     "decoration": {
       "lava_crust": true,
-      "lava_drip": true
-    },
-    "speleothems": true
+      "lava_drip": true,
+      "speleothems": true
+    }
   }
 ]

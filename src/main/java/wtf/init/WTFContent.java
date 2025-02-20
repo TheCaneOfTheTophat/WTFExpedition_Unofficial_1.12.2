@@ -201,6 +201,17 @@ public class WTFContent {
 
 			String blockName = entry.getName();
 			IBlockState blockState = JSONLoader.getStateFromId(entry.getBlockId());
+			IBlockState fracturedBlockState = JSONLoader.getStateFromId(entry.getFracturedBlockId());
+
+			if(blockState == null) {
+				WTFExpedition.wtfLog.error("Block ID " + entry.getBlockId() + " in entry " + entry.getName() + " is invalid! Skipping...");
+				continue;
+			}
+
+			if(fracturedBlockState == null && !entry.getFracturedBlockId().isEmpty()) {
+				WTFExpedition.wtfLog.error("Fractured block ID " + entry.getFracturedBlockId() + " in entry " + entry.getName() + " is invalid! Skipping...");
+				continue;
+			}
 
 			// SPELEOTHEMS
 			if(entry.hasSpeleothems()) {

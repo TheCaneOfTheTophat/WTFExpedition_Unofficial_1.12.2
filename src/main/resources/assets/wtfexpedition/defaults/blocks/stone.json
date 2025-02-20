@@ -1,8 +1,8 @@
 [
   {
     "blockId": "minecraft:stone@0",
-    "fracturedBlockId": "minecraft:cobblestone",
     "name": "stone",
+    "fracturedBlockId": "minecraft:cobblestone",
     "texture": "minecraft:blocks/stone",
     "percentageMineSpeedModifier": 15,
     "decoration": {
@@ -11,9 +11,9 @@
       "cracked": true,
       "lava_crust": true,
       "water_drip": true,
-      "lava_drip": true
-    },
-    "speleothems": true
+      "lava_drip": true,
+      "speleothems": true
+    }
   },
   {
     "blockId": "minecraft:stone@1",
@@ -26,9 +26,9 @@
       "cracked": true,
       "lava_crust": true,
       "water_drip": true,
-      "lava_drip": true
-    },
-    "speleothems": true
+      "lava_drip": true,
+      "speleothems": true
+    }
   },
   {
     "blockId": "minecraft:stone@3",
@@ -41,9 +41,9 @@
       "cracked": true,
       "lava_crust": true,
       "water_drip": true,
-      "lava_drip": true
-    },
-    "speleothems": true
+      "lava_drip": true,
+      "speleothems": true
+    }
   },
   {
     "blockId": "minecraft:stone@5",
@@ -56,8 +56,8 @@
       "cracked": true,
       "lava_crust": true,
       "water_drip": true,
-      "lava_drip": true
-    },
-    "speleothems": true
+      "lava_drip": true,
+      "speleothems": true
+    }
   }
 ]

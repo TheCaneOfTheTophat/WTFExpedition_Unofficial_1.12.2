@@ -7,8 +7,8 @@
       "soul": true,
       "cracked": true,
       "lava_crust": true,
-      "lava_drip": true
-    },
-    "speleothems": true
+      "lava_drip": true,
+      "speleothems": true
+    }
   }
 ]

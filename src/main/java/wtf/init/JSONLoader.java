@@ -21,7 +21,6 @@ public class JSONLoader {
     public static ArrayList<OreEntry> oreEntries = new ArrayList<>();
     public static ArrayList<BlockEntry> blockEntries = new ArrayList<>();
     public static Map<String, BlockEntry> identifierToBlockEntry = new HashMap<>();
-    public static Path defaultsDirectory;
 
     @SuppressWarnings({"ResultOfMethodCallIgnored", "ConstantConditions"})
     public static void loadJsonContent() {
@@ -46,6 +45,8 @@ public class JSONLoader {
         if (WTFExpeditionConfig.loadDefaultFiles) {
             try {
                 URL classUrl = WTFExpedition.class.getProtectionDomain().getCodeSource().getLocation(); // Get URL of this class
+
+                Path defaultsDirectory;
 
                 if (classUrl.getProtocol().equals("jar")) { // Use jar as filesystem if it's loaded as a jar file
                     fileSystem = FileSystems.newFileSystem(URI.create(classUrl.toString()), Collections.emptyMap());
@@ -108,8 +109,6 @@ public class JSONLoader {
 
         // Parse JSONs
         for(Path jsonPath : allJsons) {
-            OreEntry entryOre;
-            BlockEntry entryBlock;
 
             try (BufferedReader reader = new BufferedReader(new FileReader(jsonPath.toString()))) {
                 root = parser.parse(reader);
@@ -123,15 +122,93 @@ public class JSONLoader {
 
             String parent = jsonPath.getParent().subpath(WTFExpedition.configDirectory.getNameCount(), jsonPath.getParent().getNameCount()).getName(0).toString();
 
+            int index = 0;
+
             for (JsonElement element : (JsonArray) root) {
+                JsonObject object = (JsonObject) element;
+
                 if(parent.contains("ores")) {
-                    entryOre = gson.fromJson(element.toString(), OreEntry.class);
+                    // TODO Better JSON parsing, use array of "generator" objects
+                    OreEntry entryOre = gson.fromJson(element.toString(), OreEntry.class);
                     oreEntries.add(entryOre);
                 } else {
-                    entryBlock = gson.fromJson(element.toString(), BlockEntry.class);
+                    String blockId = "";
+                    String name = "";
+                    String fracturedBlockId = "";
+                    String texture = "";
+                    byte flags = 0;
+                    int percentageMineSpeedModifier = 100;
+                    int percentageStability = 100;
+
+                    if(object.has("blockId"))
+                        blockId = object.get("blockId").getAsString();
+
+                    if(blockId.isEmpty()) {
+                        WTFExpedition.wtfLog.error("Undefined block ID in block entry " + index + " at path \"" + jsonPath + "\", skipping!");
+                        index++;
+                        continue;
+                    }
+
+                    if(object.has("name"))
+                        name = object.get("name").getAsString();
+
+                    if(name.isEmpty()) {
+                        WTFExpedition.wtfLog.error("Undefined name in block entry " + index + " at path \"" + jsonPath + "\", skipping!");
+                        index++;
+                        continue;
+                    }
+
+                    blockId = blockId.contains("@") ? blockId : blockId + "@0";
+
+                    if(object.has("fracturedBlockId")) {
+                        fracturedBlockId = object.get("fracturedBlockId").getAsString();
+                        fracturedBlockId = fracturedBlockId.contains("@") ? fracturedBlockId : fracturedBlockId + "@0";
+                    }
+
+                    if(object.has("texture"))
+                        texture = object.get("texture").getAsString();
+
+                    if(object.has("fracturesFirstWhenMined") && object.get("fracturesFirstWhenMined").getAsBoolean())
+                        flags = (byte) (flags | 1);
+
+                    if(object.has("percentageMineSpeedModifier"))
+                        percentageMineSpeedModifier = Math.max(Math.min(object.get("percentageMineSpeedModifier").getAsInt(), 100), 0);
+
+                    if(object.has("percentageStability"))
+                        percentageStability = Math.max(Math.min(object.get("percentageStability").getAsInt(), 100), 0);
+
+                    if(object.has("decoration")) {
+                        JsonObject decoration = object.getAsJsonObject("decoration");
+
+                        if(decoration.has("mossy"))
+                            flags = (byte) (flags | 2);
+
+                        if(decoration.has("soul"))
+                            flags = (byte) (flags | 4);
+
+                        if(decoration.has("cracked"))
+                            flags = (byte) (flags | 8);
+
+                        if(decoration.has("lava_crust"))
+                            flags = (byte) (flags | 16);
+
+                        if(decoration.has("water_drip"))
+                            flags = (byte) (flags | 32);
+
+                        if(decoration.has("lava_drip"))
+                            flags = (byte) (flags | 64);
+
+                        if(decoration.has("speleothems"))
+                            flags = (byte) (flags | -128);
+                    }
+
+                    BlockEntry entryBlock = new BlockEntry(blockId, fracturedBlockId, name, texture, flags, percentageMineSpeedModifier, percentageStability);
+
                     blockEntries.add(entryBlock);
-                    identifierToBlockEntry.put(entryBlock.getName(), entryBlock);
-                    identifierToBlockEntry.put(entryBlock.getBlockId().contains("@") ? entryBlock.getBlockId() : entryBlock.getBlockId() + "@0", entryBlock);
+                    identifierToBlockEntry.put(name, entryBlock);
+                    identifierToBlockEntry.put(blockId, entryBlock);
+
+                    index++;
                 }
             }
         }
@@ -143,6 +220,10 @@ public class JSONLoader {
 
     public static IBlockState getStateFromId(String id) {
         String[] idSplit = id.split("@");
-        return Block.getBlockFromName(idSplit[0]).getStateFromMeta(idSplit.length > 1 ? Integer.parseInt(idSplit[1]) : 0);
+
+        if (Block.getBlockFromName(idSplit[0]) == null)
+            return null;
+
+        return Block.getBlockFromName(idSplit[0]).getStateFromMeta(Integer.parseInt(idSplit[1]));
     }
 }
