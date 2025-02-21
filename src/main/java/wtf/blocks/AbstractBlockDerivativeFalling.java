@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -76,7 +75,7 @@ public abstract class AbstractBlockDerivativeFalling extends BlockFalling {
         player.addExhaustion(0.025F);
 
         if (this.canSilkHarvest(worldIn, pos, state, player) && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0) {
-            List<ItemStack> items = new ArrayList<ItemStack>();
+            List<ItemStack> items = new ArrayList<>();
             int meta = this.parentForeground.getBlock().getMetaFromState(this.parentForeground);
             ItemStack itemstack = new ItemStack(this.parentForeground.getBlock(),1, meta);
 

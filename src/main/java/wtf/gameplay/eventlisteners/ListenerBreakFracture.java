@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
+import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import wtf.WTFExpedition;
@@ -40,6 +41,7 @@ public class ListenerBreakFracture {
 			BlockEntry entry = JSONLoader.getEntryFromState(state);
 
 			if (entry != null && !entry.getFracturedBlockId().isEmpty() && entry.fracturesFirstWhenMined()) {
+				event.getWorld().capturedBlockSnapshots.add(new BlockSnapshot(event.getWorld(), event.getPos(), event.getState()));
 				event.setCanceled(true);
 				EntityFracture.fractureBlock(event.getWorld(), event.getPos(), false, false);
 
