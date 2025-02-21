@@ -37,7 +37,6 @@ public class NetherSoulDesert extends AbstractCaveType{
 
 	@Override
 	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 

@@ -29,7 +29,6 @@ public class DungeonFireElemental extends AbstractDungeonType{
 
 	@Override
 	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -44,19 +43,16 @@ public class DungeonFireElemental extends AbstractDungeonType{
 
 	@Override
 	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		// TODO Auto-generated method stub
 		
 	}
 

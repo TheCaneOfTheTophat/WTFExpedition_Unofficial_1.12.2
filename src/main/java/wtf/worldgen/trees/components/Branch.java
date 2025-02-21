@@ -31,7 +31,6 @@ public class Branch {
 			try {
 				throw new Exception("Branch length > 32 ="+ rootLength + " "+ tree.type.getClass().toString());
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

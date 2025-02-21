@@ -40,13 +40,11 @@ public class DungeonZombieFarmer extends AbstractDungeonType{
 
 	@Override
 	public boolean canGenerateAt(GeneratorMethods gen, CaveListWrapper cave) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -58,7 +56,6 @@ public class DungeonZombieFarmer extends AbstractDungeonType{
 
 	@Override
 	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		// TODO Auto-generated method stub
 		
 	}
 

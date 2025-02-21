@@ -14,7 +14,6 @@ public class DungeonTypeSoulsand extends AbstractDungeonType{
 
 	public DungeonTypeSoulsand(String name, int ceilingAddonPercentChance, int floorAddonPercentChance) {
 		super(name, ceilingAddonPercentChance, floorAddonPercentChance);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -24,13 +23,11 @@ public class DungeonTypeSoulsand extends AbstractDungeonType{
 	
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -42,7 +39,6 @@ public class DungeonTypeSoulsand extends AbstractDungeonType{
 
 	@Override
 	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		// TODO Auto-generated method stub
 		
 	}
 

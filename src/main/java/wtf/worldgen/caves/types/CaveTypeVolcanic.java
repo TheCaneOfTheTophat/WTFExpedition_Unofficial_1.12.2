@@ -11,7 +11,6 @@ public class CaveTypeVolcanic extends AbstractCaveType{
 
 	public CaveTypeVolcanic(String name, int ceilingAddonPercentChance, int floorAddonPercentChance) {
 		super(name, ceilingAddonPercentChance, floorAddonPercentChance);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

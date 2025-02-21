@@ -8,7 +8,6 @@ public enum StaticDecoType implements IStringSerializable {
     SOUL("soul", BlockSets.Modifier.SOUL, "soul_overlay"),
     CRACKED("cracked", BlockSets.Modifier.CRACKED, "cracked_overlay");
 
-
     private final String name;
     public final BlockSets.Modifier modifier;
     private final String overlayName;

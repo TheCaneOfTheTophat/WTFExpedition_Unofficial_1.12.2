@@ -16,7 +16,6 @@ public class DungeonTypePrismarine extends AbstractDungeonType {
 
 	public DungeonTypePrismarine(String name, int ceilingAddonPercentChance, int floorAddonPercentChance) {
 		super(name, ceilingAddonPercentChance, floorAddonPercentChance);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -26,7 +25,6 @@ public class DungeonTypePrismarine extends AbstractDungeonType {
 
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -54,13 +52,11 @@ public class DungeonTypePrismarine extends AbstractDungeonType {
 
 	@Override
 	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 

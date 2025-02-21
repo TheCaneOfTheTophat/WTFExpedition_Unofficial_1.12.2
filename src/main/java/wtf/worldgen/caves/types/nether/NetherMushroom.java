@@ -15,12 +15,10 @@ public class NetherMushroom extends AbstractCaveType{
 
 	public NetherMushroom() {
 		super("NetherMushroom", 0, 1);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -32,7 +30,6 @@ public class NetherMushroom extends AbstractCaveType{
 
 	@Override
 	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -44,7 +41,6 @@ public class NetherMushroom extends AbstractCaveType{
 
 	@Override
 	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		// TODO Auto-generated method stub
 		
 	}
 

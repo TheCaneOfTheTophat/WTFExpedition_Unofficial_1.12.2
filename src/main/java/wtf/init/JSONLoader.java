@@ -1,6 +1,7 @@
 package wtf.init;
 
 import com.google.gson.*;
+import io.netty.util.internal.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import wtf.WTFExpedition;
@@ -31,18 +32,18 @@ public class JSONLoader {
         Path blockDirectory = Paths.get(WTFExpedition.configDirectoryString, "blocks"); // Get and/or make config directory for blocks
         blockDirectory.toFile().mkdir();
 
-        final String guideFilename = "Configuration_Guide.txt";
-
         List<Path> allJsons = new ArrayList<>();
-        List<Path> defaultFiles;
-        FileSystem fileSystem = null;
-        boolean fromJar = false;
 
         Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
         JsonParser parser = new JsonParser();
         JsonElement root;
 
         if (WTFExpeditionConfig.loadDefaultFiles) {
+            final String guideFilename = "Configuration_Guide.txt";
+            List<Path> defaultFiles;
+            FileSystem fileSystem = null;
+            boolean fromJar = false;
+
             try {
                 URL classUrl = WTFExpedition.class.getProtectionDomain().getCodeSource().getLocation(); // Get URL of this class
 
@@ -126,38 +127,39 @@ public class JSONLoader {
             for (JsonElement element : (JsonArray) root) {
                 JsonObject object = (JsonObject) element;
 
+                String blockId = "";
+                String name = "";
+
+                if(object.has("blockId"))
+                    blockId = object.get("blockId").getAsString();
+
+                if(blockId.isEmpty()) {
+                    WTFExpedition.wtfLog.error("Undefined block ID in " + parent.substring(0, parent.length() - 1) + " entry " + index + " at path \"" + jsonPath + "\", skipping!");
+                    index++;
+                    continue;
+                }
+
+                if(object.has("name"))
+                    name = object.get("name").getAsString();
+
+                if(name.isEmpty()) {
+                    WTFExpedition.wtfLog.error("Undefined name in " + parent.substring(0, parent.length() - 1) + " entry " + index + " at path \"" + jsonPath + "\", skipping!");
+                    index++;
+                    continue;
+                }
+
+                blockId = blockId.contains("@") ? blockId : blockId + "@0";
+
                 if(parent.contains("ores")) {
                     // TODO Better JSON parsing, use array of "generator" objects
                     OreEntry entryOre = gson.fromJson(element.toString(), OreEntry.class);
                     oreEntries.add(entryOre);
                 } else {
-                    String blockId = "";
-                    String name = "";
                     String fracturedBlockId = "";
                     String texture = "";
                     byte flags = 0;
                     int percentageMineSpeedModifier = 100;
                     int percentageStability = 100;
-
-                    if(object.has("blockId"))
-                        blockId = object.get("blockId").getAsString();
-
-                    if(blockId.isEmpty()) {
-                        WTFExpedition.wtfLog.error("Undefined block ID in block entry " + index + " at path \"" + jsonPath + "\", skipping!");
-                        index++;
-                        continue;
-                    }
-
-                    if(object.has("name"))
-                        name = object.get("name").getAsString();
-
-                    if(name.isEmpty()) {
-                        WTFExpedition.wtfLog.error("Undefined name in block entry " + index + " at path \"" + jsonPath + "\", skipping!");
-                        index++;
-                        continue;
-                    }
-
-                    blockId = blockId.contains("@") ? blockId : blockId + "@0";
 
                     if(object.has("fracturedBlockId")) {
                         fracturedBlockId = object.get("fracturedBlockId").getAsString();

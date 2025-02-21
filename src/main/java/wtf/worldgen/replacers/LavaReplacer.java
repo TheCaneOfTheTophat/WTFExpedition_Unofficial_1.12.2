@@ -19,7 +19,6 @@ public class LavaReplacer extends Replacer{
 
 	public LavaReplacer(Block block) {
 		super(block);
-		// TODO Auto-generated constructor stub
 	}
 
 	private static SimplexHelper simplex = new SimplexHelper("LavaReplacer");

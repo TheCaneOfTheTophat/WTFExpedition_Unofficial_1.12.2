@@ -19,7 +19,6 @@ public class DungeonTypeRain extends AbstractDungeonType{
 
 	public DungeonTypeRain(String name, int ceilingAddonPercentChance, int floorAddonPercentChance) {
 		super(name, ceilingAddonPercentChance, floorAddonPercentChance);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -35,7 +34,6 @@ public class DungeonTypeRain extends AbstractDungeonType{
 
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -122,7 +120,6 @@ public class DungeonTypeRain extends AbstractDungeonType{
 
 	@Override
 	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 

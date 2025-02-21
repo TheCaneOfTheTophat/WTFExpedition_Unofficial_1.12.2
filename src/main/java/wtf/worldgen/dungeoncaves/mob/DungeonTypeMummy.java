@@ -62,13 +62,11 @@ public class DungeonTypeMummy extends AbstractDungeonType{
 
 	@Override
 	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 

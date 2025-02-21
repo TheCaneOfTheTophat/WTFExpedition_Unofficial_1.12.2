@@ -17,7 +17,6 @@ public class DungeonTypeBatCave  extends AbstractDungeonType{
 
 	public DungeonTypeBatCave(String name, int ceilingAddonPercentChance, int floorAddonPercentChance) {
 		super(name, ceilingAddonPercentChance, floorAddonPercentChance);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -27,19 +26,16 @@ public class DungeonTypeBatCave  extends AbstractDungeonType{
 
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -54,13 +50,11 @@ public class DungeonTypeBatCave  extends AbstractDungeonType{
 
 	@Override
 	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		// TODO Auto-generated method stub
 		
 	}
 

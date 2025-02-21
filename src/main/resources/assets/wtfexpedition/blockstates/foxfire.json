@@ -10,26 +10,31 @@
     },
     "variants": {
         "normal": [{}],
-        "inventory": [{}],
+        "inventory": [{
+			"model": "item/generated",
+			"textures": {
+				"layer0": "wtfexpedition:blocks/foxfire"
+			}
+		}],
 		"active=false,hanging=false" : [{
 			"textures": {
-					"cross": "wtfexpedition:blocks/foxfire"
-				}
+				"cross": "wtfexpedition:blocks/foxfire"
+			}
 		}],
 		"active=false,hanging=true" : [{
 			"textures": {
-					"cross": "wtfexpedition:blocks/foxfire_hanging"
-				}
+				"cross": "wtfexpedition:blocks/foxfire_hanging"
+			}
 		}],
 		"active=true,hanging=false" : [{
 			"textures": {
-					"cross": "wtfexpedition:blocks/lit_foxfire"
-				}
+				"cross": "wtfexpedition:blocks/lit_foxfire"
+			}
 		}],
 		"active=true,hanging=true" : [{
 			"textures": {
-					"cross": "wtfexpedition:blocks/lit_foxfire_hanging"
-				}
+				"cross": "wtfexpedition:blocks/lit_foxfire_hanging"
+			}
 		}]
     }
 }

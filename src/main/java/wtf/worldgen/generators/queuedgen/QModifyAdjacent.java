@@ -15,7 +15,6 @@ public class QModifyAdjacent implements QueuedGenerator {
 	
 	@Override
 	public IBlockState getBlockState(IBlockState oldstate) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

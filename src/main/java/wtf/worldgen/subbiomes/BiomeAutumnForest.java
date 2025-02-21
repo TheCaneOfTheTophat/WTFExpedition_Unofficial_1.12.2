@@ -44,13 +44,11 @@ public class BiomeAutumnForest extends BiomeForest implements SubBiome{
 
 	@Override
 	public void resetTopBlock(World world, BlockPos pos) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public double scale() {
-		// TODO Auto-generated method stub
 		return WTFExpeditionConfig.autumnForestSize;
 	}
 
@@ -58,7 +56,6 @@ public class BiomeAutumnForest extends BiomeForest implements SubBiome{
 
 	@Override
 	public double freq() {
-		// TODO Auto-generated method stub
 		return WTFExpeditionConfig.autumnForestPercentageFrequency / 100D;
 	}
 
@@ -66,7 +63,6 @@ public class BiomeAutumnForest extends BiomeForest implements SubBiome{
 
 	@Override
 	public Biome getBiome() {
-		// TODO Auto-generated method stub
 		return this;
 	}
 	

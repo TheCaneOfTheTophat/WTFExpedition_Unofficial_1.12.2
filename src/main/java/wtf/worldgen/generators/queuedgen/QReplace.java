@@ -12,7 +12,6 @@ public class QReplace implements QueuedGenerator{
 	
 	@Override
 	public IBlockState getBlockState(IBlockState oldstate) {
-		// TODO Auto-generated method stub
 		return state;
 	}
 

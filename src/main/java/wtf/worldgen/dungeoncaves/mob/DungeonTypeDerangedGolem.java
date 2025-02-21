@@ -17,7 +17,6 @@ public class DungeonTypeDerangedGolem extends AbstractDungeonType {
 
 	public DungeonTypeDerangedGolem(String name) {
 		super(name, 0, 0);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -54,13 +53,11 @@ public class DungeonTypeDerangedGolem extends AbstractDungeonType {
 
 	@Override
 	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 }

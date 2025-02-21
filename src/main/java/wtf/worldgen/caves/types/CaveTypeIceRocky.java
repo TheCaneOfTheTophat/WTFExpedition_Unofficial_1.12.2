@@ -10,7 +10,6 @@ public class CaveTypeIceRocky extends CaveTypeRocky{
 
 	public CaveTypeIceRocky(String name, int ceilingAddonPercentChance, int floorAddonPercentChance) {
 		super(name, ceilingAddonPercentChance, floorAddonPercentChance);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

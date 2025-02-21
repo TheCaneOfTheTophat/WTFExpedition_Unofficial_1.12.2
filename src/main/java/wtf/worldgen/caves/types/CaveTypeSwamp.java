@@ -14,7 +14,6 @@ public class CaveTypeSwamp extends AbstractCaveType {
 
 	public CaveTypeSwamp(String name, int ceilingAddonPercentChance, int floorAddonPercentChance) {
 		super(name, ceilingAddonPercentChance, floorAddonPercentChance);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

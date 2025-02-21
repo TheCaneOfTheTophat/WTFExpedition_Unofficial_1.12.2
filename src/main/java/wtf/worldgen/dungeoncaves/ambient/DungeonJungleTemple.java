@@ -88,7 +88,6 @@ public class DungeonJungleTemple extends AbstractDungeonType{
 
 	@Override
 	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		// TODO Auto-generated method stub
 		
 	}
 	
