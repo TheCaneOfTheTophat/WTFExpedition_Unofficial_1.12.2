@@ -24,6 +24,7 @@ import java.util.function.Function;
 
 @SideOnly(Side.CLIENT)
 public class ModelDenseOre implements IModel {
+
     private final ResourceLocation cubeTexture;
     private final ResourceLocation overlayTexture;
     private final int meta;
@@ -67,6 +68,7 @@ public class ModelDenseOre implements IModel {
        =========================================== */
     @SideOnly(Side.CLIENT)
     public static class Loader implements ICustomModelLoader {
+
         @Override
         public boolean accepts(ResourceLocation modelLocation) {
             return modelLocation.getResourceDomain().equals(WTFExpedition.modID) && modelLocation.getResourcePath().contains("dense") && modelLocation.getResourcePath().contains("hardcoded");

@@ -38,58 +38,34 @@ public class BlockFoxfire extends BlockBush {
 	}
 
 	@Override
-	public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-		for (EnumFacing enumfacing : EnumFacing.values()) {
-			return canPlaceBlockOnSide(worldIn, pos, enumfacing);
-		}
-		return false;
+	public int damageDropped(IBlockState state) {
+		return 0;
+	}
+
+	@Override
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		worldIn.scheduleBlockUpdate(pos, this, 0, 10);
 	}
 
 	@Override
 	public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side) {
 		if (side == EnumFacing.DOWN)
 			return canBlockStay(worldIn, pos, this.getDefaultState().withProperty(HANGING, true));
+
 		return side == EnumFacing.UP && canBlockStay(worldIn, pos, this.getDefaultState());
+	}
+
+	@Override
+	public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
+		for (EnumFacing enumfacing : EnumFacing.values())
+			return canPlaceBlockOnSide(worldIn, pos, enumfacing);
+
+		return false;
 	}
 
 	@Override
 	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
 		return facing == EnumFacing.DOWN ? this.getDefaultState().withProperty(HANGING, true) : this.getDefaultState();
-	}
-
-	@Override
-	public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state) {
-		if (state.getBlock() == this) {
-			IBlockState stateDown = worldIn.getBlockState(pos.down());
-			IBlockState stateUp = worldIn.getBlockState(pos.up());
-
-			return (stateUp.getMaterial() == Material.WOOD && stateUp.isSideSolid(worldIn, pos.up(), EnumFacing.DOWN) && state.getValue(HANGING)) ||
-					(stateDown.getMaterial() == Material.WOOD && stateDown.isSideSolid(worldIn, pos.down(), EnumFacing.UP) && !state.getValue(HANGING));
-		}
-		return false;
-	}
-
-	@Override
-	public net.minecraftforge.common.EnumPlantType getPlantType(net.minecraft.world.IBlockAccess world, BlockPos pos) {
-		return EnumPlantType.Cave;
-	}
-
-	@Override
-	protected boolean canSustainBush(IBlockState state) {
-		return state.isFullBlock();
-	}
-
-	@Override
-	public int getLightValue(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-		IBlockState other = worldIn.getBlockState(pos);
-
-		if (other.getBlock() != this)
-			return other.getLightValue(worldIn, pos);
-
-		if (state.getValue(ACTIVE))
-			return 6;
-
-		return 0;
 	}
 
 	@Override
@@ -125,9 +101,8 @@ public class BlockFoxfire extends BlockBush {
 			BlockPos blockpos1 = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 2, random.nextInt(3) - 1);
 
 			for (int k = 0; k < 4; ++k) {
-				if (world.isAirBlock(blockpos1) && this.canBlockStay(world, blockpos1, this.getDefaultState()) || this.canBlockStay(world, blockpos1, this.getDefaultState().withProperty(HANGING, true))) {
+				if (world.isAirBlock(blockpos1) && this.canBlockStay(world, blockpos1, this.getDefaultState()) || this.canBlockStay(world, blockpos1, this.getDefaultState().withProperty(HANGING, true)))
 					pos = blockpos1;
-				}
 
 				blockpos1 = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 2, random.nextInt(3) - 1);
 			}
@@ -144,25 +119,21 @@ public class BlockFoxfire extends BlockBush {
 	}
 
 	@Override
-	public void onEntityWalk(World world, BlockPos pos, Entity entityIn) {
-		world.scheduleBlockUpdate(pos, this, 0, 20);
-	}
+	public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state) {
+		if (state.getBlock() == this) {
+			IBlockState stateDown = worldIn.getBlockState(pos.down());
+			IBlockState stateUp = worldIn.getBlockState(pos.up());
 
-	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		worldIn.scheduleBlockUpdate(pos, this, 0, 10);
+			return (stateUp.getMaterial() == Material.WOOD && stateUp.isSideSolid(worldIn, pos.up(), EnumFacing.DOWN) && state.getValue(HANGING)) ||
+					(stateDown.getMaterial() == Material.WOOD && stateDown.isSideSolid(worldIn, pos.down(), EnumFacing.UP) && !state.getValue(HANGING));
+		}
+
+		return false;
 	}
 
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return state.getValue(HANGING) ? hangingBB : sittingBB;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random random) {
-		if (state.getValue(ACTIVE) && random.nextInt(15) == 0)
-			world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, pos.getX() + random.nextFloat(), pos.getY() + 0.5F, pos.getZ() + random.nextFloat(), 0.0D, 0.0D, 0.0D);
 	}
 
 	@Override
@@ -183,11 +154,41 @@ public class BlockFoxfire extends BlockBush {
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-			return state.getValue(HANGING) ? (state.getValue(ACTIVE) ? 3 : 1) : (state.getValue(ACTIVE) ? 2 : 0);
+		return state.getValue(HANGING) ? (state.getValue(ACTIVE) ? 3 : 1) : (state.getValue(ACTIVE) ? 2 : 0);
 	}
 
 	@Override
-	public int damageDropped(IBlockState state) {
+	public net.minecraftforge.common.EnumPlantType getPlantType(net.minecraft.world.IBlockAccess world, BlockPos pos) {
+		return EnumPlantType.Cave;
+	}
+
+	@Override
+	protected boolean canSustainBush(IBlockState state) {
+		return state.isFullBlock();
+	}
+
+	@Override
+	public void onEntityWalk(World world, BlockPos pos, Entity entityIn) {
+		world.scheduleBlockUpdate(pos, this, 0, 20);
+	}
+
+	@Override
+	public int getLightValue(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+		IBlockState other = worldIn.getBlockState(pos);
+
+		if (other.getBlock() != this)
+			return other.getLightValue(worldIn, pos);
+
+		if (state.getValue(ACTIVE))
+			return 6;
+
 		return 0;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random random) {
+		if (state.getValue(ACTIVE) && random.nextInt(15) == 0)
+			world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, pos.getX() + random.nextFloat(), pos.getY() + 0.5F, pos.getZ() + random.nextFloat(), 0.0D, 0.0D, 0.0D);
 	}
 }

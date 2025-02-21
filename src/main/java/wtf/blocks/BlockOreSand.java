@@ -26,18 +26,16 @@ public class BlockOreSand extends BlockFalling {
         return Items.GOLD_NUGGET;
     }
 
-    public int quantityDroppedWithBonus(int fortune, Random random) {
-        return this.quantityDropped(random) + random.nextInt(fortune + 1);
-    }
-
     public int quantityDropped(Random random) {
         return 1 + random.nextInt(2);
     }
-    
-    @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
-    {
-        return BlockRenderLayer.CUTOUT_MIPPED;
+
+    public int quantityDroppedWithBonus(int fortune, Random random) {
+        return this.quantityDropped(random) + random.nextInt(fortune + 1);
     }
     
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer() {
+        return BlockRenderLayer.CUTOUT_MIPPED;
+    }
 }

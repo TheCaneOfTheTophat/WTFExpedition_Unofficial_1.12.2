@@ -39,12 +39,33 @@ public class BlockDecoAnim extends AbstractBlockDerivative implements IDeco {
 //		BlockSets.blockTransformer.put(new StateAndModifier(this.getDefaultState().withProperty(TYPE, AnimatedDecoType.DRIP_LAVA), BlockSets.Modifier.COBBLE), fractured);
 	}
 	
-	public void setFast(World world, BlockPos pos) {
-		IBlockState blockstate = world.getBlockState(pos); 
-		if (blockstate.getBlock() instanceof BlockDecoAnim)
-			world.setBlockState(pos, getStateFromMeta(this.getMetaFromState(blockstate)+8));
+    @Override
+	public void onBlockDestroyedByPlayer(World world, BlockPos pos, IBlockState state) {
+    	if (type == AnimatedDecoType.LAVA_CRUST)
+    		world.setBlockState(pos, Blocks.FLOWING_LAVA.getDefaultState());
+    }
+
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, FAST);
 	}
 	
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		IBlockState state = this.getDefaultState().withProperty(FAST, meta == 0 ? false : true);
+		return state;
+	}
+
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		return state.getValue(FAST) ? 1 : 0;
+	}
+	
+	@Override
+	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
+        return layer == BlockRenderLayer.CUTOUT || layer == BlockRenderLayer.TRANSLUCENT;
+    }
+
 	@Override
 	public int getLightValue(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
 		IBlockState other = worldIn.getBlockState(pos);
@@ -54,12 +75,6 @@ public class BlockDecoAnim extends AbstractBlockDerivative implements IDeco {
 			return 3;
 		return 0;
 	}
-	
-    @Override
-	public void onBlockDestroyedByPlayer(World world, BlockPos pos, IBlockState state) {
-    	if (type == AnimatedDecoType.LAVA_CRUST)
-    		world.setBlockState(pos, Blocks.FLOWING_LAVA.getDefaultState());
-    }
 
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -73,53 +88,38 @@ public class BlockDecoAnim extends AbstractBlockDerivative implements IDeco {
 			double z = pos.getZ() + random.nextFloat();
 
 			switch (type){
-			case LAVA_CRUST:
-				if (!world.isBlockNormalCube(pos.up(), false))
-					world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x, y+1, z, 0.0D, 0.0D, 0.0D);
-				// Fall through
-			case DRIP_LAVA:
-				if (!world.isBlockNormalCube(pos.down(), false))
-					world.spawnParticle(EnumParticleTypes.DRIP_LAVA, x, y, z, 0.0D, 0.0D, 0.0D);
-				break;
-			case DRIP_WATER:
-				if (!world.isBlockNormalCube(pos.down(), false))
-					world.spawnParticle(EnumParticleTypes.DRIP_WATER, x, y, z, 0.0D, 0.0D, 0.0D);
-				break;
-			default:
-				break;
+				case LAVA_CRUST:
+					if (!world.isBlockNormalCube(pos.up(), false))
+						world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x, y+1, z, 0.0D, 0.0D, 0.0D);
+					// Fall through
+				case DRIP_LAVA:
+					if (!world.isBlockNormalCube(pos.down(), false))
+						world.spawnParticle(EnumParticleTypes.DRIP_LAVA, x, y, z, 0.0D, 0.0D, 0.0D);
+					break;
+				case DRIP_WATER:
+					if (!world.isBlockNormalCube(pos.down(), false))
+						world.spawnParticle(EnumParticleTypes.DRIP_WATER, x, y, z, 0.0D, 0.0D, 0.0D);
+					break;
+				default:
+					break;
 			}
 		}
-	}
-	
-	@Override
-	public IBlockState getStateFromMeta(int meta) {
-		IBlockState state = this.getDefaultState().withProperty(FAST, meta == 0 ? false : true);
-		return state;
-	}
-
-	@Override
-	public int getMetaFromState(IBlockState state) {
-		return state.getValue(FAST) ? 1 : 0;
-	}
-
-	@Override
-	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, FAST);
-	}
-	
-	@Override
-	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
-        return layer == BlockRenderLayer.CUTOUT || layer == BlockRenderLayer.TRANSLUCENT;
-    }
-
-	public AnimatedDecoType getType() {
-		return type;
 	}
 
 	@Override
 	public String getDisplayName(ItemStack stack) {
 		ItemStack blockStack = new ItemStack(parentForeground.getBlock(), 1, parentForeground.getBlock().getMetaFromState(parentForeground));
 		return I18n.format(WTFExpedition.modID + ":deco_type." + getType().getName() + ".name") + " " + blockStack.getDisplayName();
+	}
+
+	public AnimatedDecoType getType() {
+		return type;
+	}
+
+	public void setFast(World world, BlockPos pos) {
+		IBlockState blockstate = world.getBlockState(pos);
+		if (blockstate.getBlock() instanceof BlockDecoAnim)
+			world.setBlockState(pos, getStateFromMeta(this.getMetaFromState(blockstate)+8));
 	}
 
 }

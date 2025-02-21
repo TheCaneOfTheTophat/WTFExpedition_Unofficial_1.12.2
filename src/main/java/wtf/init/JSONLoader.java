@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class JSONLoader {
+
     public static ArrayList<OreEntry> oreEntries = new ArrayList<>();
     public static ArrayList<BlockEntry> blockEntries = new ArrayList<>();
     public static Map<String, BlockEntry> identifierToBlockEntry = new HashMap<>();
@@ -26,7 +27,6 @@ public class JSONLoader {
     public static void loadJsonContent() {
         Path oreDirectory = Paths.get(WTFExpedition.configDirectoryString, "ores"); // Get and/or make config directory for ores
         oreDirectory.toFile().mkdir();
-
 
         Path blockDirectory = Paths.get(WTFExpedition.configDirectoryString, "blocks"); // Get and/or make config directory for blocks
         blockDirectory.toFile().mkdir();
@@ -109,7 +109,6 @@ public class JSONLoader {
 
         // Parse JSONs
         for(Path jsonPath : allJsons) {
-
             try (BufferedReader reader = new BufferedReader(new FileReader(jsonPath.toString()))) {
                 root = parser.parse(reader);
             } catch (IOException e) {

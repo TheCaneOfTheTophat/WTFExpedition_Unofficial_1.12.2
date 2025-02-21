@@ -13,7 +13,7 @@ public class ExploderEntity extends Entity {
 
 	private static final DataParameter<Integer> FUSE = EntityDataManager.createKey(ExploderEntity.class, DataSerializers.VARINT);
 	private boolean flaming = false;
-	private float str;
+	private final float str;
 	private int fuse;
 	CustomExplosion explosion;
 
@@ -36,9 +36,8 @@ public class ExploderEntity extends Entity {
 		this.flaming = fire;
 	}
 
-	//I should be able to modify this to actually do the explosion as well-
-	//which allows me to modify the time between increments, and overall slow the explosion dow
-
+	// I should be able to modify this to actually do the explosion as well-
+	// which allows me to modify the time between increments, and overall slow the explosion dow
 	@Override
 	public void onUpdate() {
 		if (!this.world.isRemote) {
@@ -46,7 +45,7 @@ public class ExploderEntity extends Entity {
 				explosion = new CustomExplosion(null, this.world, new Vec3d(this.posX, this.posY, this.posZ), str, flaming);
 				explosion.incrementVectorList();
 				//explosion.update();
-			} else if (fuse < 0) {
+			} else if (fuse < 0)
 				if (!explosion.vecList.isEmpty()) {
 					explosion.incrementVectorList();
 					//explosion.update();
@@ -54,14 +53,13 @@ public class ExploderEntity extends Entity {
 					this.setDead();
 					explosion.update();
 				}
-			}
 			fuse--;
 		}
 	}
 
 	@Override
 	protected void entityInit() {
-		this.dataManager.register(FUSE, Integer.valueOf(10));
+		this.dataManager.register(FUSE, 10);
 	}
 
 	@Override
@@ -80,7 +78,7 @@ public class ExploderEntity extends Entity {
 	}
 
 	public void setFuse(int fuseIn) {
-		this.dataManager.set(FUSE, Integer.valueOf(fuseIn));
+		this.dataManager.set(FUSE, fuseIn);
 		this.fuse = fuseIn;
 	}
 

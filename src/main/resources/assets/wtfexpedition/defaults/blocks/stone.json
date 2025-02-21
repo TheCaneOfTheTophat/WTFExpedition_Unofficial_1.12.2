@@ -4,6 +4,7 @@
     "name": "stone",
     "fracturedBlockId": "minecraft:cobblestone",
     "texture": "minecraft:blocks/stone",
+    "fracturesFirstWhenMined": true,
     "percentageMineSpeedModifier": 15,
     "decoration": {
       "mossy": true,

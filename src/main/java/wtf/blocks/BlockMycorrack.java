@@ -5,9 +5,9 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockRenderLayer;
 
-public class BlockMycorrack extends BlockNetherrack{
+public class BlockMycorrack extends BlockNetherrack {
 
-	public BlockMycorrack(){
+	public BlockMycorrack() {
 		this.setHardness(0.4F);
 		this.setSoundType(SoundType.STONE);
 	}

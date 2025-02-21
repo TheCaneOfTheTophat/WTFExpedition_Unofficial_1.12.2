@@ -34,6 +34,7 @@ public class WTFMessageBlockCrackEvent implements IMessage {
     }
 
     public static class Handler implements IMessageHandler<WTFMessageBlockCrackEvent, IMessage> {
+
         @Override
         public IMessage onMessage(WTFMessageBlockCrackEvent message, MessageContext ctx) {
             Minecraft mc = Minecraft.getMinecraft();

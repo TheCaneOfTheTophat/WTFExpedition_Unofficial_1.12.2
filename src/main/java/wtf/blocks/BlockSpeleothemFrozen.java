@@ -32,46 +32,8 @@ public class BlockSpeleothemFrozen extends BlockSpeleothem {
 		this.setHarvestLevel(parentBackground.getBlock().getHarvestTool(parentBackground), parentBackground.getBlock().getHarvestLevel(parentBackground));
 	}
 
-	@SideOnly(Side.CLIENT)
-	public BlockRenderLayer getBlockLayer() {
-		return BlockRenderLayer.TRANSLUCENT;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-		Block block = blockAccess.getBlockState(pos.offset(side)).getBlock();
-
-		if (block instanceof BlockSpeleothemFrozen || block instanceof BlockIce) {
-			return false;
-		}
-
-		return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
-	}
-	@Override
-	public boolean doesSideBlockRendering(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-		Block block = blockAccess.getBlockState(pos.offset(side)).getBlock();
-
-		if (block instanceof BlockSpeleothemFrozen || block instanceof BlockIce) {
-			return true;
-		}
-
-		return super.doesSideBlockRendering(blockState, blockAccess, pos, side);
-	}
-
 	@Override
 	public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {}
-
-	@Override
-	public boolean isFullCube(IBlockState state) {
-		return true;
-	}
-
-    @Override
-	public String getDisplayName(ItemStack stack) {
-		ItemStack stoneStack = new ItemStack(speleothem.parentForeground.getBlock(), 1, speleothem.parentForeground.getBlock().getMetaFromState(speleothem.parentForeground));
-		return I18n.format(WTFExpedition.modID + ":prefix.frozen.name") + " " + stoneStack.getDisplayName() + " " + I18n.format("tile." + WTFExpedition.modID + ":speleothem." + stack.getItemDamage() + ".name");
-	}
 
 	@Override
 	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
@@ -89,6 +51,33 @@ public class BlockSpeleothemFrozen extends BlockSpeleothem {
 	}
 
 	@Override
+	public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
+		for(BlockPos relpos : BlockPos.getAllInBoxMutable(pos.add(-1, -1, -1), pos.add(1, 1, 1)))
+			if(BlockSets.meltBlocks.contains(world.getBlockState(relpos).getBlock()))
+				return false;
+
+		if(state.getBlock() == this) {
+			switch (state.getValue(TYPE)) {
+				case speleothem_column: return traverseColumn(world, pos);
+				case stalactite_base:
+				case stalactite_small: return (world.getBlockState(pos.up()) == speleothem.parentForeground);
+				case stalactite_tip: return (hasProperty(world.getBlockState(pos.up()), SpeleothemType.stalactite_base) || hasProperty(world.getBlockState(pos.up()), SpeleothemType.speleothem_column));
+				case stalagmite_base:
+				case stalagmite_small: return (world.getBlockState(pos.down()) == speleothem.parentForeground);
+				case stalagmite_tip: return (hasProperty(world.getBlockState(pos.down()), SpeleothemType.stalagmite_base) || hasProperty(world.getBlockState(pos.down()), SpeleothemType.speleothem_column));
+				default: return false;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isFullCube(IBlockState state) {
+		return true;
+	}
+
+	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return FULL_BLOCK_AABB;
 	}
@@ -101,32 +90,34 @@ public class BlockSpeleothemFrozen extends BlockSpeleothem {
 	}
 
 	@Override
-	public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
+	public String getDisplayName(ItemStack stack) {
+		ItemStack stoneStack = new ItemStack(speleothem.parentForeground.getBlock(), 1, speleothem.parentForeground.getBlock().getMetaFromState(speleothem.parentForeground));
+		return I18n.format(WTFExpedition.modID + ":prefix.frozen.name") + " " + stoneStack.getDisplayName() + " " + I18n.format("tile." + WTFExpedition.modID + ":speleothem." + stack.getItemDamage() + ".name");
+	}
 
-		for(BlockPos relpos : BlockPos.getAllInBoxMutable(pos.add(-1, -1, -1), pos.add(1, 1, 1)))
-			if(BlockSets.meltBlocks.contains(world.getBlockState(relpos).getBlock())) {
-				return false;
-			}
+	@SideOnly(Side.CLIENT)
+	public BlockRenderLayer getBlockLayer() {
+		return BlockRenderLayer.TRANSLUCENT;
+	}
 
-		if(state.getBlock() == this) {
-			switch (state.getValue(TYPE)) {
-				case speleothem_column:
-					return traverseColumn(world, pos);
-				case stalactite_base:
-				case stalactite_small:
-					return (world.getBlockState(pos.up()) == speleothem.parentForeground);
-				case stalactite_tip:
-					return (hasProperty(world.getBlockState(pos.up()), SpeleothemType.stalactite_base) ||
-							hasProperty(world.getBlockState(pos.up()), SpeleothemType.speleothem_column));
-				case stalagmite_base:
-				case stalagmite_small:
-					return (world.getBlockState(pos.down()) == speleothem.parentForeground);
-				case stalagmite_tip:
-					return (hasProperty(world.getBlockState(pos.down()), SpeleothemType.stalagmite_base) ||
-							hasProperty(world.getBlockState(pos.down()), SpeleothemType.speleothem_column));
-				default: return false;
-			}
-		}
-		return false;
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+		Block block = blockAccess.getBlockState(pos.offset(side)).getBlock();
+
+		if (block instanceof BlockSpeleothemFrozen || block instanceof BlockIce)
+			return false;
+
+		return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+	}
+
+	@Override
+	public boolean doesSideBlockRendering(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+		Block block = blockAccess.getBlockState(pos.offset(side)).getBlock();
+
+		if (block instanceof BlockSpeleothemFrozen || block instanceof BlockIce)
+			return true;
+
+		return super.doesSideBlockRendering(blockState, blockAccess, pos, side);
 	}
 }

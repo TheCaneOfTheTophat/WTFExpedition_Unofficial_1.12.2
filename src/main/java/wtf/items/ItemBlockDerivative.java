@@ -25,6 +25,7 @@ public class ItemBlockDerivative extends ItemBlockState {
     }
 
     public static class ItemBlockDerivativeFalling extends ItemBlockState {
+
         AbstractBlockDerivativeFalling block;
 
         public ItemBlockDerivativeFalling(AbstractBlockDerivativeFalling block) {

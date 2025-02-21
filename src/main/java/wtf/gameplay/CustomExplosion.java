@@ -27,16 +27,12 @@ import wtf.utilities.wrappers.ExpVec;
 public class CustomExplosion extends Explosion {
 
 	private final World world;
-
-	Random random = new Random();
 	public Entity sourceEntity;
-	boolean isSmoking;
 	public boolean flaming;
-
 	int counterMod;
-
-	//create a list of explosion vectors
-	HashSet<ExpVec> vecList = new HashSet<>();
+	boolean isSmoking;
+	Random random = new Random();
+	HashSet<ExpVec> vecList = new HashSet<>(); // create a list of explosion vectors
 
 	public CustomExplosion(Entity entity, World world, Vec3d vec3d, float str, boolean fire) {
 		super(world, entity, vec3d.x, vec3d.y, vec3d.z, str, false, false);
@@ -61,7 +57,6 @@ public class CustomExplosion extends Explosion {
 		float yneg = this.sourceEntity instanceof EntityCreeper ? (float) (getModifier(origin.down())/ WTFExpeditionConfig.creeperUpwardModifier) :  getModifier(origin.down());
 		float zpos = getModifier(origin.north());
 		float zneg = getModifier(origin.south());
-
 		float ftotal = xpos + xneg + ypos + yneg + zpos + zneg;
 
 		//System.out.println(" y neg = " + yneg);
@@ -91,10 +86,7 @@ public class CustomExplosion extends Explosion {
 
 					// This checks if it's an edge of the cube
 					if (xloop == xMin || xloop == xMax || yloop == yMin || yloop == yMax || zloop == zMin || zloop == zMax) {
-
 						// the values to increment along the ray each loop
-
-
 						// length of the vector
 						double vectorLength = Math.sqrt(xloop * xloop + yloop * yloop + zloop * zloop);
 
@@ -116,8 +108,7 @@ public class CustomExplosion extends Explosion {
 
 						// setting the vector strength, as a sum of each
 						// component times the corresponding increment, plus a random component
-						double vector = (xcomp * (absIncX / total) + ycomp * (absIncY / total)
-								+ zcomp * (absIncZ / total)) * (0.7 + random.nextFloat() * 0.6);
+						double vector = (xcomp * (absIncX / total) + ycomp * (absIncY / total) + zcomp * (absIncZ / total)) * (0.7 + random.nextFloat() * 0.6);
 
 						//add the vector info to a vector list
 						vecList.add(new ExpVec(world, origin, incX, incY, incZ, vector, this));
@@ -169,17 +160,6 @@ public class CustomExplosion extends Explosion {
 			EnumParticleTypes type = baseStr >= 2.0F && isSmoking ? EnumParticleTypes.EXPLOSION_HUGE : EnumParticleTypes.EXPLOSION_LARGE;
 			worldServer.spawnParticle(type, origin.getX(), origin.getY(), origin.getZ(), 0, 0, 0, 0, 1.0D);
 		}
-
-		/*
-			if (isFlaming) { iterator = affectedBlockPositions.iterator(); while
-			(iterator.hasNext()) { chunkposition =
-			(BlockPos)iterator.next(); i = chunkposition.getX(); j =
-			chunkposition.getY(); k = chunkposition.getZ(); block =
-			worldObj.getBlockState(new BlockPos(i, j, k); Block block1 = worldObj.getBlockState(new BlockPos(i, j -
-			1, k); // func_149730_j() returns block.opaque if (block ==
-			Blocks.air && block1.func_149730_j() && rand.nextInt(3) == 0) {
-			worldObj.setBlock(i, j, k, Blocks.fire); } } }
-		*/
 	}
 
 
@@ -211,10 +191,9 @@ public class CustomExplosion extends Explosion {
 		}
 	}
 
-
 	private float getModifier(BlockPos pos) {
 		IBlockState state = world.getBlockState(pos);
-		float mod = MathHelper.sqrt(MathHelper.sqrt(1 / (1 + state.getBlock().getExplosionResistance(this.sourceEntity) * 5F * state.getBlockHardness(world, pos))));
+		float mod = MathHelper.sqrt(MathHelper.sqrt(1 / (1 + state.getBlock().getExplosionResistance(world, pos, this.sourceEntity, this) * 5F * state.getBlockHardness(world, pos))));
 		if (mod < 1) {
 			counterMod++;
 			return mod;
@@ -223,8 +202,7 @@ public class CustomExplosion extends Explosion {
 	}
 
 	private float setModifier(float dir, float totalAssigned) {
-		float ret  = dir / (totalAssigned/6F);
-		return ret;
+        return dir / (totalAssigned / 6F);
 	}
 	
 	void update() {

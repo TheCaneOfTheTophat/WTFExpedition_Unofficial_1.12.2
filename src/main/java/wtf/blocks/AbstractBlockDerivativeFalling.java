@@ -56,10 +56,6 @@ public abstract class AbstractBlockDerivativeFalling extends BlockFalling {
         return parentForeground.getBlock().getItemDropped(parentForeground, rand, fortune);
     }
 
-    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
-        return parentForeground.getBlock().canSilkHarvest(world, pos, parentForeground, player);
-    }
-
     @Override
     public int quantityDropped(Random random) {
         return parentForeground.getBlock().quantityDropped(random);
@@ -68,6 +64,10 @@ public abstract class AbstractBlockDerivativeFalling extends BlockFalling {
     @Override
     public int quantityDroppedWithBonus(int fortune, Random random) {
         return parentForeground.getBlock().quantityDroppedWithBonus(fortune, random);
+    }
+
+    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+        return parentForeground.getBlock().canSilkHarvest(world, pos, parentForeground, player);
     }
 
     @Override
@@ -80,14 +80,12 @@ public abstract class AbstractBlockDerivativeFalling extends BlockFalling {
             int meta = this.parentForeground.getBlock().getMetaFromState(this.parentForeground);
             ItemStack itemstack = new ItemStack(this.parentForeground.getBlock(),1, meta);
 
-            if (itemstack != null) {
+            if (itemstack != null)
                 items.add(itemstack);
-            }
 
             ForgeEventFactory.fireBlockHarvesting(items, worldIn, pos, state, 0, 1.0f, true, player);
-            for (ItemStack item : items) {
+            for (ItemStack item : items)
                 spawnAsEntity(worldIn, pos, item);
-            }
         }
         else {
             harvesters.set(player);
@@ -117,18 +115,11 @@ public abstract class AbstractBlockDerivativeFalling extends BlockFalling {
 
     @Override
     public float getExplosionResistance(Entity exploder) {
-        return parentBackground.getBlock().getExplosionResistance(exploder)/2.5F;
+        return parentBackground.getBlock().getExplosionResistance(exploder) / 2.5F;
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer() {
-        return parentBackground.getBlock().getBlockLayer();
-    }
-
-    @Override
-    public SoundType getSoundType() {
-        return parentBackground.getBlock().getSoundType();
+    public boolean canDropFromExplosion(Explosion explosionIn) {
+        return this.parentBackground.getBlock().canDropFromExplosion(explosionIn);
     }
 
     @Override
@@ -136,11 +127,18 @@ public abstract class AbstractBlockDerivativeFalling extends BlockFalling {
         return parentBackground.getBlock().getFlammability(world, pos, face);
     }
 
-    public boolean canDropFromExplosion(Explosion explosionIn) {
-        return this.parentBackground.getBlock().canDropFromExplosion(explosionIn);
+    @Override
+    public SoundType getSoundType() {
+        return parentBackground.getBlock().getSoundType();
     }
 
     public String getDisplayName(ItemStack stack) {
         return this.getUnlocalizedName();
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer() {
+        return parentBackground.getBlock().getBlockLayer();
     }
 }

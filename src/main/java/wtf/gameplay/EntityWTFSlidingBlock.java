@@ -16,10 +16,10 @@ public class EntityWTFSlidingBlock extends EntityWTFFallingBlock {
 		super(worldIn, pos, fallingBlockState);
 		double motx = pos.getX() - targetpos.getX();
 		double motz = pos.getZ() - targetpos.getZ();
-		addVelocity(0.05D * motx, -0.1D, 0.05D * motz);
 		this.oriY = pos.getY();
 		this.fallTile = fallingBlockState;
-		
+
+		addVelocity(0.05D * motx, -0.1D, 0.05D * motz);
 		worldIn.spawnEntity(this);
 		worldIn.setBlockToAir(pos);
 	}

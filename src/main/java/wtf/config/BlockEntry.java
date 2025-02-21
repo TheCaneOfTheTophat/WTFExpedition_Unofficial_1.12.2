@@ -7,6 +7,7 @@ import wtf.blocks.enums.AnimatedDecoType;
 import java.util.Map;
 
 public class BlockEntry {
+
     private final String blockId;
     private final String fracturedBlockId;
     private final String name;

@@ -48,6 +48,7 @@ public class ListenerPlantGrowth {
 				return;
 			}
 		}
+
 		event.setResult(Result.DEFAULT);
 	}
 

@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 public class EntityWTFFallingBlock extends EntityFallingBlock {
 
 	public EntityWTFFallingBlock(World worldIn, BlockPos pos, IBlockState fallingBlockState) {
-		super(worldIn, pos.getX()+0.5, pos.getY(), pos.getZ()+0.5, fallingBlockState);
+		super(worldIn, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, fallingBlockState);
 	}
 
 	@Override

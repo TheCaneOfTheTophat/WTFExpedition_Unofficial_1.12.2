@@ -26,20 +26,10 @@ public class BlockDenseOre extends AbstractBlockDerivative {
 //		BlockSets.surfaceBlocks.add(this);
 		this.disableStats();
 	}
-	
-	@Override
-	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
-        return layer == BlockRenderLayer.CUTOUT || layer == BlockRenderLayer.TRANSLUCENT;
-    }
-    
-    @Override
-	public IBlockState getStateFromMeta(int meta) {
-    	return this.blockState.getBaseState().withProperty(DENSITY, meta);
-	}
 
 	@Override
-	public int getMetaFromState(IBlockState state) {
-		return state.getValue(DENSITY);
+	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+		return this.parentForeground.getBlock().canSilkHarvest(world, pos, state, player);
 	}
 	
     @Override
@@ -49,9 +39,9 @@ public class BlockDenseOre extends AbstractBlockDerivative {
         if(state.getValue(DENSITY) < 2 && !player.capabilities.isCreativeMode)
         	state = state.withProperty(DENSITY, state.getValue(DENSITY)+1);
         else {
-			if (!player.capabilities.isCreativeMode) {
+			if (!player.capabilities.isCreativeMode)
 				this.parentBackground.getBlock().dropBlockAsItem(world, pos, this.parentBackground, 0);
-			}
+
         	state = Blocks.AIR.getDefaultState();
         }
 
@@ -63,11 +53,16 @@ public class BlockDenseOre extends AbstractBlockDerivative {
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, DENSITY);
 	}
-	
-    @Override
-	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
-        return this.parentForeground.getBlock().canSilkHarvest(world, pos, state, player);
-    }
+
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		return this.blockState.getBaseState().withProperty(DENSITY, meta);
+	}
+
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		return state.getValue(DENSITY);
+	}
 
     @Override
     public String getDisplayName(ItemStack stack) {
@@ -75,4 +70,9 @@ public class BlockDenseOre extends AbstractBlockDerivative {
         ItemStack foreStack = new ItemStack(parentForeground.getBlock(), 1, parentForeground.getBlock().getMetaFromState(parentForeground));
         return I18n.format(WTFExpedition.modID + ":prefix.dense.name") + " " + backStack.getDisplayName() + " " + foreStack.getDisplayName();
     }
+
+	@Override
+	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
+		return layer == BlockRenderLayer.CUTOUT || layer == BlockRenderLayer.TRANSLUCENT;
+	}
 }

@@ -48,16 +48,14 @@ public class ListenerBreakFracture {
 						if(mplayer != player)
 							WTFExpedition.CHANNEL_INSTANCE.sendTo(new WTFMessageBlockCrackEvent(Block.getStateId(state), event.getPos()), ((EntityPlayerMP) mplayer));
 
-				if (ListenerHelper.isHammer(player.getHeldItemMainhand()) && WTFExpeditionConfig.modifyHammerBehaviour) {
-					int toolLevel = tool == null ? 0 : tool.getItem().getHarvestLevel(tool, "pickaxe", player, state);
+				if (tool.getItem().getRegistryName().getResourcePath().contains("hammer") && WTFExpeditionConfig.modifyHammerBehaviour) {
+					int toolLevel = tool.getItem().getHarvestLevel(tool, "pickaxe", player, state);
 					EntityFracture.fractureHammer(event.getWorld(), event.getPos(), toolLevel);
 				}
 
-				if (tool != null) {
-					tool.damageItem(1, player);
-					player.addStat(StatList.getBlockStats(block));
-					player.addExhaustion(0.025F);
-				}
+				tool.damageItem(1, player);
+				player.addStat(StatList.getBlockStats(block));
+				player.addExhaustion(0.025F);
 			}
 		}
 	}

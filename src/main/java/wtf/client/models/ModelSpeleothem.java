@@ -33,6 +33,7 @@ import java.util.function.Function;
 
 @SideOnly(Side.CLIENT)
 public class ModelSpeleothem implements IModel {
+
     private final ResourceLocation blockTexture;
     private final String typeName;
     private final boolean frozen;
@@ -85,6 +86,7 @@ public class ModelSpeleothem implements IModel {
        =========================================== */
     @SideOnly(Side.CLIENT)
     public static class Loader implements ICustomModelLoader {
+
         @Override
         public boolean accepts(ResourceLocation modelLocation) {
             return modelLocation.getResourceDomain().equals(WTFExpedition.modID) && modelLocation.getResourcePath().contains("speleothem") && modelLocation.getResourcePath().contains("hardcoded");
@@ -105,6 +107,7 @@ public class ModelSpeleothem implements IModel {
                       BAKED MODEL
        =========================================== */
     private static final class FrozenSpeleothemBakedModel implements IBakedModel {
+
         private final IBakedModel ice;
         private final IBakedModel speleothem;
 

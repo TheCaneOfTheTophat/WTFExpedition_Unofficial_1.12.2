@@ -2,12 +2,9 @@ package wtf;
 
 public class CommonProxy {
 
-	public void preInitialization() {
-	}
+	public void preInitialization() {}
 
-	public void registerEntityRenderers() {
-	}
+	public void registerEntityRenderers() {}
 
-	public void initWCICRender() {
-	}
+	public void initWCICRender() {}
 }

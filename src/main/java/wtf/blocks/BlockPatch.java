@@ -18,34 +18,21 @@ import wtf.WTFExpedition;
 
 import javax.annotation.Nullable;
 
-public class BlockPatch extends BlockFalling{
+public class BlockPatch extends BlockFalling {
 
 	protected static final AxisAlignedBB height1 = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D);
 
 	private IBlockState state;
+
 	public BlockPatch(IBlockState state) {
 		super(state.getMaterial());
 		this.state = state;
 		this.setCreativeTab(WTFExpedition.wtfTab);
 	}
-	
-	@Override
-	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
-		if (layer == layer.TRANSLUCENT || layer == layer.SOLID) {
-			return true;
-		}
-		return super.canRenderInLayer(state, layer);
-	}
 
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return height1;
-	}
-
-	@Override
-	@Nullable
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-		return height1;
+	public int quantityDropped(Random random) {
+		return 0;
 	}
 
 	@Override
@@ -64,33 +51,47 @@ public class BlockPatch extends BlockFalling{
 	}
 
 	@Override
-	public int quantityDropped(Random random) {
-		return 0;
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return height1;
+	}
+
+	@Override
+	@Nullable
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+		return height1;
 	}
 
 	@Override
 	public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos) {
         return state.getBlockHardness(worldIn, pos);
     }
-	
+
     @Override
 	public float getExplosionResistance(Entity exploder) {
-        return state.getBlock().getExplosionResistance(exploder)/2.5F;
-    }
-    
-    @Override
-	@SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer() {
-        return state.getBlock().getBlockLayer();
-    }
-    
-    @Override
-	public SoundType getSoundType() {
-        return state.getBlock().getSoundType();
+        return state.getBlock().getExplosionResistance(exploder) / 2.5F;
     }
     
     @Override
 	public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face) {
         return state.getBlock().getFlammability(world, pos, face);
     }
+
+	@Override
+	public SoundType getSoundType() {
+		return state.getBlock().getSoundType();
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public BlockRenderLayer getBlockLayer() {
+		return state.getBlock().getBlockLayer();
+	}
+
+	@Override
+	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
+		if (layer == layer.TRANSLUCENT || layer == layer.SOLID)
+			return true;
+
+		return super.canRenderInLayer(state, layer);
+	}
 }

@@ -7,6 +7,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -33,6 +34,7 @@ import java.nio.file.Paths;
 @Mod(modid = WTFExpedition.modID, dependencies = "after:undergroundbiomes")
 @SuppressWarnings({"unused", "ConstantConditions"})
 public class WTFExpedition {
+
 	public static final String modID = "wtfexpedition";
 	public static String configDirectoryString;
 	public static Path configDirectory;
@@ -69,14 +71,14 @@ public class WTFExpedition {
 
 		JSONLoader.loadJsonContent();
 
-		// UBC = Loader.isModLoaded("undergroundbiomes");
+		UBC = Loader.isModLoaded("undergroundbiomes");
 
-//
+
 //		if (UBC)
 //			UBCCompat.loadUBCStone();
 //		else
 //			coreLog.info("Underground Biomes Construct not detected");
-//
+
 		BlockSets.initBlockSets();
 //		proxy.initWCICRender();
 //		WTFEntities.initEntites();
@@ -85,7 +87,7 @@ public class WTFExpedition {
 //		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 //
 //		WTFSubstitutions.init();
-//
+
 		proxy.preInitialization();
 	}
 	
@@ -166,5 +168,4 @@ public class WTFExpedition {
 //		if (GameplayConfig.wcictable)
 //			RecipeParser.init();
 	}
-
 }

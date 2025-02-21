@@ -39,10 +39,6 @@ public class BlockDenseRedstoneOre extends BlockDenseOre {
         return 30;
     }
 
-    public void setToggled(BlockDenseRedstoneOre block) {
-        toggledBlock = block;
-    }
-
     @Override
     public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn) {
         this.activate(worldIn, pos);
@@ -114,5 +110,9 @@ public class BlockDenseRedstoneOre extends BlockDenseOre {
     private IBlockState getToggled(IBlockState state) {
         int density = state.getValue(DENSITY);
         return toggledBlock.getDefaultState().withProperty(DENSITY, density);
+    }
+
+    public void setToggled(BlockDenseRedstoneOre block) {
+        toggledBlock = block;
     }
 }

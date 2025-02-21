@@ -17,13 +17,13 @@ import wtf.init.BlockSets;
 import wtf.init.JSONLoader;
 
 public class GravityMethods {
+
 	private final static Random random = new Random();
 
 	private static final int grassHash = Blocks.GRASS.hashCode();
 	private static final int airHash = Blocks.AIR.hashCode();
 
 	public static void checkPos(World world, BlockPos pos) {
-
 		if(world.isAirBlock(pos))
 			return;
 
@@ -39,26 +39,27 @@ public class GravityMethods {
 			grass = true;
 		}
 
-		if (entry == null || entry.getPercentageStability() >= 100)
+		if (entry == null || entry.getPercentageStability() == 100)
 			return;
 
-		//if the block beneath isn't solid
+		// if the block beneath isn't solid
 		if (BlockSets.nonSolidBlockSet.contains(world.getBlockState(pos.down()).getBlock())) {
 			int blockhash = block.hashCode();
 			double fallchance = 1;
-				for (int loop = 1; loop < 6 && blockhash == world.getBlockState(pos.up(loop)).getBlock().hashCode(); loop++) {
-					fallchance *= (1 - entry.getPercentageStability() / 100F);
-				}
-				if (random.nextFloat() < fallchance) {
-					if (grass)
-						world.setBlockState(pos, state);
-					dropBlock(world, pos, true);
-				}
-				return;
+
+			for (int loop = 1; loop < 6 && blockhash == world.getBlockState(pos.up(loop)).getBlock().hashCode(); loop++)
+				fallchance *= (1 - entry.getPercentageStability() / 100F);
+
+			if (random.nextFloat() < fallchance) {
+				if (grass)
+					world.setBlockState(pos, state);
+				dropBlock(world, pos, true);
+			}
+
+			return;
 		}
 
-
-		//start check for tower conditions : all adjacent are air, and unstable block below
+		// start check for tower conditions : all adjacent are air, and unstable block below
 		BlockPos downpos = pos.down();
 		IBlockState downBlockState = world.getBlockState(downpos);
 		BlockEntry downBlockEntry = JSONLoader.getEntryFromState(downBlockState.getBlock() instanceof IDeco ? ((AbstractBlockDerivative) downBlockState.getBlock()).parentForeground : downBlockState);
@@ -68,11 +69,8 @@ public class GravityMethods {
 			downBlockEntry = JSONLoader.getEntryFromState(downBlockState);
 		}
 
-		if (WTFExpeditionConfig.antiNerdPole
-				&& (downBlockEntry != null && !(downBlockEntry.getPercentageStability() >= 100))
-				&& unstableTowerPos(world, pos.down())
-				&& !fenceNear(world, pos, 1, 2)){ //we check for fences down two blocks at the start, then in each posCheck it checks down 1 level
-
+		// we check for fences down two blocks at the start, then in each posCheck it checks down 1 level
+		if (WTFExpeditionConfig.antiNerdPole && (downBlockEntry != null && !(downBlockEntry.getPercentageStability() >= 100)) && unstableTowerPos(world, pos.down()) && !fenceNear(world, pos, 1, 2)) {
 			int count = 1;
 			while (count < 5) {
 				if (unstableTowerPos(world, pos.down(count)))
@@ -92,7 +90,7 @@ public class GravityMethods {
 		}
 	}
 
-	public static boolean unstableTowerPos(World world, BlockPos pos){
+	public static boolean unstableTowerPos(World world, BlockPos pos) {
 		return world.getBlockState(pos.north()).getBlock().hashCode() == airHash
 				&& world.getBlockState(pos.north().east()).getBlock().hashCode() == airHash
 				&& world.getBlockState(pos.north().west()).getBlock().hashCode() == airHash
@@ -105,7 +103,6 @@ public class GravityMethods {
 	}
 
 	public static void dropBlock(World world, BlockPos pos, Boolean checkSupport) {
-
 		if(world.isAirBlock(pos))
 			return;
 
@@ -129,25 +126,23 @@ public class GravityMethods {
 
 
 	public static boolean fenceNear(World world, BlockPos pos, int radius, int down) {
-		for (BlockPos boxpos : BlockPos.getAllInBoxMutable(pos.add(radius, 0, radius), pos.add(-radius, -down, -radius))) {
+		for (BlockPos boxpos : BlockPos.getAllInBoxMutable(pos.add(radius, 0, radius), pos.add(-radius, -down, -radius)))
 			if (world.getBlockState(boxpos).getBlock() instanceof BlockFence)
 				return true;
-		}
+
 		return false;
 	}
 
 	public static BlockPos getRandomAdj(BlockPos pos) {
 		int chance = random.nextInt(4);
+
 		switch (chance) {
-		case 0:
-			return pos.north();
-		case 1:
-			return pos.east();
-		case 2:
-			return pos.south();
-		case 3:
-			return pos.west();
+			case 0: return pos.north();
+			case 1: return pos.east();
+			case 2: return pos.south();
+			case 3: return pos.west();
 		}
-		return null;
+
+		return pos;
 	}
 }

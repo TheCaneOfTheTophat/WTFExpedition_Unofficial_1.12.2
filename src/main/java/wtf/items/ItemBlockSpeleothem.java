@@ -43,8 +43,7 @@ public class ItemBlockSpeleothem extends ItemBlockDerivative {
             }
 
             return EnumActionResult.SUCCESS;
-        }
-        else
+        } else
             return EnumActionResult.FAIL;
     }
 }

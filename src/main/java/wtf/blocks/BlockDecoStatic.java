@@ -53,20 +53,17 @@ public class BlockDecoStatic extends AbstractBlockDerivative implements IDeco {
 	}
 
 	@Override
-	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
-		if(layer == BlockRenderLayer.CUTOUT || layer == BlockRenderLayer.TRANSLUCENT)
-			return true;
-		return false;
-	}
-
-	public StaticDecoType getType() {
-		return type;
-	}
-
-	@Override
 	public String getDisplayName(ItemStack stack) {
 		ItemStack blockStack = new ItemStack(parentForeground.getBlock(), 1, parentForeground.getBlock().getMetaFromState(parentForeground));
 		return I18n.format(WTFExpedition.modID + ":deco_type." + getType().getName() + ".name") + " " + blockStack.getDisplayName();
 	}
 
+	@Override
+	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
+        return layer == BlockRenderLayer.CUTOUT || layer == BlockRenderLayer.TRANSLUCENT;
+    }
+
+	public StaticDecoType getType() {
+		return type;
+	}
 }

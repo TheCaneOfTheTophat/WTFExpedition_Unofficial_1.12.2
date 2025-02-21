@@ -13,7 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
 public class BlockStainedTerracottaPatch extends BlockPatch {
-	public static final PropertyEnum<EnumDyeColor> COLOR = PropertyEnum.<EnumDyeColor>create("color", EnumDyeColor.class);
+
+	public static final PropertyEnum<EnumDyeColor> COLOR = PropertyEnum.create("color", EnumDyeColor.class);
 
 	public BlockStainedTerracottaPatch() {
 		super(Blocks.HARDENED_CLAY.getDefaultState());
@@ -24,14 +25,17 @@ public class BlockStainedTerracottaPatch extends BlockPatch {
 		return state.getValue(COLOR).getMetadata();
 	}
 
-	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
-		for (EnumDyeColor enumdyecolor : EnumDyeColor.values()) {
-			items.add(new ItemStack(this, 1, enumdyecolor.getMetadata()));
-		}
-	}
-
 	public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
 		return MapColor.getBlockColor(state.getValue(COLOR));
+	}
+
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, COLOR);
+	}
+
+	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+		for (EnumDyeColor enumdyecolor : EnumDyeColor.values())
+			items.add(new ItemStack(this, 1, enumdyecolor.getMetadata()));
 	}
 
 	public IBlockState getStateFromMeta(int meta) {
@@ -40,9 +44,5 @@ public class BlockStainedTerracottaPatch extends BlockPatch {
 
 	public int getMetaFromState(IBlockState state) {
 		return state.getValue(COLOR).getMetadata();
-	}
-
-	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, COLOR);
 	}
 }

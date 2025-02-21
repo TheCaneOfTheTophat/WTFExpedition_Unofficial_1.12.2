@@ -104,339 +104,351 @@ public class WTFExpeditionConfig {
 		                  MASTER
 		   ##################################### */
 		List<String> propertyOrder = new ArrayList<>();
+		String category = "1 : master";
 
 		config.setCategoryComment("1 : master", "Configurations for all modules of WTFExpedition.");
 
-		Property property = config.get("1 : master", "Set to false to disable all gameplay tweaks for a vanilla gameplay experience", true);
+		Property property = config.get(category, "Set to false to disable all gameplay tweaks for a vanilla gameplay experience", true);
 		gameplayTweaksEnabled = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("1 : master", "Set to false to disable all cave decoration", true);
+		property = config.get(category, "Set to false to disable all cave decoration", true);
 		caveGenerationEnabled = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("1 : master", "Set to false to disable all dungeon and cave subtype generation", true);
+		property = config.get(category, "Set to false to disable all dungeon and cave subtype generation", true);
 		dungeonGenerationEnabled = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("1 : master", "Set to false to disable WTFExpedition's custom ore generation completely", true);
+		property = config.get(category, "Set to false to disable WTFExpedition's custom ore generation completely", true);
 		oreGenEnabled = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("1 : master", "Set to false to disable all Overworld generation added by WTFExpedition", true);
+		property = config.get(category, "Set to false to disable all Overworld generation added by WTFExpedition", true);
 		overworldGenerationEnabled = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		config.setCategoryPropertyOrder("1 : master", propertyOrder);
+		config.setCategoryPropertyOrder(category, propertyOrder);
 
 		/* #####################################
 		                CAVE BIOMES
 		   ##################################### */
 		propertyOrder = new ArrayList<>();
+		category = "2 : cave biomes";
 
-		config.setCategoryComment("2 : cave biomes", "Configurations for the Cave Biomes module of WTFExpedition.");
+		config.setCategoryComment(category, "Configurations for the Cave Biomes module of WTFExpedition.");
 
-		property = config.get("2 : cave biomes", "Allow generation of custom mob based dungeons", true);
+		property = config.get(category, "Allow generation of custom mob based dungeons", true);
 		enableDungeons = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("2 : cave biomes", "Allow generation of cave subtypes", true);
+		property = config.get(category, "Allow generation of cave subtypes", true);
 		enableSubtypes = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("2 : cave biomes", "Percent generation chance of cave subtypes and dungeons", 50);
+		property = config.get(category, "Percent generation chance of cave subtypes and dungeons", 50);
 		subtypeChance = property.getDouble() / 100;
 		propertyOrder.add(property.getName());
 
-		property = config.get("2 : cave biomes", "Allow generation of puddles in wet cave biomes", true);
+		property = config.get(category, "Allow generation of puddles in wet cave biomes", true);
 		enablePuddles = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("2 : cave biomes", "Replace sandstone during world gen. This prevents stalactites forming in pyramid ruins", true);
+		property = config.get(category, "Replace sandstone during world gen. This prevents stalactites forming in pyramid ruins", true);
 		replaceSandstone = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("2 : cave biomes", "Update sandstone after replacement. Required only if you've changed the texture of naturalised sandstone", true);
+		property = config.get(category, "Update sandstone after replacement. Required only if you've changed the texture of naturalised sandstone", true);
 		updateSandstone = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		config.setCategoryPropertyOrder("2 : cave biomes", propertyOrder);
+		config.setCategoryPropertyOrder(category, propertyOrder);
 
 		/* #####################################
 		               TWEAKS: MISC
 		   ##################################### */
 		propertyOrder = new ArrayList<>();
+		category = "3a : tweaks";
 
-		config.setCategoryComment("3a : tweaks", "Configurations for the Tweaks module of WTFExpedition.");
+		config.setCategoryComment(category, "Configurations for the Tweaks module of WTFExpedition.");
 
-		property = config.get("3a : tweaks", "Modify crop growth rates and harvest according to biome type", true);
+		property = config.get(category, "Modify crop growth rates and harvest according to biome type", true);
 		modifyCropGrowth = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3a : tweaks", "Growth rate percent modifier for crops", 10);
+		property = config.get(category, "Growth rate percent modifier for crops", 10);
 		cropGrowthPercentModifier = property.getDouble() / 100;
 		propertyOrder.add(property.getName());
 
-		property = config.get("3a : tweaks", "Prevent infinite water source blocks outside biomes with the WET type", false);
+		property = config.get(category, "Prevent infinite water source blocks outside biomes with the WET type", false);
 		waterSourceControl = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		config.setCategoryPropertyOrder("3a : tweaks", propertyOrder);
+		config.setCategoryPropertyOrder(category, propertyOrder);
 
 		/* #####################################
 		              TWEAKS: MINING
 		   ##################################### */
 		propertyOrder = new ArrayList<>();
+		category = "3b : tweaks - mining";
 
-		property = config.get("3b : tweaks - mining", "Stone fractures upon mining. Individual stones can be disabled in the block registry", true);
+		property = config.get(category, "Stone fractures upon mining. Individual stones can be disabled in the block registry", true);
 		miningStoneFractures = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3b : tweaks - mining", "Ores fracture adjacent stone upon mining. Individual blocks can be removed from the config list", true);
+		property = config.get(category, "Ores fracture adjacent stone upon mining. Individual blocks can be removed from the config list", true);
 		miningOreFractures = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3b : tweaks - mining", "Use simplified fracturing (always fractures all 6 adjacent blocks)", false);
+		property = config.get(category, "Use simplified fracturing (always fractures all 6 adjacent blocks)", false);
 		simpleFracturing = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3b : tweaks - mining", "Enable mining speed modification. Values are set in the block registry", true);
+		property = config.get(category, "Enable mining speed modification. Values are set in the block registry", true);
 		miningSpeedModificationEnabled = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3b : tweaks - mining", "Modify hammer behaviour", true);
+		property = config.get(category, "Modify hammer behaviour", true);
 		modifyHammerBehaviour = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3b : tweaks - mining", "Blocks that fracture adjacent stone when mined", new String[] {"minecraft:coal_ore", "minecraft:iron_ore", "minecraft:gold_ore", "minecraft:lapis_ore", "minecraft:diamond_ore", "minecraft:redstone_ore", "minecraft:lit_redstone_ore", "minecraft:emerald_ore"});
+		property = config.get(category, "Blocks that fracture adjacent stone when mined", new String[] {"minecraft:coal_ore", "minecraft:iron_ore", "minecraft:gold_ore", "minecraft:lapis_ore", "minecraft:diamond_ore", "minecraft:redstone_ore", "minecraft:lit_redstone_ore", "minecraft:emerald_ore"});
         BlockSets.adjacentFracturingBlocks.addAll(Arrays.asList(property.getStringList()));
 		propertyOrder.add(property.getName());
 
-		config.setCategoryPropertyOrder("3b : tweaks - mining", propertyOrder);
+		config.setCategoryPropertyOrder(category, propertyOrder);
 
 		/* #####################################
 		            TWEAKS: EXPLOSIVES
 		   ##################################### */
 		propertyOrder = new ArrayList<>();
+		category = "3c : tweaks - explosives";
 
-		property = config.get("3c : tweaks - explosives", "Override explosions with Expedition's custom explosions. All other explosion-based values require custom explosions to be turned on", true);
+		property = config.get(category, "Override explosions with Expedition's custom explosions. All other explosion-based values require custom explosions to be turned on", true);
 		customExplosions = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3c : tweaks - explosives", "Explosions fracture stone", true);
+		property = config.get(category, "Explosions fracture stone", true);
 		explosionsFracture = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3c : tweaks - explosives", "Explosion level above which blocks atomize, and below which they drop", 5);
+		property = config.get(category, "Explosion level above which blocks atomize, and below which they drop", 5);
 		atomizingExplosionLevel = property.getDouble();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3c : tweaks - explosives", "Explosion level above which blocks drop, and below which they fracture (if fracturing on- if off nothing happens below)", 1);
+		property = config.get(category, "Explosion level above which blocks drop, and below which they fracture (if fracturing on- if off nothing happens below)", 1);
 		droppingExplosionLevel = property.getDouble();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3c : tweaks - explosives", "Explosion damage percentage modifier", 100);
+		property = config.get(category, "Explosion damage percentage modifier", 100);
 		explosionDamageModifier = property.getDouble() / 100;
 		propertyOrder.add(property.getName());
 
-		property = config.get("3c : tweaks - explosives", "Explosion force percentage modifier", 100);
+		property = config.get(category, "Explosion force percentage modifier", 100);
 		explosionForceModifier = property.getDouble() / 100;
 		propertyOrder.add(property.getName());
 
-		property = config.get("3c : tweaks - explosives", "Creeper explosion upward modifier. Increase to have creeper explosions explode more upwards", 1.5);
+		property = config.get(category, "Creeper explosion upward modifier. Increase to have creeper explosions explode more upwards", 1.5);
 		creeperUpwardModifier = property.getDouble() * 100;
 		propertyOrder.add(property.getName());
 
-		config.setCategoryPropertyOrder("3c : tweaks - explosives", propertyOrder);
+		config.setCategoryPropertyOrder(category, propertyOrder);
 
 		/* #####################################
 		              TWEAKS: GRAVITY
 		   ##################################### */
 		propertyOrder = new ArrayList<>();
+		category = "3d : tweaks - gravity";
 
-		property = config.get("3d : tweaks - gravity", "Enable gravity for additional blocks", true);
+		property = config.get(category, "Enable gravity for additional blocks", true);
 		additionalBlockGravity = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3d : tweaks - gravity", "Enable damage from falling blocks", true);
+		property = config.get(category, "Enable damage from falling blocks", true);
 		fallingBlocksDamage = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3d : tweaks - gravity", "Nerdpole prevention: Prevent indefinite stacking of non-stable blocks, causing them to slide off", true);
+		property = config.get(category, "Nerdpole prevention: Prevent indefinite stacking of non-stable blocks, causing them to slide off", true);
 		antiNerdPole = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		config.setCategoryPropertyOrder("3d : tweaks - gravity", propertyOrder);
+		config.setCategoryPropertyOrder(category, propertyOrder);
 
 		/* #####################################
 		        TWEAKS: LOOT AND CRAFTING
 		   ##################################### */
 		propertyOrder = new ArrayList<>();
+		category = "3d : tweaks - loot & crafting";
 
-		property = config.get("3d : tweaks - loot & crafting", "Average number of minutes between chickens dropping feathers", 30);
+		property = config.get(category, "Average number of minutes between chickens dropping feathers", 30);
 		featherDropRate = property.getInt() * 20 * 60;
 		propertyOrder.add(property.getName());
 
-		property = config.get("3d : tweaks - loot & crafting", "Percentage of leaf blocks that drop extra sticks when broken", 50);
+		property = config.get(category, "Percentage of leaf blocks that drop extra sticks when broken", 50);
 		stickDropPercentage = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3d : tweaks - loot & crafting", "When not killed by a player, mobs only drop items this percentage of the time", 25);
+		property = config.get(category, "When not killed by a player, mobs only drop items this percentage of the time", 25);
 		playerlessMobDropPercentage = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3d : tweaks - loot & crafting", "Enable Crafting Recipe Table", true);
+		property = config.get(category, "Enable Crafting Recipe Table", true);
 		wcicTableEnabled = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3d : tweaks - loot & crafting", "Enable home scrolls", true);
+		property = config.get(category, "Enable home scrolls", true);
 		homeScrollsEnabled = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3d : tweaks - loot & crafting", "Enable Netherrack --> Sulfur recipe", true);
+		property = config.get(category, "Enable Netherrack --> Sulfur recipe", true);
 		sulfurRecipeEnabled = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3d : tweaks - loot & crafting", "Remove recipes for vanilla tools (Requires Tinkers Construct to be installed)", false);
+		property = config.get(category, "Remove recipes for vanilla tools (Requires Tinkers Construct to be installed)", false);
 		removeVanillaTools = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		config.setCategoryPropertyOrder("3d : tweaks - loot & crafting", propertyOrder);
+		config.setCategoryPropertyOrder(category, propertyOrder);
 		
 		/* #####################################
 		              TWEAKS: TORCHES
 		   ##################################### */
 		propertyOrder = new ArrayList<>();
+		category = "3e : tweaks - torches";
 
-		property = config.get("3e : tweaks - torches", "Replace vanilla torches with finite torches", false);
+		property = config.get(category, "Replace vanilla torches with finite torches", false);
 		replaceTorches = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3e : tweaks - torches", "Chance in 100 per block tick (avg every 45 seconds) that an unattended torch will go out", 20);
+		property = config.get(category, "Chance in 100 per block tick (avg every 45 seconds) that an unattended torch will go out", 20);
 		torchLifespan = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3e : tweaks - torches", "Number of blocks a player must be within to prevent a torch from going out", 20);
+		property = config.get(category, "Number of blocks a player must be within to prevent a torch from going out", 20);
 		torchRange = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get("3e : tweaks - torches", "Torches can be relit by hand (true), or require flint and steel (false)", true);
+		property = config.get(category, "Torches can be relit by hand (true), or require flint and steel (false)", true);
 		relightTorchByHand = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		config.setCategoryPropertyOrder("3e : tweaks - torches", propertyOrder);
+		config.setCategoryPropertyOrder(category, propertyOrder);
 		
 		/* #####################################
 		                   ORES
 		   ##################################### */
 		propertyOrder = new ArrayList<>();
+		category = "4 : ores";
 
-		config.setCategoryComment("4 : ores", "Configurations for the Ores module of WTFExpedition.");
+		config.setCategoryComment(category, "Configurations for the Ores module of WTFExpedition.");
 
-		property = config.get("4 : ores", "Use simplex noise instead of random for ore generation", true);
+		property = config.get(category, "Use simplex noise instead of random for ore generation", true);
 		simplexOreGen = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		config.setCategoryPropertyOrder("4 : ores", propertyOrder);
+		config.setCategoryPropertyOrder(category, propertyOrder);
 		
 		/* #####################################
 		              OVERWORLD: MISC
 		   ##################################### */
 		propertyOrder = new ArrayList<>();
+		category = "5a : overworld";
 
-		config.setCategoryComment("5a : overworld", "Configurations for the Overworld module of WTFExpedition.");
+		config.setCategoryComment(category, "Configurations for the Overworld module of WTFExpedition.");
 
-		property = config.get("5a : overworld", "Enable all surface modification", true);
+		property = config.get(category, "Enable all surface modification", true);
 		enableSurfaceModification = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("5a : overworld", "Percentage of chunks which will have mossy surfaces in forests", 50);
+		property = config.get(category, "Percentage of chunks which will have mossy surfaces in forests", 50);
 		forestMossyChunkPercent = property.getDouble() / 100;
 		propertyOrder.add(property.getName());
 
-		property = config.get("5a : overworld", "Percentage of mossy blocks in mossy forest chunks", 50);
+		property = config.get(category, "Percentage of mossy blocks in mossy forest chunks", 50);
 		forestMossyBlockPercent = property.getDouble() / 100;
 		propertyOrder.add(property.getName());
 
-		property = config.get("5a : overworld", "Percentage of chunks which will have fractured surfaces in mountains", 50);
+		property = config.get(category, "Percentage of chunks which will have fractured surfaces in mountains", 50);
 		mountainFracturedChunkPercent = property.getDouble() / 100;
 		propertyOrder.add(property.getName());
 
-		property = config.get("5a : overworld", "Percentage of fractured blocks in fractured mountain chunks", 20);
+		property = config.get(category, "Percentage of fractured blocks in fractured mountain chunks", 20);
 		mountainFracturedBlockPercent = property.getDouble() / 100;
 		propertyOrder.add(property.getName());
 
-		property = config.get("5a : overworld", "Percentage of chunks which will have fractured surfaces in rivers", 50);
+		property = config.get(category, "Percentage of chunks which will have fractured surfaces in rivers", 50);
 		riverFracturedChunkPercent = property.getDouble() / 100;
 		propertyOrder.add(property.getName());
 
-		property = config.get("5a : overworld", "Percentage of fractured blocks in fractured river chunks", 20);
+		property = config.get(category, "Percentage of fractured blocks in fractured river chunks", 20);
 		riverFracturedBlockPercent = property.getDouble() / 100;
 		propertyOrder.add(property.getName());
 
-		config.setCategoryPropertyOrder("5a : overworld", propertyOrder);
+		config.setCategoryPropertyOrder(category, propertyOrder);
 		
 		/* #####################################
 		   OVERWORLD: SUB-BIOMES - AUTUMN FOREST
 		   ##################################### */
 		propertyOrder = new ArrayList<>();
+		category = "5b : overworld - sub biomes - autumn forest";
 
-		property = config.get("5b : overworld - sub biomes - autumn forest", "Autumn Forest ID, set to -1 to disable", 40);
+		property = config.get(category, "Autumn Forest ID, set to -1 to disable", 40);
 		autumnForestID = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get("5b : overworld - sub biomes - autumn forest", "Autumn Hills ID, set to -1 to disable", 41);
+		property = config.get(category, "Autumn Hills ID, set to -1 to disable", 41);
 		autumnHillsID = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get("5b : overworld - sub biomes - autumn forest", "Percentage frequency of Autumn Forest sub biomes within their parent biomes", 15);
+		property = config.get(category, "Percentage frequency of Autumn Forest sub biomes within their parent biomes", 15);
 		autumnForestPercentageFrequency = property.getInt();
 		propertyOrder.add(property.getName());
 
-		property = config.get("5b : overworld - sub biomes - autumn forest", "Autumn forest size - setting smaller will give isolated patches, larger gives large swathes", 30);
+		property = config.get(category, "Autumn forest size - setting smaller will give isolated patches, larger gives large swathes", 30);
 		autumnForestSize = property.getInt() * 32;
 		propertyOrder.add(property.getName());
 
-		property = config.get("5b : overworld - sub biomes - autumn forest", "Autumn Color Scaling- setting smaller will give faster changes in colour", 10);
+		property = config.get(category, "Autumn Color Scaling- setting smaller will give faster changes in colour", 10);
 		autumnForestColorScale = property.getInt();
 		propertyOrder.add(property.getName());
 
-		config.setCategoryPropertyOrder("5b : overworld - sub biomes - autumn forest", propertyOrder);
+		config.setCategoryPropertyOrder(category, propertyOrder);
 
 		/* #####################################
 		           OVERWORLD: BIG TREES
 		   ##################################### */
 		propertyOrder = new ArrayList<>();
+		category = "5c : overworld - big trees";
 
-		property = config.get("5c : overworld - big trees", "Enable custom tree generation (required for the rest of the tree configs to have effect)", true);
+		property = config.get(category, "Enable custom tree generation (required for the rest of the tree configs to have effect)", true);
 		bigTreesEnabled = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		property = config.get("5c : overworld - big trees", "Percentage of trees generated that this mod will attempt to replace with custom big trees", 50);
+		property = config.get(category, "Percentage of trees generated that this mod will attempt to replace with custom big trees", 50);
 		bigTreeReplacementPercentage = property.getDouble() / 100;
 		propertyOrder.add(property.getName());
 
-		property = config.get("5c : overworld - big trees", "Scale for the simplex tree replacement - smaller values allow more mixing of tree types, larger values separate them out more", 3.0D);
+		property = config.get(category, "Scale for the simplex tree replacement - smaller values allow more mixing of tree types, larger values separate them out more", 3.0D);
 		simplexBigTreeScale = property.getDouble();
 		propertyOrder.add(property.getName());
 
-		config.setCategoryPropertyOrder("5c : overworld - big trees", propertyOrder);
+		config.setCategoryPropertyOrder(category, propertyOrder);
 		
 		/* #####################################
 		               MISCELLANEOUS
 		   ##################################### */
 		propertyOrder = new ArrayList<>();
+		category = "6 : miscellaneous";
 
-		config.setCategoryComment("6 : miscellaneous", "Miscellaneous settings. These usually will not interfere with gameplay.");
+		config.setCategoryComment(category, "Miscellaneous settings. These usually will not interfere with gameplay.");
 
-		property = config.get("6 : miscellaneous", "Load default JSON data and guide into the configuration folder if they do not exist", true);
+		property = config.get(category, "Load default JSON data and guide into the configuration folder if they do not exist", true);
 		loadDefaultFiles = property.getBoolean();
 		propertyOrder.add(property.getName());
 
-		config.setCategoryPropertyOrder("6 : miscellaneous", propertyOrder);
+		config.setCategoryPropertyOrder(category, propertyOrder);
 		
-		if (config.hasChanged()) {
+		if (config.hasChanged())
 			config.save();
-		}
 	}
 }

@@ -24,6 +24,7 @@ public class ExpVec extends Vec {
 	private final CustomExplosion explosion;
 	int waterHash = Material.WATER.hashCode();
 	int lavaHash = Material.LAVA.hashCode();
+	IBlockState air = Blocks.AIR.getDefaultState();
 
 	public ExpVec(World world, BlockPos pos, double x, double y, double z, double vecStr, CustomExplosion explosion) {
 		super(pos, x, y, z);
@@ -34,8 +35,6 @@ public class ExpVec extends Vec {
 		this.random = new Random();
 	}
 
-	IBlockState air = Blocks.AIR.getDefaultState();
-
 	public boolean increment() {
 		if (!hasNext())
 			return false;
@@ -44,7 +43,7 @@ public class ExpVec extends Vec {
 
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
-		float resistance = block.getExplosionResistance(explosion.sourceEntity);
+		float resistance = block.getExplosionResistance(world, pos, explosion.sourceEntity, explosion);
 		int hash = state.getMaterial().hashCode();
 
 		if (hash == waterHash || hash == lavaHash)

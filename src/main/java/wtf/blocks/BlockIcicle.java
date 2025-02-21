@@ -25,13 +25,28 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import wtf.blocks.enums.IcicleType;
 import wtf.init.BlockSets;
 
-
-public class BlockIcicle extends AbstractBlockDerivative{
+public class BlockIcicle extends AbstractBlockDerivative {
 
 	public static final IProperty<IcicleType> TYPE = PropertyEnum.create("type", IcicleType.class);
 	
 	public BlockIcicle() {
 		super(Blocks.ICE.getDefaultState(), Blocks.ICE.getDefaultState());
+	}
+
+	@Override
+	public int quantityDropped(Random random) {
+		return 0;
+	}
+
+	@Override
+	public int damageDropped(IBlockState state) {
+		return getMetaFromState(state);
+	}
+
+	@Override
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		if(!canBlockStay(world, pos, state))
+			world.destroyBlock(pos, true);
 	}
 
 	@Override
@@ -41,16 +56,8 @@ public class BlockIcicle extends AbstractBlockDerivative{
 
 	@Override
 	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-    	if(!canBlockStay(worldIn, pos, state)){
+    	if(!canBlockStay(worldIn, pos, state))
 			worldIn.destroyBlock(pos, true);
-		}
-    }
-
-    @Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-    	if(!canBlockStay(world, pos, state)) {
-    		world.destroyBlock(pos, true);
-		}
     }
 	
 	public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
@@ -64,13 +71,42 @@ public class BlockIcicle extends AbstractBlockDerivative{
 				case icicle_small: return (world.getBlockState(pos.up()).isBlockNormalCube());
 				case icicle_tip: return (world.getBlockState(pos.up()) == this.getDefaultState().withProperty(TYPE, IcicleType.icicle_base));
 				default: return false;
-		}
+			}
+
 		return false;
+	}
+
+	@Override
+	public boolean isFullCube(IBlockState state) {
+		return false;
+	}
+
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
+
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return state.getValue(TYPE).boundingBox;
+	}
+
+	@Override
+	@Deprecated
+	@Nullable
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+		return null;
 	}
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, TYPE);
+	}
+
+	@Override
+	public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> items) {
+		for (int loop = 0; loop < IcicleType.values().length; loop++)
+			items.add(new ItemStack(this, 1, loop));
 	}
 
 	@Override
@@ -80,56 +116,16 @@ public class BlockIcicle extends AbstractBlockDerivative{
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		IcicleType type = state.getValue(TYPE);
-		return type.getID();
-	}
-
-	@Override
-	public int damageDropped(IBlockState state) {
-		return getMetaFromState(state);
-	}
-
-	@Override
-	public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> items) {
-		for (int loop = 0; loop < IcicleType.values().length; loop++) {
-			items.add(new ItemStack(this, 1, loop));
-		}
-	}
-
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
-	}
-
-	@Override
-	public boolean isFullCube(IBlockState state) {
-		return false;
-	}
-    
-	@Override
-	public int quantityDropped(Random random) {
-		return 0;
-	}
-
-	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return state.getValue(TYPE).boundingBox;
-	}
-    
-	@Override
-	@Deprecated
-    @Nullable
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-        return null;
-    }
-
-	public IBlockState getBlockState(IcicleType type) {
-		return this.getDefaultState().withProperty(TYPE, type);
+		return state.getValue(TYPE).getID();
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public BlockRenderLayer getBlockLayer() {
 		return BlockRenderLayer.TRANSLUCENT;
+	}
+
+	public IBlockState getBlockState(IcicleType type) {
+		return this.getDefaultState().withProperty(TYPE, type);
 	}
 }

@@ -9,9 +9,8 @@ public class ListenerGravity {
 
 	@SubscribeEvent
 	public void PlayerPlaceBlock(PlaceEvent event) {
-		if (!event.getPlayer().capabilities.isCreativeMode) {
+		if (!event.getPlayer().capabilities.isCreativeMode)
 			GravityMethods.checkPos(event.getWorld(), event.getPos());
-		}
 	}
 
 	@SubscribeEvent

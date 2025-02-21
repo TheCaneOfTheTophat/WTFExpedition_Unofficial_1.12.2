@@ -15,11 +15,10 @@ public class ListenerOreFracture {
 
 	@SubscribeEvent
 	public void rightClick(RightClickBlock event) {
-		if (!event.getEntityPlayer().capabilities.isCreativeMode && event.getItemStack() != null) {
+		if (!event.getEntityPlayer().capabilities.isCreativeMode) {
 			Block block = Block.getBlockFromItem(event.getItemStack().getItem());
-			if (BlockSets.adjacentFracturingBlocks.contains(block.getRegistryName().toString())) {
+			if (BlockSets.adjacentFracturingBlocks.contains(block.getRegistryName().toString()))
 				event.setCanceled(true);
-			}
 		}
 	}
 
@@ -34,7 +33,7 @@ public class ListenerOreFracture {
 				if (WTFExpeditionConfig.simpleFracturing)
 					EntityFracture.fractureAdjacentSimple(event.getWorld(), event.getPos());
 				else {
-					int toolLevel = tool == null ? 0 : tool.getItem().getHarvestLevel(tool, "pickaxe", event.getPlayer(), event.getState());
+					int toolLevel = tool.getItem().getHarvestLevel(tool, "pickaxe", event.getPlayer(), event.getState());
 					EntityFracture.fractureOre(event.getWorld(), event.getPos(), toolLevel);
 				}
 			}

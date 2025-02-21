@@ -5,34 +5,34 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OreEntry {
-    private String blockId = "";
-    private String name = "";
+    private final String blockId = "";
+    private final String name = "";
 
-    private String[] stoneList = {};
+    private final String[] stoneList = {};
 
-    private int minAmountPerChunk = 0;
-    private int maxAmountPerChunk = 0;
+    private final int minAmountPerChunk = 0;
+    private final int maxAmountPerChunk = 0;
 
-    private int surfaceHeightMinPercentage = 0;
-    private int surfaceHeightMaxPercentage = 100;
+    private final int surfaceHeightMinPercentage = 0;
+    private final int surfaceHeightMaxPercentage = 100;
 
-    private int[] dimensionList = {};
-    private boolean dimensionListWhitelist = true;
+    private final int[] dimensionList = {};
+    private final boolean dimensionListWhitelist = true;
 
-    private boolean useDenseBlock = false;
+    private final boolean useDenseBlock = false;
 
-    private String overlayPath = "";
+    private final String overlayPath = "";
 
-    private int veinPercentDensity = 100;
+    private final int veinPercentDensity = 100;
 
-    private String[] biomeTypeList = {};
-    private boolean biomeTypeListWhitelist = false;
+    private final String[] biomeTypeList = {};
+    private final boolean biomeTypeListWhitelist = false;
 
-    private Map<String, Integer> percentGenerationPerBiomeType = new HashMap<>();
+    private final Map<String, Integer> percentGenerationPerBiomeType = new HashMap<>();
 
-    private GenerationSettings generation_settings = new GenerationSettings();
+    private final GenerationSettings generation_settings = new GenerationSettings();
 
-    public Map<String, Integer> getPercentGenerationPerBiomeType() {
+    public final Map<String, Integer> getPercentGenerationPerBiomeType() {
         return percentGenerationPerBiomeType;
     }
 
@@ -164,41 +164,41 @@ public class OreEntry {
     }
 
     private static class GenerationSettings {
-        private GenerationTypes generation_types = new GenerationTypes();
-        private VeinFields vein_generation = new VeinFields();
-        private CloudFields cloud_generation = new CloudFields();
-        private CaveFields cave_generation = new CaveFields();
-        private VanillaFields vanilla_generation = new VanillaFields();
+        private final GenerationTypes generation_types = new GenerationTypes();
+        private final VeinFields vein_generation = new VeinFields();
+        private final CloudFields cloud_generation = new CloudFields();
+        private final CaveFields cave_generation = new CaveFields();
+        private final VanillaFields vanilla_generation = new VanillaFields();
     }
 
     private static class GenerationTypes {
-        private boolean vanilla = false;
-        private boolean vein = false;
-        private boolean cloud = false;
-        private boolean cluster = false;
-        private boolean single = false;
-        private boolean cave = false;
-        private boolean underwater = false;
+        private final boolean vanilla = false;
+        private final boolean vein = false;
+        private final boolean cloud = false;
+        private final boolean cluster = false;
+        private final boolean single = false;
+        private final boolean cave = false;
+        private final boolean underwater = false;
     }
 
     private static class VeinFields {
-        private double veinPitchAverage = 0;
-        private int veinLength = 0;
-        private int veinWidth = 0;
-        private int veinVerticalThickness = 0;
+        private final double veinPitchAverage = 0;
+        private final int veinLength = 0;
+        private final int veinWidth = 0;
+        private final int veinVerticalThickness = 0;
     }
 
     private static class CloudFields {
-        private int cloudDiameter = 0;
+        private final int cloudDiameter = 0;
     }
 
     private static class CaveFields {
-        private boolean ceiling = false;
-        private boolean wall = false;
-        private boolean floor = false;
+        private final boolean ceiling = false;
+        private final boolean wall = false;
+        private final boolean floor = false;
     }
 
     private static class VanillaFields {
-        private int blocksPerCluster = 0;
+        private final int blocksPerCluster = 0;
     }
 }

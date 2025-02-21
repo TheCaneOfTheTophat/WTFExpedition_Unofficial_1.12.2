@@ -12,9 +12,8 @@ public class ListenerChickenDrops {
 	public void onLivingUpdate(LivingUpdateEvent event) {
 		if (!event.getEntity().world.isRemote && (event.getEntity() instanceof EntityChicken)) {
 			EntityChicken chicken = (EntityChicken) event.getEntity();
-			if(!chicken.isChild() && event.getEntity().getEntityWorld().rand.nextInt(WTFExpeditionConfig.featherDropRate) == 1) {
+			if(!chicken.isChild() && event.getEntity().getEntityWorld().rand.nextInt(WTFExpeditionConfig.featherDropRate) == 1)
 				chicken.dropItem(Items.FEATHER, 1);
-			}
 		}
 	}
 }

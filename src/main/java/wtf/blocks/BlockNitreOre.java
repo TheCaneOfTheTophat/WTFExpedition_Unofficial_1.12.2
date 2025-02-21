@@ -11,6 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import wtf.init.WTFContent;
 
 public class BlockNitreOre extends BlockOre {
+
 	public BlockNitreOre() {
 		super();
 		this.setHardness(3.0F);

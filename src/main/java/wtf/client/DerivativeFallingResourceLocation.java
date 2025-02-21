@@ -4,6 +4,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import wtf.blocks.AbstractBlockDerivativeFalling;
 
 public class DerivativeFallingResourceLocation extends ModelResourceLocation {
+
     public final AbstractBlockDerivativeFalling block;
     public final int meta;
 

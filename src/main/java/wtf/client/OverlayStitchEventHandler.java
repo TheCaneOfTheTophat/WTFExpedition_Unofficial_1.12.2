@@ -9,6 +9,7 @@ import wtf.config.OreEntry;
 import wtf.init.JSONLoader;
 
 public class OverlayStitchEventHandler {
+
     @SubscribeEvent
     public void addOverlayTexturesToAtlas(TextureStitchEvent.Pre event) {
         ImmutableList<String> decoOverlays = ImmutableList.of("moss_overlay", "soul_overlay", "cracked_overlay", "lava_overlay");

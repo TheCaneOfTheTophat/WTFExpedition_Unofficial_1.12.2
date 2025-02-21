@@ -24,6 +24,7 @@ import java.util.function.Function;
 
 @SideOnly(Side.CLIENT)
 public class ModelDecoration implements IModel {
+
     private final ResourceLocation cubeTexture;
     private final ResourceLocation overlayTexture;
     private final String overlayName;
@@ -68,6 +69,7 @@ public class ModelDecoration implements IModel {
        =========================================== */
     @SideOnly(Side.CLIENT)
     public static class Loader implements ICustomModelLoader {
+
         @Override
         public boolean accepts(ResourceLocation modelLocation) {
             return modelLocation.getResourceDomain().equals(WTFExpedition.modID) && modelLocation.getResourcePath().contains("decoration") && modelLocation.getResourcePath().contains("hardcoded");

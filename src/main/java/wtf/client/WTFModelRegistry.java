@@ -29,9 +29,8 @@ public class WTFModelRegistry {
             // If the current item does not have a corresponding key in the meta map, 0. If there is, get the meta from the meta map
             if(meta == null)
                 ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName().toString(), "inventory"));
-            else for (int i = 0; i < meta + 1; i++) {
+            else for (int i = 0; i < meta + 1; i++)
                 ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName().toString(), "inventory" + i));
-            }
         }
 
         // Get all blocks
@@ -48,9 +47,8 @@ public class WTFModelRegistry {
             // Set state mapper for speleothems
             else if(block instanceof BlockSpeleothem) {
                 ModelLoader.setCustomStateMapper(block, WTFStateMappers.SPELEOTHEM_STATE_MAPPER);
-                for (int i = 0; i <= 6; i++) {
+                for (int i = 0; i <= 6; i++)
                     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), i, new DerivativeResourceLocation((BlockSpeleothem) block, "type", i));
-                }
             }
 
             // Set state mapper for decor

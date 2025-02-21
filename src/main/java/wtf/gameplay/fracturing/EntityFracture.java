@@ -59,17 +59,14 @@ public class EntityFracture extends Entity {
 	}
 	
 	public void crackOre(World world, BlockPos pos, int toolLevel) {
-		//tool level determines how many cracks happen
-		//ore level determines how strong those cracks are
+		// tool level determines how many cracks happen
+		// ore level determines how strong those cracks are
+		// currently only cracking in a single direction
 		
-		//currently only cracking in a single direction
-		
-		int blockLevel = world.getBlockState(pos).getBlock().getHarvestLevel(world.getBlockState(pos)); 
-		
-		EntityFracture crack = new EntityFracture(world, pos);
-				
+		int blockLevel = world.getBlockState(pos).getBlock().getHarvestLevel(world.getBlockState(pos));
 		int numLoop = (toolLevel + 1) * 4;
 		int maxDist = 1 + blockLevel;
+		EntityFracture crack = new EntityFracture(world, pos);
 		
 		for (int loop = 0; loop < numLoop; loop++) {
 			int blockToFrac = MathHelper.clamp(1+rand.nextInt(blockLevel+1), 1, maxDist);
@@ -80,6 +77,7 @@ public class EntityFracture extends Entity {
 				for (int vecLoop = 0; vecLoop < blockToFrac; vecLoop++)
 					cracking.add(new FracVec(pos, 1, maxDist, rand));
 		}
+
 		world.spawnEntity(crack);
 	}
 	
@@ -94,6 +92,7 @@ public class EntityFracture extends Entity {
 			int maxDist = 1 + toolLevel;
 			cracking.add(new FracVec(pos, blockToFrac, maxDist, posRandom));
 		}
+
 		world.spawnEntity(crack);
 	}
 

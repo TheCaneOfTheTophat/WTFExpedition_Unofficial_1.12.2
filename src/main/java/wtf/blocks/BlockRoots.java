@@ -26,7 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockRoots extends AbstractBlockDerivative{
 
-    public static final PropertyEnum<BlockPlanks.EnumType> VARIANT = PropertyEnum.<BlockPlanks.EnumType>create("variant", BlockPlanks.EnumType.class);
+    public static final PropertyEnum<BlockPlanks.EnumType> VARIANT = PropertyEnum.create("variant", BlockPlanks.EnumType.class);
 	
 	public BlockRoots() {
 		super(Blocks.LOG.getDefaultState(), Blocks.LOG.getDefaultState());
@@ -60,6 +60,7 @@ public class BlockRoots extends AbstractBlockDerivative{
 			IBlockState stateUp = worldIn.getBlockState(pos.up());
 			return stateUp.isBlockNormalCube();
 		}
+
 		return false;
 	}
 
@@ -75,30 +76,28 @@ public class BlockRoots extends AbstractBlockDerivative{
 	}
 
 	@Override
+	public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> items) {
+		for (int loop = 0; loop < BlockPlanks.EnumType.values().length; loop++)
+			items.add(new ItemStack(this, 1, loop));
+	}
+
+	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		return getDefaultState().withProperty(VARIANT, BlockPlanks.EnumType.values()[meta]);
 	}
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-        BlockPlanks.EnumType type = state.getValue(VARIANT);
-		return type.getMetadata();
-	}
-
-	@Override
-	public void getSubBlocks(CreativeTabs tabs, NonNullList<ItemStack> items) {
-		for (int loop = 0; loop < BlockPlanks.EnumType.values().length; loop++){
-			items.add(new ItemStack(this, 1, loop));
-		}
-	}
-
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
+		return state.getValue(VARIANT).getMetadata();
 	}
 
 	@Override
 	public boolean isFullCube(IBlockState state) {
+		return false;
+	}
+
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
     

@@ -28,18 +28,8 @@ public class BlockDenseOreFalling extends AbstractBlockDerivativeFalling {
     }
 
     @Override
-    public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
-        return layer == BlockRenderLayer.CUTOUT || layer == BlockRenderLayer.TRANSLUCENT;
-    }
-
-    @Override
-    public IBlockState getStateFromMeta(int meta) {
-        return this.blockState.getBaseState().withProperty(DENSITY, meta);
-    }
-
-    @Override
-    public int getMetaFromState(IBlockState state) {
-        return state.getValue(DENSITY);
+    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+        return this.parentForeground.getBlock().canSilkHarvest(world, pos, state, player);
     }
 
     @Override
@@ -49,9 +39,9 @@ public class BlockDenseOreFalling extends AbstractBlockDerivativeFalling {
         if(state.getValue(DENSITY) < 2 && !player.capabilities.isCreativeMode)
             state = state.withProperty(DENSITY, state.getValue(DENSITY)+1);
         else {
-            if (!player.capabilities.isCreativeMode) {
+            if (!player.capabilities.isCreativeMode)
                 this.parentBackground.getBlock().dropBlockAsItem(world, pos, this.parentBackground, 0);
-            }
+
             state = Blocks.AIR.getDefaultState();
         }
 
@@ -65,8 +55,13 @@ public class BlockDenseOreFalling extends AbstractBlockDerivativeFalling {
     }
 
     @Override
-    public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
-        return this.parentForeground.getBlock().canSilkHarvest(world, pos, state, player);
+    public IBlockState getStateFromMeta(int meta) {
+        return this.blockState.getBaseState().withProperty(DENSITY, meta);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(DENSITY);
     }
 
     @Override
@@ -74,5 +69,10 @@ public class BlockDenseOreFalling extends AbstractBlockDerivativeFalling {
         ItemStack backStack = new ItemStack(parentBackground.getBlock(), 1, parentBackground.getBlock().getMetaFromState(parentBackground));
         ItemStack foreStack = new ItemStack(parentForeground.getBlock(), 1, parentForeground.getBlock().getMetaFromState(parentForeground));
         return I18n.format(WTFExpedition.modID + ":prefix.dense.name") + " " + backStack.getDisplayName() + " " + foreStack.getDisplayName();
+    }
+
+    @Override
+    public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
+        return layer == BlockRenderLayer.CUTOUT || layer == BlockRenderLayer.TRANSLUCENT;
     }
 }
