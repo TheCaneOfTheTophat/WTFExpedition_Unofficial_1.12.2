@@ -6,15 +6,6 @@
     },
     "variants": {
         "normal": [{}],
-        "inventory0": [{
-			 "model" : "wtfexpedition:stalactite_small"
-        }],
-        "inventory1": [{
-			"model" : "wtfexpedition:stalactite_base"
-        }],
-        "inventory2": [{
-			"model" : "wtfexpedition:stalactite_tip"
-        }],
         "type" : {
         	"stalactite_small" 	: { "model": "wtfexpedition:stalactite_small" },
        		"stalactite_base" 	: { "model" : "wtfexpedition:stalactite_base" },

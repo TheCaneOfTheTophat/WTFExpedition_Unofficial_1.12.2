@@ -5,8 +5,8 @@ tile.wcic_table.name=Recipe Guide Crafting Table
 tile.wtfexpedition:nitre_ore.name=Nitre Ore
 tile.wtfexpedition:gold_ore_sand.name=Gold Nugget Ore
 
-tile.torch_on.name=Lit Torch
-tile.torch_off.name=Unlit Torch
+tile.wtfexpedition:lit_torch.name=Lit Torch
+tile.wtfexpedition:extinguished_torch.name=Extinguished Torch
 
 tile.wtfexpedition:icicle.0.name=Small Icicle
 tile.wtfexpedition:icicle.1.name=Icicle Base

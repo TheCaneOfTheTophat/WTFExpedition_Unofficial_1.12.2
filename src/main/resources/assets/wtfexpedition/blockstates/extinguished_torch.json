@@ -1,0 +1,15 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "torch": "wtfexpedition:blocks/extinguished_torch"
+    }
+  },
+  "variants": {
+    "facing=up": { "model": "torch" },
+    "facing=east": { "model": "torch_wall" },
+    "facing=south": { "model": "torch_wall", "y": 90 },
+    "facing=west": { "model": "torch_wall", "y": 180 },
+    "facing=north": { "model": "torch_wall", "y": 270 }
+  }
+}

@@ -24,7 +24,7 @@ import wtf.blocks.*;
 import wtf.blocks.enums.AnimatedDecoType;
 import wtf.blocks.enums.StaticDecoType;
 import wtf.blocks.redstone.BlockDenseRedstoneOre;
-import wtf.client.WTFModelRegistry;
+import wtf.blocks.BlockWTFTorch;
 import wtf.config.*;
 import wtf.blocks.BlockOreSand;
 import wtf.items.ItemBlockDerivative;
@@ -34,7 +34,7 @@ import wtf.items.ItemBlockState;
 
 @Mod.EventBusSubscriber
 @GameRegistry.ObjectHolder(WTFExpedition.modID)
-@SuppressWarnings({"unused", "deprecation", "ConstantConditions"})
+@SuppressWarnings({"unused", "ConstantConditions"})
 public class WTFContent {
 
 	public static HashMap<IBlockState, BlockSpeleothem> speleothemMap = new HashMap<>();
@@ -66,6 +66,9 @@ public class WTFContent {
 
 	public static final Block icicle = null;
 	public static final Block roots = null;
+
+	public static final Block lit_torch = null;
+	public static final Block extinguished_torch = null;
 	
 	public static final Block natural_sandstone = null;
 	public static final Block natural_red_sandstone = null;
@@ -106,17 +109,24 @@ public class WTFContent {
 		registerSimpleBlock(reg, new BlockPuddle().setCreativeTab(WTFExpedition.wtfTab), "puddle");
 		registerSimpleBlock(reg, new BlockIcePatch().setCreativeTab(WTFExpedition.wtfTab), "ice_patch");
 		registerSimpleBlock(reg, new BlockPatch(Blocks.HARDENED_CLAY.getDefaultState()), "terracotta_patch");
-		registerSimpleBlock(reg, new BlockStainedTerracottaPatch().setCreativeTab(WTFExpedition.wtfTab), "terracotta_patch_stained", 15);
+		registerSimpleBlock(reg, new BlockStainedTerracottaPatch().setCreativeTab(WTFExpedition.wtfTab), "terracotta_patch_stained");
 
-		registerSimpleBlock(reg, new BlockIcicle().setCreativeTab(WTFExpedition.wtfTab), "icicle", 2);
-		registerSimpleBlock(reg, new BlockRoots().setCreativeTab(WTFExpedition.wtfTab), "roots", 5);
+		registerSimpleBlock(reg, new BlockIcicle().setCreativeTab(WTFExpedition.wtfTab), "icicle");
+		registerSimpleBlock(reg, new BlockRoots().setCreativeTab(WTFExpedition.wtfTab), "roots");
+
+		BlockWTFTorch torchOff = new BlockWTFTorch(false);
+		BlockWTFTorch torchOn = new BlockWTFTorch(true);
+
+		torchOff.setToggleBlock(torchOn);
+		torchOn.setToggleBlock(torchOff);
+
+		registerBlockWithoutItem(reg, torchOn, "lit_torch");
+		registerSimpleBlock(reg, torchOff, "extinguished_torch");
 
 		// wcicTable = registerBlock(new WCICTable(), "wcic_table");
 		// GameRegistry.registerTileEntity(WCICTileEntity.class, "WCICTable");
 
 		// new NetherrackReplacer();
-
-		// BlockWTFTorch.torch_off = new BlockWTFTorch(false);
 
 		registerSimpleBlock(reg, new BlockNaturalSandstone(Blocks.SANDSTONE.getDefaultState()), "natural_sandstone");
 		registerSimpleBlock(reg, new BlockNaturalSandstone(Blocks.RED_SANDSTONE.getDefaultState()), "natural_red_sandstone");
@@ -284,7 +294,7 @@ public class WTFContent {
 			else if (block instanceof BlockDecoAnim)
 				registerItemBlockNoModel(reg, new ItemBlockDerivative((BlockDecoAnim) block));
 
-			else if (WTFModelRegistry.metaMap.get(block.getRegistryName()) != null)
+			else if (block instanceof BlockRoots || block instanceof BlockIcicle || block instanceof BlockStainedTerracottaPatch)
 				registerItemBlock(reg, new ItemBlockState(block));
 
 			else
@@ -309,11 +319,6 @@ public class WTFContent {
 		blocks.add(block);
 
 		registerBlockWithoutItem(registry, block, name);
-	}
-
-	public static <T extends Block> void registerSimpleBlock(IForgeRegistry<Block> registry, T block, String name, int meta) {
-		registerSimpleBlock(registry, block, name);
-		WTFModelRegistry.metaMap.put(block.getRegistryName(), meta);
 	}
 
 	public static <T extends Item> void registerItem(IForgeRegistry<Item> registry, T item, String name) {

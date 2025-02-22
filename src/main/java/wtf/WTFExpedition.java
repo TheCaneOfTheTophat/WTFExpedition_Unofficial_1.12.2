@@ -142,6 +142,11 @@ public class WTFExpedition {
 				MinecraftForge.EVENT_BUS.register(new ListenerEntityDrops());
 				WTFExpedition.wtfLog.info("Non-player killed mob loot modifier enabled!");
 			}
+			if (WTFExpeditionConfig.replaceTorches) {
+				MinecraftForge.EVENT_BUS.register(new ListenerReplaceTorch());
+				WTFExpedition.wtfLog.info("Finite torches enabled!");
+				// TODO Replace torches in worldgen
+			}
 
 			MinecraftForge.EVENT_BUS.register(new ListenerLoot());
 			MinecraftForge.EVENT_BUS.register(new ListenerDenseOreHarvest());

@@ -1,7 +1,6 @@
 package wtf.init;
 
 import com.google.gson.*;
-import io.netty.util.internal.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import wtf.WTFExpedition;
