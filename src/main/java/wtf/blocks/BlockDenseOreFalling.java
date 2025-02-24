@@ -1,6 +1,5 @@
 package wtf.blocks;
 
-
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -9,10 +8,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import wtf.WTFExpedition;
+
+import javax.annotation.Nullable;
 
 public class BlockDenseOreFalling extends AbstractBlockDerivativeFalling {
 
@@ -48,6 +52,23 @@ public class BlockDenseOreFalling extends AbstractBlockDerivativeFalling {
         player.addStat(StatList.getBlockStats(this.parentForeground.getBlock()));
         return world.setBlockState(pos, state, world.isRemote ? 11 : 3);
     }
+
+    @Override
+    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, @Nullable ItemStack stack) {
+        if(state.getValue(DENSITY) < 2) {
+            Vec3d vec3d = player.getPositionEyes(1.0F);
+            Vec3d vec3d1 = player.getLook(1.0F);
+            double blockReachDistance = player.getEntityAttribute(EntityPlayer.REACH_DISTANCE).getAttributeValue();
+            Vec3d vec3d2 = vec3d.addVector(vec3d1.x * blockReachDistance, vec3d1.y * blockReachDistance, vec3d1.z * blockReachDistance);
+            RayTraceResult result = worldIn.rayTraceBlocks(vec3d, vec3d2, false, false, true);
+
+            if (result != null)
+                pos = pos.offset(result.sideHit);
+        }
+
+        super.harvestBlock(worldIn, player, pos, state, te, stack);
+    }
+
 
     @Override
     protected BlockStateContainer createBlockState() {

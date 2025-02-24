@@ -81,7 +81,6 @@ public class WTFExpedition {
 
 		BlockSets.initBlockSets();
 //		proxy.initWCICRender();
-//		WTFEntities.initEntites();
 //		WTFRecipes.initRecipes();
 //
 //		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
@@ -149,7 +148,6 @@ public class WTFExpedition {
 			}
 
 			MinecraftForge.EVENT_BUS.register(new ListenerLoot());
-			MinecraftForge.EVENT_BUS.register(new ListenerDenseOreHarvest());
 		}
 
 //		if (WTFExpeditionConfig.oreGenEnabled) {
