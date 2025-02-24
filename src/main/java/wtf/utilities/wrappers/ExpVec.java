@@ -71,7 +71,7 @@ public class ExpVec extends Vec {
 				if (block.canDropFromExplosion(explosion))
 					block.dropBlockAsItemWithChance(world, pos, state, chance, 0);
 
-				if (flaming && world.isAirBlock(pos) && this.world.getBlockState(pos.down()).isFullBlock() && random.nextInt(2) == 0)
+				if (flaming && world.isAirBlock(pos) && this.world.getBlockState(pos.down()).isFullBlock() && random.nextFloat() > 0.1F)
 					world.setBlockState(pos, Blocks.FIRE.getDefaultState(), 2);
 				else
 					world.setBlockState(pos, air, 2);

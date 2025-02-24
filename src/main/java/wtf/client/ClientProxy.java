@@ -11,14 +11,14 @@ import wtf.client.models.ModelSpeleothem;
 import wtf.crafting.render.WCICTESR;
 import wtf.crafting.render.WCICTileEntity;
 import wtf.entities.customentities.EntityBlockHead;
-import wtf.entities.customentities.EntityDerangedGolem;
+import wtf.entities.customentities.EntityDerangedIronGolem;
 import wtf.entities.customentities.EntityFireElemental;
-import wtf.entities.customentities.EntityFlyingFlame;
-import wtf.entities.customentities.EntityZombieGhost;
-import wtf.entities.customentities.renderers.RenderBlockHead;
-import wtf.entities.customentities.renderers.RenderDerangedGolem;
-import wtf.entities.customentities.renderers.RenderFlyingFlame;
-import wtf.entities.customentities.renderers.RenderZombieGhost;
+import wtf.entities.customentities.EntityBogLantern;
+import wtf.entities.customentities.EntityCursedArmor;
+import wtf.client.renderers.RenderBlockHead;
+import wtf.client.renderers.RenderDerangedIronGolem;
+import wtf.client.renderers.RenderBogLantern;
+import wtf.client.renderers.RenderGhost;
 import wtf.CommonProxy;
 
 public class ClientProxy extends CommonProxy {
@@ -34,11 +34,11 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void registerEntityRenderers() {
-		RenderingRegistry.registerEntityRenderingHandler(EntityZombieGhost.class, RenderZombieGhost::new);
-		RenderingRegistry.registerEntityRenderingHandler(EntityFlyingFlame.class, RenderFlyingFlame::new);
-		RenderingRegistry.registerEntityRenderingHandler(EntityDerangedGolem.class, RenderDerangedGolem::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityBlockHead.class, RenderBlockHead::new);
-		RenderingRegistry.registerEntityRenderingHandler(EntityFireElemental.class, RenderZombieGhost::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityBogLantern.class, RenderBogLantern::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityCursedArmor.class, RenderGhost::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityDerangedIronGolem.class, RenderDerangedIronGolem::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityFireElemental.class, RenderGhost::new);
 	}
 
 	@Override

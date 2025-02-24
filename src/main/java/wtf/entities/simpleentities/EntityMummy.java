@@ -1,18 +1,19 @@
 package wtf.entities.simpleentities;
 
+import net.minecraft.entity.monster.EntityHusk;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class Mummy extends Husk{
+public class EntityMummy extends EntityHusk {
 
 	static int mummyCount = 0;
 	
-	public Mummy(World worldIn) {
+	public EntityMummy(World worldIn) {
 		super(worldIn);
 		
-		if (mummyCount > 4){
+		if (mummyCount > 4) {
 			mummyCount = 0;
 			this.setCustomNameTag("Pharaoh");
 			this.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(Items.GOLDEN_HELMET, 1, rand.nextInt(60)));
@@ -21,9 +22,7 @@ public class Mummy extends Husk{
 			this.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(Items.GOLDEN_BOOTS, 1, rand.nextInt(60)));
 			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(Items.GOLDEN_SWORD, 1, rand.nextInt(60)));
 			this.setAIMoveSpeed(0.2F);
-
-		}
-		else {
+		} else {
 			mummyCount++;
 			this.setCustomNameTag("Mummy");
 			if (rand.nextFloat() < 0.25) {this.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(Items.LEATHER_HELMET, 1, rand.nextInt(30)));}

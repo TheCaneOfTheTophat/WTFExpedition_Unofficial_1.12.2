@@ -6,12 +6,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.block.BlockFalling;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -27,6 +31,8 @@ import wtf.blocks.redstone.BlockDenseRedstoneOre;
 import wtf.blocks.BlockWTFTorch;
 import wtf.config.*;
 import wtf.blocks.BlockOreSand;
+import wtf.entities.customentities.*;
+import wtf.entities.simpleentities.*;
 import wtf.items.ItemBlockDerivative;
 import wtf.items.ItemBlockSpeleothem;
 import wtf.items.ItemHomeScroll;
@@ -302,6 +308,28 @@ public class WTFContent {
 		}
 	}
 
+	private static int entityCounter = 0;
+
+	@SubscribeEvent()
+	public static void registerEntities(RegistryEvent.Register<EntityEntry> event) {
+		IForgeRegistry<EntityEntry> reg = event.getRegistry();
+
+		reg.register(buildEntry(EntityCursedArmor.class, "cursed_armor"));
+		reg.register(buildEntry(EntityDerangedIronGolem.class, "deranged_iron_golem"));
+		reg.register(buildEntry(EntityBogLantern.class, "bog_lantern"));
+		reg.register(buildEntry(EntityBlockHead.class, "blockhead"));
+		reg.register(buildEntry(EntityFireElemental.class, "fire_elemental"));
+
+		reg.register(buildEntry(EntityFarmerZombie.class, "zombie_farmer"));
+		reg.register(buildEntry(EntityLumberjackZombie.class, "zombie_lumberjack"));
+		reg.register(buildEntry(EntityMummy.class, "mummy"));
+		reg.register(buildEntry(EntitySkeletonMage.class, "skeleton_mage"));
+		reg.register(buildEntry(EntitySkeletonKnight.class, "skeleton_knight"));
+		reg.register(buildEntry(EntityZombieMiner.class, "zombie_miner"));
+
+		WTFExpedition.proxy.registerEntityRenderers();
+	}
+
 	/*
 	====================================
 	              METHODS
@@ -344,5 +372,11 @@ public class WTFContent {
 		items.add(itemBlock);
 
 		registerItemBlockNoModel(registry, itemBlock);
+	}
+
+	public static EntityEntry buildEntry(Class<? extends Entity> entityClass, String name) {
+		entityCounter++;
+		ResourceLocation rl = new ResourceLocation(WTFExpedition.modID, name);
+		return EntityEntryBuilder.create().id(rl, entityCounter).entity(entityClass).name(rl.toString()).tracker(64, 1, true).egg(entityCounter * 16, entityCounter * 22).build();
 	}
 }
