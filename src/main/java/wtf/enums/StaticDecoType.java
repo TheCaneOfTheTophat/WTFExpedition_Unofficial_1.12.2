@@ -1,18 +1,17 @@
-package wtf.blocks.enums;
+package wtf.enums;
 
 import net.minecraft.util.IStringSerializable;
-import wtf.init.BlockSets;
 
 public enum StaticDecoType implements IStringSerializable {
-    MOSS("mossy", BlockSets.Modifier.MOSSY, "moss_overlay"),
-    SOUL("soul", BlockSets.Modifier.SOUL, "soul_overlay"),
-    CRACKED("cracked", BlockSets.Modifier.CRACKED, "cracked_overlay");
+    MOSS("mossy", Modifier.MOSS, "moss_overlay"),
+    SOUL("soul", Modifier.SOUL, "soul_overlay"),
+    CRACKED("cracked", Modifier.CRACKED, "cracked_overlay");
 
     private final String name;
-    public final BlockSets.Modifier modifier;
+    public final Modifier modifier;
     private final String overlayName;
 
-    StaticDecoType(String name, BlockSets.Modifier mod, String overlayName) {
+    StaticDecoType(String name, Modifier mod, String overlayName) {
         this.name = name;
         this.modifier = mod;
         this.overlayName = overlayName;

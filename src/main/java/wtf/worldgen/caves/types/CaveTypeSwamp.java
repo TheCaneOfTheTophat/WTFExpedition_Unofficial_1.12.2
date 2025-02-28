@@ -4,8 +4,7 @@ import java.util.Random;
 
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import wtf.init.BlockSets;
-import wtf.init.BlockSets.Modifier;
+import wtf.enums.Modifier;
 import wtf.utilities.wrappers.AdjPos;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
@@ -19,14 +18,14 @@ public class CaveTypeSwamp extends AbstractCaveType {
 	@Override
 	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		if (random.nextFloat()<0.15){
-			gen.transformBlock(pos, BlockSets.Modifier.WATER_DRIP);
+			gen.transformBlock(pos, Modifier.WET);
 		} else{
 			if (simplex.get3DNoise(gen.getWorld(), pos) <0.1){
-				gen.transformBlock(pos, Modifier.COBBLE);
+				gen.transformBlock(pos, Modifier.FRACTURED);
 				
 			}
 			if (simplex.get3DNoise(gen.getWorld(), pos)-0.5 > depth){
-				gen.transformBlock(pos, Modifier.MOSSY);
+				gen.transformBlock(pos, Modifier.MOSS);
 			}
 		}
 	}
@@ -38,18 +37,18 @@ public class CaveTypeSwamp extends AbstractCaveType {
 		}
 
 		if (simplex.get3DNoise(gen.getWorld(), pos) <0.1){
-			gen.transformBlock(pos, Modifier.COBBLE);
+			gen.transformBlock(pos, Modifier.FRACTURED);
 			
 		}
 		if (simplex.get3DNoise(gen.getWorld(), pos)-0.5 > depth){
-			gen.transformBlock(pos, Modifier.MOSSY);
+			gen.transformBlock(pos, Modifier.MOSS);
 		}
 		
 	}
 
 	@Override
 	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (random.nextBoolean() && gen.setCeilingAddon(pos, Modifier.COBBLE)){
+		if (random.nextBoolean() && gen.setCeilingAddon(pos, Modifier.FRACTURED)){
 			for (int loop = random.nextInt(3)+1; loop > -1; loop--){
 				gen.GenVines(pos.east().down(loop), EnumFacing.WEST);
 			}
@@ -72,7 +71,7 @@ public class CaveTypeSwamp extends AbstractCaveType {
 
 	@Override
 	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (random.nextBoolean() && gen.setFloorAddon(pos, Modifier.COBBLE)){
+		if (random.nextBoolean() && gen.setFloorAddon(pos, Modifier.FRACTURED)){
 				gen.GenVines(pos.east(), EnumFacing.WEST);
 				gen.GenVines(pos.west(), EnumFacing.EAST);
 				gen.GenVines(pos.north(), EnumFacing.SOUTH);
@@ -92,11 +91,11 @@ public class CaveTypeSwamp extends AbstractCaveType {
 		}
 
 		if (simplex.get3DNoise(gen.getWorld(), pos) <0.1){
-			gen.transformBlock(pos, Modifier.COBBLE);
+			gen.transformBlock(pos, Modifier.FRACTURED);
 			
 		}
 		if (simplex.get3DNoise(gen.getWorld(), pos)-0.5 > depth){
-			gen.transformBlock(pos, Modifier.MOSSY);
+			gen.transformBlock(pos, Modifier.MOSS);
 		}
 
 	}

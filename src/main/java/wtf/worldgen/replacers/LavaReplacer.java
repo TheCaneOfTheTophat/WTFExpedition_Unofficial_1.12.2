@@ -9,7 +9,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import wtf.init.BlockSets.Modifier;
+import wtf.enums.Modifier;
 import wtf.utilities.simplex.SimplexHelper;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.CaveTypeRegister;

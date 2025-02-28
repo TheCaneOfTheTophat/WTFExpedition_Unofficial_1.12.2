@@ -4,7 +4,7 @@ import java.util.Random;
 
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import wtf.init.BlockSets.Modifier;
+import wtf.enums.Modifier;
 import wtf.utilities.wrappers.AdjPos;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
@@ -24,7 +24,7 @@ public class CaveTypeJungleVolcano extends AbstractCaveType{
 		if (noise > 0.66){
 			
 			if (n > 0.75){
-				gen.transformBlock(pos, Modifier.COBBLE);
+				gen.transformBlock(pos, Modifier.FRACTURED);
 			}
 			else if (n > 0.5){
 				gen.transformBlock(pos, Modifier.LAVA_CRUST);
@@ -33,7 +33,7 @@ public class CaveTypeJungleVolcano extends AbstractCaveType{
 		else {
 			boolean mossy =  simplex.get3DNoise(gen.getWorld(), pos) > depth;	
 			if (mossy){	
-				gen.transformBlock(pos, Modifier.MOSSY);
+				gen.transformBlock(pos, Modifier.MOSS);
 			}
 		}
 		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.1){
@@ -51,7 +51,7 @@ public class CaveTypeJungleVolcano extends AbstractCaveType{
 		if (noise > 0.66){
 			
 			if (n > 0.75){
-				gen.transformBlock(pos, Modifier.COBBLE);
+				gen.transformBlock(pos, Modifier.FRACTURED);
 			}
 			else if (n > 0.5){
 				gen.transformBlock(pos, Modifier.LAVA_CRUST);
@@ -60,7 +60,7 @@ public class CaveTypeJungleVolcano extends AbstractCaveType{
 		else {
 			boolean mossy =  simplex.get3DNoise(gen.getWorld(), pos) > depth;	
 			if (mossy){	
-				gen.transformBlock(pos, Modifier.MOSSY);
+				gen.transformBlock(pos, Modifier.MOSS);
 			}
 		}
 		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.1){
@@ -75,7 +75,7 @@ public class CaveTypeJungleVolcano extends AbstractCaveType{
 		double noise = simplex.get3DNoiseScaled(gen.getWorld(), pos.up(), 0.1);
 		
 		if (noise < 0.66){
-			gen.setCeilingAddon(pos, Modifier.COBBLE);
+			gen.setCeilingAddon(pos, Modifier.FRACTURED);
 			if (random.nextBoolean()){
 				for (int loop = random.nextInt(3)+1; loop > -1; loop--){
 					gen.GenVines(pos.east().down(loop), EnumFacing.WEST);
@@ -129,7 +129,7 @@ public class CaveTypeJungleVolcano extends AbstractCaveType{
 		if (noise > 0.66){
 			
 			if (n > 0.75){
-				gen.transformBlock(pos, Modifier.COBBLE);
+				gen.transformBlock(pos, Modifier.FRACTURED);
 			}
 			else if (n > 0.5){
 				gen.transformBlock(pos, Modifier.LAVA_CRUST);
@@ -138,7 +138,7 @@ public class CaveTypeJungleVolcano extends AbstractCaveType{
 		else {
 			boolean mossy =  simplex.get3DNoise(gen.getWorld(), pos) > depth;	
 			if (mossy){	
-				gen.transformBlock(pos, Modifier.MOSSY);
+				gen.transformBlock(pos, Modifier.MOSS);
 			}
 		}
 		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.1){

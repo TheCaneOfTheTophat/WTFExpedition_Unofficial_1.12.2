@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import wtf.WTFExpedition;
-import wtf.blocks.enums.SpeleothemType;
+import wtf.enums.SpeleothemType;
 import wtf.init.BlockSets;
 
 public class BlockSpeleothemFrozen extends BlockSpeleothem {

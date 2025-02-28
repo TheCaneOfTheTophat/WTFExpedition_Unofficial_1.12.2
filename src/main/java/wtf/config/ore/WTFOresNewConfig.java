@@ -16,7 +16,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Loader;
 import wtf.WTFExpedition;
 import wtf.init.BlockSets;
-import wtf.init.BlockSets.Modifier;
+import wtf.enums.Modifier;
 import wtf.ores.OreGenAbstract;
 import wtf.ores.OreReplacer;
 import wtf.ores.VanillOreGenCatcher;

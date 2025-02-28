@@ -1,15 +1,15 @@
 package wtf.blocks;
 
 import net.minecraft.block.state.IBlockState;
+import org.apache.commons.lang3.tuple.Pair;
 import wtf.init.BlockSets;
-import wtf.init.BlockSets.Modifier;
-import wtf.utilities.wrappers.StateAndModifier;
+import wtf.enums.Modifier;
 
 public class BlockNaturalSandstone extends AbstractBlockDerivative {
 
 	public BlockNaturalSandstone(IBlockState state) {
 		 super(state, state);
-		 BlockSets.blockTransformer.put(new StateAndModifier(this.getDefaultState(), Modifier.BRICK), state);
+		 BlockSets.blockTransformer.put(Pair.of(this.getDefaultState(), Modifier.BRICK), state);
 	}
 }
 

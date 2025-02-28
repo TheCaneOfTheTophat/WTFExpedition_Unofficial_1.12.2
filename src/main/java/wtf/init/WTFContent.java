@@ -1,9 +1,7 @@
 
 package wtf.init;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import net.minecraft.block.BlockFalling;
 import net.minecraft.entity.Entity;
@@ -23,20 +21,20 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import org.apache.commons.lang3.tuple.Pair;
 import wtf.WTFExpedition;
 import wtf.blocks.*;
-import wtf.blocks.enums.AnimatedDecoType;
-import wtf.blocks.enums.StaticDecoType;
+import wtf.enums.AnimatedDecoType;
+import wtf.enums.Modifier;
+import wtf.enums.SpeleothemType;
+import wtf.enums.StaticDecoType;
 import wtf.blocks.redstone.BlockDenseRedstoneOre;
 import wtf.blocks.BlockWTFTorch;
 import wtf.config.*;
 import wtf.blocks.BlockOreSand;
 import wtf.entities.customentities.*;
 import wtf.entities.simpleentities.*;
-import wtf.items.ItemBlockDerivative;
-import wtf.items.ItemBlockSpeleothem;
-import wtf.items.ItemHomeScroll;
-import wtf.items.ItemBlockState;
+import wtf.items.*;
 
 @Mod.EventBusSubscriber
 @GameRegistry.ObjectHolder(WTFExpedition.modID)
@@ -139,7 +137,7 @@ public class WTFContent {
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public static void registerConfigDependentBlocks(RegistryEvent.Register<Block> event) {
+	public static void registerJSONDependentContent(RegistryEvent.Register<Block> event) {
 		IForgeRegistry<Block> reg = event.getRegistry();
 
 		/*  ==============================================
@@ -214,20 +212,25 @@ public class WTFContent {
 		    ============================================== */
 
 		for(BlockEntry entry : JSONLoader.blockEntries) {
-
 			String blockName = entry.getName();
 			IBlockState blockState = JSONLoader.getStateFromId(entry.getBlockId());
-			IBlockState fracturedBlockState = JSONLoader.getStateFromId(entry.getFracturedBlockId());
+			String fracturedId = JSONLoader.processId(entry.getFracturedBlockId());
+			IBlockState fracturedBlockState = JSONLoader.getStateFromId(fracturedId);
 
 			if(blockState == null) {
 				WTFExpedition.wtfLog.error("Block ID " + entry.getBlockId() + " in entry " + entry.getName() + " is invalid! Skipping...");
 				continue;
 			}
 
-			if(fracturedBlockState == null && !entry.getFracturedBlockId().isEmpty()) {
-				WTFExpedition.wtfLog.error("Fractured block ID " + entry.getFracturedBlockId() + " in entry " + entry.getName() + " is invalid! Skipping...");
+			if(fracturedBlockState == null && !fracturedId.isEmpty()) {
+				WTFExpedition.wtfLog.error("Fractured block ID " + fracturedId + " in entry " + entry.getName() + " is invalid! Skipping...");
 				continue;
 			}
+
+			boolean fractures = fracturedBlockState != null;
+
+			if(fractures)
+				BlockSets.blockTransformer.put(Pair.of(blockState, Modifier.FRACTURED), fracturedBlockState);
 
 			// SPELEOTHEMS
 			if(entry.hasSpeleothems()) {
@@ -244,30 +247,87 @@ public class WTFContent {
 
 				blocks.add(frozenSpeleothem);
 				reg.register(frozenSpeleothem);
-			}
 
-			// STATIC DECOR
-			for(StaticDecoType decorType : StaticDecoType.values()) {
-				if(entry.getStaticDecorTypes().get(decorType)) {
-					BlockDecoStatic decor = new BlockDecoStatic(blockState, decorType);
-					decor.setRegistryName(WTFExpedition.modID, "decoration_" + decorType.getName() + "_" + blockName);
-					decor.setCreativeTab(WTFExpedition.wtfTab);
-
-					blocks.add(decor);
-					reg.register(decor);
+				for(SpeleothemType type : SpeleothemType.values()) {
+					IBlockState speleothemState = speleothem.getBlockState(type);
+					IBlockState frozenSpeleothemState = frozenSpeleothem.getBlockState(type);
+					BlockSets.blockTransformer.put(Pair.of(speleothemState, Modifier.FROZEN), frozenSpeleothemState);
 				}
 			}
 
-			// ANIMATED DECOR
-			for(AnimatedDecoType decorType : AnimatedDecoType.values()) {
-				if(entry.getAnimatedDecorTypes().get(decorType)) {
-					BlockDecoAnim decor = new BlockDecoAnim(blockState, decorType);
-					decor.setRegistryName(WTFExpedition.modID, "decoration_" + decorType.getName() + "_" + blockName);
-					decor.setCreativeTab(WTFExpedition.wtfTab);
+			for(Modifier modifier : Modifier.values()) {
+				String modStateId = entry.getModifiers().get(modifier);
 
-					blocks.add(decor);
-					reg.register(decor);
+				if(modStateId == null)
+					continue;
+
+				if(!modStateId.isEmpty()) {
+					IBlockState modState = null;
+
+					if(modStateId.equals("#generated") && modifier.getDecoType() != null) {
+						if(modifier.getDecoType() instanceof StaticDecoType) {
+							StaticDecoType decorType = (StaticDecoType) modifier.getDecoType();
+
+                            BlockDecoStatic decor = new BlockDecoStatic(blockState, decorType);
+							decor.setRegistryName(WTFExpedition.modID, "decoration_" + decorType.getName() + "_" + blockName);
+							decor.setCreativeTab(WTFExpedition.wtfTab);
+
+							blocks.add(decor);
+							reg.register(decor);
+
+							modState = decor.getDefaultState();
+						}
+
+						if(modifier.getDecoType() instanceof AnimatedDecoType) {
+							AnimatedDecoType decorType = (AnimatedDecoType) modifier.getDecoType();
+
+							BlockDecoAnim decor = new BlockDecoAnim(blockState, decorType);
+							decor.setRegistryName(WTFExpedition.modID, "decoration_" + decorType.getName() + "_" + blockName);
+							decor.setCreativeTab(WTFExpedition.wtfTab);
+
+							blocks.add(decor);
+							reg.register(decor);
+
+							modState = decor.getDefaultState();
+						}
+
+						if(fractures && modifier != Modifier.LAVA_CRUST)
+							BlockSets.blockTransformer.put(Pair.of(modState, Modifier.FRACTURED), fracturedBlockState);
+					} else
+						modState = JSONLoader.getStateFromId(JSONLoader.processId(modStateId));
+
+					BlockSets.blockTransformer.put(Pair.of(blockState, modifier), modState);
 				}
+			}
+		}
+
+		/*  ==============================================
+			================= TRANSFORMER ================
+		    ============================================== */
+
+		// Iterate again after all registration and basic transformer stuff has been done.
+		for(Pair<IBlockState, Modifier> entry : new HashSet<>(BlockSets.blockTransformer.keySet())) {
+			IBlockState blockState = entry.getKey();
+			Modifier modifier = entry.getValue();
+			IBlockState modState = BlockSets.getTransformedState(blockState, modifier);
+
+			ArrayList<Modifier> modValues2 = new ArrayList<>();
+			Collections.addAll(modValues2, Modifier.values());
+			modValues2.remove(modifier);
+
+			for(Modifier modifier2 : modValues2) {
+				IBlockState modState2 = BlockSets.getTransformedState(blockState, modifier2);
+
+				if(modState2 == null)
+					continue;
+
+				IBlockState modState3 = BlockSets.getTransformedState(modState2, modifier);
+
+				if(modState3 == null)
+					continue;
+
+				BlockSets.blockTransformer.remove(Pair.of(modState, modifier2));
+				BlockSets.blockTransformer.put(Pair.of(modState, modifier2), modState3);
 			}
 		}
 	}
@@ -306,6 +366,9 @@ public class WTFContent {
 			else
 				registerItemBlock(reg, new ItemBlock(block));
 		}
+
+		for(Modifier mod : Modifier.values())
+			registerItem(reg, new ItemDebugModifier(mod), "debug_modifier_" + mod.name().toLowerCase());
 	}
 
 	private static int entityCounter = 0;

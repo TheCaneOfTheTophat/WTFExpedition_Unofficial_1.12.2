@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import wtf.WTFExpedition;
-import wtf.blocks.enums.AnimatedDecoType;
+import wtf.enums.AnimatedDecoType;
 
 public class BlockDecoAnim extends AbstractBlockDerivative implements IDeco {
 	private final AnimatedDecoType type;
@@ -27,16 +27,9 @@ public class BlockDecoAnim extends AbstractBlockDerivative implements IDeco {
 		super(state, state);
 		this.type = type;
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FAST, false));
-		
-//		BlockSets.blockTransformer.put(new StateAndModifier(state, BlockSets.Modifier.LAVA_CRUST), this.getDefaultState().withProperty(TYPE, AnimatedDecoType.LAVA_CRUST));
-//		BlockSets.blockTransformer.put(new StateAndModifier(state, BlockSets.Modifier.WATER_DRIP), this.getDefaultState().withProperty(TYPE, AnimatedDecoType.DRIP_WATER));
-//		BlockSets.blockTransformer.put(new StateAndModifier(state, BlockSets.Modifier.LAVA_DRIP), this.getDefaultState().withProperty(TYPE, AnimatedDecoType.DRIP_LAVA));
-//
+
 //		BlockSpeleothem block = WTFContent.speleothemMap.get(state);
 //		WTFContent.speleothemMap.put(this.getDefaultState().withProperty(TYPE, AnimatedDecoType.DRIP_WATER), block);
-//		IBlockState fractured =  BlockSets.blockTransformer.get(new StateAndModifier(state, BlockSets.Modifier.COBBLE));
-//		BlockSets.blockTransformer.put(new StateAndModifier(this.getDefaultState().withProperty(TYPE, AnimatedDecoType.DRIP_WATER), BlockSets.Modifier.COBBLE), fractured);
-//		BlockSets.blockTransformer.put(new StateAndModifier(this.getDefaultState().withProperty(TYPE, AnimatedDecoType.DRIP_LAVA), BlockSets.Modifier.COBBLE), fractured);
 	}
 	
     @Override
@@ -92,11 +85,11 @@ public class BlockDecoAnim extends AbstractBlockDerivative implements IDeco {
 					if (!world.isBlockNormalCube(pos.up(), false))
 						world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x, y+1, z, 0.0D, 0.0D, 0.0D);
 					// Fall through
-				case DRIP_LAVA:
+				case LAVA_DRIPPING:
 					if (!world.isBlockNormalCube(pos.down(), false))
 						world.spawnParticle(EnumParticleTypes.DRIP_LAVA, x, y, z, 0.0D, 0.0D, 0.0D);
 					break;
-				case DRIP_WATER:
+				case WET:
 					if (!world.isBlockNormalCube(pos.down(), false))
 						world.spawnParticle(EnumParticleTypes.DRIP_WATER, x, y, z, 0.0D, 0.0D, 0.0D);
 					break;

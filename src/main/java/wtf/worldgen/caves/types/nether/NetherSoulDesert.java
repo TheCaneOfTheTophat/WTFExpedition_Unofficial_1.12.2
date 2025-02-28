@@ -4,7 +4,7 @@ import java.util.Random;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
-import wtf.init.BlockSets.Modifier;
+import wtf.enums.Modifier;
 import wtf.init.WTFContent;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
@@ -30,7 +30,7 @@ public class NetherSoulDesert extends AbstractCaveType{
 		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.25){
 			gen.replaceBlock(pos, Blocks.SOUL_SAND.getDefaultState());
 		}
-		gen.transformBlock(pos, Modifier.COBBLE);
+		gen.transformBlock(pos, Modifier.FRACTURED);
 		
 
 	}

@@ -9,7 +9,7 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import wtf.WTFExpedition;
-import wtf.blocks.enums.StaticDecoType;
+import wtf.enums.StaticDecoType;
 import wtf.gameplay.fracturing.EntityFracture;
 
 public class BlockDecoStatic extends AbstractBlockDerivative implements IDeco {
@@ -20,20 +20,6 @@ public class BlockDecoStatic extends AbstractBlockDerivative implements IDeco {
 	public BlockDecoStatic(IBlockState state, StaticDecoType type) {
 		super(state, state);
 		this.type = type;
-//		if (state.getMaterial() == Material.ROCK || state.getMaterial() == Material.GROUND){
-//			BlockSets.blockTransformer.put(new StateAndModifier(state, BlockSets.Modifier.MOSSY), this.getDefaultState());
-//			IBlockState cobble = BlockSets.getTransformedState(state, Modifier.COBBLE);
-//			if (cobble != null){
-//				IBlockState mossyCobble = BlockSets.getTransformedState(cobble, Modifier.MOSSY);
-//				if (mossyCobble != null){
-//					BlockSets.blockTransformer.put(new StateAndModifier(this.getDefaultState(), Modifier.COBBLE), mossyCobble);
-//				}
-//			}
-//		}
-//			BlockSets.blockTransformer.put(new StateAndModifier(state, BlockSets.Modifier.SOUL), this.getDefaultState().withProperty(TYPE, StaticDecoType.SOUL));
-//		if (state.getMaterial() == Material.ROCK || state.getMaterial() == Material.ICE){
-//			BlockSets.blockTransformer.put(new StateAndModifier(state, BlockSets.Modifier.CRACKED), this.getDefaultState().withProperty(TYPE, StaticDecoType.CRACKED));
-//		}
 //		if (BlockSets.fallingBlocks.containsKey(this.parentBackground)){
 //			BlockSets.fallingBlocks.put(this, BlockSets.fallingBlocks.get(this.parentBackground));
 //		}

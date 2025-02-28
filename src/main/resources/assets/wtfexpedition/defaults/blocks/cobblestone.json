@@ -3,7 +3,10 @@
     "blockId": "minecraft:cobblestone",
     "name": "cobblestone",
     "texture": "minecraft:blocks/cobblestone",
-    "percentageStability": 75
+    "percentageStability": 75,
+    "modifiers": {
+      "mossy": "mossy_cobblestone"
+    }
   },
   {
     "blockId": "minecraft:mossy_cobblestone",

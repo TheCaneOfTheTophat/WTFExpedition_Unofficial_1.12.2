@@ -17,17 +17,18 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
+import org.apache.commons.lang3.tuple.Pair;
 import wtf.blocks.BlockIcicle;
 import wtf.blocks.BlockRoots;
 import wtf.blocks.BlockSpeleothem;
-import wtf.blocks.enums.IcicleType;
-import wtf.blocks.enums.SpeleothemType;
+import wtf.enums.IcicleType;
+import wtf.enums.Modifier;
+import wtf.enums.SpeleothemType;
 import wtf.config.WTFExpeditionConfig;
 import wtf.init.BlockSets;
 import wtf.init.WTFContent;
 import wtf.utilities.wrappers.BlockMap;
 import wtf.utilities.wrappers.ChunkCoords;
-import wtf.utilities.wrappers.StateAndModifier;
 import wtf.worldgen.generators.queuedgen.QMobSpawner;
 import wtf.worldgen.generators.queuedgen.QModify;
 import wtf.worldgen.generators.queuedgen.QOreGen;
@@ -55,7 +56,7 @@ public class GeneratorMethods{
 	/**
 	 **Used to set a block, based on a modifier and the block at the given location
 	 **/
-	public boolean transformBlock(BlockPos pos, BlockSets.Modifier modifier){
+	public boolean transformBlock(BlockPos pos, Modifier modifier){
 		return blockmap.add(pos, new QModify(modifier));
 	}
 	/**
@@ -80,9 +81,9 @@ public class GeneratorMethods{
 	/**
 	 **Used to set a block floor y+1, based on a modifier and the block at the given location.  e.g. cobblestone boulders on top of stone
 	 **/
-	public boolean setFloorAddon(BlockPos pos, BlockSets.Modifier modifier){
+	public boolean setFloorAddon(BlockPos pos, Modifier modifier){
 		IBlockState oldState = getWorld().getBlockState(pos.down());
-		IBlockState newState = BlockSets.blockTransformer.get(new StateAndModifier(oldState, modifier));
+		IBlockState newState = BlockSets.blockTransformer.get(Pair.of(oldState, modifier));
 
 		if (newState != null && !blockmap.posQueued(pos.down())){
 			return replaceBlock(pos, newState);
@@ -91,9 +92,9 @@ public class GeneratorMethods{
 		return false;
 
 	}
-	public boolean setCeilingAddon(BlockPos pos, BlockSets.Modifier modifier){
+	public boolean setCeilingAddon(BlockPos pos, Modifier modifier){
 		IBlockState oldState = getWorld().getBlockState(pos.up());
-		IBlockState newState = BlockSets.blockTransformer.get(new StateAndModifier(oldState, modifier));
+		IBlockState newState = BlockSets.blockTransformer.get(Pair.of(oldState, modifier));
 		if (newState != null && !blockmap.posQueued(pos.up())){
 			return replaceBlock(pos, newState);
 		}

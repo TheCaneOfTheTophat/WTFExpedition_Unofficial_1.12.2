@@ -1,30 +1,23 @@
 package wtf.init;
 
 import java.util.*;
-import java.util.Map.Entry;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockSand;
-import net.minecraft.block.BlockStone;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import wtf.utilities.wrappers.StateAndModifier;
+import org.apache.commons.lang3.tuple.Pair;
+import wtf.enums.Modifier;
 import wtf.utilities.wrappers.StoneAndOre;
 import wtf.worldgen.replacers.LavaReplacer;
 import wtf.worldgen.replacers.NonSolidNoReplace;
 import wtf.worldgen.replacers.Replacer;
 
-
 public class BlockSets {
 
-	public enum Modifier {
-		COBBLE, CRACKED, LAVA_CRUST, MOSSY, WATER_DRIP, LAVA_DRIP, FROZEN, SOUL, BRICK
-	}
-
-	public static Set<String> adjacentFracturingBlocks = new HashSet<>();
+    public static Set<String> adjacentFracturingBlocks = new HashSet<>();
 
 	//private static IBlockState[] defOreStates = {Blocks.IRON_ORE.getDefaultState(), Blocks.DIAMOND_ORE.getDefaultState(), Blocks.LAPIS_ORE.getDefaultState(), Blocks.GOLD_ORE.getDefaultState(),
 	//		Blocks.EMERALD_ORE.getDefaultState(), Blocks.REDSTONE_ORE.getDefaultState(), Blocks.LIT_REDSTONE_ORE.getDefaultState(), Blocks.COAL_ORE.getDefaultState()};
@@ -52,17 +45,11 @@ public class BlockSets {
 
 	public static HashMap<Block, Replacer> isNonSolidAndCheckReplacement = new HashMap<>();
 
-	public static HashMap<StateAndModifier, IBlockState> blockTransformer = new HashMap<>();
+	public static HashMap<Pair<IBlockState, Modifier>, IBlockState> blockTransformer = new HashMap<>();
 
 	public static IBlockState getTransformedState(IBlockState oldstate, Modifier mod) {
-		return blockTransformer.get(new StateAndModifier(oldstate, mod));
+		return blockTransformer.get(Pair.of(oldstate, mod));
 	}
-
-	public static boolean hasCobble(IBlockState state) {
-		return blockTransformer.containsKey(new StateAndModifier(state, Modifier.COBBLE));
-	}
-
-	private static HashSet<Block> cobble = new HashSet<>();
 	
 	public static HashSet<Block> riverBlocks = new HashSet<>();
 
@@ -90,7 +77,7 @@ public class BlockSets {
                     new NonSolidNoReplace(block);
             }
             if (block.getDefaultState().getMaterial() == Material.LAVA) {
-                nonSolidBlockSet.add(block);
+                liquidBlockSet.add(block);
                 nonSolidBlockSet.add(block);
                 if (!isNonSolidAndCheckReplacement.containsKey(block))
                     new NonSolidNoReplace(block);
@@ -132,23 +119,8 @@ public class BlockSets {
 		//differentiate between lit and unlit redstone wire
 		explosiveBlocks.put(Blocks.REDSTONE_WIRE, 0.9F);
 
-		blockTransformer.put(new StateAndModifier(Blocks.COBBLESTONE.getDefaultState(), Modifier.MOSSY), Blocks.MOSSY_COBBLESTONE.getDefaultState());
-		blockTransformer.put(new StateAndModifier(blockTransformer.get(new StateAndModifier(Blocks.STONE.getDefaultState(), Modifier.MOSSY)), Modifier.COBBLE), Blocks.MOSSY_COBBLESTONE.getDefaultState());
-		
-		blockTransformer.put(new StateAndModifier(Blocks.STONE.getDefaultState(), Modifier.BRICK), Blocks.STONEBRICK.getDefaultState());
-		blockTransformer.put(new StateAndModifier(Blocks.NETHERRACK.getDefaultState(), Modifier.BRICK), Blocks.NETHER_BRICK.getDefaultState());
-		blockTransformer.put(new StateAndModifier(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE), Modifier.BRICK), Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE_SMOOTH));
-		blockTransformer.put(new StateAndModifier(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.DIORITE), Modifier.BRICK), Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.DIORITE_SMOOTH));
-		blockTransformer.put(new StateAndModifier(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE), Modifier.BRICK), Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE_SMOOTH));
-		blockTransformer.put(new StateAndModifier(Blocks.DIRT.getDefaultState(), Modifier.BRICK), Blocks.BRICK_BLOCK.getDefaultState());
-		blockTransformer.put(new StateAndModifier(Blocks.GRAVEL.getDefaultState(), Modifier.BRICK), Blocks.STONEBRICK.getDefaultState());
-		blockTransformer.put(new StateAndModifier(Blocks.SAND.getDefaultState(), Modifier.BRICK), Blocks.SANDSTONE.getDefaultState());
-		blockTransformer.put(new StateAndModifier(Blocks.SAND.getDefaultState().withProperty(BlockSand.VARIANT, BlockSand.EnumType.RED_SAND), Modifier.BRICK), Blocks.RED_SANDSTONE.getDefaultState());
-		
-		for (Entry<StateAndModifier, IBlockState> entry : blockTransformer.entrySet()) {
-			if (entry.getKey().modifier == Modifier.COBBLE)
-				cobble.add(entry.getValue().getBlock());
-		}
+//		blockTransformer.put(Pair.of(Blocks.SAND.getDefaultState(), Modifier.BRICK), Blocks.SANDSTONE.getDefaultState());
+//		blockTransformer.put(Pair.of(Blocks.SAND.getDefaultState().withProperty(BlockSand.VARIANT, BlockSand.EnumType.RED_SAND), Modifier.BRICK), Blocks.RED_SANDSTONE.getDefaultState());
 
 		new LavaReplacer(Blocks.LAVA); //replaces lava below y=11 in a biome specific manner
 	}

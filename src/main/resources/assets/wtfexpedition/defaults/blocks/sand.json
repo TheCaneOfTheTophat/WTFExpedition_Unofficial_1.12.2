@@ -1,15 +1,21 @@
 [
   {
-    "blockId": "minecraft:sand@0",
+    "blockId": "minecraft:sand",
     "name": "sand",
     "texture": "minecraft:blocks/sand",
-    "percentageStability": 10
+    "percentageStability": 10,
+    "modifiers": {
+      "brick": "sandstone"
+    }
   },
   {
     "blockId": "minecraft:sand@1",
     "name": "red_sand",
     "texture": "minecraft:blocks/red_sand",
-    "percentageStability": 10
+    "percentageStability": 10,
+    "modifiers": {
+      "brick": "red_sandstone"
+    }
   },
   {
     "blockId": "minecraft:soul_sand",

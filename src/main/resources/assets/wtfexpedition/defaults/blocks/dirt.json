@@ -4,8 +4,19 @@
     "name": "dirt",
     "texture": "minecraft:blocks/dirt",
     "percentageStability": 50,
-    "decoration": {
-      "mossy": true
+    "modifiers": {
+      "mossy": "#generated",
+      "brick": "bricks"
+    }
+  },
+  {
+    "blockId": "minecraft:dirt@1",
+    "name": "coarse_dirt",
+    "texture": "minecraft:blocks/coarse_dirt",
+    "percentageStability": 50,
+    "modifiers": {
+      "mossy": "#generated",
+      "brick": "bricks"
     }
   }
 ]

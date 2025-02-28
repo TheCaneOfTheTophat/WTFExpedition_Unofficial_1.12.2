@@ -3,12 +3,13 @@
     "blockId": "minecraft:netherrack",
     "name": "netherrack",
     "texture": "minecraft:blocks/netherrack",
-    "decoration": {
-      "soul": true,
-      "cracked": true,
-      "lava_crust": true,
-      "lava_drip": true,
-      "speleothems": true
-    }
+    "modifiers": {
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "lava_dripping": "#generated",
+      "brick": "nether_brick"
+    },
+	"speleothems": true
   }
 ]

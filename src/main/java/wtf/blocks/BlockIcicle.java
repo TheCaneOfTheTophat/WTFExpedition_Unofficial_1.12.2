@@ -22,7 +22,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import wtf.blocks.enums.IcicleType;
+import wtf.enums.IcicleType;
 import wtf.init.BlockSets;
 
 public class BlockIcicle extends AbstractBlockDerivative {

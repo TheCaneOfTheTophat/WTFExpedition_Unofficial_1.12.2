@@ -13,11 +13,13 @@ import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import wtf.WTFExpedition;
 import wtf.blocks.*;
-import wtf.blocks.enums.AnimatedDecoType;
-import wtf.blocks.enums.StaticDecoType;
+import wtf.enums.AnimatedDecoType;
+import wtf.enums.Modifier;
+import wtf.enums.StaticDecoType;
 import wtf.config.BlockEntry;
 import wtf.config.WTFExpeditionConfig;
 import wtf.gameplay.fracturing.EntityFracture;
+import wtf.init.BlockSets;
 import wtf.init.JSONLoader;
 import wtf.network.WTFMessageBlockCrackEvent;
 
@@ -33,14 +35,17 @@ public class ListenerBreakFracture {
 			IBlockState state = event.getState();
 			Block block = state.getBlock();
 
-			if((block instanceof IDeco && (((IDeco) block).getType() != StaticDecoType.CRACKED && ((IDeco) block).getType() != AnimatedDecoType.LAVA_CRUST))) {
+			if(BlockSets.getTransformedState(state, Modifier.FRACTURED) == null)
+				return;
+
+			if(block instanceof IDeco) {
 				state = ((AbstractBlockDerivative) event.getState().getBlock()).parentBackground;
 				block = state.getBlock();
 			}
 
 			BlockEntry entry = JSONLoader.getEntryFromState(state);
 
-			if (entry != null && !entry.getFracturedBlockId().isEmpty() && entry.fracturesFirstWhenMined()) {
+			if (entry != null && entry.fracturesFirstWhenMined()) {
 				event.getWorld().capturedBlockSnapshots.add(new BlockSnapshot(event.getWorld(), event.getPos(), event.getState()));
 				event.setCanceled(true);
 				EntityFracture.fractureBlock(event.getWorld(), event.getPos(), false, false);

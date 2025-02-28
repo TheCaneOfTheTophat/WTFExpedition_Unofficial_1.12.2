@@ -77,7 +77,7 @@ public class EntityDerangedIronGolem extends EntityGolem implements IMob {
 			--this.attackTimer;
 
 		if(this.ticksExisted % 800 <= 200)
-			this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).applyModifier(new AttributeModifier("derangedSpeedBonus", 0.0013D, 0));
+			this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).applyModifier(new AttributeModifier("derangedSpeedBonus", 0.00135D, 0));
 		else if(this.ticksExisted % 800 >= 400 && this.ticksExisted % 800 <= 600) {
 			for(AttributeModifier mod : this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getModifiers())
 				if(mod.getName().equals("derangedSpeedBonus")) {

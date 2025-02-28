@@ -1,4 +1,4 @@
-package wtf.blocks.enums;
+package wtf.enums;
 
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;

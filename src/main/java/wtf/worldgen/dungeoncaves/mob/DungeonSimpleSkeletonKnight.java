@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import wtf.WTFExpedition;
 import wtf.init.BlockSets;
-import wtf.init.BlockSets.Modifier;
+import wtf.enums.Modifier;
 import wtf.utilities.wrappers.CaveListWrapper;
 import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;

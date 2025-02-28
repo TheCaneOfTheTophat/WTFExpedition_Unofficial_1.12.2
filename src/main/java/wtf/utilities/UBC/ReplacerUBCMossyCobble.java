@@ -5,7 +5,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.chunk.Chunk;
 import wtf.init.BlockSets;
-import wtf.init.BlockSets.Modifier;
+import wtf.enums.Modifier;
 import wtf.worldgen.GeneratorMethods;
 
 public class ReplacerUBCMossyCobble extends ReplacerUBCAbstract{
@@ -17,8 +17,8 @@ public class ReplacerUBCMossyCobble extends ReplacerUBCAbstract{
 	@Override
 	public boolean isNonSolidAndReplacement(Chunk chunk, BlockPos pos, GeneratorMethods gen, IBlockState oldState) {
 		
-		IBlockState cobble = BlockSets.getTransformedState(getUBCStone(pos), Modifier.COBBLE);
-		IBlockState mossy = BlockSets.getTransformedState(cobble, Modifier.MOSSY);
+		IBlockState cobble = BlockSets.getTransformedState(getUBCStone(pos), Modifier.FRACTURED);
+		IBlockState mossy = BlockSets.getTransformedState(cobble, Modifier.MOSS);
 		
 		//Running it off simplex sand, because it's easy	
 		//double noise =getSimplexSand(chunk.getWorld(), pos);

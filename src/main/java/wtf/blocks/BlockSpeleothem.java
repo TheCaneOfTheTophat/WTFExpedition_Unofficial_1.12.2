@@ -16,7 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import wtf.WTFExpedition;
-import wtf.blocks.enums.SpeleothemType;
+import wtf.enums.SpeleothemType;
 import wtf.init.WTFContent;
 
 import java.util.Random;

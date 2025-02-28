@@ -8,7 +8,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import wtf.init.WTFContent;
-import wtf.init.BlockSets.Modifier;
+import wtf.enums.Modifier;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
 
@@ -23,7 +23,7 @@ public class CaveTypePodzol extends AbstractCaveType{
 	@Override
 	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		if (simplex.get3DNoise(gen.getWorld(), pos) > 0.66){
-			gen.transformBlock(pos, Modifier.MOSSY);
+			gen.transformBlock(pos, Modifier.MOSS);
 		}
 	}
 
@@ -34,7 +34,7 @@ public class CaveTypePodzol extends AbstractCaveType{
 		}
 		else {
 			if (simplex.get3DNoise(gen.getWorld(), pos) > 0.66){
-				gen.transformBlock(pos, Modifier.MOSSY);
+				gen.transformBlock(pos, Modifier.MOSS);
 			}
 		}
 	}
@@ -58,7 +58,7 @@ public class CaveTypePodzol extends AbstractCaveType{
 			gen.replaceBlock(pos, podzol);
 		}
 		if (simplex.get3DNoise(gen.getWorld(), pos) > 0.66){
-				gen.transformBlock(pos, Modifier.MOSSY);
+				gen.transformBlock(pos, Modifier.MOSS);
 		}
 		
 	}

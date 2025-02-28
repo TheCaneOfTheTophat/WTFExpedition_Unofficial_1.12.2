@@ -15,12 +15,12 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidBase;
 import wtf.blocks.*;
-import wtf.blocks.enums.AnimatedDecoType;
-import wtf.blocks.enums.StaticDecoType;
-import wtf.config.BlockEntry;
+import wtf.enums.AnimatedDecoType;
+import wtf.enums.Modifier;
+import wtf.enums.StaticDecoType;
 import wtf.config.WTFExpeditionConfig;
 import wtf.gameplay.GravityMethods;
-import wtf.init.JSONLoader;
+import wtf.init.BlockSets;
 
 public class EntityFracture extends Entity {
 
@@ -148,7 +148,6 @@ public class EntityFracture extends Entity {
 	public static void fractureBlock(World world, BlockPos pos, boolean indirectFracture, boolean breakBlockEffect) {
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
-		BlockEntry entry;
 		IBlockState cobble;
 
 		if (state.getMaterial() == Material.AIR || block instanceof BlockFluidBase)
@@ -166,13 +165,11 @@ public class EntityFracture extends Entity {
 			if(indirectFracture && ((IDeco) block).getType() == StaticDecoType.CRACKED)
 				fractureAdjacent(world, pos);
 
-			entry = JSONLoader.getEntryFromState(((AbstractBlockDerivative) block).parentBackground);
-		} else
-			entry = JSONLoader.getEntryFromState(state);
+		}
 
-		if(entry != null && !entry.getFracturedBlockId().isEmpty())
-			cobble = JSONLoader.getStateFromId(entry.getFracturedBlockId());
-		else
+		cobble = BlockSets.getTransformedState(state, Modifier.FRACTURED);
+
+		if(cobble == null)
 			return;
 
 		if(breakBlockEffect)

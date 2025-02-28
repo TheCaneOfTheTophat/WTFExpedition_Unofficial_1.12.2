@@ -16,9 +16,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.lang3.tuple.Pair;
 import wtf.init.BlockSets;
-import wtf.init.BlockSets.Modifier;
-import wtf.utilities.wrappers.StateAndModifier;
+import wtf.enums.Modifier;
 
 public class BlockIcePatch extends BlockBreakable {
 
@@ -29,7 +29,7 @@ public class BlockIcePatch extends BlockBreakable {
 		this.setSoundType(SoundType.GLASS);
 		this.setTickRandomly(true);
 
-		BlockSets.blockTransformer.put(new StateAndModifier(Blocks.AIR.getDefaultState(), Modifier.FROZEN), this.getDefaultState());
+		BlockSets.blockTransformer.put(Pair.of(Blocks.AIR.getDefaultState(), Modifier.FROZEN), this.getDefaultState());
 	}
 
 	@Override

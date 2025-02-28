@@ -1,0 +1,10 @@
+[
+  {
+    "blockId": "minecraft:sandstone",
+    "name": "sandstone"
+  },
+  {
+    "blockId": "minecraft:red_sandstone",
+    "name": "red_sandstone"
+  }
+]

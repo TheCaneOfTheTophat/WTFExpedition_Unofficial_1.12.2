@@ -3,9 +3,7 @@ package wtf.worldgen.dungeoncaves;
 import java.util.Random;
 
 import net.minecraft.util.math.BlockPos;
-import wtf.init.BlockSets.Modifier;
 import wtf.utilities.wrappers.CaveListWrapper;
-import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
 
 public abstract class DungeonAbstractSimple extends AbstractDungeonType {

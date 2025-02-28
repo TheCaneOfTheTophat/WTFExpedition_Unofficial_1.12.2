@@ -4,15 +4,10 @@ import java.util.ArrayList;
 
 import exterminatorjeff.undergroundbiomes.api.API;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import org.apache.commons.lang3.tuple.Pair;
 import wtf.WTFExpedition;
 import wtf.init.BlockSets;
-import wtf.init.WTFContent;
-import wtf.utilities.wrappers.StateAndModifier;
-import wtf.init.BlockSets.Modifier;
+import wtf.enums.Modifier;
 
 public class UBCCompat {
 
@@ -72,7 +67,7 @@ public class UBCCompat {
 		IgneousBrick = new IBlockState[8];
 		for (int loop = 0; loop < 8; loop++){
 			IgneousBrick[loop] = API.IGNEOUS_BRICK.getBlock().getStateFromMeta(loop);
-			BlockSets.blockTransformer.put(new StateAndModifier(IgneousStone[loop], Modifier.BRICK), IgneousBrick[loop]);
+			BlockSets.blockTransformer.put(Pair.of(IgneousStone[loop], Modifier.BRICK), IgneousBrick[loop]);
 		}
 
 		MetamorphicStone = new IBlockState[8];
@@ -95,7 +90,7 @@ public class UBCCompat {
 		MetamorphicBrick = new IBlockState[8];
 		for (int loop = 0; loop < 8; loop++){
 			MetamorphicBrick[loop] = API.METAMORPHIC_BRICK.getBlock().getStateFromMeta(loop);
-			BlockSets.blockTransformer.put(new StateAndModifier(MetamorphicStone[loop], Modifier.BRICK), MetamorphicBrick[loop]);
+			BlockSets.blockTransformer.put(Pair.of(MetamorphicStone[loop], Modifier.BRICK), MetamorphicBrick[loop]);
 		}
 
 		SedimentaryStone = new IBlockState[8];

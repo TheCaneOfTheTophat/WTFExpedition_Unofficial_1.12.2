@@ -1,0 +1,39 @@
+[
+  {
+    "blockId": "minecraft:stonebrick",
+    "fracturedBlockId": "cracked_stone_bricks",
+    "name": "stone_bricks",
+    "modifiers": {
+      "mossy": "mossy_stone_bricks",
+      "cracked": "cracked_stone_bricks"
+    }
+  },
+  {
+    "blockId": "minecraft:stonebrick@1",
+    "name": "mossy_stone_bricks"
+  },
+  {
+    "blockId": "minecraft:stonebrick@2",
+    "name": "cracked_stone_bricks"
+  },
+  {
+    "blockId": "minecraft:stone@2",
+    "name": "polished_granite"
+  },
+  {
+    "blockId": "minecraft:stone@4",
+    "name": "polished_diorite"
+  },
+  {
+    "blockId": "minecraft:stone@6",
+    "name": "polished_andesite"
+  },
+  {
+    "blockId": "minecraft:nether_brick",
+    "name": "nether_brick"
+  },
+  {
+    "blockId": "minecraft:brick_block",
+    "name": "bricks"
+  }
+]

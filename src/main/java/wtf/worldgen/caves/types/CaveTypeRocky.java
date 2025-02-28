@@ -3,7 +3,7 @@ package wtf.worldgen.caves.types;
 import java.util.Random;
 
 import net.minecraft.util.math.BlockPos;
-import wtf.init.BlockSets.Modifier;
+import wtf.enums.Modifier;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
 
@@ -20,7 +20,7 @@ public class CaveTypeRocky extends AbstractCaveType{
 			gen.transformBlock(pos, Modifier.CRACKED);
 		}
 		else if (noise > 0.75){
-			gen.transformBlock(pos, Modifier.COBBLE);
+			gen.transformBlock(pos, Modifier.FRACTURED);
 		}
 	}
 
@@ -31,7 +31,7 @@ public class CaveTypeRocky extends AbstractCaveType{
 			gen.transformBlock(pos, Modifier.CRACKED);
 		}
 		else if (noise > 0.75){
-			gen.transformBlock(pos, Modifier.COBBLE);
+			gen.transformBlock(pos, Modifier.FRACTURED);
 		}
 	}
 
@@ -47,7 +47,7 @@ public class CaveTypeRocky extends AbstractCaveType{
 		}
 				
 		else {
-			gen.setFloorAddon(pos, Modifier.COBBLE);
+			gen.setFloorAddon(pos, Modifier.FRACTURED);
 		}
 	}
 
@@ -58,7 +58,7 @@ public class CaveTypeRocky extends AbstractCaveType{
 			gen.transformBlock(pos, Modifier.CRACKED);
 		}
 		else if (noise > 0.75){
-			gen.transformBlock(pos, Modifier.COBBLE);
+			gen.transformBlock(pos, Modifier.FRACTURED);
 		}
 	}
 

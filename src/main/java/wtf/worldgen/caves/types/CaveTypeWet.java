@@ -3,7 +3,7 @@ package wtf.worldgen.caves.types;
 import java.util.Random;
 
 import net.minecraft.util.math.BlockPos;
-import wtf.init.BlockSets;
+import wtf.enums.Modifier;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
 
@@ -17,7 +17,7 @@ public class CaveTypeWet extends AbstractCaveType {
 	@Override
 	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		if (random.nextFloat()<0.1){
-			gen.transformBlock(pos, BlockSets.Modifier.WATER_DRIP);
+			gen.transformBlock(pos, Modifier.WET);
 		}
 		
 	}

@@ -4,6 +4,7 @@ import com.google.gson.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import wtf.WTFExpedition;
+import wtf.enums.Modifier;
 import wtf.config.BlockEntry;
 import wtf.config.OreEntry;
 import wtf.config.WTFExpeditionConfig;
@@ -147,7 +148,7 @@ public class JSONLoader {
                     continue;
                 }
 
-                blockId = blockId.contains("@") ? blockId : blockId + "@0";
+                blockId = addMeta(blockId);
 
                 if(parent.contains("ores")) {
                     // TODO Better JSON parsing, use array of "generator" objects
@@ -156,20 +157,19 @@ public class JSONLoader {
                 } else {
                     String fracturedBlockId = "";
                     String texture = "";
-                    byte flags = 0;
+                    boolean fracturesFirstWhenMined = false;
+                    boolean speleothems = false;
                     int percentageMineSpeedModifier = 100;
                     int percentageStability = 100;
 
-                    if(object.has("fracturedBlockId")) {
+                    if(object.has("fracturedBlockId"))
                         fracturedBlockId = object.get("fracturedBlockId").getAsString();
-                        fracturedBlockId = fracturedBlockId.contains("@") ? fracturedBlockId : fracturedBlockId + "@0";
-                    }
 
                     if(object.has("texture"))
                         texture = object.get("texture").getAsString();
 
-                    if(object.has("fracturesFirstWhenMined") && object.get("fracturesFirstWhenMined").getAsBoolean())
-                        flags = (byte) (flags | 1);
+                    if(object.has("fracturesFirstWhenMined"))
+                        fracturesFirstWhenMined = object.get("fracturesFirstWhenMined").getAsBoolean();
 
                     if(object.has("percentageMineSpeedModifier"))
                         percentageMineSpeedModifier = Math.max(Math.min(object.get("percentageMineSpeedModifier").getAsInt(), 100), 0);
@@ -177,32 +177,40 @@ public class JSONLoader {
                     if(object.has("percentageStability"))
                         percentageStability = Math.max(Math.min(object.get("percentageStability").getAsInt(), 100), 0);
 
-                    if(object.has("decoration")) {
-                        JsonObject decoration = object.getAsJsonObject("decoration");
+                    HashMap<Modifier, String> modifierMap = new HashMap<>();
 
-                        if(decoration.has("mossy"))
-                            flags = (byte) (flags | 2);
+                    if(object.has("modifiers")) {
+                        JsonObject modifiers = object.getAsJsonObject("modifiers");
 
-                        if(decoration.has("soul"))
-                            flags = (byte) (flags | 4);
+                        if(modifiers.has("mossy"))
+                            modifierMap.put(Modifier.MOSS, modifiers.get("mossy").getAsString());
 
-                        if(decoration.has("cracked"))
-                            flags = (byte) (flags | 8);
+                        if(modifiers.has("soul"))
+                            modifierMap.put(Modifier.SOUL, modifiers.get("soul").getAsString());
 
-                        if(decoration.has("lava_crust"))
-                            flags = (byte) (flags | 16);
+                        if(modifiers.has("cracked"))
+                            modifierMap.put(Modifier.CRACKED, modifiers.get("cracked").getAsString());
 
-                        if(decoration.has("water_drip"))
-                            flags = (byte) (flags | 32);
+                        if(modifiers.has("lava_crust"))
+                            modifierMap.put(Modifier.LAVA_CRUST, modifiers.get("lava_crust").getAsString());
 
-                        if(decoration.has("lava_drip"))
-                            flags = (byte) (flags | 64);
+                        if(modifiers.has("wet"))
+                            modifierMap.put(Modifier.WET, modifiers.get("wet").getAsString());
 
-                        if(decoration.has("speleothems"))
-                            flags = (byte) (flags | -128);
+                        if(modifiers.has("lava_dripping"))
+                            modifierMap.put(Modifier.LAVA_DRIPPING, modifiers.get("lava_dripping").getAsString());
+
+                        if(modifiers.has("frozen"))
+                            modifierMap.put(Modifier.FROZEN, modifiers.get("frozen").getAsString());
+
+                        if(modifiers.has("brick"))
+                            modifierMap.put(Modifier.BRICK, modifiers.get("brick").getAsString());
                     }
 
-                    BlockEntry entryBlock = new BlockEntry(blockId, fracturedBlockId, name, texture, flags, percentageMineSpeedModifier, percentageStability);
+                    if(object.has("speleothems"))
+                        speleothems = object.get("speleothems").getAsBoolean();
+
+                    BlockEntry entryBlock = new BlockEntry(blockId, fracturedBlockId, name, texture, fracturesFirstWhenMined, percentageMineSpeedModifier, percentageStability, modifierMap, speleothems);
 
                     blockEntries.add(entryBlock);
                     identifierToBlockEntry.put(name, entryBlock);
@@ -214,12 +222,24 @@ public class JSONLoader {
         }
     }
 
+    public static String addMeta(String id) {
+        return id.contains("@") ? id : id + "@0";
+    }
+
+    public static String processId(String id) {
+        if(id.isEmpty())
+            return "";
+
+        BlockEntry entry = identifierToBlockEntry.get(id);
+        return entry != null ? entry.getBlockId() : id;
+    }
+
     public static BlockEntry getEntryFromState(IBlockState state) {
         return identifierToBlockEntry.get(state.getBlock().getRegistryName() + "@" + state.getBlock().getMetaFromState(state));
     }
 
     public static IBlockState getStateFromId(String id) {
-        String[] idSplit = id.split("@");
+        String[] idSplit = addMeta(id).split("@");
 
         if (Block.getBlockFromName(idSplit[0]) == null)
             return null;

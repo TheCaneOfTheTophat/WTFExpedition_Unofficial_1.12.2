@@ -3,12 +3,10 @@ package wtf.worldgen.dungeoncaves.ambient;
 import java.util.Random;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import wtf.blocks.BlockDecoAnim;
 import wtf.init.BlockSets;
-import wtf.init.BlockSets.Modifier;
+import wtf.enums.Modifier;
 import wtf.utilities.wrappers.CaveListWrapper;
 import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
@@ -39,7 +37,7 @@ public class DungeonTypeRain extends AbstractDungeonType{
 
 	@Override
 	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		IBlockState state = BlockSets.getTransformedState(gen.getWorld().getBlockState(pos), Modifier.WATER_DRIP);
+		IBlockState state = BlockSets.getTransformedState(gen.getWorld().getBlockState(pos), Modifier.WET);
 		
 		if (state != null && random.nextBoolean()){
 			gen.replaceBlock(pos, state.withProperty(BlockDecoAnim.FAST, true));
@@ -48,14 +46,14 @@ public class DungeonTypeRain extends AbstractDungeonType{
 			int var = random.nextInt(3);
 			switch (var){
 			case 0:
-				gen.transformBlock(pos, Modifier.COBBLE);
+				gen.transformBlock(pos, Modifier.FRACTURED);
 				break;
 			case 1:
-				gen.transformBlock(pos, Modifier.MOSSY);
+				gen.transformBlock(pos, Modifier.MOSS);
 				break;
 			case 2:
-				gen.transformBlock(pos, Modifier.COBBLE);
-				gen.transformBlock(pos, Modifier.MOSSY);
+				gen.transformBlock(pos, Modifier.FRACTURED);
+				gen.transformBlock(pos, Modifier.MOSS);
 				break;
 			}
 		}
@@ -70,30 +68,30 @@ public class DungeonTypeRain extends AbstractDungeonType{
 		case 0:
 			if (water){
 				gen.setWaterPatch(pos);
-				gen.transformBlock(pos, Modifier.COBBLE);
+				gen.transformBlock(pos, Modifier.FRACTURED);
 			}
 			else {
-				gen.transformBlock(pos, Modifier.COBBLE);
+				gen.transformBlock(pos, Modifier.FRACTURED);
 			}
 			break;
 		case 1:
 			if (water){
 				gen.setWaterPatch(pos);
-				gen.transformBlock(pos, Modifier.MOSSY);
+				gen.transformBlock(pos, Modifier.MOSS);
 			}
 			else {
-				gen.transformBlock(pos, Modifier.MOSSY);	
+				gen.transformBlock(pos, Modifier.MOSS);
 			}
 			break;
 		case 2:
 			if (water){
 				gen.setWaterPatch(pos);
-				gen.transformBlock(pos, Modifier.COBBLE);
-				gen.transformBlock(pos, Modifier.MOSSY);
+				gen.transformBlock(pos, Modifier.FRACTURED);
+				gen.transformBlock(pos, Modifier.MOSS);
 			}
 			else {
-				gen.transformBlock(pos, Modifier.COBBLE);
-				gen.transformBlock(pos.down(), Modifier.MOSSY);
+				gen.transformBlock(pos, Modifier.FRACTURED);
+				gen.transformBlock(pos.down(), Modifier.MOSS);
 			}
 			break;
 		}
@@ -105,14 +103,14 @@ public class DungeonTypeRain extends AbstractDungeonType{
 		int var = random.nextInt(3);
 		switch (var){
 		case 0:
-			gen.transformBlock(pos, Modifier.COBBLE);
+			gen.transformBlock(pos, Modifier.FRACTURED);
 			break;
 		case 1:
-			gen.transformBlock(pos, Modifier.MOSSY);
+			gen.transformBlock(pos, Modifier.MOSS);
 			break;
 		case 2:
-			gen.transformBlock(pos, Modifier.COBBLE);
-			gen.transformBlock(pos, Modifier.MOSSY);
+			gen.transformBlock(pos, Modifier.FRACTURED);
+			gen.transformBlock(pos, Modifier.MOSS);
 			break;
 		}
 

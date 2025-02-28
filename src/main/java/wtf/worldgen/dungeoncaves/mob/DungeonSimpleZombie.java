@@ -7,7 +7,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import wtf.init.BlockSets;
-import wtf.init.BlockSets.Modifier;
+import wtf.enums.Modifier;
 import wtf.utilities.wrappers.CaveListWrapper;
 import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
@@ -28,8 +28,8 @@ public class DungeonSimpleZombie extends DungeonAbstractSimple{
 	
 	@Override
 	public boolean canGenerateAt(GeneratorMethods gen, CaveListWrapper cave) {
-		IBlockState temp = BlockSets.getTransformedState(gen.getWorld().getBlockState(cave.centerpos.getFloorPos()), Modifier.COBBLE);
-		block = BlockSets.getTransformedState(temp, Modifier.MOSSY);
+		IBlockState temp = BlockSets.getTransformedState(gen.getWorld().getBlockState(cave.centerpos.getFloorPos()), Modifier.FRACTURED);
+		block = BlockSets.getTransformedState(temp, Modifier.MOSS);
 		
 		if (block==null){
 			block = Blocks.MOSSY_COBBLESTONE.getDefaultState();

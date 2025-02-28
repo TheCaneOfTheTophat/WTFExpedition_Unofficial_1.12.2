@@ -2,7 +2,7 @@ package wtf.worldgen.generators.queuedgen;
 
 import net.minecraft.block.state.IBlockState;
 import wtf.init.BlockSets;
-import wtf.init.BlockSets.Modifier;
+import wtf.enums.Modifier;
 
 public class QModify implements QueuedGenerator {
 

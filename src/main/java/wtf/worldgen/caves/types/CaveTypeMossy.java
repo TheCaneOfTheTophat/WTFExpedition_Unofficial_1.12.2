@@ -4,7 +4,7 @@ import java.util.Random;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
-import wtf.init.BlockSets.Modifier;
+import wtf.enums.Modifier;
 import wtf.init.WTFContent;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
@@ -19,7 +19,7 @@ public class CaveTypeMossy extends AbstractCaveType{
 	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		boolean mossy = simplex.get3DNoise(gen.getWorld(), pos) > 0.5;
 		if (mossy){
-			gen.transformBlock(pos, Modifier.MOSSY);
+			gen.transformBlock(pos, Modifier.MOSS);
 		}
 	}
 
@@ -38,7 +38,7 @@ public class CaveTypeMossy extends AbstractCaveType{
 		}
 		
 		if (mossy){	
-			gen.transformBlock(pos, Modifier.MOSSY);
+			gen.transformBlock(pos, Modifier.MOSS);
 		}
 	}
 
@@ -62,12 +62,12 @@ public class CaveTypeMossy extends AbstractCaveType{
 		if (height < 3 && noise < 0.33){
 			gen.replaceBlock(pos, Blocks.DIRT.getDefaultState());
 			if (mossy){
-				gen.transformBlock(pos, Modifier.MOSSY);
+				gen.transformBlock(pos, Modifier.MOSS);
 			}
 		}
 		
 		if (mossy){	
-			gen.transformBlock(pos, Modifier.MOSSY);
+			gen.transformBlock(pos, Modifier.MOSS);
 		}
 	}
 

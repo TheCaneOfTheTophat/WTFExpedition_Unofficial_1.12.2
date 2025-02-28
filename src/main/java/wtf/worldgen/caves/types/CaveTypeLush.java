@@ -13,7 +13,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import wtf.blocks.BlockRoots;
 import wtf.init.WTFContent;
-import wtf.init.BlockSets.Modifier;
+import wtf.enums.Modifier;
 import wtf.utilities.wrappers.AdjPos;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
@@ -39,7 +39,7 @@ public class CaveTypeLush extends AbstractCaveType{
 			gen.replaceBlock(pos, Blocks.DIRT.getDefaultState());
 		}
 		if (mossy){	
-			gen.transformBlock(pos, Modifier.MOSSY);
+			gen.transformBlock(pos, Modifier.MOSS);
 		}
 	}
 
@@ -62,10 +62,10 @@ public class CaveTypeLush extends AbstractCaveType{
 		}
 		
 		if (simplex.get3DNoise(gen.getWorld(), pos) > 0.75){
-			gen.transformBlock(pos, Modifier.COBBLE);
+			gen.transformBlock(pos, Modifier.FRACTURED);
 		}
 		if (mossy){	
-			gen.transformBlock(pos, Modifier.MOSSY);
+			gen.transformBlock(pos, Modifier.MOSS);
 		}
 		
 	}
@@ -78,7 +78,7 @@ public class CaveTypeLush extends AbstractCaveType{
 			gen.replaceBlock(pos, roots);
 		}
 		else{
-			gen.setCeilingAddon(pos, Modifier.COBBLE);
+			gen.setCeilingAddon(pos, Modifier.FRACTURED);
 			if (random.nextBoolean()){
 				for (int loop = random.nextInt(3)+1; loop > -1; loop--){
 					gen.GenVines(pos.east().down(loop), EnumFacing.WEST);
@@ -134,10 +134,10 @@ public class CaveTypeLush extends AbstractCaveType{
 		}
 		
 		if (simplex.get3DNoise(gen.getWorld(), pos) > 0.75){
-			gen.transformBlock(pos, Modifier.COBBLE);
+			gen.transformBlock(pos, Modifier.FRACTURED);
 		}
 		if (mossy){	
-			gen.transformBlock(pos, Modifier.MOSSY);
+			gen.transformBlock(pos, Modifier.MOSS);
 		}
 		
 	}

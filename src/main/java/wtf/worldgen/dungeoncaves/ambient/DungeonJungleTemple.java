@@ -6,7 +6,7 @@ import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import wtf.init.BlockSets.Modifier;
+import wtf.enums.Modifier;
 import wtf.utilities.wrappers.AdjPos;
 import wtf.utilities.wrappers.CaveListWrapper;
 import wtf.utilities.wrappers.CavePosition;
@@ -69,7 +69,7 @@ public class DungeonJungleTemple extends AbstractDungeonType{
 
 	@Override
 	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (random.nextFloat() < depth && gen.setCeilingAddon(pos, Modifier.COBBLE)){
+		if (random.nextFloat() < depth && gen.setCeilingAddon(pos, Modifier.FRACTURED)){
 			for (int loop = random.nextInt(3)+1; loop > -1; loop--){
 				gen.GenVines(pos.east().down(loop), EnumFacing.WEST);
 			}

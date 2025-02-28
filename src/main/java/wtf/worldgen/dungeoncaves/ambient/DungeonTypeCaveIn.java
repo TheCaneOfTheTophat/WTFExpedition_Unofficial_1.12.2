@@ -3,7 +3,7 @@ package wtf.worldgen.dungeoncaves.ambient;
 import java.util.Random;
 
 import net.minecraft.util.math.BlockPos;
-import wtf.init.BlockSets.Modifier;
+import wtf.enums.Modifier;
 import wtf.utilities.wrappers.CaveListWrapper;
 import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
@@ -59,7 +59,7 @@ public class DungeonTypeCaveIn extends AbstractDungeonType {
 
 		if (noise < 0.5){
 			gen.genFloatingStone(floating);
-			gen.transformBlock(floating, Modifier.COBBLE);
+			gen.transformBlock(floating, Modifier.FRACTURED);
 		}
 	}
 
