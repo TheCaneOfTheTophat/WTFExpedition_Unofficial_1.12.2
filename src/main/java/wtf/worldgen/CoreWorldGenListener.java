@@ -50,7 +50,7 @@ public class CoreWorldGenListener {
 		ChunkCoords coords = new ChunkCoords(event.getChunkX(), event.getChunkZ());
 
 		BlockPos pos = coords.getGenMarkerPos();
-		// event.getWorld().setBlockState(pos, WTFContent.gen_marker.getDefaultState());
+		event.getWorld().setBlockState(pos, WTFContent.gen_marker.getDefaultState());
 		
 		for (ChunkCoords adjCoords : coords.getChunksInRadius(1)){
 			if (shouldScan(worldMap, adjCoords)){

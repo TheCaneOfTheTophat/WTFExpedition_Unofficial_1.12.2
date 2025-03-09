@@ -4,6 +4,7 @@ package wtf.init;
 import java.util.*;
 
 import net.minecraft.block.BlockFalling;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -28,7 +29,7 @@ import wtf.enums.AnimatedDecoType;
 import wtf.enums.Modifier;
 import wtf.enums.SpeleothemType;
 import wtf.enums.StaticDecoType;
-import wtf.blocks.redstone.BlockDenseRedstoneOre;
+import wtf.blocks.BlockDenseRedstoneOre;
 import wtf.blocks.BlockWTFTorch;
 import wtf.config.*;
 import wtf.blocks.BlockOreSand;
@@ -76,6 +77,8 @@ public class WTFContent {
 	
 	public static final Block natural_sandstone = null;
 	public static final Block natural_red_sandstone = null;
+
+	public static final Block gen_marker = null;
 
 	public static final Item sulfur = null;
 	public static final Item nitre = null;
@@ -134,6 +137,8 @@ public class WTFContent {
 
 		registerSimpleBlock(reg, new BlockNaturalSandstone(Blocks.SANDSTONE.getDefaultState()), "natural_sandstone");
 		registerSimpleBlock(reg, new BlockNaturalSandstone(Blocks.RED_SANDSTONE.getDefaultState()), "natural_red_sandstone");
+
+		registerBlockWithoutItem(reg, new Block(Material.AIR), "gen_marker");
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
