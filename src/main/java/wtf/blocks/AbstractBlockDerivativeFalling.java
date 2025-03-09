@@ -108,6 +108,11 @@ public abstract class AbstractBlockDerivativeFalling extends BlockFalling {
     }
 
     @Override
+    public int getExpDrop(IBlockState state, net.minecraft.world.IBlockAccess world, BlockPos pos, int fortune) {
+        return this.parentForeground.getBlock().getExpDrop(state, world, pos, fortune);
+    }
+
+    @Override
     public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos) {
         return parentBackground.getBlockHardness(worldIn, pos);
     }
@@ -139,5 +144,10 @@ public abstract class AbstractBlockDerivativeFalling extends BlockFalling {
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer() {
         return parentBackground.getBlock().getBlockLayer();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public int getDustColor(IBlockState state) {
+        return ((BlockFalling) parentBackground.getBlock()).getDustColor(parentBackground);
     }
 }

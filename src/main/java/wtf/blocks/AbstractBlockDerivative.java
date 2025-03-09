@@ -104,8 +104,12 @@ public abstract class AbstractBlockDerivative extends Block {
             Item item = this.getItemDropped(parentForeground, rand, fortune);
             if (item != Items.AIR)
                 drops.add(new ItemStack(item, 1, parentForeground.getBlock().damageDropped(parentForeground)));
-
         }
+    }
+
+    @Override
+    public int getExpDrop(IBlockState state, net.minecraft.world.IBlockAccess world, BlockPos pos, int fortune) {
+        return this.parentForeground.getBlock().getExpDrop(state, world, pos, fortune);
     }
 	
     @Override
