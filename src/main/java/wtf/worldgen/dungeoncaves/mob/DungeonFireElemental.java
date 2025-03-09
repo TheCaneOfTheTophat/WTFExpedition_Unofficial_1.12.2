@@ -24,7 +24,7 @@ public class DungeonFireElemental extends AbstractDungeonType{
 
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID, "fireelemental"), 2);
+		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID, "fire_elemental"), 2);
 	}
 
 	@Override

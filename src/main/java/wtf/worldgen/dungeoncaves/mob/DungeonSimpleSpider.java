@@ -40,12 +40,13 @@ public class DungeonSimpleSpider extends DungeonAbstractSimple{
 
 		BlockPos midpos = pos.getMidPos();
 
-		gen.spawnVanillaSpawner(midpos, new ResourceLocation("spider"), 3);
 		midpos = midpos.down();
 		while (midpos.getY() > pos.floor){
 			gen.replaceBlock(midpos, Blocks.MOSSY_COBBLESTONE.getDefaultState());
 			midpos = midpos.down();
 		}
+
+		gen.spawnVanillaSpawner(midpos, new ResourceLocation("spider"), 3);
 
 	}
 

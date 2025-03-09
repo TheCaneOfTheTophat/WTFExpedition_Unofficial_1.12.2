@@ -23,7 +23,7 @@ public class DungeonBogLantern extends AbstractDungeonType{
 
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID, "flyingflame"), 8);
+		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID, "bog_lantern"), 8);
 		
 	}
 

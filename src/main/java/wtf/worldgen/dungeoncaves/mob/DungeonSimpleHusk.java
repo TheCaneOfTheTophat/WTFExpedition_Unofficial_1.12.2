@@ -20,7 +20,7 @@ public class DungeonSimpleHusk extends DungeonAbstractSimple{
 
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID, "husk"), 5);
+		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation("husk"), 5);
 	}
 
 	IBlockState sandstone = Blocks.SANDSTONE.getDefaultState().withProperty(BlockSandStone.TYPE, BlockSandStone.EnumType.SMOOTH);

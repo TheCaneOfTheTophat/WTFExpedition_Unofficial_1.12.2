@@ -1,4 +1,4 @@
-package wtf.worldgen.dungeoncaves;
+package wtf.worldgen.dungeoncaves.mob;
 
 import java.util.Random;
 
@@ -11,8 +11,9 @@ import wtf.init.WTFContent;
 import wtf.utilities.wrappers.CaveListWrapper;
 import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
+import wtf.worldgen.dungeoncaves.AbstractDungeonType;
 
-public class DungeonZombieFarmer extends AbstractDungeonType{
+public class DungeonZombieFarmer extends AbstractDungeonType {
 
 	public DungeonZombieFarmer(String name) {
 		super(name, 5, 15);
@@ -35,7 +36,7 @@ public class DungeonZombieFarmer extends AbstractDungeonType{
 	
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID,"zombiefarmer"), 2);
+		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID,"zombie_farmer"), 2);
 	}
 
 	@Override

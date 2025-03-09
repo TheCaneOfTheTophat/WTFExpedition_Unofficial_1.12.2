@@ -12,22 +12,7 @@ import wtf.worldgen.dungeoncaves.ambient.DungeonTypeFrozenSolid;
 import wtf.worldgen.dungeoncaves.ambient.DungeonTypePrismarine;
 import wtf.worldgen.dungeoncaves.ambient.DungeonTypeRain;
 import wtf.worldgen.dungeoncaves.ambient.DungeonTypeSoulsand;
-import wtf.worldgen.dungeoncaves.mob.DungeonBlaze;
-import wtf.worldgen.dungeoncaves.mob.DungeonBogLantern;
-import wtf.worldgen.dungeoncaves.mob.DungeonFireElemental;
-import wtf.worldgen.dungeoncaves.mob.DungeonMine;
-import wtf.worldgen.dungeoncaves.mob.DungeonSimpleHusk;
-import wtf.worldgen.dungeoncaves.mob.DungeonSimpleMagma;
-import wtf.worldgen.dungeoncaves.mob.DungeonSimpleSkeleton;
-import wtf.worldgen.dungeoncaves.mob.DungeonSimpleSkeletonKnight;
-import wtf.worldgen.dungeoncaves.mob.DungeonSimpleSpider;
-import wtf.worldgen.dungeoncaves.mob.DungeonSimpleStray;
-import wtf.worldgen.dungeoncaves.mob.DungeonSimpleZombie;
-import wtf.worldgen.dungeoncaves.mob.DungeonSlime;
-import wtf.worldgen.dungeoncaves.mob.DungeonTypeDerangedGolem;
-import wtf.worldgen.dungeoncaves.mob.DungeonTypeMummy;
-import wtf.worldgen.dungeoncaves.mob.DungeonTypeNetherPortal;
-import wtf.worldgen.dungeoncaves.mob.DungeonTypeSkeletonMage;
+import wtf.worldgen.dungeoncaves.mob.*;
 
 public class DungeonTypeRegister {
 	

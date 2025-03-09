@@ -26,7 +26,7 @@ public class DungeonMine extends AbstractDungeonType{
 
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID, "zombieminer"), 5);
+		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID, "zombie_miner"), 5);
 		gen.replaceBlock(pos.getFloorPos().up(2), Blocks.TNT.getDefaultState());
 	}
 

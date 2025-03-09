@@ -33,7 +33,7 @@ IBlockState block = null;
 	
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID, "skeletonknight"), 5);
+		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID, "skeleton_knight"), 5);
 	}
 
 	public void generate(GeneratorMethods gen, Random random, BlockPos pos) {

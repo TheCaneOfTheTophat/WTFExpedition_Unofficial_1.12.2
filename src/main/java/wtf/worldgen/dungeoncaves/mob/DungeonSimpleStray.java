@@ -15,7 +15,7 @@ public class DungeonSimpleStray extends DungeonSimpleSkeleton{
 	
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID, "stray"), 5);
+		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation("stray"), 5);
 	}
 
 }

@@ -28,7 +28,7 @@ public class DungeonTypeDerangedGolem extends AbstractDungeonType {
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
 		//anvil in center, with golem spawner underneath
 		//gen.spawnVanillaSpawner(pos.getFloorPos(), Core.coreID+".ZombieMummy", 3);
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID, "derangedirongolem"), 1);
+		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID, "deranged_iron_golem"), 1);
 		gen.replaceBlock(pos.getFloorPos().up(2), Blocks.ANVIL.getDefaultState());
 		
 	}

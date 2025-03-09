@@ -19,7 +19,7 @@ public class DungeonTypeSkeletonMage extends DungeonSimpleSkeleton{
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
 		gen.replaceBlock(pos.getFloorPos().up(2), Blocks.ENCHANTING_TABLE.getDefaultState());
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID,"skeletonmage"), 2);
+		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID,"skeleton_mage"), 2);
 	}
 
 	@Override
