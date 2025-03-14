@@ -31,7 +31,6 @@ public class DungeonZombieFarmer extends AbstractDungeonType {
 	@Override
 	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		gen.replaceBlock(pos, Blocks.MYCELIUM.getDefaultState());
-		
 	}
 	
 	@Override
@@ -45,20 +44,13 @@ public class DungeonZombieFarmer extends AbstractDungeonType {
 	}
 
 	@Override
-	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
+	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
 	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		gen.replaceBlock(pos, Blocks.BROWN_MUSHROOM.getDefaultState());
-		
 	}
 
 	@Override
-	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		
-	}
-
-
+	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {}
 }

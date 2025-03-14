@@ -11,8 +11,6 @@ import wtf.worldgen.dungeoncaves.AbstractDungeonType;
 
 public class DungeonTypeCaveIn extends AbstractDungeonType {
 
-
-
 	public DungeonTypeCaveIn(String name) {
 		super(name, 0, 0);
 		this.genAir = true;
@@ -24,45 +22,30 @@ public class DungeonTypeCaveIn extends AbstractDungeonType {
 	}
 
 	@Override
-	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-
-	}
+	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {}
 
 	@Override
-	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-
-	}
+	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-
-	}
+	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-
-	}
+	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {}
 
 	@Override
-	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-
-	}
+	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-
-	}
+	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateAir(GeneratorMethods gen, Random random, BlockPos floating, float depth){
+	public void generateAir(GeneratorMethods gen, Random random, BlockPos floating, float depth) {
 		double noise = simplex.get3DNoise(gen.getWorld(), floating.getX(), floating.getY(), floating.getZ());
 
-		if (noise < 0.5){
+		if (noise < 0.5) {
 			gen.genFloatingStone(floating);
 			gen.transformBlock(floating, Modifier.FRACTURED);
 		}
 	}
-
-
-
 }

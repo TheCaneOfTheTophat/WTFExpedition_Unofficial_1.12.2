@@ -2,11 +2,11 @@ package wtf.worldgen.generators.queuedgen;
 
 import net.minecraft.block.state.IBlockState;
 
-public class QReplace implements QueuedGenerator{
+public class QReplace implements QueuedGenerator {
 
 	private final IBlockState state;
 	
-	public QReplace(IBlockState state){
+	public QReplace(IBlockState state) {
 		this.state = state;
 	}
 	

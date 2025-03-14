@@ -90,15 +90,15 @@ public class ExpVec extends Vec {
 	}
 
 	public double strX() {
-		return str*vecX;
+		return str * vecX;
 	}
 
 	public double strY() {
-		return str*vecY;
+		return str * vecY;
 	}
 
 	public double strZ() {
-		return str*vecZ;
+		return str * vecZ;
 	}
 
 	public boolean hasNext() {

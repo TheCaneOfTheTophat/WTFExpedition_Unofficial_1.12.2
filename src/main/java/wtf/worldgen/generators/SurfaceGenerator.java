@@ -18,31 +18,20 @@ public class SurfaceGenerator {
 
 	private static SimplexHelper simplex = new SimplexHelper("SurfaceGenerator");
 	
-	public void generate(World world, ChunkCoords chunkcoords, Random random, ChunkScan chunkscan, GeneratorMethods gen){
-
-		for (SurfacePos[] posArray : chunkscan.surface){
-			for (SurfacePos pos : posArray){
+	public void generate(World world, ChunkCoords chunkcoords, Random random, ChunkScan chunkscan, GeneratorMethods gen) {
+		for (SurfacePos[] posArray : chunkscan.surface) {
+			for (SurfacePos pos : posArray) {
 				Biome biome = world.getBiome(pos);
 				if (BiomeDictionary.hasType(biome, Type.RIVER)){
-					if (simplex.get2DNoise(world, pos.getX()*16, pos.getZ()*16) > WTFExpeditionConfig.riverFracturedBlockPercent &&
-							simplex.get3DNoise(world, pos) > WTFExpeditionConfig.riverFracturedBlockPercent){
+					if (simplex.get2DNoise(world, pos.getX() * 16, pos.getZ() * 16) > WTFExpeditionConfig.riverFracturedBlockPercent && simplex.get3DNoise(world, pos) > WTFExpeditionConfig.riverFracturedBlockPercent)
 						gen.transformBlock(pos, Modifier.FRACTURED);
-					}
-				}
-				else if (BiomeDictionary.hasType(biome, Type.MOUNTAIN)){
-					if (simplex.get2DNoise(world, pos.getX()*16, pos.getZ()*16) > WTFExpeditionConfig.mountainFracturedChunkPercent &&
-							simplex.get3DNoise(world, pos) > WTFExpeditionConfig.mountainFracturedBlockPercent){
+				} else if (BiomeDictionary.hasType(biome, Type.MOUNTAIN)) {
+					if (simplex.get2DNoise(world, pos.getX() * 16, pos.getZ() * 16) > WTFExpeditionConfig.mountainFracturedChunkPercent && simplex.get3DNoise(world, pos) > WTFExpeditionConfig.mountainFracturedBlockPercent)
 						gen.transformBlock(pos, Modifier.FRACTURED);
-					}
-				}
-				else if (BiomeDictionary.hasType(biome, Type.FOREST )){
-					if (simplex.get2DNoise(world, pos.getX()*16, pos.getZ()*16) > WTFExpeditionConfig.forestMossyChunkPercent &&
-							simplex.get3DNoise(world, pos) > WTFExpeditionConfig.forestMossyBlockPercent){
+				} else if (BiomeDictionary.hasType(biome, Type.FOREST )) {
+					if (simplex.get2DNoise(world, pos.getX() * 16, pos.getZ() * 16) > WTFExpeditionConfig.forestMossyChunkPercent && simplex.get3DNoise(world, pos) > WTFExpeditionConfig.forestMossyBlockPercent)
 						gen.transformBlock(pos, Modifier.MOSS);
-					}
 				}
-				
-				
 			}
 		}
 	}

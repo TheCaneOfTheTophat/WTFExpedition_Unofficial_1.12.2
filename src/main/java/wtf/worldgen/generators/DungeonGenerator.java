@@ -18,22 +18,19 @@ import wtf.worldgen.dungeoncaves.AbstractDungeonType;
 
 public class DungeonGenerator {
 
-	private HashSet<ChunkCoords> spawned = new HashSet<ChunkCoords>();
+	private HashSet<ChunkCoords> spawned = new HashSet<>();
 	
 	public void generate(World world, ChunkCoords coords, Random random, ChunkScan chunkscan, GeneratorMethods gen) {
-
-		if (world.provider.getDimensionType() == DimensionType.OVERWORLD 
-				&& random.nextFloat() < WTFExpeditionConfig.subtypeChance){
-
-			for (ChunkCoords adj : coords.getChunksInRadius(1)){
-				if (spawned.contains(adj)){
+		if (world.provider.getDimensionType() == DimensionType.OVERWORLD && random.nextFloat() < WTFExpeditionConfig.subtypeChance) {
+			for (ChunkCoords adj : coords.getChunksInRadius(1)) {
+				if (spawned.contains(adj)) {
 					//System.out.println("stopped from spawning adjacency");
 					return;
 				}
 			}
 
 			CaveListWrapper cave = getLargestCave(world, chunkscan);
-			if (cave==null){
+			if (cave == null) {
 				//if the cave is null
 				return;
 			}
@@ -41,79 +38,61 @@ public class DungeonGenerator {
 			CaveProfile profile = CaveTypeRegister.getCaveProfile(cave.getBiome(world));
 			AbstractDungeonType dungeon = profile.getDungeonForCave(gen, random, cave, (int) chunkscan.surfaceAvg);
 
-			if (dungeon != null){
-				System.out.println("Generating dungeon " + dungeon.name + " @ " + cave.getCenter().x + " " + (cave.getCenter().floor+2) + " " + cave.getCenter().z );
+			if (dungeon != null) {
+				System.out.println("Generating dungeon " + dungeon.name + " @ " + cave.getCenter().x + " " + (cave.getCenter().floor + 2) + " " + cave.getCenter().z);
 				spawned.add(coords);
 				
 				dungeon.setupForGen(cave);
-				float depth = (float) (cave.getAvgFloor()/chunkscan.surfaceAvg);
+				float depth = (float) (cave.getAvgFloor() / chunkscan.surfaceAvg);
 
-				for (CavePosition position : cave.getCaveSet()) {
+				for (CavePosition position : cave.getCaveSet())
 					generateDungeon(gen, random, dungeon, position,depth);
-				}
+
 				dungeon.generateCenter(gen, random, cave.getCenter(), depth);
 			}
 		}
 	}
 
-
-	public static void generateDungeon(GeneratorMethods gen, Random random, AbstractDungeonType dungeon, CavePosition pos, float depth){
-
-		
-		if (dungeon.shouldPosGen(gen, pos.getFloorPos())){
+	public static void generateDungeon(GeneratorMethods gen, Random random, AbstractDungeonType dungeon, CavePosition pos, float depth) {
+		if (dungeon.shouldPosGen(gen, pos.getFloorPos()))
 			dungeon.generateFloor(gen, random, pos.getFloorPos(), depth);
-		}
 		
-		if (dungeon.shouldPosGen(gen, pos.getCeilingPos())){
+		if (dungeon.shouldPosGen(gen, pos.getCeilingPos()))
 			dungeon.generateCeiling(gen, random, pos.getCeilingPos(), depth);
-		}
 
-		for (BlockPos wallpos : pos.wall){
-			if (dungeon.shouldPosGen(gen, wallpos)){
+		for (BlockPos wallpos : pos.wall)
+			if (dungeon.shouldPosGen(gen, wallpos))
 				dungeon.generateWall(gen, random, wallpos, depth, wallpos.getY() - pos.floor);
-			}
-		}
-		for (AdjPos adjpos : pos.adj){
-			if (dungeon.shouldPosGen(gen, adjpos)){
-				dungeon.generateAdjacentWall(gen, random, adjpos, depth, adjpos.getY()-pos.floor);
-			}
-		}
+
+		for (AdjPos adjpos : pos.adj)
+			if (dungeon.shouldPosGen(gen, adjpos))
+				dungeon.generateAdjacentWall(gen, random, adjpos, depth, adjpos.getY() - pos.floor);
 
 
-		if (random.nextInt(100) < dungeon.ceilingaddonchance+(1-depth)*5 && dungeon.shouldPosGen(gen, pos.getCeilingPos().down()))
-		{
+		if (random.nextInt(100) < dungeon.ceilingaddonchance + (1 - depth) * 5 && dungeon.shouldPosGen(gen, pos.getCeilingPos().down()))
 			dungeon.generateCeilingAddons(gen, random, pos.getCeilingPos().down(), depth);
-		}
-		if (random.nextInt(100) < dungeon.flooraddonchance+(1-depth)*5 && dungeon.shouldPosGen(gen,  pos.getFloorPos().up()))
-		{
+
+		if (random.nextInt(100) < dungeon.flooraddonchance + ( 1 - depth) * 5 && dungeon.shouldPosGen(gen,  pos.getFloorPos().up()))
 			dungeon.generateFloorAddons(gen, random, pos.getFloorPos().up(), depth);
-		}
-		if (dungeon.genAir){
-			for (BlockPos airpos : pos.getAirPos()){
-				if (dungeon.shouldPosGen(gen, airpos)){
+
+		if (dungeon.genAir)
+			for (BlockPos airpos : pos.getAirPos())
+				if (dungeon.shouldPosGen(gen, airpos))
 					dungeon.generateAir(gen, random, airpos, depth);
-				}
-			}
-		}
 	}
 
-
-	public static CaveListWrapper getLargestCave(World world, ChunkScan chunkscan){
+	public static CaveListWrapper getLargestCave(World world, ChunkScan chunkscan) {
 		CaveListWrapper best = null;
 		double bestvalue = 1;
 
-		for (CaveListWrapper wrappedcave : chunkscan.caveset.getCaves()){
+		for (CaveListWrapper wrappedcave : chunkscan.caveset.getCaves()) {
+			double score = wrappedcave.dungeonScore(world, chunkscan.surfaceAvg);
 
-			double score = wrappedcave.dungeonScore(world, chunkscan.surfaceAvg); 
-			if (score > bestvalue){
+			if (score > bestvalue) {
 				best = wrappedcave;
 				bestvalue = score;
 			}
 		}
 		return best;
 	}
-
-
-
-
 }

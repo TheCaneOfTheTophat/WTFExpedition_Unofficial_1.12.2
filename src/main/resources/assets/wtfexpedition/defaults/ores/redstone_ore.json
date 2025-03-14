@@ -16,9 +16,7 @@
       "wet": 50
     },
     "generation_settings": {
-      "generation_types": {
-        "vein": true
-      },
+      "primaryGenerationType": "vein",
       "vein_generation": {
         "veinPitchAverage": 0.0,
         "veinLength": 16,

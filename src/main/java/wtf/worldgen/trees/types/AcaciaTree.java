@@ -12,7 +12,7 @@ import wtf.worldgen.trees.TreeGenMethods;
 import wtf.worldgen.trees.TreeInstance;
 import wtf.worldgen.trees.components.Branch;
 
-public class AcaciaTree extends AbstractTreeType{
+public class AcaciaTree extends AbstractTreeType {
 
 	public AcaciaTree(World world) {
 		super(world, Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.ACACIA), 
@@ -26,14 +26,11 @@ public class AcaciaTree extends AbstractTreeType{
 		this.topLimitDown = 1;
 		this.topLimitIncrement = 0.5;
 		this.genBuffer = 6;
-	
-	
-	
 	}
 
 	@Override
 	public int getBranchesPerNode(double nodeHeight, double scale) {
-		return random.nextInt(2)+1;
+		return random.nextInt(2) + 1;
 	}
 
 	@Override
@@ -43,32 +40,32 @@ public class AcaciaTree extends AbstractTreeType{
 
 	@Override
 	public double getBranchSeperation(double scale) {
-		return random.nextInt(2)+2;
+		return random.nextInt(2) + 2;
 	}
 
 	@Override
 	public double getBranchPitch(double scale) {
-		return random.nextFloat()/3+0.4;
+		return random.nextFloat() / 3 + 0.4;
 	}
 
 	@Override
 	public double getLowestBranchRatio() {
-		return random.nextFloat()/2+0.5;
+		return random.nextFloat() / 2 + 0.5;
 	}
 
 	@Override
 	public double getBranchLength(double scale, double trunkHeight, double nodeHeight) {
-		return trunkHeight*2;
+		return trunkHeight * 2;
 	}
 
 	@Override
 	public double getTrunkHeight(double scale) {
-		return random.nextInt(3)+2 + 2*scale;
+		return random.nextInt(3) + 2 + 2 * scale;
 	}
 
 	@Override
 	public double getRootLength(double trunkHeight) {
-		return trunkHeight/2;
+		return trunkHeight / 2;
 	}
 
 	@Override
@@ -83,44 +80,37 @@ public class AcaciaTree extends AbstractTreeType{
 
 	@Override
 	public int getNumRoots(double trunkDiameter) {
-		return random.nextInt(2)+2;
+		return random.nextInt(2) + 2;
 	}
 
 	@Override
 	public void doLeafNode(TreeInstance tree, Branch branch, BlockPos pos) {
-		double height = pos.getY()-tree.y;
-		double taper = MathHelper.clamp((tree.type.leafTaper) * (tree.trunkHeight-height)/tree.trunkHeight, tree.type.leafTaper, 1);
+		double height = pos.getY() - tree.y;
+		double taper = MathHelper.clamp((tree.type.leafTaper) * (tree.trunkHeight - height) / tree.trunkHeight, tree.type.leafTaper, 1);
 
-		double radius = MathHelper.clamp(tree.type.leafRad*taper, 1, tree.type.leafRad);
+		double radius = MathHelper.clamp(tree.type.leafRad * taper, 1, tree.type.leafRad);
 		double ymin = tree.type.leafYMin;
 		double ymax = tree.type.leafYMax;
 
-
-		for (double yloop = ymin; yloop < ymax; yloop++){
-
-			double sliceRadSq = (radius+1) * (radius+1) - (yloop*yloop);
+		for(double yloop = ymin; yloop < ymax; yloop++) {
+			double sliceRadSq = (radius + 1) * (radius + 1) - (yloop * yloop);
 			double slicedRadSqSmall = radius * radius - (yloop * yloop);
 
-			if (sliceRadSq > 0){
+			if (sliceRadSq > 0) {
+				for (double xloop = -radius; xloop < radius + 1; xloop++) {
+					for (double zloop = -radius; zloop < radius + 1; zloop++) {
+						double xzDistanceSq = xloop * xloop + zloop * zloop;
 
-				for (double xloop = -radius; xloop < radius+1; xloop++){
-					for (double zloop = -radius; zloop < radius+1; zloop++){
+						BlockPos leafPos = new BlockPos(xloop + pos.getX(), yloop + pos.getY(), zloop + pos.getZ());
 
-						double xzDistanceSq = xloop*xloop + zloop*zloop;
-
-						BlockPos leafPos = new BlockPos(xloop+pos.getX(), yloop+pos.getY(), zloop+pos.getZ());
-
-						if (xzDistanceSq < slicedRadSqSmall){
+						if (xzDistanceSq < slicedRadSqSmall)
 							tree.setLeaf(leafPos);
-						}
-						else if (xzDistanceSq < sliceRadSq){
-							if (tree.random.nextBoolean()){
+						else if (xzDistanceSq < sliceRadSq) {
+							if (tree.random.nextBoolean()) {
 								tree.setLeaf(leafPos);
 
-
-								if (tree.type.vines > 0 && MathHelper.absMax(xloop, zloop) > yloop && tree.random.nextBoolean()){
+								if (tree.type.vines > 0 && MathHelper.absMax(xloop, zloop) > yloop && tree.random.nextBoolean())
 									TreeGenMethods.genVine(tree, leafPos, xloop, zloop);
-								}
 							}
 						}
 					}
@@ -128,5 +118,4 @@ public class AcaciaTree extends AbstractTreeType{
 			}
 		}
 	}
-	
 }

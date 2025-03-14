@@ -9,7 +9,7 @@ public class QTreeReplace implements QueuedGenerator{
 	private final IBlockState state;
 	private final BlockPos pos;
 	
-	public QTreeReplace(BlockPos pos, IBlockState state){
+	public QTreeReplace(BlockPos pos, IBlockState state) {
 		this.state = state;
 		this.pos = pos;
 	}

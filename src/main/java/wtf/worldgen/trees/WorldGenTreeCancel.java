@@ -10,13 +10,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class WorldGenTreeCancel {
 
 	@SubscribeEvent
-	public void decorate(DecorateBiomeEvent.Decorate event){
-		if (event.getType() == Decorate.EventType.TREE  && TreeGenerator.shouldTreePosGenerate(event.getWorld(), event.getRand(), event.getPos())){	
+	public void decorate(DecorateBiomeEvent.Decorate event) {
+		if (event.getType() == Decorate.EventType.TREE  && TreeGenerator.shouldTreePosGenerate(event.getWorld(), event.getRand(), event.getPos()))
 			event.setResult(Result.DENY);
-		}
 	}
-	
-	
 
 	//tree testing
 /*

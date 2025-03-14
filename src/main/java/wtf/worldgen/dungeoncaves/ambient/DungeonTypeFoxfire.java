@@ -13,7 +13,6 @@ import wtf.worldgen.dungeoncaves.AbstractDungeonType;
 
 public class DungeonTypeFoxfire extends AbstractDungeonType {
 
-
 	public DungeonTypeFoxfire(String name, int ceilingAddonPercentChance, int floorAddonPercentChance) {
 		super(name, ceilingAddonPercentChance, floorAddonPercentChance);
 	}
@@ -31,6 +30,7 @@ public class DungeonTypeFoxfire extends AbstractDungeonType {
 		gen.replaceBlock(pos.down(), Blocks.LOG.getDefaultState());
 		gen.replaceBlock(pos.down(2), WTFContent.foxfire.getDefaultState().withProperty(BlockFoxfire.HANGING, true));
 	}
+
 	@Override
 	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		gen.replaceBlock(pos.down(2), Blocks.LOG.getDefaultState());
@@ -41,24 +41,15 @@ public class DungeonTypeFoxfire extends AbstractDungeonType {
 	}
 	
 	@Override
-	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		
-	}
+	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {}
 
 	@Override
-	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
+	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
+	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		
-	}
-
+	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {}
 
 }

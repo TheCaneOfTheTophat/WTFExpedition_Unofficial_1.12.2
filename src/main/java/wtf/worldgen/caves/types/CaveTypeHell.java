@@ -13,7 +13,7 @@ import wtf.worldgen.caves.types.nether.NetherMushroom;
 import wtf.worldgen.caves.types.nether.NetherNormal;
 import wtf.worldgen.caves.types.nether.NetherSoulDesert;
 
-public class CaveTypeHell extends AbstractCaveType{
+public class CaveTypeHell extends AbstractCaveType {
 
 	public CaveTypeHell(String name, int ceilingAddonPercentChance, int floorAddonPercentChance) {
 		super(name, 100, 100);
@@ -32,47 +32,42 @@ public class CaveTypeHell extends AbstractCaveType{
 	@Override
 	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		hellBiome type = getSubType(pos);
-		if (random.nextInt(100) < type.cavetype.ceilingaddonchance){
+
+		if (random.nextInt(100) < type.cavetype.ceilingaddonchance)
 			type.cavetype.generateCeilingAddons(gen, random, pos, depth);
-		}
-		
 	}
 
 	@Override
 	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		hellBiome type = getSubType(pos);
-		if (random.nextInt(100) < type.cavetype.flooraddonchance){
+		if (random.nextInt(100) < type.cavetype.flooraddonchance)
 			type.cavetype.generateFloorAddons(gen, random, pos, depth);
-		}
 	}
 
 	@Override
 	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
 		getSubType(pos).cavetype.generateWall(gen, random, pos, depth, height);
-		
 	}
 	
 	@Override
-	public void generateAdjacentWall(GeneratorMethods gen, Random random, AdjPos pos, float depth, int height){
+	public void generateAdjacentWall(GeneratorMethods gen, Random random, AdjPos pos, float depth, int height) {
 		getSubType(pos).cavetype.generateAdjacentWall(gen, random, pos, depth, height);
 	}
 	
-	public enum hellBiome{
+	public enum hellBiome {
 		NORMAL(new NetherNormal()), 
 		SOULDESERT(new NetherSoulDesert()), 
 		MUSHROOM(new NetherMushroom()), 
 		DEADFOREST(new NetherDeadForest()), 
 		FIREFOREST(new NetherFireForest()), 
 		FROZEN(new NetherFrozen());
-		
-		
+
 		private final AbstractCaveType cavetype;
 		
 		hellBiome(AbstractCaveType type){
 			this.cavetype = type;
 		}
-	};
-
+	}
 
 	public hellBiome getSubType(BlockPos pos){
 		

@@ -8,31 +8,23 @@ import wtf.init.WTFContent;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
 
-public class CaveTypeIce extends AbstractCaveType{
-
+public class CaveTypeIce extends AbstractCaveType {
 
 	public CaveTypeIce(String name, int ceilingAddonPercentChance, int floorAddonPercentChance) {
 		super(name, ceilingAddonPercentChance, floorAddonPercentChance);
 	}
 
-
 	@Override
-	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
-
+	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
 	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-		if (simplex.get3DNoiseScaled(gen.getWorld(),pos, 0.2) < 0.5 ){
+		if (simplex.get3DNoiseScaled(gen.getWorld(),pos, 0.2) < 0.5) {
 			//in shallow caves, depth = 0 to 0.33
-			if (simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.1)/3 > depth){
+			if (simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.1) / 3 > depth)
 				gen.setPatch(pos, WTFContent.ice_patch.getDefaultState());
-			}
-			else {
+			else
 				gen.setPatch(pos, Blocks.SNOW_LAYER.getDefaultState());
-			}
 		}
 	}
 
@@ -42,20 +34,10 @@ public class CaveTypeIce extends AbstractCaveType{
 		gen.genIcicle(pos);
 	}
 
+	@Override
+	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-		
-	}
-
-
-	@Override
-	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		
-	}
-
-
-
+	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {}
 
 }

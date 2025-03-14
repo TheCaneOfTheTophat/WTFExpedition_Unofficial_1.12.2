@@ -3,12 +3,9 @@ package wtf.worldgen.generators;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 import wtf.utilities.wrappers.BlockMap;
-import wtf.worldgen.CoreWorldGenListener;
 
 public class TickGenBuffer {
 
@@ -28,11 +25,9 @@ public class TickGenBuffer {
 				mapbuffer.poll().setBlocks();
 			}
 		}*/
-		if (mapbuffer.size() > 0){
+		if (mapbuffer.size() > 0) {
 			BlockMap map = mapbuffer.poll();
 			map.setBlocks();
 		}
 	}
-
-
 }

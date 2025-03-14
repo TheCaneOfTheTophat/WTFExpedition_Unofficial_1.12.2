@@ -102,49 +102,37 @@ public class JungleGiant extends AbstractTreeType{
 
 	@Override
 	public void doLeafNode(TreeInstance tree, Branch branch, BlockPos pos) {
-		double height = pos.getY()-tree.y;
-		double taper = MathHelper.clamp((tree.type.leafTaper) * (tree.trunkHeight-height)/tree.trunkHeight, tree.type.leafTaper, 1);
+		double height = pos.getY() - tree.y;
+		double taper = MathHelper.clamp((tree.type.leafTaper) * (tree.trunkHeight - height) / tree.trunkHeight, tree.type.leafTaper, 1);
 
-		double radius = MathHelper.clamp(tree.type.leafRad*taper, 1, tree.type.leafRad);
+		double radius = MathHelper.clamp(tree.type.leafRad * taper, 1, tree.type.leafRad);
 		double ymin = tree.type.leafYMin;
 		double ymax = tree.type.leafYMax;
 
-
-		for (double yloop = ymin; yloop < ymax; yloop++){
-
-			double sliceRadSq = (radius+1) * (radius+1) - (yloop*yloop);
+		for(double yloop = ymin; yloop < ymax; yloop++) {
+			double sliceRadSq = (radius + 1) * (radius + 1) - (yloop * yloop);
 			double slicedRadSqSmall = radius * radius - (yloop * yloop);
 
-			if (sliceRadSq > 0){
+			if (sliceRadSq > 0) {
+				for (double xloop = -radius; xloop < radius + 1; xloop++) {
+					for (double zloop = -radius; zloop < radius + 1; zloop++) {
+						double xzDistanceSq = xloop * xloop + zloop * zloop;
 
-				for (double xloop = -radius; xloop < radius+1; xloop++){
-					for (double zloop = -radius; zloop < radius+1; zloop++){
+						BlockPos leafPos = new BlockPos(xloop + pos.getX(), yloop + pos.getY(), zloop + pos.getZ());
 
-						double xzDistanceSq = xloop*xloop + zloop*zloop;
-
-						BlockPos leafPos = new BlockPos(xloop+pos.getX(), yloop+pos.getY(), zloop+pos.getZ());
-
-						if (xzDistanceSq < slicedRadSqSmall){
+						if (xzDistanceSq < slicedRadSqSmall)
 							tree.setLeaf(leafPos);
-						}
-						else if (xzDistanceSq < sliceRadSq){
-							if (tree.random.nextBoolean()){
+						else if (xzDistanceSq < sliceRadSq) {
+							if (tree.random.nextBoolean()) {
 								tree.setLeaf(leafPos);
 
-
-								if (tree.type.vines > 0 && MathHelper.absMax(xloop, zloop) > yloop && tree.random.nextBoolean()){
+								if (tree.type.vines > 0 && MathHelper.absMax(xloop, zloop) > yloop && tree.random.nextBoolean())
 									TreeGenMethods.genVine(tree, leafPos, xloop, zloop);
-								}
 							}
 						}
 					}
 				}
 			}
 		}
-		
 	}
-
-
-	
-	
 }

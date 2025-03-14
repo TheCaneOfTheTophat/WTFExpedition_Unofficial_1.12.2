@@ -5,18 +5,60 @@ import java.util.Random;
 
 import net.minecraft.util.math.BlockPos;
 
-public class CavePosition{
+public class CavePosition {
 
 	public final int floor;
 	public final int ceiling;
     public final int x;
     public final int z;
 
-    public ArrayList<AdjPos> adj = new ArrayList<AdjPos>();
-    public ArrayList<BlockPos> wall = new ArrayList<BlockPos>();
+    public ArrayList<AdjPos> adj = new ArrayList<>();
+    public ArrayList<BlockPos> wall = new ArrayList<>();
+
+	public CavePosition(int p_i45363_1_, int p_i45363_2_, int p_i45363_3_,  int p_i45363_4_) {
+		this.x = p_i45363_1_;
+		this.ceiling = p_i45363_2_;
+		this.floor = p_i45363_3_;
+		this.z = p_i45363_4_;
+	}
     
     //public boolean alreadyGenerated = false;
-    
+
+	public BlockPos getFloorPos() {
+		return new BlockPos(x, floor, z);
+	}
+	
+	public BlockPos getCeilingPos() {
+		return new BlockPos(x, ceiling, z);
+	}
+	
+	public XZ xz() {
+		return new XZ(this.x, this.z);
+	}
+
+	public BlockPos getRandomWall(Random random) {
+		if (this.wall.size() > 1)
+			return wall.get(random.nextInt(wall.size()));
+
+		return null;
+	}
+	
+	public BlockPos getMidPos(){
+		return new BlockPos(this.x, (ceiling-floor/2)+floor, this.z);
+	}
+	
+	public ArrayList<BlockPos> getAirPos() {
+		ArrayList<BlockPos> list= new ArrayList<>();
+		BlockPos pos = getFloorPos().up();
+
+		while (pos.getY() < this.ceiling) {
+			list.add(pos);
+			pos=pos.up();
+		}
+
+		return list;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -28,18 +70,6 @@ public class CavePosition{
 		return result;
 	}
 
-	public BlockPos getFloorPos(){
-		return new BlockPos(x, floor, z);
-	}
-	
-	public BlockPos getCeilingPos(){
-		return new BlockPos(x, ceiling, z);
-	}
-	
-	public XZ xz(){
-		return new XZ(this.x, this.z);
-	}
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -59,35 +89,4 @@ public class CavePosition{
 			return false;
 		return true;
 	}
-
-	public CavePosition(int p_i45363_1_, int p_i45363_2_, int p_i45363_3_,  int p_i45363_4_) {
-
-		this.x = p_i45363_1_;
-		this.ceiling = p_i45363_2_;
-		this.floor = p_i45363_3_;
-		this.z = p_i45363_4_;
-
-	}
-
-	public BlockPos getRandomWall(Random random) {
-		if (this.wall.size() > 1){
-			return wall.get(random.nextInt(wall.size()));
-		}
-		return null;
-	}
-	
-	public BlockPos getMidPos(){
-		return new BlockPos(this.x, (ceiling-floor/2)+floor, this.z);
-	}
-	
-	public ArrayList<BlockPos> getAirPos(){
-		ArrayList<BlockPos> list= new ArrayList<BlockPos>();
-		BlockPos pos = getFloorPos().up();
-		while (pos.getY() < this.ceiling){
-			list.add(pos);
-			pos=pos.up();
-		}
-		return list;
-	}
-
 }

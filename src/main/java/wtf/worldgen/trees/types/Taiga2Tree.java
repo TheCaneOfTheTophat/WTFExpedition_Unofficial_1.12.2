@@ -26,17 +26,17 @@ public class Taiga2Tree extends AbstractTreeType {
 	
 	@Override
 	public int getBranchesPerNode(double nodeHeight, double scale) {
-		return random.nextInt(3)+3;
+		return random.nextInt(3) + 3;
 	}
 
 	@Override
 	public double getBranchRotation(double scale, double numBranches) {
-		return Math.PI/(numBranches+1);
+		return Math.PI / (numBranches + 1);
 	}
 
 	@Override
 	public double getBranchSeperation(double scale) {
-		return 1+random.nextInt(2);
+		return 1 + random.nextInt(2);
 	}
 
 	@Override
@@ -46,24 +46,21 @@ public class Taiga2Tree extends AbstractTreeType {
 
 	@Override
 	public double getBranchLength(double scale, double trunkHeight, double nodeHeight) {
-		double bottom = this.getLowestBranchRatio()*trunkHeight;
+		double bottom = this.getLowestBranchRatio() * trunkHeight;
 		double distFromBottom = nodeHeight - bottom;
-		double branchSectionLength = trunkHeight-bottom;
+		double branchSectionLength = trunkHeight - bottom;
 		double taper = 1 - MathHelper.clamp(distFromBottom/branchSectionLength, 0.1, 0.9);
-		return  1+(trunkHeight/6)*taper;
-		
+		return 1 + (trunkHeight / 6) * taper;
 	}
-
-
 
 	@Override
 	public double getTrunkHeight(double scale) {
-		return 10 + random.nextInt(10) + 10*scale;
+		return 10 + random.nextInt(10) + 10 * scale;
 	}
 
 	@Override
 	public double getRootLength(double trunkHeight) {
-		return trunkHeight/5;
+		return trunkHeight / 5;
 	}
 
 	@Override
@@ -83,7 +80,7 @@ public class Taiga2Tree extends AbstractTreeType {
 
 	@Override
 	public int getNumRoots(double trunkDiameter) {
-		return random.nextInt(3)+2;
+		return random.nextInt(3) + 2;
 	}
 	
 	@Override
@@ -94,5 +91,4 @@ public class Taiga2Tree extends AbstractTreeType {
 		tree.setLeaf(pos.south());
 		tree.setLeaf(pos.west());
 	}
-
 }

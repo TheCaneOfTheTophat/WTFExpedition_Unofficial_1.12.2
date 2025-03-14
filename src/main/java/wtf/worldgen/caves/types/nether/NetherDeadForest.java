@@ -6,7 +6,7 @@ import net.minecraft.util.math.BlockPos;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
 
-public class NetherDeadForest extends AbstractCaveType{
+public class NetherDeadForest extends AbstractCaveType {
 
 	//Trees of bone, with leaves of... ash, tar instead of lava, some soulsand
 	
@@ -15,28 +15,18 @@ public class NetherDeadForest extends AbstractCaveType{
 	}
 
 	@Override
-	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
+	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
+	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
+	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
+	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		
-	}
+	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {}
 
 }

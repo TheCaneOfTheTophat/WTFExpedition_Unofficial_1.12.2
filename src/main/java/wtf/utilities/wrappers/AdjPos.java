@@ -8,22 +8,18 @@ import net.minecraft.util.math.BlockPos;
 
 public class AdjPos extends BlockPos {
 
-	public final ArrayList<EnumFacing> faces = new ArrayList<EnumFacing>();
-
+	public final ArrayList<EnumFacing> faces = new ArrayList<>();
 	
 	public AdjPos(BlockPos pos, EnumFacing facing) {
 		super(pos);
 		faces.add(facing);
 	}
 
-	public void addFace(EnumFacing face){
+	public void addFace(EnumFacing face) {
 		faces.add(face);
 	}
 
 	public EnumFacing getFace(Random random) {
-		
 		return faces.size() > 1 ? faces.get(random.nextInt(faces.size())) : faces.get(0);
 	}
-	
-	
 }

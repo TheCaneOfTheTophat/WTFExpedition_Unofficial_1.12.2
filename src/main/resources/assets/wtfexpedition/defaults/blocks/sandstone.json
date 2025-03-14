@@ -1,10 +1,20 @@
 [
   {
-    "blockId": "minecraft:sandstone",
-    "name": "sandstone"
+    "blockId": "wtfexpedition:natural_sandstone",
+    "name": "sandstone",
+    "fracturedBlockId": "sand",
+    "texture": "minecraft:blocks/sandstone_top",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 30,
+    "speleothems": true
   },
   {
-    "blockId": "minecraft:red_sandstone",
-    "name": "red_sandstone"
+    "blockId": "wtfexpedition:natural_red_sandstone",
+    "name": "red_sandstone",
+    "fracturedBlockId": "red_sand",
+    "texture": "minecraft:blocks/red_sandstone_top",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 30,
+    "speleothems": true
   }
 ]

@@ -10,13 +10,11 @@ import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
 
-public abstract class AbstractDungeonType extends AbstractCaveType{
-
-
+public abstract class AbstractDungeonType extends AbstractCaveType {
 	
 	protected SimplexHelper simplex;
 	
-	public AbstractDungeonType(String name, int ceilingAddonPercentChance, int floorAddonPercentChance){
+	public AbstractDungeonType(String name, int ceilingAddonPercentChance, int floorAddonPercentChance) {
 		super(name, ceilingAddonPercentChance, floorAddonPercentChance);
 	}
 	
@@ -24,59 +22,50 @@ public abstract class AbstractDungeonType extends AbstractCaveType{
 	//issue- the generators need to be seperate, so nevermind
 
 	public abstract boolean canGenerateAt(GeneratorMethods gen, CaveListWrapper cave);
-
 	
-	protected boolean isHeight(CaveListWrapper cave, int n){
-		return cave.getAvgCeiling()-cave.getAvgFloor() >= n;
+	protected boolean isHeight(CaveListWrapper cave, int n) {
+		return cave.getAvgCeiling() - cave.getAvgFloor() >= n;
 	}
-	
 
-	private final double variable = 5;
-
-	protected BlockPos midpos;
+    protected BlockPos midpos;
 	protected double wallDist;
 	protected CaveListWrapper cave = null;
 	
-	public void setupForGen(CaveListWrapper cave){
+	public void setupForGen(CaveListWrapper cave) {
 		simplex = new SimplexHelper(name+cave.centerpos.toString(), false);
 		this.cave=cave;
 		midpos = cave.centerpos.getMidPos();
 		wallDist = cave.getWallDist(cave.centerpos);
-		
 	}
 	
-	public boolean shouldPosGen(GeneratorMethods gen, BlockPos pos){
-		
-		
+	public boolean shouldPosGen(GeneratorMethods gen, BlockPos pos) {
 		double rad = cave.distFromCenter(pos);
 		
-		if (pos.getX()==midpos.getX() && pos.getZ()==midpos.getZ()){
+		if (pos.getX()==midpos.getX() && pos.getZ()==midpos.getZ()) {
 			//for some reason, the center pos wasn't generating, so I've just stuck this check in
 			return true;
 		}
 		
-		double vecx = (midpos.getX()-pos.getX())/rad;
-		double vecy = (midpos.getY()-pos.getY())/rad;
+		double vecx = (midpos.getX()-pos.getX()) / rad;
+		double vecy = (midpos.getY()-pos.getY()) / rad;
 	
 		double pitchY = Math.acos(vecy);
 		double sinY = Math.sin(pitchY);
-
 		
 		double n = MathHelper.clamp(vecx/sinY, -1, 1);
 		double pitchX = Math.acos(n);
 		double pitchZ = Math.asin(n);
 		 
-		double noise = simplex.get3DNoise(gen.chunk.getWorld(), pitchX*2, pitchY*3, pitchZ*2);
-		double maxDist = noise*variable + wallDist+1;
-		
-
+		double noise = simplex.get3DNoise(gen.chunk.getWorld(), pitchX * 2, pitchY * 3, pitchZ * 2);
+        double variable = 5;
+        double maxDist = noise * variable + wallDist+1;
 		
 		//System.out.println("noise " + noise*variable);
 		
 		//y is left out in order to generate a cylinder, rather than a sphere
-		int x = pos.getX()-midpos.getX();
-		int z = pos.getZ()-midpos.getZ();
-		return x*x+z*z < maxDist*maxDist;
+		int x = pos.getX() - midpos.getX();
+		int z = pos.getZ() - midpos.getZ();
+		return x * x + z * z < maxDist * maxDist;
 	}
 	
 	/**
@@ -87,7 +76,4 @@ public abstract class AbstractDungeonType extends AbstractCaveType{
 	/**
 	 * generates fill blocks- used by cave in and frozen dungeons, to replace all air blocks within the dungeon with whatever is supplied.
 	 **/
-	
-
-	
 }

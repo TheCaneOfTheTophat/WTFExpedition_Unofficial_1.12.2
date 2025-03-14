@@ -9,8 +9,7 @@ import wtf.WTFExpedition;
 import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
 
-public class DungeonTypeSkeletonMage extends DungeonSimpleSkeleton{
-
+public class DungeonTypeSkeletonMage extends DungeonSimpleSkeleton {
 
 	public DungeonTypeSkeletonMage() {
 		super("SkeletonMage");
@@ -24,11 +23,9 @@ public class DungeonTypeSkeletonMage extends DungeonSimpleSkeleton{
 
 	@Override
 	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		if (height == 3){
+		if (height == 3)
 			gen.replaceBlock(pos, Blocks.BOOKSHELF.getDefaultState());
-		}
-		else {
+		else
 			super.generateWall(gen, random, pos, depth, height);
-		}
 	}
 }

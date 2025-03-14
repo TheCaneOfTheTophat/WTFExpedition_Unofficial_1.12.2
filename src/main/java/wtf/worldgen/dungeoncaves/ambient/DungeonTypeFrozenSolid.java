@@ -9,8 +9,7 @@ import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.dungeoncaves.AbstractDungeonType;
 
-public class DungeonTypeFrozenSolid extends AbstractDungeonType{
-
+public class DungeonTypeFrozenSolid extends AbstractDungeonType {
 
 	public DungeonTypeFrozenSolid(String name) {
 		super(name, 0, 0);
@@ -22,45 +21,30 @@ public class DungeonTypeFrozenSolid extends AbstractDungeonType{
 	}
 	
 	@Override
-	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		
-	}
+	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {}
 
 	@Override
-	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-
-	}
+	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateAir(GeneratorMethods gen, Random random, BlockPos floating, float depth){
-		if (random.nextBoolean()){
+	public void generateAir(GeneratorMethods gen, Random random, BlockPos floating, float depth) {
+		if (random.nextBoolean()) {
 			gen.replaceBlock(floating, Blocks.ICE.getDefaultState());
-		}
-		else {
+		} else {
 			gen.replaceBlock(floating, Blocks.PACKED_ICE.getDefaultState());
 		}
-
 	}
 	
 	@Override
-	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-	
-	}
+	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		
-	}
+	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {}
 
 	@Override
-	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
+	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
-
+	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 }

@@ -1,28 +1,21 @@
 package wtf.worldgen.caves;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import wtf.utilities.simplex.SimplexHelper;
 import wtf.utilities.wrappers.AdjPos;
-import wtf.utilities.wrappers.CavePosition;
-import wtf.utilities.wrappers.SurfacePos;
 import wtf.worldgen.GeneratorMethods;
 
-public abstract class AbstractCaveType
-{
+public abstract class AbstractCaveType {
 
-	public int dungeonPercentChance = 5;
 	final public String name;
 	protected static SimplexHelper simplex = new SimplexHelper("CaveGenerator");
 	
 	public final int ceilingaddonchance;
 	public final int flooraddonchance;
 
-	public AbstractCaveType(String name, int ceilingAddonPercentChance, int floorAddonPercentChance)
-	{
+	public AbstractCaveType(String name, int ceilingAddonPercentChance, int floorAddonPercentChance) {
 		this.name = name;
 		this.ceilingaddonchance = ceilingAddonPercentChance;
 		this.flooraddonchance = floorAddonPercentChance;
@@ -40,18 +33,12 @@ public abstract class AbstractCaveType
 	
 	public abstract void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height);
 	
-	public void generateAdjacentWall(GeneratorMethods gen, Random random, AdjPos pos, float depth, int height){
-		
-	}
+	public void generateAdjacentWall(GeneratorMethods gen, Random random, AdjPos pos, float depth, int height) {}
 	
 	public boolean genAir = false;
-	public void generateAir(GeneratorMethods gen, Random random, BlockPos pos, float depth){
-		
-	}
+	public void generateAir(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 	
-	protected int getSpelSize(Random random, float depth){
-		
-		return (int)(Math.sqrt(random.nextInt(9))*(1-depth))+random.nextInt(2)+random.nextInt(2);
+	protected int getSpelSize(Random random, float depth) {
+		return (int)(Math.sqrt(random.nextInt(9)) * (1 - depth)) + random.nextInt(2) + random.nextInt(2);
 	}
-
 }

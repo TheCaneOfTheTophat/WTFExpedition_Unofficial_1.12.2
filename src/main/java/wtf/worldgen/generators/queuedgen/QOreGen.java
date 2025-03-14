@@ -11,7 +11,7 @@ public class QOreGen implements QueuedGenerator{
 	private final IBlockState ore;
 	private final int density;
 
-	public QOreGen(IBlockState state, int density){
+	public QOreGen(IBlockState state, int density) {
 		this.ore = state;
 		this.density = density;
 	}
@@ -19,14 +19,14 @@ public class QOreGen implements QueuedGenerator{
 	@Override
 	public IBlockState getBlockState(IBlockState oldstate) {
 		IBlockState newstate = BlockSets.stoneAndOre.get(new StoneAndOre(oldstate, ore));
-		if (newstate != null){
-			if (newstate.getBlock() instanceof BlockDenseOre){
+
+		if (newstate != null) {
+			if (newstate.getBlock() instanceof BlockDenseOre)
 				newstate = newstate.withProperty(BlockDenseOre.DENSITY, density);
-			}
-			else if (newstate.getBlock() instanceof BlockDenseOreFalling){
+			else if (newstate.getBlock() instanceof BlockDenseOreFalling)
 				newstate = newstate.withProperty(BlockDenseOreFalling.DENSITY, density);
-			}
 		}
+
 		return newstate;
 	}
 

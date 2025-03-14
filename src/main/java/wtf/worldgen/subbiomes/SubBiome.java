@@ -10,16 +10,17 @@ import wtf.utilities.wrappers.ChunkScan;
 
 public interface SubBiome {
 
-	public void resetTopBlock(World world, BlockPos pos);
+	void resetTopBlock(World world, BlockPos pos);
 	
-	public double scale();
-	public double freq();
-	public Biome getBiome();
-	public byte getID();
-	public Biome getParentBiome();
-	
+	double scale();
 
-	public WorldGenerator getTree(ChunkScan chunkscan, Random random);
+	double freq();
 
-	
+	Biome getBiome();
+
+	byte getID();
+
+	Biome getParentBiome();
+
+	WorldGenerator getTree(ChunkScan chunkscan, Random random);
 }

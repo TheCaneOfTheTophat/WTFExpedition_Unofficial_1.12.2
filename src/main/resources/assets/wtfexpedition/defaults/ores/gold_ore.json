@@ -16,9 +16,7 @@
       "forest": 50
     },
     "generation_settings": {
-      "generation_types": {
-        "cloud": true
-      },
+      "primaryGenerationType": "cloud",
       "cloud_generation": {
         "cloudDiameter": 14
       }

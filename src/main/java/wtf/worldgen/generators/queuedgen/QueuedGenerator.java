@@ -4,6 +4,6 @@ import net.minecraft.block.state.IBlockState;
 
 public interface QueuedGenerator {
 
-	public IBlockState getBlockState(IBlockState oldstate);
+	IBlockState getBlockState(IBlockState oldstate);
 	
 }

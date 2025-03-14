@@ -16,9 +16,7 @@
       "dry": 50
     },
     "generation_settings": {
-      "generation_types": {
-        "cluster": true
-      }
+      "primaryGenerationType": "cluster"
     }
   }
 ]

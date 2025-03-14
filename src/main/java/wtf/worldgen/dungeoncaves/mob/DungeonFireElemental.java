@@ -11,7 +11,7 @@ import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.dungeoncaves.AbstractDungeonType;
 
-public class DungeonFireElemental extends AbstractDungeonType{
+public class DungeonFireElemental extends AbstractDungeonType {
 
 	public DungeonFireElemental(String name) {
 		super(name, 0,0);
@@ -28,32 +28,23 @@ public class DungeonFireElemental extends AbstractDungeonType{
 	}
 
 	@Override
-	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
+	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
 	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.5){
+		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.5) {
 			gen.replaceBlock(pos, Blocks.NETHERRACK.getDefaultState());
 			gen.replaceBlock(pos.up(), Blocks.FIRE.getDefaultState());
 		}
-		
 	}
 
 	@Override
-	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
+	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
+	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		
-	}
+	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {}
 
 }

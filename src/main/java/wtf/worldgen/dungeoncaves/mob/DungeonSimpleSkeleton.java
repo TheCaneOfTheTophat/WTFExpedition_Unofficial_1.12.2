@@ -13,7 +13,7 @@ import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.dungeoncaves.DungeonAbstractSimple;
 
-public class DungeonSimpleSkeleton extends DungeonAbstractSimple{
+public class DungeonSimpleSkeleton extends DungeonAbstractSimple {
 
 	public DungeonSimpleSkeleton(String name) {
 		super(name);
@@ -24,9 +24,9 @@ public class DungeonSimpleSkeleton extends DungeonAbstractSimple{
 	@Override
 	public boolean canGenerateAt(GeneratorMethods gen, CaveListWrapper cave) {
 		block = BlockSets.getTransformedState(gen.getWorld().getBlockState(cave.centerpos.getFloorPos()), Modifier.BRICK);
-		if (block==null){
+
+		if (block == null)
 			block = Blocks.STONEBRICK.getDefaultState();
-		}
 		
 		return true;
 	}
@@ -38,7 +38,5 @@ public class DungeonSimpleSkeleton extends DungeonAbstractSimple{
 
 	public void generate(GeneratorMethods gen, Random random, BlockPos pos) {
 			gen.replaceBlock(pos, block);
-		
 	}
-
 }

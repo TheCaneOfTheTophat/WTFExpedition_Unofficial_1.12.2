@@ -8,10 +8,9 @@ public class ColumnTrunk {
 	public final double z;
 	public final double startY;
 	
-	
 	public double currentY;
 	
-	public ColumnTrunk(double d, double e, double startHeight){
+	public ColumnTrunk(double d, double e, double startHeight) {
 		this.x=d;
 		this.z=e;
 		this.startY=startHeight;
@@ -25,13 +24,12 @@ public class ColumnTrunk {
 		this.currentY=height;
 	}
 
-	public BlockPos nextPos(){
+	public BlockPos nextPos() {
 		currentY--;
 		return new BlockPos(x, currentY, z);
 	}
 	
-	public BlockPos currentPos(){
+	public BlockPos currentPos() {
 		return new BlockPos(x, currentY, z);
 	}
-	
 }

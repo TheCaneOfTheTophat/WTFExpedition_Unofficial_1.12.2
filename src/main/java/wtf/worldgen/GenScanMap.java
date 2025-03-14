@@ -13,36 +13,38 @@ public class GenScanMap {
 	private  volatile HashMap<ChunkCoords, MultiThreadGenerator> generators;
 	public final World world;
 	
-	public GenScanMap(World world){
+	public GenScanMap(World world) {
 		this.world = world;
-		worldChunkScans = new HashMap<ChunkCoords, ChunkScan>();
-		scanners = new HashMap<ChunkCoords, MultiThreadScanner>();
-		generators = new HashMap<ChunkCoords, MultiThreadGenerator>();
+		worldChunkScans = new HashMap<>();
+		scanners = new HashMap<>();
+		generators = new HashMap<>();
 	}
 	
-	public ChunkScan getChunkScan(ChunkCoords coords){
+	public ChunkScan getChunkScan(ChunkCoords coords) {
 		return worldChunkScans.get(coords);
 	}
 	
-	public int scannersRemaining(){
+	public int scannersRemaining() {
 		return scanners.size();
 	}
 
-	public void storeScan(ChunkCoords coords, ChunkScan scan){
+	public void storeScan(ChunkCoords coords, ChunkScan scan) {
 		worldChunkScans.put(coords, scan);
 	}
 	
-	public void storeGenerator(MultiThreadGenerator gen){
+	public void storeGenerator(MultiThreadGenerator gen) {
 		generators.put(gen.coords, gen);
 	}
-	public void removeGenerator(ChunkCoords coords){
+
+	public void removeGenerator(ChunkCoords coords) {
 		generators.remove(coords);
 	}
-	public boolean containsGenerator(ChunkCoords coords){
+
+	public boolean containsGenerator(ChunkCoords coords) {
 		return generators.containsKey(coords);
 	}
 	
-	public void regScanner(MultiThreadScanner scanner){
+	public void regScanner(MultiThreadScanner scanner) {
 		scanners.put(scanner.coords, scanner);
 	}
 	
@@ -56,9 +58,5 @@ public class GenScanMap {
 
 	public boolean scanStarted(ChunkCoords coords) {
 		return scanners.containsKey(coords) || worldChunkScans.containsKey(coords);
-		
 	}
-	
-	
-	
 }

@@ -33,17 +33,17 @@ public class Mangrove extends AbstractTreeType {
 
 	@Override
 	public int getBranchesPerNode(double nodeHeight, double scale) {
-		return (int) MathHelper.clamp(random.nextInt(5-3), 1, 2);
+		return MathHelper.clamp(random.nextInt(5 - 3), 1, 2);
 	}
 
 	@Override
 	public double getBranchRotation(double scale, double numBranches) {
-		return Math.PI/numBranches;
+		return Math.PI / numBranches;
 	}
 
 	@Override
 	public double getBranchSeperation(double scale) {
-		return random.nextInt(2)+2;
+		return random.nextInt(2) + 2;
 	}
 
 	@Override
@@ -53,18 +53,18 @@ public class Mangrove extends AbstractTreeType {
 
 	@Override
 	public double getBranchLength(double scale, double trunkHeight, double nodeHeight) {
-		double taper = 1-nodeHeight/trunkHeight;
-		return trunkHeight/2*taper;
+		double taper = 1 - nodeHeight/trunkHeight;
+		return trunkHeight / 2 * taper;
 	}
 
 	@Override
 	public double getTrunkHeight(double scale) {
-		return 7 + random.nextInt(7) + 7*scale;
+		return 7 + random.nextInt(7) + 7 * scale;
 	}
 
 	@Override
 	public double getRootLength(double trunkHeight) {
-		return trunkHeight/2;
+		return trunkHeight / 2;
 	}
 
 	@Override
@@ -79,50 +79,44 @@ public class Mangrove extends AbstractTreeType {
 
 	@Override
 	public double getLowestBranchRatio() {
-		return random.nextFloat()/2+0.25;
+		return random.nextFloat() / 2 + 0.25;
 	}
 
 
 	@Override
 	public int getNumRoots(double trunkDiameter) {
-		return random.nextInt(2)+3;
+		return random.nextInt(2) + 3;
 	}
 
 	@Override
 	public void doLeafNode(TreeInstance tree, Branch branch, BlockPos pos) {
-		double height = pos.getY()-tree.y;
-		double taper = MathHelper.clamp((tree.type.leafTaper) * (tree.trunkHeight-height)/tree.trunkHeight, tree.type.leafTaper, 1);
+		double height = pos.getY() - tree.y;
+		double taper = MathHelper.clamp((tree.type.leafTaper) * (tree.trunkHeight - height) / tree.trunkHeight, tree.type.leafTaper, 1);
 
-		double radius = MathHelper.clamp(tree.type.leafRad*taper, 1, tree.type.leafRad);
+		double radius = MathHelper.clamp(tree.type.leafRad * taper, 1, tree.type.leafRad);
 		double ymin = tree.type.leafYMin;
 		double ymax = tree.type.leafYMax;
 
-
-		for (double yloop = ymin; yloop < ymax; yloop++){
-
-			double sliceRadSq = (radius+1) * (radius+1) - (yloop*yloop);
+		for (double yloop = ymin; yloop < ymax; yloop++) {
+			double sliceRadSq = (radius + 1) * (radius + 1) - (yloop * yloop);
 			double slicedRadSqSmall = radius * radius - (yloop * yloop);
 
-			if (sliceRadSq > 0){
+			if (sliceRadSq > 0) {
+				for (double xloop = -radius; xloop < radius + 1; xloop++) {
+					for (double zloop = -radius; zloop < radius + 1; zloop++) {
 
-				for (double xloop = -radius; xloop < radius+1; xloop++){
-					for (double zloop = -radius; zloop < radius+1; zloop++){
+						double xzDistanceSq = xloop * xloop + zloop * zloop;
 
-						double xzDistanceSq = xloop*xloop + zloop*zloop;
+						BlockPos leafPos = new BlockPos(xloop + pos.getX(), yloop + pos.getY(), zloop + pos.getZ());
 
-						BlockPos leafPos = new BlockPos(xloop+pos.getX(), yloop+pos.getY(), zloop+pos.getZ());
-
-						if (xzDistanceSq < slicedRadSqSmall){
+						if (xzDistanceSq < slicedRadSqSmall)
 							tree.setLeaf(leafPos);
-						}
-						else if (xzDistanceSq < sliceRadSq){
-							if (tree.random.nextBoolean()){
+						else if (xzDistanceSq < sliceRadSq) {
+							if (tree.random.nextBoolean()) {
 								tree.setLeaf(leafPos);
 
-
-								if (tree.type.vines > 0 && MathHelper.absMax(xloop, zloop) > yloop && tree.random.nextBoolean()){
+								if (tree.type.vines > 0 && MathHelper.absMax(xloop, zloop) > yloop && tree.random.nextBoolean())
 									TreeGenMethods.genVine(tree, leafPos, xloop, zloop);
-								}
 							}
 						}
 					}
@@ -130,5 +124,4 @@ public class Mangrove extends AbstractTreeType {
 			}
 		}
 	}
-
 }

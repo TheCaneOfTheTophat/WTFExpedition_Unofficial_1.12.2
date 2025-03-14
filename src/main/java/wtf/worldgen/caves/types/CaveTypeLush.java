@@ -24,23 +24,20 @@ public class CaveTypeLush extends AbstractCaveType{
 		super(name, ceilingAddonPercentChance, floorAddonPercentChance);
 	}
 	
-	final IBlockState leaves = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.JUNGLE).withProperty(BlockLeaves.DECAYABLE, Boolean.valueOf(false));
+	final IBlockState leaves = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.JUNGLE).withProperty(BlockLeaves.DECAYABLE, Boolean.FALSE);
 	final IBlockState roots = WTFContent.roots.getDefaultState().withProperty(BlockRoots.VARIANT, BlockPlanks.EnumType.JUNGLE);
 	final IBlockState fern = Blocks.TALLGRASS.getDefaultState().withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.FERN);
 	final IBlockState sapling = Blocks.SAPLING.getDefaultState().withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.JUNGLE);
-
 
 	@Override
 	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		double noise = simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.1);
 		boolean mossy = simplex.get3DNoise(gen.getWorld(), pos) > 0.5;
 		
-		if (noise < 0.33){
+		if (noise < 0.33)
 			gen.replaceBlock(pos, Blocks.DIRT.getDefaultState());
-		}
-		if (mossy){	
+		if (mossy)
 			gen.transformBlock(pos, Modifier.MOSS);
-		}
 	}
 
 	@Override
@@ -49,24 +46,20 @@ public class CaveTypeLush extends AbstractCaveType{
 		double noise = simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.1);
 		boolean mossy =  simplex.get3DNoise(gen.getWorld(), pos) > 0.5;
 		
-		if (noise < 0.33){
+		if (noise < 0.33)
 			gen.replaceBlock(pos, Blocks.DIRT.getDefaultState());
-		}
-		if (simplex.get3DNoiseShifted(gen.getWorld(), pos, -100) > 0.66){
-			if (mossy){
+
+		if (simplex.get3DNoiseShifted(gen.getWorld(), pos, -100) > 0.66)
+			if (mossy)
 				gen.setPatch(pos, WTFContent.mossy_dirt_patch.getDefaultState());
-			}
-			else {
+			else
 				gen.setPatch(pos, WTFContent.dirt_patch.getDefaultState());
-			}
-		}
 		
-		if (simplex.get3DNoise(gen.getWorld(), pos) > 0.75){
+		if (simplex.get3DNoise(gen.getWorld(), pos) > 0.75)
 			gen.transformBlock(pos, Modifier.FRACTURED);
-		}
-		if (mossy){	
+
+		if (mossy)
 			gen.transformBlock(pos, Modifier.MOSS);
-		}
 		
 	}
 
@@ -74,45 +67,43 @@ public class CaveTypeLush extends AbstractCaveType{
 	@Override
 	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		double noise = simplex.get3DNoiseScaled(gen.getWorld(), pos.up(), 0.1);
-		if (noise < 0.33){
+
+		if (noise < 0.33)
 			gen.replaceBlock(pos, roots);
-		}
-		else{
+		else {
 			gen.setCeilingAddon(pos, Modifier.FRACTURED);
-			if (random.nextBoolean()){
-				for (int loop = random.nextInt(3)+1; loop > -1; loop--){
+
+			if (random.nextBoolean())
+				for (int loop = random.nextInt(3) + 1; loop > -1; loop--)
 					gen.GenVines(pos.east().down(loop), EnumFacing.WEST);
-				}
-			}
-			if (random.nextBoolean()){
-				for (int loop = random.nextInt(3)+1; loop > -1; loop--){
+
+			if (random.nextBoolean())
+				for (int loop = random.nextInt(3) + 1; loop > -1; loop--)
 					gen.GenVines(pos.west().down(loop), EnumFacing.EAST);
-				}
-			}
-			if (random.nextBoolean()){
-				for (int loop = random.nextInt(3)+1; loop > -1; loop--){
+
+
+			if (random.nextBoolean())
+				for (int loop = random.nextInt(3) + 1; loop > -1; loop--)
 					gen.GenVines(pos.north().down(loop), EnumFacing.SOUTH);
-				}
-			}
-			if (random.nextBoolean()){
-				for (int loop = random.nextInt(3)+1; loop > -1; loop--){
+
+
+			if (random.nextBoolean())
+				for (int loop = random.nextInt(3) + 1; loop > -1; loop--)
 					gen.GenVines(pos.south().down(loop), EnumFacing.NORTH);
-				}
-			}
 		}
-		
 	}
 
 	@Override
 	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		double noise = simplex.get3DNoiseScaled(gen.getWorld(), pos.down(), 0.1);
-		if (noise < 0.165){
-			gen.replaceBlock(pos, fern );
-		}
-		else if (noise < 0.33){
+
+		if (noise < 0.165)
+			gen.replaceBlock(pos, fern);
+
+		else if (noise < 0.33)
 			gen.replaceBlock(pos, sapling);
-		}
-		else if (random.nextBoolean()){
+
+		else if (random.nextBoolean()) {
 			gen.replaceBlock(pos, leaves);
 			gen.replaceBlock(pos.north(), leaves);
 			gen.replaceBlock(pos.south(), leaves);
@@ -120,36 +111,28 @@ public class CaveTypeLush extends AbstractCaveType{
 			gen.replaceBlock(pos.west(), leaves);
 			gen.replaceBlock(pos.up(), leaves);
 		}
-
 	}
 
 	@Override
 	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-
 		double noise = simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.1);
 		boolean mossy = simplex.get3DNoise(gen.getWorld(), pos) > 0.5;
 		
-		if (noise < 0.33){
+		if (noise < 0.33)
 			gen.replaceBlock(pos, Blocks.DIRT.getDefaultState());
-		}
 		
-		if (simplex.get3DNoise(gen.getWorld(), pos) > 0.75){
+		if (simplex.get3DNoise(gen.getWorld(), pos) > 0.75)
 			gen.transformBlock(pos, Modifier.FRACTURED);
-		}
-		if (mossy){	
+
+		if (mossy)
 			gen.transformBlock(pos, Modifier.MOSS);
-		}
-		
 	}
 
 	@Override
 	public void generateAdjacentWall(GeneratorMethods gen, Random random, AdjPos pos, float depth, int height){
 		boolean mossy = simplex.get3DNoise(gen.getWorld(), pos) > 0.5;
-		if (mossy){
+
+		if (mossy)
 			gen.GenVines(pos, pos.getFace(random));
-		}
 	}
-	
-
-
 }

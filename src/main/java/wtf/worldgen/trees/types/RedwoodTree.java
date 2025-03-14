@@ -10,9 +10,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import wtf.worldgen.trees.TreeInstance;
 import wtf.worldgen.trees.components.Branch;
-import wtf.worldgen.trees.types.AbstractTreeType.LeafStyle;
 
-public class RedwoodTree extends AbstractTreeType{
+public class RedwoodTree extends AbstractTreeType {
 	public RedwoodTree(World world) {
 		super(world, Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.SPRUCE), 
 				Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.SPRUCE), 
@@ -31,20 +30,18 @@ public class RedwoodTree extends AbstractTreeType{
 	@Override
 	public int getBranchesPerNode(double taper, double scale) {
 	//I should theoretically be able to calculate the number of spokes required to join up branches of a given distance
-		
-		double branches = 7+5*scale;
-		return (int) (branches + branches*taper);
-		
+		double branches = 7 + 5 * scale;
+		return (int) (branches + branches * taper);
 	}
 
 	@Override
 	public double getBranchRotation(double scale, double numBranches) {
-		return Math.PI*2/(numBranches+1);
+		return Math.PI * 2 / (numBranches + 1);
 	}
 
 	@Override
 	public double getBranchSeperation(double scale) {
-		return 3+random.nextInt(2);
+		return 3 + random.nextInt(2);
 	}
 
 	@Override
@@ -54,41 +51,38 @@ public class RedwoodTree extends AbstractTreeType{
 
 	@Override
 	public double getBranchLength(double scale, double trunkHeight, double nodeHeight) {
-		double bottom = this.getLowestBranchRatio()*trunkHeight;
+		double bottom = this.getLowestBranchRatio() * trunkHeight;
 		double distFromBottom = nodeHeight - bottom;
 		double branchSectionLength = trunkHeight-bottom;
 		double taper = 1 - MathHelper.clamp(distFromBottom/branchSectionLength, 0.1, 0.9);
-		return  trunkHeight/4*taper;
+		return trunkHeight / 4 * taper;
 	}
 
 	@Override
 	public double getTrunkHeight(double scale) {
-		return 33 + random.nextInt(33) + 33*scale;
+		return 33 + random.nextInt(33) + 33 * scale;
 	}
 
 	@Override
 	public double getRootLength(double trunkHeight) {
-		return trunkHeight/4;
+		return trunkHeight / 4;
 	}
 
 	@Override
 	public double getTrunkDiameter(double scale) {
-		return random.nextInt(4)+4+scale*4;
+		return random.nextInt(4) + 4 + scale * 4;
 	}
-
-
 
 	@Override
 	public int getTrunkColumnHeight(double trunkHeight, double currentRadius, double maxRadius) {
-		if (currentRadius > 1){
-			double thirdHeight = trunkHeight/3;
-			double rad = 1-(currentRadius/maxRadius);
-			return (int) (thirdHeight + 2*(thirdHeight*rad) + random.nextInt(5)-2);
-		}
-		else {
+		if (currentRadius > 1) {
+			double thirdHeight = trunkHeight / 3;
+			double rad = 1 - (currentRadius/maxRadius);
+			return (int) (thirdHeight + 2 * (thirdHeight * rad) + random.nextInt(5) - 2);
+		} else
 			return MathHelper.ceil(trunkHeight);
-		}
 	}
+
 	@Override
 	public double getLowestBranchRatio() {
 		return 0.6;
@@ -96,29 +90,23 @@ public class RedwoodTree extends AbstractTreeType{
 
 	@Override
 	public int getNumRoots(double trunkDiameter) {
-		return random.nextInt(4)+4;
+		return random.nextInt(4) + 4;
 	}
 
 	@Override
 	public void doLeafNode(TreeInstance tree, Branch branch, BlockPos pos) {
-		
-		if (pos.getY() < tree.trunkHeight+tree.y){
+		if(pos.getY() < tree.trunkHeight+tree.y)
 			tree.setBranch(pos, branch.axis);
-		}
 		
-		for (int loop = 0; loop < 5; loop++){
-			double vecX = branch.vecX + random.nextFloat()-0.5;
-			double vecY = branch.vecY + random.nextFloat()-0.25;
-			double vecZ = branch.vecZ + random.nextFloat()-0.5;
+		for(int loop = 0; loop < 5; loop++) {
+			double vecX = branch.vecX + random.nextFloat() - 0.5;
+			double vecY = branch.vecY + random.nextFloat() - 0.25;
+			double vecZ = branch.vecZ + random.nextFloat() - 0.5;
 			
 			Branch twig = new Branch(tree, pos.getX(), pos.getY(), pos.getZ(), vecX, vecY, vecZ, 2);
 			
-			while (twig.hasNext()){
+			while(twig.hasNext())
 				tree.setLeaf(twig.next());
-			}
-			
 		}
-		
 	}
-
 }

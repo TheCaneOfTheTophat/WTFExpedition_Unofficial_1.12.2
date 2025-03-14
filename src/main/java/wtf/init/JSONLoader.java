@@ -4,9 +4,10 @@ import com.google.gson.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import wtf.WTFExpedition;
+import wtf.config.OreEntry;
+import wtf.config.OreGeneratorSettings;
 import wtf.enums.Modifier;
 import wtf.config.BlockEntry;
-import wtf.config.OreEntry;
 import wtf.config.WTFExpeditionConfig;
 
 import java.io.*;
@@ -34,7 +35,6 @@ public class JSONLoader {
 
         List<Path> allJsons = new ArrayList<>();
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
         JsonParser parser = new JsonParser();
         JsonElement root;
 
@@ -151,9 +151,166 @@ public class JSONLoader {
                 blockId = addMeta(blockId);
 
                 if(parent.contains("ores")) {
-                    // TODO Better JSON parsing, use array of "generator" objects
-                    OreEntry entryOre = gson.fromJson(element.toString(), OreEntry.class);
-                    oreEntries.add(entryOre);
+                    // TODO Use array of "generator" objects
+                    ArrayList<String> stoneList = new ArrayList<>();
+                    int minAmountPerChunk = 0;
+                    int maxAmountPerChunk = 0;
+                    int surfaceHeightMinPercentage = 0;
+                    int surfaceHeightMaxPercentage = 100;
+                    ArrayList<Integer> dimensionList = new ArrayList<>();
+                    boolean dimensionListWhitelist = true;
+                    boolean useDenseBlock = false;
+                    String overlayPath = "";
+                    int veinPercentDensity = 100;
+                    ArrayList<String> biomeTypeList = new ArrayList<>();
+                    boolean biomeTypeListWhitelist = false;
+                    HashMap<String, Integer> percentGenerationPerBiomeType = new HashMap<>();
+
+                    OreGeneratorSettings settings = null;
+                    
+                    String primaryGenerationType = "";
+                    String secondaryGenerationType = "";
+                    
+                    double veinPitchAverage = 0;
+                    int veinLength = 0;
+                    int veinWidth = 0;
+                    int veinVerticalThickness = 0;
+                    
+                    int cloudDiameter = 0;
+                    
+                    int blocksPerCluster = 0;
+
+                    boolean ceiling = false;
+                    boolean wall = false;
+                    boolean floor = false;
+
+                    if(object.has("stoneList"))
+                        for (JsonElement arrayElement : object.get("stoneList").getAsJsonArray())
+                            stoneList.add(arrayElement.getAsString());
+
+                    if(object.has("minAmountPerChunk"))
+                        minAmountPerChunk = object.get("minAmountPerChunk").getAsInt();
+
+                    if(object.has("maxAmountPerChunk"))
+                        maxAmountPerChunk = object.get("maxAmountPerChunk").getAsInt();
+
+                    if(object.has("surfaceHeightMinPercentage"))
+                        surfaceHeightMinPercentage = object.get("surfaceHeightMinPercentage").getAsInt();
+
+                    if(object.has("surfaceHeightMaxPercentage"))
+                        surfaceHeightMaxPercentage = object.get("surfaceHeightMaxPercentage").getAsInt();
+
+                    if(surfaceHeightMaxPercentage - surfaceHeightMinPercentage < 1) {
+                        WTFExpedition.wtfLog.error("Minimum surface height percentage greater than maximum surface height percentage in ore entry \"" + name + "\" at path \"" + jsonPath + "\", skipping!");
+                        index++;
+                        continue;
+                    }
+
+                    if(object.has("dimensionList"))
+                        for (JsonElement arrayElement : object.get("dimensionList").getAsJsonArray())
+                            dimensionList.add(arrayElement.getAsInt());
+
+                    if(object.has("dimensionListWhitelist"))
+                        dimensionListWhitelist = object.get("dimensionListWhitelist").getAsBoolean();
+
+                    if(object.has("useDenseBlock"))
+                        useDenseBlock = object.get("useDenseBlock").getAsBoolean();
+
+                    if(object.has("overlayPath"))
+                        overlayPath = object.get("overlayPath").getAsString();
+
+                    if(overlayPath.isEmpty() && useDenseBlock) {
+                        WTFExpedition.wtfLog.error("Undefined overlay path in ore entry \"" + name + "\" at path \"" + jsonPath + "\", skipping!");
+                        index++;
+                        continue;
+                    }
+
+                    if(object.has("veinPercentDensity"))
+                        veinPercentDensity = object.get("veinPercentDensity").getAsInt();
+
+                    if(object.has("biomeTypeList"))
+                        for (JsonElement arrayElement : object.get("biomeTypeList").getAsJsonArray())
+                            biomeTypeList.add(arrayElement.getAsString());
+
+                    if(object.has("biomeTypeListWhitelist"))
+                        biomeTypeListWhitelist = object.get("biomeTypeListWhitelist").getAsBoolean();
+
+                    if(object.has("percentGenerationPerBiomeType"))
+                        for(Map.Entry<String, JsonElement> entry : object.getAsJsonObject("percentGenerationPerBiomeType").entrySet())
+                            percentGenerationPerBiomeType.put(entry.getKey(), entry.getValue().getAsInt());
+                    
+                    // GENERATOR
+                    if(object.has("generation_settings")) {
+                        JsonObject generationSettings = object.getAsJsonObject("generation_settings");
+
+                        if(generationSettings.has("primaryGenerationType"))
+                            primaryGenerationType = generationSettings.get("primaryGenerationType").getAsString();
+
+                        if(generationSettings.has("secondaryGenerationType"))
+                            secondaryGenerationType = generationSettings.get("secondaryGenerationType").getAsString();
+
+                        if(primaryGenerationType.equals("vein")) {
+                            if(generationSettings.has("vein_generation")) {
+                                JsonObject veinGeneration = generationSettings.getAsJsonObject("vein_generation");
+
+                                if(veinGeneration.has("veinPitchAverage"))
+                                    veinPitchAverage = veinGeneration.get("veinPitchAverage").getAsDouble();
+
+                                if(veinGeneration.has("veinLength"))
+                                    veinLength = veinGeneration.get("veinLength").getAsInt();
+
+                                if(veinGeneration.has("veinWidth"))
+                                    veinWidth = veinGeneration.get("veinWidth").getAsInt();
+
+                                if(veinGeneration.has("veinVerticalThickness"))
+                                    veinVerticalThickness = veinGeneration.get("veinVerticalThickness").getAsInt();
+                            }
+                        } else if(primaryGenerationType.equals("cloud")) {
+                            if(generationSettings.has("cloud_generation")) {
+                                JsonObject cloudGeneration = generationSettings.getAsJsonObject("cloud_generation");
+
+                                if (cloudGeneration.has("cloudDiameter"))
+                                    cloudDiameter = cloudGeneration.get("cloudDiameter").getAsInt();
+                            }
+                        } else if(primaryGenerationType.equals("vanilla")) {
+                            if(generationSettings.has("vanilla_generation")) {
+                                JsonObject vanillaGeneration = generationSettings.getAsJsonObject("vanilla_generation");
+
+                                if (vanillaGeneration.has("blocksPerCluster"))
+                                    blocksPerCluster = vanillaGeneration.get("blocksPerCluster").getAsInt();
+                            }
+                        } else if(!primaryGenerationType.equals("cluster") && !primaryGenerationType.equals("single")) {
+                            WTFExpedition.wtfLog.error("Invalid primary generation type in ore entry \"" + name + "\" at path \"" + jsonPath + "\", skipping!");
+                            index++;
+                            continue;
+                        }
+
+                        if(secondaryGenerationType.equals("cave")) {
+                            if(generationSettings.has("cave_generation")) {
+                                JsonObject caveGeneration = generationSettings.getAsJsonObject("cave_generation");
+
+                                if(caveGeneration.has("ceiling"))
+                                    ceiling = caveGeneration.get("ceiling").getAsBoolean();
+
+                                if(caveGeneration.has("wall"))
+                                    wall = caveGeneration.get("wall").getAsBoolean();
+
+                                if(caveGeneration.has("floor"))
+                                    floor = caveGeneration.get("floor").getAsBoolean();
+
+                            } else if(!secondaryGenerationType.equals("underwater") && !secondaryGenerationType.isEmpty()) {
+                                WTFExpedition.wtfLog.error("Invalid secondary generation type in ore entry \"" + name + "\" at path \"" + jsonPath + "\", skipping!");
+                                index++;
+                                continue;
+                            }
+                        }
+
+                        settings = new OreGeneratorSettings(primaryGenerationType, secondaryGenerationType, veinPitchAverage, veinLength, veinWidth, veinVerticalThickness, cloudDiameter, ceiling, wall, floor, blocksPerCluster);
+                    }
+
+                    OreEntry entryOre = new OreEntry(blockId, name, stoneList, minAmountPerChunk, maxAmountPerChunk, surfaceHeightMinPercentage, surfaceHeightMaxPercentage, dimensionList, dimensionListWhitelist, useDenseBlock, overlayPath, veinPercentDensity, biomeTypeList, biomeTypeListWhitelist, percentGenerationPerBiomeType, settings);
+
+                     oreEntries.add(entryOre);
                 } else {
                     String fracturedBlockId = "";
                     String texture = "";
@@ -161,6 +318,7 @@ public class JSONLoader {
                     boolean speleothems = false;
                     int percentageMineSpeedModifier = 100;
                     int percentageStability = 100;
+                    HashMap<Modifier, String> modifierMap = new HashMap<>();
 
                     if(object.has("fracturedBlockId"))
                         fracturedBlockId = object.get("fracturedBlockId").getAsString();
@@ -176,8 +334,6 @@ public class JSONLoader {
 
                     if(object.has("percentageStability"))
                         percentageStability = Math.max(Math.min(object.get("percentageStability").getAsInt(), 100), 0);
-
-                    HashMap<Modifier, String> modifierMap = new HashMap<>();
 
                     if(object.has("modifiers")) {
                         JsonObject modifiers = object.getAsJsonObject("modifiers");

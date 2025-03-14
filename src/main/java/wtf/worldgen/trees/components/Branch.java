@@ -24,7 +24,6 @@ public class Branch {
 	
 	public final BlockLog.EnumAxis axis;
 	
-	
 	public Branch(TreeInstance tree, double oriX, double oriY, double oriZ, double x, double y, double z, double rootLength) {
 		/*
 		if (rootLength*(1-pitch) > 32){
@@ -51,28 +50,28 @@ public class Branch {
 		axis = Math.abs(vecY) < MathHelper.absMax(vecX, vecZ) ? (Math.abs(vecX) > Math.abs(vecZ) ? BlockLog.EnumAxis.X : BlockLog.EnumAxis.Z) : BlockLog.EnumAxis.Y;
 	}
 	 
-	public boolean hasNext(){
+	public boolean hasNext() {
 		double xlength = x - oriX;
 		double ylength = y - oriY;
 		double zlength = z - oriZ;
-		if (length > 100){
+
+		if (length > 100) {
 			//System.out.println("Infinite caught");	
 		}
 		
-		return length > 0 ? (xlength * xlength + ylength*ylength + zlength*zlength) < length*length : false;
+		return length > 0 && (xlength * xlength + ylength * ylength + zlength * zlength) < length * length;
 		//return count<length;
 	}
 	
 	//swap over to a calculated length, intead of simply number of blocks placed
 	
-	public BlockPos next(){
+	public BlockPos next() {
 		
-		if (length > 6 && MathHelper.absMax(vecX,  vecY) > vecY){
-			if ((int)(y+vecY) > (int)y){
+		if (length > 6 && MathHelper.absMax(vecX,  vecY) > vecY) {
+			if ((int)(y + vecY) > (int) y) {
 				y += vecY;
 				return new BlockPos(x, y, z);
-			}
-			else if ((int)(y+vecY) < (int)y){
+			} else if ((int)(y + vecY) < (int) y) {
 				y += vecY;
 				return new BlockPos(x, y, z);
 			}
@@ -85,15 +84,14 @@ public class Branch {
 		return new BlockPos(x, y, z);
 	}
 	
-	public BlockPos pos(){
+	public BlockPos pos() {
 		return new BlockPos(x, y, z);
 	}
-	
 
-	public BlockPos lateralNext(){
+	public BlockPos lateralNext() {
 		//System.out.println("vec " + vecX + " " + vecZ);
-		if (x==0 && z==0){
-			y = y>0 ? y+1 : y-1;
+		if (x == 0 && z == 0) {
+			y = y > 0 ? y + 1 : y - 1;
 			return new BlockPos(x, y, z); 
 		}
 
@@ -102,7 +100,7 @@ public class Branch {
 		return new BlockPos(x, y, z);
 	}
 	
-	public int getCount(){
+	public int getCount() {
 		return count;
 	}
 }

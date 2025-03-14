@@ -15,7 +15,7 @@ import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.CaveTypeRegister;
 import wtf.worldgen.caves.types.CaveTypeHell.hellBiome;
 
-public class LavaReplacer extends Replacer{
+public class LavaReplacer extends Replacer {
 
 	public LavaReplacer(Block block) {
 		super(block);
@@ -24,7 +24,7 @@ public class LavaReplacer extends Replacer{
 	private static SimplexHelper simplex = new SimplexHelper("LavaReplacer");
 	
 	@Override
-	public  boolean isNonSolidAndReplacement(Chunk chunk, BlockPos pos, GeneratorMethods gen, IBlockState oldState) {
+	public boolean isNonSolidAndReplacement(Chunk chunk, BlockPos pos, GeneratorMethods gen, IBlockState oldState) {
 		//if (pos.getY() < 11){
 			
 			double n = simplex.get3DNoiseScaled(gen.getWorld(),pos, 0.33);
@@ -33,29 +33,22 @@ public class LavaReplacer extends Replacer{
 			World world = chunk.getWorld();
 			Biome biome = world.getBiomeForCoordsBody(pos);
 			
-			if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.OCEAN)){
+			if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.OCEAN)) {
 				gen.replaceBlock(pos, Blocks.WATER.getDefaultState());
 				return true;
-			}
-			else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.SNOWY)){
-		
-				if (n < 0.33){
+			} else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.SNOWY)) {
+				if (n < 0.33)
 					return true;
-				}
 				else if (n < 0.66) {
 					gen.replaceBlock(pos, Blocks.OBSIDIAN.getDefaultState());
 					gen.transformBlock(pos, Modifier.LAVA_CRUST);
 				}
-				else {
+				else
 					gen.replaceBlock(pos, Blocks.OBSIDIAN.getDefaultState());
-				}
-				
-				
-			}
-			else if (BiomeDictionary.hasType(biome, Type.NETHER)){
+			} else if (BiomeDictionary.hasType(biome, Type.NETHER)){
 				hellBiome netherbiome = CaveTypeRegister.nether.getSubType(pos);
 
-				switch (netherbiome){
+				switch (netherbiome) {
 				case DEADFOREST:
 					break;
 				case FIREFOREST:
@@ -70,9 +63,7 @@ public class LavaReplacer extends Replacer{
 					
 				default:
 					break;
-			
 				}
-
 			}
 			return false;
 			

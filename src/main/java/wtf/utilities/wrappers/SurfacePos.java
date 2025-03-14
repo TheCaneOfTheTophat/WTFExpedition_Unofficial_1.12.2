@@ -2,7 +2,7 @@ package wtf.utilities.wrappers;
 
 import net.minecraft.util.math.BlockPos;
 
-public class SurfacePos extends BlockPos{
+public class SurfacePos extends BlockPos {
 
 	private final double x;
 	private final double y;
@@ -15,8 +15,8 @@ public class SurfacePos extends BlockPos{
 		this.z=z;
 	}
 
-	public SurfacePos setGenerated(){
-		this.generated=true;
+	public SurfacePos setGenerated() {
+		this.generated = true;
 		return this;
 	}
 	
@@ -26,11 +26,8 @@ public class SurfacePos extends BlockPos{
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		long temp;
-		temp = Double.doubleToLongBits(x);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(z);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+        result = prime * result + Double.hashCode(x);
+        result = prime * result + Double.hashCode(z);
 		return result;
 	}
 
@@ -49,7 +46,5 @@ public class SurfacePos extends BlockPos{
 			return false;
 		return true;
 	}
-	
-
 }
 

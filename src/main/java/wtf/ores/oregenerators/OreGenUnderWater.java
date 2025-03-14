@@ -27,7 +27,7 @@ public class OreGenUnderWater extends OreGenAbstract{
 		
 	
 		ArrayList<BlockPos> list = chunkscan.getWaterList();
-		if (list.size() > 0){
+		if (!list.isEmpty()){
 			
 			int numToGenerate = this.getBlocksPerChunk(world, coords, random, chunkscan.surfaceAvg);
 			int blocksReq = this.blocksReq();
@@ -47,8 +47,7 @@ public class OreGenUnderWater extends OreGenAbstract{
 	}
 
 	@Override
-	public int genVein(World world, GeneratorMethods gen, Random random, ChunkScan scan, BlockPos pos)
-			throws Exception {
+	public int genVein(World world, GeneratorMethods gen, Random random, ChunkScan scan, BlockPos pos) {
 		return 0;
 	}
 

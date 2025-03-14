@@ -12,12 +12,11 @@ import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.dungeoncaves.AbstractDungeonType;
 
-public class DungeonMine extends AbstractDungeonType{
+public class DungeonMine extends AbstractDungeonType {
 
 	public DungeonMine(String name) {
 		super(name, 0, 0);
 	}
-	
 
 	@Override
 	public boolean canGenerateAt(GeneratorMethods gen, CaveListWrapper cave) {
@@ -32,42 +31,30 @@ public class DungeonMine extends AbstractDungeonType{
 
 	@Override
 	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		int x = pos.getX()%10;
-		int z = pos.getZ()%10;
+		int x = pos.getX() % 10;
+		int z = pos.getZ() % 10;
 		
-		if (x == 1 || x == 5 || x == 8 ||z == 1 || z == 5 ||z == 8){
+		if (x == 1 || x == 5 || x == 8 || z == 1 || z == 5 || z == 8)
 			gen.replaceBlock(pos.down(), Blocks.SPRUCE_FENCE.getDefaultState());
-		}
 	}
 
 	@Override
-	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-
-	}
+	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
+	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
+	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		
-	}
+	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {}
 
 	@Override
-	public void generateAdjacentWall(GeneratorMethods gen, Random random, AdjPos pos, float depth, int height){
-		int x = pos.getX()%10;
-		int z = pos.getZ()%10;
-		if (x == 1 || x == 5 || x == 8 ||z == 1 || z == 5 ||z == 8){
+	public void generateAdjacentWall(GeneratorMethods gen, Random random, AdjPos pos, float depth, int height) {
+		int x = pos.getX() % 10;
+		int z = pos.getZ() % 10;
+		if (x == 1 || x == 5 || x == 8 || z == 1 || z == 5 || z == 8)
 			gen.replaceBlock(pos.down(), Blocks.SPRUCE_FENCE.getDefaultState());
-		}
-		
 	}
-	
 }

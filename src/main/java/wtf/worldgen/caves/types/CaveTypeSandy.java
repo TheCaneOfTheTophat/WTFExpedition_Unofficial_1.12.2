@@ -10,7 +10,7 @@ import wtf.init.WTFContent;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
 
-public class CaveTypeSandy extends AbstractCaveType{
+public class CaveTypeSandy extends AbstractCaveType {
 
 	private final IBlockState sand;
 	private final IBlockState sandstone;
@@ -23,19 +23,13 @@ public class CaveTypeSandy extends AbstractCaveType{
 		this.slab = redSand? WTFContent.red_sand_patch.getDefaultState() : WTFContent.sand_patch.getDefaultState();
 	}
 
-	
-
 	@Override
-	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
+	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
 	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-		if (simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.2) < 0.3){
+		if (simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.2) < 0.3)
 			gen.setPatch(pos, slab);
-		}
 	}
 
 	@Override
@@ -50,12 +44,7 @@ public class CaveTypeSandy extends AbstractCaveType{
 
 	@Override
 	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		if (height < 3 && simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.2) < 0.3){
+		if (height < 3 && simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.2) < 0.3)
 			gen.replaceBlock(pos, sandstone);
-		}
 	}
-
-
-
-
 }

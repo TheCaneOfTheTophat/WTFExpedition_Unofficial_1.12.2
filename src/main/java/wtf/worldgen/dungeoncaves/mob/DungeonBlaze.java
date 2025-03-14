@@ -12,7 +12,7 @@ import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.dungeoncaves.DungeonAbstractSimple;
 
-public class DungeonBlaze extends DungeonAbstractSimple{
+public class DungeonBlaze extends DungeonAbstractSimple {
 
 	public DungeonBlaze(String name) {
 		super(name);
@@ -36,13 +36,11 @@ public class DungeonBlaze extends DungeonAbstractSimple{
 	}
 
 	@Override
-	public void generateAdjacentWall(GeneratorMethods gen, Random random, AdjPos pos, float depth, int height){
-		int x = pos.getX()%10;
-		int z = pos.getZ()%10;
-		if (x == 1 || x == 5 || x == 8 ||z == 1 || z == 5 ||z == 8){
+	public void generateAdjacentWall(GeneratorMethods gen, Random random, AdjPos pos, float depth, int height) {
+		int x = pos.getX() % 10;
+		int z = pos.getZ() % 10;
+
+		if (x == 1 || x == 5 || x == 8 || z == 1 || z == 5 || z == 8)
 			gen.replaceBlock(pos.down(), Blocks.NETHER_BRICK_FENCE.getDefaultState());
-		}
-		
 	}
-	
 }

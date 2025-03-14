@@ -17,7 +17,6 @@ public abstract class DungeonAbstractSimple extends AbstractDungeonType {
 		return true;
 	}
 
-
 	public abstract void generate(GeneratorMethods gen, Random random, BlockPos pos);
 	
 	@Override
@@ -28,25 +27,20 @@ public abstract class DungeonAbstractSimple extends AbstractDungeonType {
 	@Override
 	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		generate(gen, random, pos);
-		
 	}
 
 	@Override
 	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		//no ceiling addons
-		
 	}
 
 	@Override
 	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		//no floor addons
-		
 	}
 
 	@Override
 	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
 		generate(gen, random, pos);
-		
 	}
-
 }

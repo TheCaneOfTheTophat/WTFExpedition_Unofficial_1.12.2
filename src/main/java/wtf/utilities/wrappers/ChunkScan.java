@@ -18,7 +18,6 @@ public class ChunkScan {
 	public final double surfaceAvg;
 	public GeneratorMethods gen;
 
-
 	public final UnsortedChunkCaves caveset;
 
 	private final ArrayList<BlockPos> underwater;
@@ -33,25 +32,25 @@ public class ChunkScan {
 		this.gen = gen;
 	}
 
-
-	public Block getBlockInChunk(int x, int z){
-
+	public Block getBlockInChunk(int x, int z) {
 		return world.getBlockState(surface[x][z]).getBlock();
 	}
-	public SurfacePos getSurfacePosFromWorldCoords(int worldx, int worldz){
-		int x = worldx-coords.getChunkX();
-		int z = worldz-coords.getChunkZ();
-		if (x > -1 && x < 16 && z > -1 && z < 16){
-			return surface[x][z];
-		}
-		return null;
 
+	public SurfacePos getSurfacePosFromWorldCoords(int worldx, int worldz) {
+		int x = worldx - coords.getChunkX();
+		int z = worldz - coords.getChunkZ();
+
+		if (x > -1 && x < 16 && z > -1 && z < 16)
+			return surface[x][z];
+
+		return null;
 	}
-	public SurfacePos getRandomNotGenerated(Random random){
-		for (int tryloop = 0; tryloop < 5; tryloop++){
+
+	public SurfacePos getRandomNotGenerated(Random random) {
+		for(int tryloop = 0; tryloop < 5; tryloop++) {
 			int x = random.nextInt(16);
 			int z = random.nextInt(16);
-			if (!surface[x][z].generated){
+			if(!surface[x][z].generated) {
 				//IBlockState up1 = world.getBlockState(surface[x][z].up());
 
 				//if (up1.getMaterial().hashCode() != lavaHash || up1.getMaterial().hashCode() != waterHash){
@@ -64,63 +63,51 @@ public class ChunkScan {
 	}
 
 
-	public ArrayList<BlockPos> getWaterList(){
+	public ArrayList<BlockPos> getWaterList() {
 		return underwater;
 	}
 
-	public void setGenerated(BlockPos pos){
-		int x = pos.getX()-coords.getWorldX();
-		int z = pos.getZ()-coords.getWorldZ();
+	public void setGenerated(BlockPos pos) {
+		int x = pos.getX() - coords.getWorldX();
+		int z = pos.getZ() - coords.getWorldZ();
 
-		if (x < 16 && x > -1 && z < 16 && z > -1){
+		if (x < 16 && x > -1 && z < 16 && z > -1)
 			surface[x][z].generated = true;
-		}
 		else {
 			ChunkCoords adj = new ChunkCoords(pos);
 			ChunkScan scan = CoreWorldGenListener.getChunkScan(world, adj);
 			//if (x > 16 || z > 16){
 				//System.out.println("getting adjacent chunkscan " + x + " " + z);
 			//}
-			if (scan != null){
+			if (scan != null)
 				scan.setGenerated(pos);
-			}
 		}
-
 	}
 
+	public boolean checkGenerated(BlockPos pos, double d) {
+		int x = pos.getX() - coords.getChunkX();
+		int z = pos.getZ() - coords.getChunkZ();
+		double radius2 = d * d;
 
-	public boolean checkGenerated(BlockPos pos, double d){
-		int x = pos.getX()-coords.getChunkX();
-		int z = pos.getZ()-coords.getChunkZ();
-		double radius2 = d*d;
-
-		for (double loopX = -d; loopX < d; loopX++){
-			for (double loopZ = -d;loopZ  < d; loopZ++){	
+		for (double loopX = -d; loopX < d; loopX++) {
+			for (double loopZ = -d;loopZ  < d; loopZ++) {
 				int scanx = (int) (loopX + x);
 				int scanz = (int) (loopZ + z);
 				int rad = (int) (loopX*loopX + loopZ*loopZ);
 
-
-				if (rad < radius2){
-					if (scanx < 16 && scanx > -1 && scanz < 16 && scanz > -1){
-						if (surface[scanx][scanz].generated ==true){
+				if (rad < radius2) {
+					if (scanx < 16 && scanx > -1 && scanz < 16 && scanz > -1) {
+						if (surface[scanx][scanz].generated)
 							return true;
-						}
-					}
-					else {
-						
+					} else {
 						//ChunkScan adjacentScan = CoreWorldGenListener.getChunkScan(world, new ChunkCoords(scanx+coords.getWorldX(), scanz+coords.getWorldZ()));
 						//if (adjacentScan != null && adjacentScan.getSurfacePosFromWorldCoords(scanx+coords.getWorldX(), scanz+coords.getWorldZ()).generated == true) {
 						//	return true;
 						//}
-
 					}
 				}
 			}
 		}
 		return false;
 	}
-
-
-
 }

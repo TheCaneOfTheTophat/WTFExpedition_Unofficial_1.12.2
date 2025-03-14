@@ -17,94 +17,71 @@ public class CaveTypeSwamp extends AbstractCaveType {
 
 	@Override
 	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (random.nextFloat()<0.15){
+		if (random.nextFloat() < 0.15)
 			gen.transformBlock(pos, Modifier.WET);
-		} else{
-			if (simplex.get3DNoise(gen.getWorld(), pos) <0.1){
+		else {
+			if (simplex.get3DNoise(gen.getWorld(), pos) < 0.1)
 				gen.transformBlock(pos, Modifier.FRACTURED);
-				
-			}
-			if (simplex.get3DNoise(gen.getWorld(), pos)-0.5 > depth){
+			if (simplex.get3DNoise(gen.getWorld(), pos) - 0.5 > depth)
 				gen.transformBlock(pos, Modifier.MOSS);
-			}
 		}
 	}
 
 	@Override
 	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.5) < 0.2){
+		if (simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.5) < 0.2)
 			gen.setWaterPatch(pos);
-		}
 
-		if (simplex.get3DNoise(gen.getWorld(), pos) <0.1){
+		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.1)
 			gen.transformBlock(pos, Modifier.FRACTURED);
-			
-		}
-		if (simplex.get3DNoise(gen.getWorld(), pos)-0.5 > depth){
+
+		if (simplex.get3DNoise(gen.getWorld(), pos)- 0.5 > depth)
 			gen.transformBlock(pos, Modifier.MOSS);
-		}
-		
 	}
 
 	@Override
 	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (random.nextBoolean() && gen.setCeilingAddon(pos, Modifier.FRACTURED)){
-			for (int loop = random.nextInt(3)+1; loop > -1; loop--){
+		if (random.nextBoolean() && gen.setCeilingAddon(pos, Modifier.FRACTURED)) {
+			for (int loop = random.nextInt(3)+1; loop > -1; loop--)
 				gen.GenVines(pos.east().down(loop), EnumFacing.WEST);
-			}
-			for (int loop = random.nextInt(3)+1; loop > -1; loop--){
+			for (int loop = random.nextInt(3)+1; loop > -1; loop--)
 				gen.GenVines(pos.west().down(loop), EnumFacing.EAST);
-			}
-			for (int loop = random.nextInt(3)+1; loop > -1; loop--){
+			for (int loop = random.nextInt(3)+1; loop > -1; loop--)
 				gen.GenVines(pos.north().down(loop), EnumFacing.SOUTH);
-			}
-			for (int loop = random.nextInt(3)+1; loop > -1; loop--){
+			for (int loop = random.nextInt(3)+1; loop > -1; loop--)
 				gen.GenVines(pos.south().down(loop), EnumFacing.NORTH);
-			}
-
-		}
-		else {
+		} else
 			gen.genSpeleothem(pos, getSpelSize(random, depth), depth, false);
-		}
 	}
-
 
 	@Override
 	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (random.nextBoolean() && gen.setFloorAddon(pos, Modifier.FRACTURED)){
-				gen.GenVines(pos.east(), EnumFacing.WEST);
-				gen.GenVines(pos.west(), EnumFacing.EAST);
-				gen.GenVines(pos.north(), EnumFacing.SOUTH);
-				gen.GenVines(pos.south(), EnumFacing.NORTH);
-					}
-		else {
+		if (random.nextBoolean() && gen.setFloorAddon(pos, Modifier.FRACTURED)) {
+			gen.GenVines(pos.east(), EnumFacing.WEST);
+			gen.GenVines(pos.west(), EnumFacing.EAST);
+			gen.GenVines(pos.north(), EnumFacing.SOUTH);
+			gen.GenVines(pos.south(), EnumFacing.NORTH);
+		} else
 			gen.genSpeleothem(pos, getSpelSize(random, depth), depth, false);
-		}
 	}
 
 
 	@Override
 	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		
-		if (simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.5) < 0.2){
+		if (simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.5) < 0.2)
 			gen.setWaterPatch(pos);
-		}
 
-		if (simplex.get3DNoise(gen.getWorld(), pos) <0.1){
+		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.1)
 			gen.transformBlock(pos, Modifier.FRACTURED);
-			
-		}
-		if (simplex.get3DNoise(gen.getWorld(), pos)-0.5 > depth){
+
+		if (simplex.get3DNoise(gen.getWorld(), pos) - 0.5 > depth)
 			gen.transformBlock(pos, Modifier.MOSS);
-		}
 
 	}
 
 	@Override
-	public void generateAdjacentWall(GeneratorMethods gen, Random random, AdjPos pos, float depth, int height){
-		if (simplex.get3DNoise(gen.getWorld(), pos) > depth*2){
+	public void generateAdjacentWall(GeneratorMethods gen, Random random, AdjPos pos, float depth, int height) {
+		if (simplex.get3DNoise(gen.getWorld(), pos) > depth * 2)
 			gen.GenVines(pos, pos.getFace(random));
-		}
 	}
-
 }

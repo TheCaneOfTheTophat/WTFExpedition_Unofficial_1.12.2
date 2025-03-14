@@ -7,7 +7,7 @@ public class StoneAndOre {
 	public final IBlockState stone;
 	public final IBlockState ore;
 	
-	public StoneAndOre(IBlockState blockStone, IBlockState blockOre){
+	public StoneAndOre(IBlockState blockStone, IBlockState blockOre) {
 		stone = blockStone;
 		ore = blockOre;
 	}

@@ -5,90 +5,50 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OreEntry {
-    private String blockId = "";
-    private String name = "";
+    private final String blockId;
+    private final String name;
 
-    private String[] stoneList = {};
+    private final ArrayList<String> stoneList;
 
-    private int minAmountPerChunk = 0;
-    private int maxAmountPerChunk = 0;
+    private final int minAmountPerChunk;
+    private final int maxAmountPerChunk;
 
-    private int surfaceHeightMinPercentage = 0;
-    private int surfaceHeightMaxPercentage = 100;
+    private final int surfaceHeightMinPercentage;
+    private final int surfaceHeightMaxPercentage;
 
-    private int[] dimensionList = {};
-    private boolean dimensionListWhitelist = true;
+    private final ArrayList<Integer> dimensionList;
+    private final boolean dimensionListWhitelist;
 
-    private boolean useDenseBlock = false;
+    private final boolean useDenseBlock;
 
-    private String overlayPath = "";
+    private final String overlayPath;
 
-    private int veinPercentDensity = 100;
+    private final int veinPercentDensity;
 
-    private String[] biomeTypeList = {};
-    private boolean biomeTypeListWhitelist = false;
+    private final ArrayList<String> biomeTypeList;
+    private final boolean biomeTypeListWhitelist;
 
-    private Map<String, Integer> percentGenerationPerBiomeType = new HashMap<>();
+    private final HashMap<String, Integer> percentGenerationPerBiomeType;
 
-    private GenerationSettings generation_settings = new GenerationSettings();
+    private final OreGeneratorSettings settings;
 
-    public Map<String, Integer> getPercentGenerationPerBiomeType() {
-        return percentGenerationPerBiomeType;
-    }
-
-    public boolean isBiomeTypeListWhitelist() {
-        return biomeTypeListWhitelist;
-    }
-
-    public String[] getBiomeTypeList() {
-        return biomeTypeList;
-    }
-
-    public int getVeinPercentDensity() {
-        return veinPercentDensity;
-    }
-
-    public String getRawOverlayPath() {
-        return overlayPath;
-    }
-
-    public ArrayList<String> getAllOverlayPaths() {
-        ArrayList<String> paths = new ArrayList<>();
-        for(int i = 0; i <= 2; i++)
-            paths.add(overlayPath + i);
-        return paths;
-    }
-
-    public boolean usesDenseBlocks() {
-        return useDenseBlock;
-    }
-
-    public boolean isDimensionListWhitelist() {
-        return dimensionListWhitelist;
-    }
-
-    public int[] getDimensionList() {
-        return dimensionList;
-    }
-
-    public int getSurfaceHeightMaxPercentage() {
-        return surfaceHeightMaxPercentage;
-    }
-
-    public int getSurfaceHeightMinPercentage() {
-        return surfaceHeightMinPercentage;
-    }
-
-    public int getMaxAmountPerChunk() {
-        return maxAmountPerChunk;
-    }
-
-    public int getMinAmountPerChunk() {
-        return minAmountPerChunk;
-    }
-
-    public String[] getStoneList() {
-        return stoneList;
+    public OreEntry(String blockId, String name, ArrayList<String> stoneList, int minAmountPerChunk, int maxAmountPerChunk, int surfaceHeightMinPercentage, int surfaceHeightMaxPercentage, ArrayList<Integer> dimensionList, boolean dimensionListWhitelist, boolean useDenseBlock, String overlayPath, int veinPercentDensity, ArrayList<String> biomeTypeList, boolean biomeTypeListWhitelist, HashMap<String, Integer> percentGenerationPerBiomeType, OreGeneratorSettings settings) {
+        this.blockId = blockId;
+        this.name = name;
+        this.stoneList = stoneList;
+        this.minAmountPerChunk = minAmountPerChunk;
+        this.maxAmountPerChunk = maxAmountPerChunk;
+        this.surfaceHeightMinPercentage = surfaceHeightMinPercentage;
+        this.surfaceHeightMaxPercentage = surfaceHeightMaxPercentage;
+        this.dimensionList = dimensionList;
+        this.dimensionListWhitelist = dimensionListWhitelist;
+        this.useDenseBlock = useDenseBlock;
+        this.overlayPath = overlayPath;
+        this.veinPercentDensity = veinPercentDensity;
+        this.biomeTypeList = biomeTypeList;
+        this.biomeTypeListWhitelist = biomeTypeListWhitelist;
+        this.percentGenerationPerBiomeType = percentGenerationPerBiomeType;
+        this.settings = settings;
     }
 
     public String getName() {
@@ -99,106 +59,68 @@ public class OreEntry {
         return blockId;
     }
 
-    public boolean generatesVanilla() {
-        return generation_settings.generation_types.vanilla;
+    public ArrayList<String> getStoneList() {
+        return stoneList;
     }
 
-    public boolean generatesVein() {
-        return generation_settings.generation_types.vein;
+    public int getMinAmountPerChunk() {
+        return minAmountPerChunk;
     }
 
-    public boolean generatesCloud() {
-        return generation_settings.generation_types.cloud;
+    public int getMaxAmountPerChunk() {
+        return maxAmountPerChunk;
     }
 
-    public boolean generatesCluster() {
-        return generation_settings.generation_types.cluster;
+    public int getSurfaceHeightMinPercentage() {
+        return surfaceHeightMinPercentage;
     }
 
-    public boolean generatesSingle() {
-        return generation_settings.generation_types.single;
+    public int getSurfaceHeightMaxPercentage() {
+        return surfaceHeightMaxPercentage;
     }
 
-    public boolean generatesCave() {
-        return generation_settings.generation_types.cave;
+    public boolean usesDenseBlocks() {
+        return useDenseBlock;
     }
 
-    public boolean generatesUnderwater() {
-        return generation_settings.generation_types.underwater;
+    public ArrayList<Integer> getDimensionList() {
+        return dimensionList;
     }
 
-    public double getVeinPitch() {
-        return generation_settings.vein_generation.veinPitchAverage;
+    public boolean isDimensionListWhitelist() {
+        return dimensionListWhitelist;
     }
 
-    public int getVeinLength() {
-        return generation_settings.vein_generation.veinLength;
+    public String getRawOverlayPath() {
+        return overlayPath;
     }
 
-    public int getVeinWidth() {
-        return generation_settings.vein_generation.veinWidth;
+    public ArrayList<String> getAllOverlayPaths() {
+        ArrayList<String> paths = new ArrayList<>();
+
+        for(int i = 0; i <= 2; i++)
+            paths.add(overlayPath + i);
+
+        return paths;
     }
 
-    public int getVeinVerticalThickness() {
-        return generation_settings.vein_generation.veinVerticalThickness;
+    public int getVeinPercentDensity() {
+        return veinPercentDensity;
     }
 
-    public int getCloudDiameter() {
-        return generation_settings.cloud_generation.cloudDiameter;
+    public ArrayList<String> getBiomeTypeList() {
+        return biomeTypeList;
     }
 
-    public boolean generatesOnCeiling() {
-        return generation_settings.cave_generation.ceiling;
+    public boolean isBiomeTypeListWhitelist() {
+        return biomeTypeListWhitelist;
     }
 
-    public boolean generatesOnWall() {
-        return generation_settings.cave_generation.wall;
+    public Map<String, Integer> getPercentGenerationPerBiomeType() {
+        return percentGenerationPerBiomeType;
     }
 
-    public boolean generatesOnFloor() {
-        return generation_settings.cave_generation.floor;
-    }
-
-    public int getBlocksPerCluster() {
-        return generation_settings.vanilla_generation.blocksPerCluster;
-    }
-
-    private static class GenerationSettings {
-        private GenerationTypes generation_types = new GenerationTypes();
-        private VeinFields vein_generation = new VeinFields();
-        private CloudFields cloud_generation = new CloudFields();
-        private CaveFields cave_generation = new CaveFields();
-        private VanillaFields vanilla_generation = new VanillaFields();
-    }
-
-    private static class GenerationTypes {
-        private boolean vanilla = false;
-        private boolean vein = false;
-        private boolean cloud = false;
-        private boolean cluster = false;
-        private boolean single = false;
-        private boolean cave = false;
-        private boolean underwater = false;
-    }
-
-    private static class VeinFields {
-        private double veinPitchAverage = 0;
-        private int veinLength = 0;
-        private int veinWidth = 0;
-        private int veinVerticalThickness = 0;
-    }
-
-    private static class CloudFields {
-        private int cloudDiameter = 0;
-    }
-
-    private static class CaveFields {
-        private boolean ceiling = false;
-        private boolean wall = false;
-        private boolean floor = false;
-    }
-
-    private static class VanillaFields {
-        private int blocksPerCluster = 0;
+    public OreGeneratorSettings getSettings() {
+        return settings;
     }
 }

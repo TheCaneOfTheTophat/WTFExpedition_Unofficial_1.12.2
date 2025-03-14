@@ -8,7 +8,7 @@ public class QModify implements QueuedGenerator {
 
 	private final Modifier modifier;
 	
-	public QModify(Modifier modifier){
+	public QModify(Modifier modifier) {
 		this.modifier = modifier;
 	}
 
@@ -16,5 +16,4 @@ public class QModify implements QueuedGenerator {
 	public IBlockState getBlockState(IBlockState oldstate) {
 		return BlockSets.getTransformedState(oldstate, modifier);
 	}
-	
 }

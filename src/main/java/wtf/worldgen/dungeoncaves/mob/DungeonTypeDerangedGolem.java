@@ -14,7 +14,6 @@ import wtf.worldgen.dungeoncaves.AbstractDungeonType;
 
 public class DungeonTypeDerangedGolem extends AbstractDungeonType {
 
-
 	public DungeonTypeDerangedGolem(String name) {
 		super(name, 0, 0);
 	}
@@ -26,8 +25,6 @@ public class DungeonTypeDerangedGolem extends AbstractDungeonType {
 	
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		//anvil in center, with golem spawner underneath
-		//gen.spawnVanillaSpawner(pos.getFloorPos(), Core.coreID+".ZombieMummy", 3);
 		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID, "deranged_iron_golem"), 1);
 		gen.replaceBlock(pos.getFloorPos().up(2), Blocks.ANVIL.getDefaultState());
 		
@@ -36,28 +33,21 @@ public class DungeonTypeDerangedGolem extends AbstractDungeonType {
 	@Override
 	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		gen.replaceBlock(pos, Blocks.STONEBRICK.getDefaultState().withProperty(BlockStoneBrick.VARIANT, BlockStoneBrick.EnumType.CRACKED));
-		
 	}
 
 	@Override
 	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		gen.replaceBlock(pos, Blocks.STONEBRICK.getDefaultState().withProperty(BlockStoneBrick.VARIANT, BlockStoneBrick.EnumType.CRACKED));
-		
 	}
 
 	@Override
 	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
 		gen.replaceBlock(pos, Blocks.STONEBRICK.getDefaultState().withProperty(BlockStoneBrick.VARIANT, BlockStoneBrick.EnumType.CRACKED));
-		
 	}
 
 	@Override
-	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
+	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
+	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 }

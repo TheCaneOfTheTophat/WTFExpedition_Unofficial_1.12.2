@@ -16,9 +16,7 @@
       "hot": 50
     },
     "generation_settings": {
-      "generation_types": {
-        "vein": true
-      },
+      "primaryGenerationType": "vein",
       "vein_generation": {
         "veinPitchAverage": 1.5,
         "veinLength": 8,

@@ -26,30 +26,32 @@ import wtf.worldgen.trees.types.Shrub;
 public class TreeGenerator {
 
 	private static SimplexHelper treeSimplex = new SimplexHelper("TreeSimplex");
-	private static HashMap<BlockPos, IBlockState> worldBlockMap = new HashMap<BlockPos, IBlockState>();
+	private static HashMap<BlockPos, IBlockState> worldBlockMap = new HashMap<>();
 	
-	public static synchronized void addTreeMapPos(BlockPos pos, IBlockState state){
+	public static synchronized void addTreeMapPos(BlockPos pos, IBlockState state) {
 		worldBlockMap.put(pos, state);
 	}
-	public static synchronized void removeTreeMapPos(BlockPos pos){
+
+	public static synchronized void removeTreeMapPos(BlockPos pos) {
 		worldBlockMap.remove(pos);
 	}
-	public static synchronized IBlockState getTreeMapPos(BlockPos pos){
+
+	public static synchronized IBlockState getTreeMapPos(BlockPos pos) {
 		return worldBlockMap.get(pos);
 	}
-	public static boolean shouldTreePosGenerate(World world, Random random, BlockPos pos){
-		double noise = (treeSimplex.get2DNoise(world, pos.getX()/32, pos.getZ()/32)); 
+
+	public static boolean shouldTreePosGenerate(World world, Random random, BlockPos pos) {
+		double noise = (treeSimplex.get2DNoise(world, pos.getX() / 32D, pos.getZ() / 32D));
 		double rand = random.nextFloat(); 
-		double noise2 = noise - (noise - WTFExpeditionConfig.bigTreeReplacementPercentage)*WTFExpeditionConfig.simplexBigTreeScale;
+		double noise2 = noise - (noise - WTFExpeditionConfig.bigTreeReplacementPercentage) * WTFExpeditionConfig.simplexBigTreeScale;
 		return rand < noise2;
 	}
 	
-	public void generate(World world, ChunkCoords chunkcoords, Random random, ChunkScan chunkscan, GeneratorMethods gen){
+	public void generate(World world, ChunkCoords chunkcoords, Random random, ChunkScan chunkscan, GeneratorMethods gen) {
+		Queue<Shrub> shrubQ = new LinkedList<>();
 		
-		Queue<Shrub> shrubQ = new LinkedList<Shrub>(); 
-		
-		for (int loopx = 0; loopx < 4; loopx++){
-			for (int loopz = 0; loopz < 4; loopz++){
+		for (int loopx = 0; loopx < 4; loopx++) {
+			for (int loopz = 0; loopz < 4; loopz++) {
 
 				SurfacePos pos = chunkscan.surface[4*loopx+random.nextInt(4)][4*loopz+random.nextInt(4)];
 				//int failloop = 0;
@@ -59,27 +61,24 @@ public class TreeGenerator {
 				//}
 				Biome biome = world.getBiome(pos);
 				double numTrees = biome.decorator.treesPerChunk > -1 ? biome.decorator.treesPerChunk : 16;
-				double genChance = 16*numTrees/256;
+				double genChance = 16 * numTrees / 256;
 				
-				if (random.nextFloat() > genChance || pos.generated || !shouldTreePosGenerate(world, random, pos)){
+				if (random.nextFloat() > genChance || pos.generated || !shouldTreePosGenerate(world, random, pos))
 					continue;
-				}
 				
 				WorldGenerator oldTree = biome.getRandomTreeFeature(random);
 				
-				if (oldTree instanceof WorldGenShrub){
+				if (oldTree instanceof WorldGenShrub)
 						shrubQ.add(new Shrub((WorldGenShrub) oldTree, gen));
-				}
-				else if (oldTree == null){
+				else if (oldTree == null)
 					continue;
-				}
+
 				AbstractTreeType treeType = TreeTypeGetter.getTree(world, oldTree);
 				
-				if (treeType != null){
+				if (treeType != null) {
 					try {
-						
 						if (TreeGenMethods.tryGenerate(new TreeInstance(world, random, chunkscan, pos, treeType), gen)){
-							
+
 						}
 						else {
 							//System.out.println("Tree gen failed");
@@ -89,23 +88,10 @@ public class TreeGenerator {
 						e.printStackTrace();
 					}
 				}
-				
 			}
 		}
 		
-		while (!shrubQ.isEmpty()){
+		while (!shrubQ.isEmpty())
 			shrubQ.poll().generate(world, random, chunkscan.getRandomNotGenerated(random));
-		}
-		
-		
-		
-		
-		
-		
-		
 	}
-	
-	
-	
-	
 }

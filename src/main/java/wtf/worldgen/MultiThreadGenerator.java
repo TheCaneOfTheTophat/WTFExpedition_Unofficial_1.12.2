@@ -31,31 +31,28 @@ public class MultiThreadGenerator implements Runnable{
 	private static final SubBiomeGenerator subGen = new SubBiomeGenerator();
 	private static final SurfaceGenerator surfaceGen = new SurfaceGenerator();
 
-	public MultiThreadGenerator(World world, ChunkCoords coords){
+	public MultiThreadGenerator(World world, ChunkCoords coords) {
 		this.world = world;
 		this.coords = coords;
 	}
 
 	@Override
 	public void run() {
-				
 		ChunkScan scan = CoreWorldGenListener.getChunkScan(world, coords);
 		generate(scan);
-		
 	}
-	
 
 	//Better way to do this- registry of all populated and ungenerated chunks- registry rebuilds itself on chunk load after exit
 	//registry is effectively needs to be generated
 	//on every add, check needs to be generated for adjacent
 
-	private void generate(ChunkScan scan){
+	private void generate(ChunkScan scan) {
 		//System.out.println("Generating " + coords.getChunkX() + " " + coords.getChunkZ());
 		Random random = ThreadLocalRandom.current();
 		GeneratorMethods gen = scan.gen;
 		
 		ChunkCoords coords = scan.coords;
-		if (gen == null){
+		if (gen == null) {
 			System.out.println("******************FOUND NULL GEN");
 			return;
 		}
@@ -63,34 +60,30 @@ public class MultiThreadGenerator implements Runnable{
 		gen.overrideBlock(scan.coords.getGenMarkerPos(), Blocks.BEDROCK.getDefaultState());
 		
 		try {
-			if (WTFExpeditionConfig.oreGenEnabled){
+			if (WTFExpeditionConfig.oreGenEnabled)
 				oreGen.generate(world, coords, random, scan, gen);
-			}
-			if (WTFExpeditionConfig.dungeonGenerationEnabled){
+
+			if (WTFExpeditionConfig.dungeonGenerationEnabled)
 				dungeonGen.generate(world, coords, random, scan, gen);
-			}
-			if (WTFExpeditionConfig.caveGenerationEnabled){
+
+			if (WTFExpeditionConfig.caveGenerationEnabled)
 				caveGen.generate(world, coords, random, scan, gen);
-			}
-			if (WTFExpeditionConfig.overworldGenerationEnabled && WTFExpeditionConfig.bigTreesEnabled){
+
+			if (WTFExpeditionConfig.overworldGenerationEnabled && WTFExpeditionConfig.bigTreesEnabled)
 				treeGen.generate(world, coords, random, scan, gen);
-			}
-			if (WTFExpeditionConfig.enableSurfaceModification){ // I don't have this under a config a the moment
+
+			// TODO I don't have this under a config at the moment
+			if (WTFExpeditionConfig.enableSurfaceModification)
 				subGen.generate(world, coords, random, scan, gen);
-			}
-			if (WTFExpeditionConfig.enableSurfaceModification && WTFExpeditionConfig.overworldGenerationEnabled){
+
+			if (WTFExpeditionConfig.enableSurfaceModification && WTFExpeditionConfig.overworldGenerationEnabled)
 				surfaceGen.generate(world, coords, random, scan, gen);
-			}
-		}
-		catch (Exception e){
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		TickGenBuffer.addMap(gen.blockmap);
 		scan.gen = null;
 	}
-
-
-
-
 }

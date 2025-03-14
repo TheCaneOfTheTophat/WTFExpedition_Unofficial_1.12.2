@@ -15,25 +15,22 @@ public class MultiThreadScanner  implements Runnable{
 	
 	private volatile CountDownLatch latch = new CountDownLatch(1);
 	
-	
-	public MultiThreadScanner(World world, ChunkCoords coords){
+	public MultiThreadScanner(World world, ChunkCoords coords) {
 		this.world = world;
 		this.coords = coords;
-		
 	}
 
-	public void latchOn() throws InterruptedException{
+	public void latchOn() throws InterruptedException {
 		latch.await();
 	}
-	
 
 	@Override
 	public void run() {
-		
 		//System.out.println("Scanning " + coords.getChunkX() + " " + coords.getChunkZ());
 		
-		WorldScanner scanner = null;//new WorldScanner();
-		switch (world.provider.getDimensionType()){
+		WorldScanner scanner = null; //new WorldScanner();
+
+		switch (world.provider.getDimensionType()) {
 		case NETHER:
 			scanner = new NetherScanner();
 			break;
@@ -45,10 +42,9 @@ public class MultiThreadScanner  implements Runnable{
 			break;
 		default:
 			break;
-
 		}
 
-		if (scanner != null){
+		if (scanner != null) {
 			GeneratorMethods gen = WTFExpedition.UBC ? new UBCGenMethods(world, coords, world.rand) : new GeneratorMethods(world, coords, world.rand);
 			ChunkScan scan = scanner.getChunkScan(world, coords, gen);
 			CoreWorldGenListener.storeScan(world, coords, scan);
@@ -57,6 +53,4 @@ public class MultiThreadScanner  implements Runnable{
 			latch.countDown();
 		}
 	}
-
-	
 }

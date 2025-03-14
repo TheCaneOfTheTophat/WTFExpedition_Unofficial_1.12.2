@@ -13,7 +13,7 @@ import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.dungeoncaves.DungeonAbstractSimple;
 
-public class DungeonSimpleZombie extends DungeonAbstractSimple{
+public class DungeonSimpleZombie extends DungeonAbstractSimple {
 
 	public DungeonSimpleZombie(String name) {
 		super(name);
@@ -31,15 +31,13 @@ public class DungeonSimpleZombie extends DungeonAbstractSimple{
 		IBlockState temp = BlockSets.getTransformedState(gen.getWorld().getBlockState(cave.centerpos.getFloorPos()), Modifier.FRACTURED);
 		block = BlockSets.getTransformedState(temp, Modifier.MOSS);
 		
-		if (block==null){
+		if (block==null)
 			block = Blocks.MOSSY_COBBLESTONE.getDefaultState();
-		}
+
 		return true;
 	}
 
 	public void generate(GeneratorMethods gen, Random random, BlockPos pos) {
-			gen.replaceBlock(pos, block);
+		gen.replaceBlock(pos, block);
 	}
-	
-
 }

@@ -35,7 +35,6 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-
 @Mod(modid = WTFExpedition.modID, dependencies = "after:undergroundbiomes")
 @SuppressWarnings({"unused", "ConstantConditions"})
 public class WTFExpedition {
@@ -88,8 +87,6 @@ public class WTFExpedition {
 //		WTFRecipes.initRecipes();
 //
 //		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
-//
-//		WTFSubstitutions.init();
 
 		proxy.preInitialization();
 	}

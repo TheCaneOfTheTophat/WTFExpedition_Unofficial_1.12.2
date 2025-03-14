@@ -19,7 +19,7 @@ public class CaveTypePaintedDesert extends AbstractCaveType{
 
 	//Red, orange, yellow, brown, white, light gray and unstained hardened c
 
-	IBlockState[] slabs = { 
+	IBlockState[] slabs = {
 			//WTFBlocks.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.BLUE),
 			//WTFBlocks.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.CYAN),
 			//WTFBlocks.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.LIGHT_BLUE),
@@ -27,13 +27,12 @@ public class CaveTypePaintedDesert extends AbstractCaveType{
 			WTFContent.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.WHITE),
 			//WTFBlocks.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.GRAY),
 			WTFContent.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.YELLOW),
-			WTFContent.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.BLACK),
+			WTFContent.terracotta_patch.getDefaultState(),
 			WTFContent.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.BROWN),
 			WTFContent.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.RED),
 			WTFContent.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.ORANGE),
 			WTFContent.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.PINK),
 			//WTFBlocks.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.PURPLE),
-			
 	};
 	
 	IBlockState[] clay = {
@@ -56,32 +55,22 @@ public class CaveTypePaintedDesert extends AbstractCaveType{
 
 	public CaveTypePaintedDesert(String name, int ceilingAddonPercentChance, int floorAddonPercentChance) {
 		super(name, ceilingAddonPercentChance, floorAddonPercentChance);
-
 	}
-
-
 
 	@Override
-	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-
-	}
+	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
 	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-
 		double noise = simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.2);
-		if (noise < 0.3){
-			gen.setPatch(pos, slabs[(int)simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.33)*slabs.length]);
-		}
-		else if (noise > 0.66){
-			if (random.nextBoolean()){
-				gen.replaceBlock(pos, Blocks.GRASS_PATH.getDefaultState());
-			}
-			else {
-				gen.setPatch(pos, WTFContent.red_sand_patch.getDefaultState());
-			}
-		}
 
+		if (noise < 0.3)
+			gen.setPatch(pos, slabs[(int)simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.33) * slabs.length]);
+		else if (noise > 0.66)
+			if (random.nextBoolean())
+				gen.replaceBlock(pos, Blocks.GRASS_PATH.getDefaultState());
+			else
+				gen.setPatch(pos, WTFContent.red_sand_patch.getDefaultState());
 	}
 
 	@Override
@@ -96,12 +85,11 @@ public class CaveTypePaintedDesert extends AbstractCaveType{
 
 	@Override
 	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		if (height < 3){
+		if (height < 3) {
 			double noise = simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.2);
-			if (noise < 0.3){
-				gen.replaceBlock(pos.up(), clay[(int)simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.33)*clay.length]);
-			}
+
+			if (noise < 0.3)
+				gen.replaceBlock(pos.up(), clay[(int)simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.33) * clay.length]);
 		}
 	}
-
 }

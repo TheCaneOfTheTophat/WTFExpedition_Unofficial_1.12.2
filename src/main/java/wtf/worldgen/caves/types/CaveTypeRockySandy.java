@@ -9,7 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import wtf.init.WTFContent;
 import wtf.worldgen.GeneratorMethods;
 
-public class CaveTypeRockySandy extends CaveTypeRocky{
+public class CaveTypeRockySandy extends CaveTypeRocky {
 
 	private final IBlockState sand;
 	private final IBlockState sandstone;
@@ -22,21 +22,19 @@ public class CaveTypeRockySandy extends CaveTypeRocky{
 		this.slab = redSand? WTFContent.red_sand_patch.getDefaultState() : WTFContent.sand_patch.getDefaultState();
 	}
 
-
 	@Override
 	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		super.generateFloor(gen, random, pos, depth);		
-		if (simplex.get3DNoiseScaled(gen.getWorld(),pos, 0.2) < 0.5 ){
+		super.generateFloor(gen, random, pos, depth);
+
+		if (simplex.get3DNoiseScaled(gen.getWorld(),pos, 0.2) < 0.5)
 			gen.setPatch(pos, slab);
-		}
 	}
+
 	@Override
 	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		if (height < 3 && simplex.get3DNoiseScaled(gen.getWorld(),pos, 0.2) < 0.5 ){
+		if (height < 3 && simplex.get3DNoiseScaled(gen.getWorld(),pos, 0.2) < 0.5)
 			gen.replaceBlock(pos, sandstone);
-		}
+
 		super.generateWall(gen, random, pos, depth, height);
 	}
-
-
 }

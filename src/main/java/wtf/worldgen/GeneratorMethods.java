@@ -56,81 +56,76 @@ public class GeneratorMethods{
 	/**
 	 **Used to set a block, based on a modifier and the block at the given location
 	 **/
-	public boolean transformBlock(BlockPos pos, Modifier modifier){
+	public boolean transformBlock(BlockPos pos, Modifier modifier) {
 		return blockmap.add(pos, new QModify(modifier));
 	}
+
 	/**
 	 **Used to replace a block.  Checks that the block is replaceable first
 	 **/
-	public boolean replaceBlock(BlockPos pos, IBlockState state){
+	public boolean replaceBlock(BlockPos pos, IBlockState state) {
 		return blockmap.add(pos, new QReplace(state));
 	}
+
 	/**
 	 **Used to replace a block without checking that the block is replaceable first
 	 **/
-	
-	public boolean overrideBlock(BlockPos pos, IBlockState state){
+	public boolean overrideBlock(BlockPos pos, IBlockState state) {
 		return blockmap.add(pos, new QReplaceNoCheck(state));
 	}
-	
 
-	public boolean setOreBlock(BlockPos pos, IBlockState oreState, int density){
+	public boolean setOreBlock(BlockPos pos, IBlockState oreState, int density) {
 		return blockmap.add(pos, new QOreGen(oreState, density));
 	}
 
 	/**
 	 **Used to set a block floor y+1, based on a modifier and the block at the given location.  e.g. cobblestone boulders on top of stone
 	 **/
-	public boolean setFloorAddon(BlockPos pos, Modifier modifier){
+	public boolean setFloorAddon(BlockPos pos, Modifier modifier) {
 		IBlockState oldState = getWorld().getBlockState(pos.down());
 		IBlockState newState = BlockSets.blockTransformer.get(Pair.of(oldState, modifier));
 
-		if (newState != null && !blockmap.posQueued(pos.down())){
+		if (newState != null && !blockmap.posQueued(pos.down()))
 			return replaceBlock(pos, newState);
 
-		}
 		return false;
-
 	}
-	public boolean setCeilingAddon(BlockPos pos, Modifier modifier){
+
+	public boolean setCeilingAddon(BlockPos pos, Modifier modifier) {
 		IBlockState oldState = getWorld().getBlockState(pos.up());
 		IBlockState newState = BlockSets.blockTransformer.get(Pair.of(oldState, modifier));
-		if (newState != null && !blockmap.posQueued(pos.up())){
-			return replaceBlock(pos, newState);
-		}
-		return false;
 
+		if (newState != null && !blockmap.posQueued(pos.up()))
+			return replaceBlock(pos, newState);
+
+		return false;
 	}
 	
-	public void setWaterPatch(BlockPos pos){
-		if (WTFExpeditionConfig.enablePuddles){
+	public void setWaterPatch(BlockPos pos) {
+		if (WTFExpeditionConfig.enablePuddles)
 			setPatch(pos, WTFContent.puddle.getDefaultState());
-		}
 	}
 	
 	
 	private Material[] repset = {Material.SNOW, Material.ICE, Material.PACKED_ICE, Material.LAVA, Material.WATER, Material.AIR, Material.GRASS};
-	private HashSet<Material> rephashset = new HashSet<Material>(Arrays.asList(repset));
+	private HashSet<Material> rephashset = new HashSet<>(Arrays.asList(repset));
 	
-	public void setPatch(BlockPos pos, IBlockState patch){
-
-		if (isAir(pos.up())  && !rephashset.contains(getWorld().getBlockState(pos).getMaterial())){
+	public void setPatch(BlockPos pos, IBlockState patch) {
+		if (isAir(pos.up())  && !rephashset.contains(getWorld().getBlockState(pos).getMaterial()))
 			replaceBlock(pos.up(), patch);
-		}
 	}
 
-	public void genFloatingStone(BlockPos pos){
+	public void genFloatingStone(BlockPos pos) {
 		//When implementing non-vanilla stone, this method needs to call the UBifier
 		replaceBlock(pos, Blocks.STONE.getDefaultState());
 	}
 
+	public boolean genSpeleothem(BlockPos pos, int size, float depth, boolean frozen) {
 
-	public boolean genSpeleothem(BlockPos pos, int size, float depth, boolean frozen){
-
-		if (blockmap.posQueued(pos.up()) || blockmap.posQueued(pos) || blockmap.posQueued(pos.down())){ 
+		if (blockmap.posQueued(pos.up()) || blockmap.posQueued(pos) || blockmap.posQueued(pos.down()))
 			return false;
-		}
-		if (frozen && depth > 0.9){
+
+		if (frozen && depth > 0.9) {
 			genIcicle(pos);
 			return true;
 		}
@@ -144,22 +139,18 @@ public class GeneratorMethods{
 		if (isAir(pos.up()) && !isAir(pos.down())){
 			direction = 1;
 			speleothem = WTFContent.speleothemMap.get(below);
-		}
-		else if (!isAir(pos.up()) && isAir(pos.down())){
+		} else if (!isAir(pos.up()) && isAir(pos.down())){
 			direction = -1;
 			speleothem = WTFContent.speleothemMap.get(above);
-		}
-		else {
+		} else
 			return false;
-		}
 
-		if (speleothem == null){
-			if (direction == -1){
-				if (above.getBlock().hashCode() == Blocks.DIRT.hashCode() && depth > 0.7){
+		if (speleothem == null) {
+			if (direction == -1) {
+				if (above.getBlock().hashCode() == Blocks.DIRT.hashCode() && depth > 0.7) {
 					genRoot(pos);
 					return true;
-				}
-				else if (frozen || above.getMaterial() == Material.ICE || above.getMaterial() == Material.PACKED_ICE){
+				} else if (frozen || above.getMaterial() == Material.ICE || above.getMaterial() == Material.PACKED_ICE) {
 					genIcicle(pos);
 					return true;
 				}
@@ -169,83 +160,66 @@ public class GeneratorMethods{
 			return false;	
 		}
 		
-		if (depth > 1){
+		if (depth > 1)
 			return false;
-		}
 
-		if (frozen){
+		if (frozen)
 			speleothem = speleothem.frozen;
-		}
 
-		while (remaining > 0){
+		while (remaining > 0) {
 			IBlockState next = getWorld().getBlockState(pos.up(direction));
 			boolean nextQueued = blockmap.posQueued(pos.up(direction));
-			IBlockState set = null;
+			IBlockState set;
 
-			if (!nextQueued && remaining == size){//first block
-				if (isAir(pos.up(direction))){
-					if (size > 1){
+			if (!nextQueued && remaining == size) {//first block
+				if (isAir(pos.up(direction))) {
+					if (size > 1)
 						set = direction == 1 ? speleothem.getBlockState(SpeleothemType.stalagmite_base) : speleothem.getBlockState(SpeleothemType.stalactite_base);
-					}
-					else {
+					else
 						set = direction == 1 ? speleothem.getBlockState(SpeleothemType.stalagmite_small) : speleothem.getBlockState(SpeleothemType.stalactite_small);
-					}
-				}
-				else {
-					return false;//cave size = 1, generate nothing 
-				}
-			}
-			else if (!nextQueued && remaining > 1){ //middle block
-				if (isAir(pos.up(direction))){
+				} else
+					return false; //cave size = 1, generate nothing
+			} else if (!nextQueued && remaining > 1) { //middle block
+				if (isAir(pos.up(direction)))
 					set = speleothem.getBlockState(SpeleothemType.speleothem_column);
-				}
 				else if (next.hashCode() == speleothem.parentBackground.hashCode()){
 					set = direction == 1 ? speleothem.getBlockState(SpeleothemType.stalactite_base) : speleothem.getBlockState(SpeleothemType.stalagmite_base);
 					remaining = 0;
-				}
-				else {
+				} else
 					set = direction == 1 ? speleothem.getBlockState(SpeleothemType.stalagmite_tip) : speleothem.getBlockState(SpeleothemType.stalactite_tip);
-				}
-			}
-			else { //last block
+			} else { //last block
 				set = direction == 1 ? speleothem.getBlockState(SpeleothemType.stalagmite_tip) : speleothem.getBlockState(SpeleothemType.stalactite_tip);
 			}
-
 
 			replaceBlock(pos, set);
 			pos = pos.up(direction);
 			remaining --;
 		}
+
 		return true;
 	}
-
 
 	/**
 	 **Generates an icicle hanging from the ceiling
 	 **/
-	public  void genIcicle (BlockPos pos){
-			if (random.nextBoolean() && isAir(pos.down())){
-				replaceBlock(pos, WTFContent.icicle.getDefaultState().withProperty(BlockIcicle.TYPE, IcicleType.icicle_base));
-				replaceBlock(pos.down(),  WTFContent.icicle.getDefaultState().withProperty(BlockIcicle.TYPE, IcicleType.icicle_tip));
-			}
-			else {
-				replaceBlock(pos, WTFContent.icicle.getDefaultState().withProperty(BlockIcicle.TYPE, IcicleType.icicle_small));
-			}
-		
+	public void genIcicle(BlockPos pos) {
+		if (random.nextBoolean() && isAir(pos.down())) {
+			replaceBlock(pos, WTFContent.icicle.getDefaultState().withProperty(BlockIcicle.TYPE, IcicleType.icicle_base));
+			replaceBlock(pos.down(), WTFContent.icicle.getDefaultState().withProperty(BlockIcicle.TYPE, IcicleType.icicle_tip));
+		} else
+			replaceBlock(pos, WTFContent.icicle.getDefaultState().withProperty(BlockIcicle.TYPE, IcicleType.icicle_small));
 	}
-
 
 	/**
 	 **Generates vines hanging from the ceiling
-	 * @return 
-	 **/
-	public void GenVines(BlockPos pos, EnumFacing facing)
-	{
-		if (!isAir(pos)){
+     **/
+	public void GenVines(BlockPos pos, EnumFacing facing) {
+		if (!isAir(pos))
 			return;
-		}
+
 		IBlockState block = null;
-		switch(facing){
+
+		switch(facing) {
 		case EAST:
 			block = Blocks.VINE.getDefaultState().withProperty(BlockVine.EAST,  true);
 			break;
@@ -259,11 +233,11 @@ public class GeneratorMethods{
 			block = Blocks.VINE.getDefaultState().withProperty(BlockVine.WEST,  true);
 			break;
 		}
-		replaceBlock(pos, block);
 
+		replaceBlock(pos, block);
 	}
 
-	public void genRoot(BlockPos pos){
+	public void genRoot(BlockPos pos) {
 		Biome biome = chunk.getBiome(pos, chunk.getWorld().getBiomeProvider());
 		if (BiomeDictionary.hasType(biome, Type.CONIFEROUS))
 			replaceBlock(pos, WTFContent.roots.getDefaultState().withProperty(BlockRoots.VARIANT, BlockPlanks.EnumType.SPRUCE));
@@ -279,20 +253,18 @@ public class GeneratorMethods{
 			replaceBlock(pos, WTFContent.roots.getDefaultState());
 	}
 
-
 	/**
 	 **Checks if spawners are enabled, and then generates a mob spawner
 	 **/
-	public void spawnVanillaSpawner(BlockPos pos, ResourceLocation entityName, int count){
+	public void spawnVanillaSpawner(BlockPos pos, ResourceLocation entityName, int count) {
 		blockmap.add(pos, new QMobSpawner(this.getWorld(), pos, entityName, count));
 	}
 
-	private boolean isAir(BlockPos pos){
+	private boolean isAir(BlockPos pos) {
 		return getWorld().isAirBlock(pos) && !blockmap.posQueued(pos);
 	}
 
 	public boolean setTreeBlock(BlockPos pos, IBlockState state) {
 		return blockmap.add(pos, new QTreeReplace(pos, state));
 	}
-	
 }

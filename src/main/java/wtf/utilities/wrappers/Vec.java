@@ -17,7 +17,7 @@ public class Vec {
 	private double currentY;
 	private double currentZ;
 
-	float tau = (float) Math.PI*2;
+	float tau = (float) Math.PI * 2;
 	
 	public Vec(BlockPos pos, double pitchX, double pitchY) {
 		currentX = pos.getX();
@@ -35,8 +35,8 @@ public class Vec {
 		currentX = pos.getX();
 		currentZ = pos.getZ();
 		currentY = pos.getY();
-		float pitchX = random.nextFloat()* tau;
-		float pitchY = random.nextFloat()* tau;
+		float pitchX = random.nextFloat() * tau;
+		float pitchY = random.nextFloat() * tau;
 		float sinY = MathHelper.sin(pitchY);
 		vecY = MathHelper.cos(pitchY);
 		vecX = MathHelper.cos(pitchX) * sinY;
@@ -44,10 +44,10 @@ public class Vec {
 	}
 	
 	public Vec(BlockPos pos, double x, double y, double z) {
-		ori = new BlockPos(pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5);
-		currentX = pos.getX()+0.5;
-		currentZ = pos.getZ()+0.5;
-		currentY = pos.getY()+0.5;
+		ori = new BlockPos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+		currentX = pos.getX() + 0.5;
+		currentZ = pos.getZ() + 0.5;
+		currentY = pos.getY() + 0.5;
 		vecX = x;
 		vecY = y;
 		vecZ = z;

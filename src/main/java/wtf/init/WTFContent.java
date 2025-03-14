@@ -9,6 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -36,6 +37,11 @@ import wtf.blocks.BlockOreSand;
 import wtf.entities.customentities.*;
 import wtf.entities.simpleentities.*;
 import wtf.items.*;
+import wtf.ores.OreGenAbstract;
+import wtf.ores.VanillOreGenCatcher;
+import wtf.ores.oregenerators.*;
+import wtf.utilities.wrappers.StoneAndOre;
+import wtf.worldgen.generators.OreGenerator;
 
 @Mod.EventBusSubscriber
 @GameRegistry.ObjectHolder(WTFExpedition.modID)
@@ -150,9 +156,9 @@ public class WTFContent {
 		    ============================================== */
 
 		for(OreEntry entry : JSONLoader.oreEntries) {
-			if(entry.usesDenseBlocks()) {
-				IBlockState oreState = JSONLoader.getStateFromId(entry.getBlockId());
+			IBlockState oreState = JSONLoader.getStateFromId(entry.getBlockId());
 
+			if(entry.usesDenseBlocks()) {
 				for (String stone : entry.getStoneList()) {
 					BlockEntry stoneEntry = JSONLoader.identifierToBlockEntry.get(stone);
 
@@ -186,6 +192,9 @@ public class WTFContent {
 						BlockSets.adjacentFracturingBlocks.add(oreOff.getRegistryName().toString());
 						BlockSets.adjacentFracturingBlocks.add(oreOn.getRegistryName().toString());
 
+						BlockSets.stoneAndOre.put(new StoneAndOre(stoneState, oreState), oreOff.getDefaultState());
+						BlockSets.surfaceBlocks.add(oreOff);
+
 					} else if(stoneState.getBlock() instanceof BlockFalling) {
 						// Sadly, there is no such thing as a falling redstone ore since both redstone logic and falling block logic depend on ticking. :(
 						BlockDenseOreFalling ore = new BlockDenseOreFalling(stoneState, oreState);
@@ -195,6 +204,9 @@ public class WTFContent {
 						blocks.add(ore);
 						oreEntryMap.put(ore, entry);
 						BlockSets.adjacentFracturingBlocks.add(ore.getRegistryName().toString());
+
+						BlockSets.stoneAndOre.put(new StoneAndOre(stoneState, oreState), ore.getDefaultState());
+						BlockSets.surfaceBlocks.add(ore);
 
 						reg.register(ore);
 					} else {
@@ -206,9 +218,28 @@ public class WTFContent {
 						oreEntryMap.put(ore, entry);
 						BlockSets.adjacentFracturingBlocks.add(ore.getRegistryName().toString());
 
+						BlockSets.stoneAndOre.put(new StoneAndOre(stoneState, oreState), ore.getDefaultState());
+						BlockSets.surfaceBlocks.add(ore);
+
 						reg.register(ore);
 					}
 				}
+			}
+
+			OreGenAbstract generator = getOreGenerator(oreState, entry, true);
+
+			if(generator != null) {
+				generator.dimension.addAll(entry.getDimensionList());
+				generator.setVeinDensity(entry.getVeinPercentDensity() / 100F);
+
+				for(Map.Entry<String, Integer> mapentry : entry.getPercentGenerationPerBiomeType().entrySet())
+					generator.biomeModifier.put(BiomeDictionary.Type.getType(mapentry.getKey()), mapentry.getValue() / 100F);
+
+				for(String biome : entry.getBiomeTypeList())
+					generator.reqBiomeTypes.add(BiomeDictionary.Type.getType(biome));
+
+				OreGenerator.oreGenRegister.add(generator);
+				VanillOreGenCatcher.vanillaCanceler(oreState);
 			}
 		}
 
@@ -446,5 +477,55 @@ public class WTFContent {
 		entityCounter++;
 		ResourceLocation rl = new ResourceLocation(WTFExpedition.modID, name);
 		return EntityEntryBuilder.create().id(rl, entityCounter).entity(entityClass).name(rl.toString()).tracker(64, 1, true).egg(entityCounter * 16, entityCounter * 22).build();
+	}
+
+	public static OreGenAbstract getOreGenerator(IBlockState oreState, OreEntry oreEntry, boolean getSecondary) {
+		OreGeneratorSettings settings = oreEntry.getSettings();
+		
+		String primary = settings.primaryGenerationType;
+		String secondary = settings.secondaryGenerationType;
+		
+		int[] genRange = {oreEntry.getSurfaceHeightMinPercentage(), oreEntry.getSurfaceHeightMaxPercentage()};
+		int[] orePerChunk = {oreEntry.getMinAmountPerChunk(), oreEntry.getMaxAmountPerChunk()};
+		
+		boolean denseBlock = oreEntry.usesDenseBlocks();
+		
+		if(getSecondary && !secondary.isEmpty()) {
+			OreGenAbstract primaryGen = getOreGenerator(oreState, oreEntry, false);
+			
+			if (secondary.equals("cave")) {
+				ArrayList<OreGenCaveFloor.surface> surfaceList = new ArrayList<>();
+
+				if (settings.ceiling)
+					surfaceList.add(OreGenCaveFloor.surface.ceiling);
+
+				if (settings.wall)
+					surfaceList.add(OreGenCaveFloor.surface.wall);
+
+				if (settings.floor)
+					surfaceList.add(OreGenCaveFloor.surface.floor);
+				
+				return new OreGenCaveFloor(primaryGen, oreState, genRange, orePerChunk, denseBlock, surfaceList);
+			}
+
+			if (secondary.equals("underwater"))
+				return new OreGenUnderWater(primaryGen, oreState, genRange, orePerChunk, denseBlock);
+		} else {
+            switch (primary) {
+                case "cloud":
+                    return new OreGenCloud(oreState, genRange, orePerChunk, denseBlock, settings.cloudDiameter);
+                case "cluster":
+                    return new OreGenCluster(oreState, genRange, orePerChunk, denseBlock);
+                case "single":
+                    return new OreGenSingle(oreState, genRange, orePerChunk, denseBlock);
+                case "vanilla":
+                    return new OreGenVanilla(oreState, genRange, orePerChunk, denseBlock, settings.blocksPerCluster);
+                case "vein":
+                    int[] dimensions = {settings.veinLength, settings.veinWidth, settings.veinVerticalThickness};
+                    return new OreGenVein(oreState, genRange, orePerChunk, dimensions, (float) settings.veinPitchAverage, denseBlock);
+            }
+        }
+
+		return null;
 	}
 }

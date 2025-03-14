@@ -13,7 +13,7 @@ import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.dungeoncaves.AbstractDungeonType;
 
-public class DungeonTypeMummy extends AbstractDungeonType{
+public class DungeonTypeMummy extends AbstractDungeonType {
 
 	public DungeonTypeMummy(String name) {
 		super(name, 0, 0);
@@ -29,46 +29,29 @@ public class DungeonTypeMummy extends AbstractDungeonType{
 	
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		
 		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID,"mummy"), 5);
-		
 		gen.replaceBlock(pos.getFloorPos().up(2), Blocks.GOLD_BLOCK.getDefaultState());
-		
 	}
-
-
 	
 	@Override
-	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-		
-	}
+	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
 	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		gen.replaceBlock(pos, sandstone);
-		
 	}
 
 	@Override
 	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		if (height == 3){
+		if (height == 3)
 			gen.replaceBlock(pos, chiseled);
-		}
-		else {
+		else
 			gen.replaceBlock(pos, sandstone);
-		} 	
 	}
 
 	@Override
-	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
+	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
-
-
+	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 }

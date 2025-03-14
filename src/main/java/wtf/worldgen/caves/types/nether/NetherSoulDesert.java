@@ -21,36 +21,26 @@ public class NetherSoulDesert extends AbstractCaveType{
 	@Override
 	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		//Some sort of use of magma blocks, with obsidian stalactites?
-		
 	}
 
 	@Override
 	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-
-		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.25){
+		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.25)
 			gen.replaceBlock(pos, Blocks.SOUL_SAND.getDefaultState());
-		}
-		gen.transformBlock(pos, Modifier.FRACTURED);
-		
 
+		gen.transformBlock(pos, Modifier.FRACTURED);
 	}
 
 	@Override
-	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
+	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
 	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		for (int rand = random.nextInt(3); rand > -1; rand--){
+		for (int rand = random.nextInt(3); rand > -1; rand--)
 			gen.replaceBlock(pos.up(rand), WTFContent.red_cactus.getDefaultState());
-		}
-		
 	}
 
 	@Override
-	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		
-	}
+	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {}
 
 }

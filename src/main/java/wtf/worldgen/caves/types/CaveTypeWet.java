@@ -13,39 +13,29 @@ public class CaveTypeWet extends AbstractCaveType {
 		super(name, ceilingAddonPercentChance, floorAddonPercentChance);
 	}
 
-
 	@Override
 	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (random.nextFloat()<0.1){
+		if (random.nextFloat()<0.1)
 			gen.transformBlock(pos, Modifier.WET);
-		}
-		
 	}
 
 	@Override
 	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.25) < 0.33){
+		if (simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.25) < 0.33)
 			gen.setWaterPatch(pos);
-		}
 	}
 
 	@Override
 	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		gen.genSpeleothem(pos, getSpelSize(random, depth), depth, false);
-
 	}
 
 	@Override
 	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		gen.genSpeleothem(pos, getSpelSize(random, depth), depth, false);
-
 	}
 
 	@Override
-	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-
-	}
-
-	
+	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {}
 
 }

@@ -12,10 +12,8 @@
     "overlayPath": "wtfexpedition:overlays/nitre_ore",
     "veinPercentDensity": 100,
     "generation_settings": {
-      "generation_types": {
-        "cave": true,
-        "single": true
-      },
+      "primaryGenerationType": "single",
+      "secondaryGenerationType": "cave",
       "cave_generation": {
         "floor": true
       }

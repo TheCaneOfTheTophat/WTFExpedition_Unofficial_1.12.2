@@ -13,7 +13,7 @@ public class ChunkCoords {
 	private final int x;
 	private final int z;
 	
-	public ChunkCoords(int chunkX, int chunkZ){
+	public ChunkCoords(int chunkX, int chunkZ) {
 		x = chunkX;
 		z = chunkZ;
 	}
@@ -46,8 +46,7 @@ public class ChunkCoords {
 	public BlockPos getGenMarkerPos() {
 		return new BlockPos(this.getWorldX() + 8, 0, this.getWorldZ() + 8);
 	}
-	
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -57,18 +56,18 @@ public class ChunkCoords {
 		return result;
 	}
 
-	public ArrayList<ChunkCoords> getChunksInRadius(int radius){
-		ArrayList<ChunkCoords> arraylist = new ArrayList<ChunkCoords>();
-		for (int xloop = -radius; xloop < radius+1; xloop++){
-			for (int zloop = -radius; zloop < radius+1; zloop++){
-				if (xloop == 0 && zloop == 0){
+	public ArrayList<ChunkCoords> getChunksInRadius(int radius) {
+		ArrayList<ChunkCoords> arraylist = new ArrayList<>();
+
+		for (int xloop = -radius; xloop < radius+1; xloop++) {
+			for (int zloop = -radius; zloop < radius+1; zloop++) {
+				if (xloop == 0 && zloop == 0) {
 					//dont add the center position
-				}
-				else {
+				} else
 					arraylist.add(new ChunkCoords(x+xloop, z+zloop));
-				}
 			}
 		}
+
 		return arraylist;
 	}
 		
@@ -97,10 +96,6 @@ public class ChunkCoords {
 	}
 
 	public boolean isWTFGenerated(World world) {
-		if (world.getBlockState(this.getGenMarkerPos()).getBlock() == WTFContent.gen_marker){
-			return false;
-		}
-		return true;
-	}
-
+        return world.getBlockState(this.getGenMarkerPos()).getBlock() != WTFContent.gen_marker;
+    }
 }

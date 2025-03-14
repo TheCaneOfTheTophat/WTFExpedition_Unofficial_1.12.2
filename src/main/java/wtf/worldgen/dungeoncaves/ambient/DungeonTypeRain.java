@@ -12,8 +12,7 @@ import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.dungeoncaves.AbstractDungeonType;
 
-public class DungeonTypeRain extends AbstractDungeonType{
-
+public class DungeonTypeRain extends AbstractDungeonType {
 
 	public DungeonTypeRain(String name, int ceilingAddonPercentChance, int floorAddonPercentChance) {
 		super(name, ceilingAddonPercentChance, floorAddonPercentChance);
@@ -25,26 +24,21 @@ public class DungeonTypeRain extends AbstractDungeonType{
 	}
 
 	@Override
-	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-
-	}
-
+	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-
-	}
+	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {}
 
 	@Override
 	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		IBlockState state = BlockSets.getTransformedState(gen.getWorld().getBlockState(pos), Modifier.WET);
 		
-		if (state != null && random.nextBoolean()){
+		if (state != null && random.nextBoolean())
 			gen.replaceBlock(pos, state.withProperty(BlockDecoAnim.FAST, true));
-		}
 		else {
 			int var = random.nextInt(3);
-			switch (var){
+
+			switch (var) {
 			case 0:
 				gen.transformBlock(pos, Modifier.FRACTURED);
 				break;
@@ -57,51 +51,46 @@ public class DungeonTypeRain extends AbstractDungeonType{
 				break;
 			}
 		}
-
 	}
 
 	@Override
 	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		int var = random.nextInt(3);
 		boolean water = random.nextBoolean();
-		switch (var){
+
+		switch (var) {
 		case 0:
-			if (water){
+			if (water) {
 				gen.setWaterPatch(pos);
 				gen.transformBlock(pos, Modifier.FRACTURED);
-			}
-			else {
+			} else
 				gen.transformBlock(pos, Modifier.FRACTURED);
-			}
 			break;
 		case 1:
-			if (water){
+			if (water) {
 				gen.setWaterPatch(pos);
 				gen.transformBlock(pos, Modifier.MOSS);
-			}
-			else {
+			} else
 				gen.transformBlock(pos, Modifier.MOSS);
-			}
 			break;
 		case 2:
-			if (water){
+			if (water) {
 				gen.setWaterPatch(pos);
 				gen.transformBlock(pos, Modifier.FRACTURED);
 				gen.transformBlock(pos, Modifier.MOSS);
-			}
-			else {
+			} else {
 				gen.transformBlock(pos, Modifier.FRACTURED);
 				gen.transformBlock(pos.down(), Modifier.MOSS);
 			}
 			break;
 		}
-
 	}
 
 	@Override
 	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
 		int var = random.nextInt(3);
-		switch (var){
+
+		switch (var) {
 		case 0:
 			gen.transformBlock(pos, Modifier.FRACTURED);
 			break;
@@ -113,13 +102,8 @@ public class DungeonTypeRain extends AbstractDungeonType{
 			gen.transformBlock(pos, Modifier.MOSS);
 			break;
 		}
-
 	}
 
 	@Override
-	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
-
-
+	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 }

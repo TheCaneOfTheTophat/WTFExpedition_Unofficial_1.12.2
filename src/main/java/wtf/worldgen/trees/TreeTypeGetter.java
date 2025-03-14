@@ -37,7 +37,7 @@ import wtf.worldgen.trees.types.Taiga2Tree;
 
 public class TreeTypeGetter {
 
-	public static HashMap<WorldGenerator, AbstractTreeType> treeTypes = new HashMap<WorldGenerator, AbstractTreeType>();
+	public static HashMap<WorldGenerator, AbstractTreeType> treeTypes = new HashMap<>();
 
 	final static IBlockState woodOak = Blocks.LOG.getDefaultState();
 	final static IBlockState woodSpruce = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.SPRUCE);
@@ -46,27 +46,23 @@ public class TreeTypeGetter {
 	final static IBlockState woodAcacia = Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.ACACIA);
 	final static IBlockState darkOakBlocks = Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.DARK_OAK);
 
-	final static IBlockState leavesOak = Blocks.LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
-	final static IBlockState leavesSpruce = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.SPRUCE).withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
-	final static IBlockState leavesBirch = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.BIRCH).withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
-	final static IBlockState leavesJungle = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.JUNGLE).withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
-	final static IBlockState leavesAcacia = Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.ACACIA).withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
-	final static IBlockState leavesDarkOak = Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.DARK_OAK).withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
+	final static IBlockState leavesOak = Blocks.LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+	final static IBlockState leavesSpruce = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.SPRUCE).withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+	final static IBlockState leavesBirch = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.BIRCH).withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+	final static IBlockState leavesJungle = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.JUNGLE).withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+	final static IBlockState leavesAcacia = Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.ACACIA).withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+	final static IBlockState leavesDarkOak = Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.DARK_OAK).withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
 
-	public static AbstractTreeType getTree(World world, WorldGenerator oldTree){
-
-
-
-		if (treeTypes.containsKey(oldTree)){
+	public static AbstractTreeType getTree(World world, WorldGenerator oldTree) {
+		if (treeTypes.containsKey(oldTree))
 			return treeTypes.get(oldTree);
-		}
 
-		if (oldTree instanceof WorldGenShrub){
+		if (oldTree instanceof WorldGenShrub) {
 			treeTypes.put(oldTree, null);
 			return null;
 		}
 
-		if (oldTree instanceof WorldGenTrees){
+		if (oldTree instanceof WorldGenTrees) {
 
 			IBlockState wood = net.minecraftforge.fml.common.ObfuscationReflectionHelper.getPrivateValue(WorldGenTrees.class, (WorldGenTrees)oldTree, 4);
 			//IBlockState leaf = net.minecraftforge.fml.common.ObfuscationReflectionHelper.getPrivateValue(WorldGenTrees.class, (WorldGenTrees)oldTree, 5);
@@ -74,62 +70,38 @@ public class TreeTypeGetter {
 
 			IBlockState leaf = Blocks.LEAVES.getStateFromMeta(wood.getBlock().getMetaFromState(wood));
 
-			if (wood == woodJungle){
+			if (wood == woodJungle) {
 				treeTypes.put(oldTree, new JungleTree(world));
 				return new JungleTree(world);
-			}
-			else {
+			} else {
 				treeTypes.put(oldTree, new SimpleTree(world, wood, wood, leaf, vines));
 				return new SimpleTree(world, wood, wood, leaf, vines);
 			}
-
-		}
-		else if (oldTree instanceof WorldGenMegaPineTree){
+		} else if (oldTree instanceof WorldGenMegaPineTree) {
 			treeTypes.put(oldTree, new RedwoodTree(world));
 			return new RedwoodTree(world);
-		}
-		else if (oldTree instanceof WorldGenCanopyTree){
+		} else if (oldTree instanceof WorldGenCanopyTree) {
 			treeTypes.put(oldTree, new DarkOakTree(world));
 			return new DarkOakTree(world);
-		}
-
-		else if (oldTree instanceof WorldGenBigTree){
+		} else if (oldTree instanceof WorldGenBigTree) {
 			treeTypes.put(oldTree, new BigTree(world, woodOak, woodOak, leavesOak));
 			return new BigTree(world, woodOak, woodOak, leavesOak);
-
-		}
-
-		else if (oldTree instanceof WorldGenBirchTree){
+		} else if (oldTree instanceof WorldGenBirchTree) {
 			treeTypes.put(oldTree, new SimpleTree(world, woodBirch, woodBirch, leavesBirch, false));
 			return new SimpleTree(world, woodBirch, woodBirch, leavesBirch, false);
-		}
-
-		else if (oldTree instanceof WorldGenMegaJungle){
+		} else if (oldTree instanceof WorldGenMegaJungle) {
 			treeTypes.put(oldTree, new JungleGiant(world));
 			return new JungleGiant(world);
-		}
-
-
-		else if (oldTree instanceof WorldGenMegaPineTree){
-			treeTypes.put(oldTree, new RedwoodTree(world));
-			return new RedwoodTree(world);
-		}
-		else if (oldTree instanceof WorldGenSavannaTree){
+		} else if (oldTree instanceof WorldGenSavannaTree) {
 			treeTypes.put(oldTree, new AcaciaTree(world));
 			return new AcaciaTree(world);
-		}
-
-
-		else if (oldTree instanceof WorldGenSwamp){
+		} else if (oldTree instanceof WorldGenSwamp) {
 			treeTypes.put(oldTree, new SwampTree(world));
 			return new SwampTree(world);
-		}
-
-		else if (oldTree instanceof WorldGenTaiga1){		
+		} else if (oldTree instanceof WorldGenTaiga1) {
 			treeTypes.put(oldTree, new Taiga1Tree(world));
 			return new Taiga1Tree(world);
-		}
-		else if (oldTree instanceof WorldGenTaiga2){
+		} else if (oldTree instanceof WorldGenTaiga2) {
 			treeTypes.put(oldTree, new Taiga2Tree(world));
 			return new Taiga2Tree(world);
 		}
@@ -141,7 +113,6 @@ public class TreeTypeGetter {
 		treeTypes.put(oldTree, null);
 		//System.out.println("Skipping unsupported tree type- this tree will not be replaced, but instead generate normally " + oldTree.getClass());
 		return null;
-
 	}
 }
 

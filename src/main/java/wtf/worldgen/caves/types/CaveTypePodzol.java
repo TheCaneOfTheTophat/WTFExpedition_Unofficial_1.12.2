@@ -12,7 +12,7 @@ import wtf.enums.Modifier;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
 
-public class CaveTypePodzol extends AbstractCaveType{
+public class CaveTypePodzol extends AbstractCaveType {
 
 	public CaveTypePodzol(String name, int ceilingAddonPercentChance, int floorAddonPercentChance) {
 		super(name, ceilingAddonPercentChance, floorAddonPercentChance);
@@ -22,27 +22,21 @@ public class CaveTypePodzol extends AbstractCaveType{
 
 	@Override
 	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (simplex.get3DNoise(gen.getWorld(), pos) > 0.66){
+		if (simplex.get3DNoise(gen.getWorld(), pos) > 0.66)
 			gen.transformBlock(pos, Modifier.MOSS);
-		}
 	}
 
 	@Override
 	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.2) < 0.33){
+		if (simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.2) < 0.33)
 			gen.replaceBlock(pos.up(), WTFContent.podzol_patch.getDefaultState());
-		}
-		else {
-			if (simplex.get3DNoise(gen.getWorld(), pos) > 0.66){
-				gen.transformBlock(pos, Modifier.MOSS);
-			}
-		}
+		else if (simplex.get3DNoise(gen.getWorld(), pos) > 0.66)
+			gen.transformBlock(pos, Modifier.MOSS);
 	}
 
 	@Override
 	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		gen.genSpeleothem(pos, getSpelSize(random, depth), depth, false);
-
 	}
 
 	@Override
@@ -53,14 +47,9 @@ public class CaveTypePodzol extends AbstractCaveType{
 
 	@Override
 	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-
-		if (height < 3 && simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.2) < 0.33){
+		if (height < 3 && simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.2) < 0.33)
 			gen.replaceBlock(pos, podzol);
-		}
-		if (simplex.get3DNoise(gen.getWorld(), pos) > 0.66){
-				gen.transformBlock(pos, Modifier.MOSS);
-		}
-		
+		if (simplex.get3DNoise(gen.getWorld(), pos) > 0.66)
+			gen.transformBlock(pos, Modifier.MOSS);
 	}
-
 }

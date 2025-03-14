@@ -14,10 +14,8 @@
     "biomeTypeList": ["river"],
     "biomeTypeListWhitelist": true,
     "generation_settings": {
-      "generation_types": {
-        "underwater": true,
-        "single": true
-      }
+      "primaryGenerationType": "single",
+      "secondaryGenerationType": "underwater"
     }
   }
 ]

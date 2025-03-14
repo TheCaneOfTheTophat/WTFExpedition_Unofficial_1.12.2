@@ -1,6 +1,19 @@
 package wtf.utilities.wrappers;
 
-public class XZ{
+public class XZ {
+
+	public final int x;
+	public final int z;
+
+	public XZ (int x, int z) {
+		this.x = x;
+		this.z = z;
+	}
+
+	public XZ[] getAdj() {
+        return new XZ[]{new XZ(x + 1, z), new XZ(x - 1, z), new XZ(x, z + 1), new XZ(x, z - 1)};
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -9,6 +22,7 @@ public class XZ{
 		result = prime * result + z;
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -24,18 +38,4 @@ public class XZ{
 			return false;
 		return true;
 	}
-	public final int x;
-	public final int z;
-	public XZ (int x, int z){
-		this.x = x;
-		this.z = z;
-	}
-	public XZ[] getAdj() {
-		XZ[] set= {new XZ(x+1, z), new XZ(x-1, z), new XZ(x, z+1), new XZ(x, z-1)}; 
-		return set;
-	}
-	
-	
-	
-	
 }

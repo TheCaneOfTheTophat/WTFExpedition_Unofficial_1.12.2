@@ -12,10 +12,8 @@
     "overlayPath": "wtfexpedition:overlays/quartz_ore",
     "veinPercentDensity": 75,
     "generation_settings": {
-      "generation_types": {
-        "cave": true,
-        "cluster": true
-      },
+      "primaryGenerationType": "cluster",
+      "secondaryGenerationType": "cave",
       "cave_generation": {
         "ceiling": true,
         "wall": true,

@@ -13,8 +13,7 @@ import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.dungeoncaves.DungeonAbstractSimple;
 
-public class DungeonSimpleSpider extends DungeonAbstractSimple{
-
+public class DungeonSimpleSpider extends DungeonAbstractSimple {
 
 	public DungeonSimpleSpider(String name) {
 		super(name);
@@ -26,45 +25,37 @@ public class DungeonSimpleSpider extends DungeonAbstractSimple{
 		IBlockState temp = BlockSets.getTransformedState(gen.getWorld().getBlockState(cave.centerpos.getFloorPos()), Modifier.FRACTURED);
 		block = BlockSets.getTransformedState(temp, Modifier.MOSS);
 		
-		if (block==null){
+		if (block==null)
 			block = Blocks.MOSSY_COBBLESTONE.getDefaultState();
-		}
+
 		return isHeight(cave, 4);
 	}
 
 	IBlockState block = null;
 	
-	
 	@Override
 	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
+		BlockPos midpos = pos.getMidPos().down();
 
-		BlockPos midpos = pos.getMidPos();
-
-		midpos = midpos.down();
-		while (midpos.getY() > pos.floor){
+		while (midpos.getY() > pos.floor) {
 			gen.replaceBlock(midpos, Blocks.MOSSY_COBBLESTONE.getDefaultState());
 			midpos = midpos.down();
 		}
 
 		gen.spawnVanillaSpawner(midpos, new ResourceLocation("spider"), 3);
-
 	}
 
-
-
 	@Override
-	public void generateAir(GeneratorMethods gen, Random random, BlockPos floating, float depth){
+	public void generateAir(GeneratorMethods gen, Random random, BlockPos floating, float depth) {
 		double noise = simplex.get3DNoise(gen.getWorld(), floating.getX(), floating.getY(), floating.getZ());
 
-		if (noise < 0.2){
+		if (noise < 0.2)
 			gen.replaceBlock(floating, Blocks.WEB.getDefaultState());
-		}
 	}
 
 	@Override
 	public void generate(GeneratorMethods gen, Random random, BlockPos pos) {
 		gen.replaceBlock(pos, block);
-}
-
+	}
 }
 

@@ -10,22 +10,19 @@ import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.CaveTypeRegister;
 import wtf.worldgen.caves.types.CaveTypeHell.hellBiome;
 
-public class NetherrackReplacer extends Replacer{
+public class NetherrackReplacer extends Replacer {
 
 	public NetherrackReplacer() {
 		super(Blocks.NETHERRACK);
-		
 	}
 
 	private static SimplexHelper simplex = new SimplexHelper("NetherrackReplacer");
-	@Override
-	public  boolean isNonSolidAndReplacement(Chunk chunk, BlockPos pos, GeneratorMethods gen,IBlockState oldState) {
-		
 
-		
+	@Override
+	public boolean isNonSolidAndReplacement(Chunk chunk, BlockPos pos, GeneratorMethods gen,IBlockState oldState) {
 		hellBiome biome = CaveTypeRegister.nether.getSubType(pos);
 
-		switch (biome){
+		switch (biome) {
 		case DEADFOREST:
 			break;
 		case FIREFOREST:
@@ -54,19 +51,16 @@ public class NetherrackReplacer extends Replacer{
 			*/
 		default:
 			break;
-	
 		}
 
 		return false;
 	}
 
-	private double desertNoise(World world, BlockPos pos){
-		double x = ((double)pos.getX())/15;
-		double y = ((double)pos.getY())/3;
-		double z = ((double)pos.getZ())/15;
+	private double desertNoise(World world, BlockPos pos) {
+		double x = ((double)pos.getX()) / 15;
+		double y = ((double)pos.getY()) / 3;
+		double z = ((double)pos.getZ()) / 15;
 		//System.out.println(" simplex " + x + " " + y + " " +z);
 		return simplex.get3DNoise(world, x, y, z); 
 	}
-	
-	
 }

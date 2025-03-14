@@ -14,7 +14,7 @@ import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.dungeoncaves.DungeonAbstractSimple;
 
-public class DungeonSlime extends DungeonAbstractSimple{
+public class DungeonSlime extends DungeonAbstractSimple {
 
 	public DungeonSlime(String name) {
 		super(name);
@@ -31,9 +31,10 @@ public class DungeonSlime extends DungeonAbstractSimple{
 	public boolean canGenerateAt(GeneratorMethods gen, CaveListWrapper cave) {
 		IBlockState temp = BlockSets.getTransformedState(gen.getWorld().getBlockState(cave.centerpos.getFloorPos()), Modifier.FRACTURED);
 		block = BlockSets.getTransformedState(temp, Modifier.MOSS);
-		if (block==null){
+
+		if (block == null)
 			block = Blocks.STONEBRICK.getDefaultState().withProperty(BlockStoneBrick.VARIANT, BlockStoneBrick.EnumType.MOSSY);
-		}
+
 		return true;
 	}
 
@@ -44,7 +45,5 @@ public class DungeonSlime extends DungeonAbstractSimple{
 	@Override
 	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
 		gen.replaceBlock(pos, Blocks.SLIME_BLOCK.getDefaultState());
-		
 	}
-
 }

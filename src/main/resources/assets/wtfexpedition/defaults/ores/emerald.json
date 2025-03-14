@@ -16,9 +16,7 @@
       "wet": 50
     },
     "generation_settings": {
-      "generation_types": {
-        "single": true
-      }
+      "primaryGenerationType": "single"
     }
   }
 ]

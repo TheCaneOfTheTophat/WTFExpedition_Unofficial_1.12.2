@@ -11,11 +11,8 @@ import net.minecraft.world.World;
 import wtf.worldgen.trees.TreeGenMethods;
 import wtf.worldgen.trees.TreeInstance;
 import wtf.worldgen.trees.components.Branch;
-import wtf.worldgen.trees.types.AbstractTreeType.LeafStyle;
 
-
-
-public class PoplarTree extends AbstractTreeType{
+public class PoplarTree extends AbstractTreeType {
 
 	public PoplarTree(World world) {
 		super(world, Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.BIRCH), 
@@ -31,7 +28,7 @@ public class PoplarTree extends AbstractTreeType{
 
 	@Override
 	public double getBranchRotation(double scale, double numBranches) {
-		return Math.PI/7;
+		return Math.PI / 7;
 	}
 
 	@Override
@@ -46,20 +43,17 @@ public class PoplarTree extends AbstractTreeType{
 
 	@Override
 	public double getBranchLength(double scale, double trunkHeight, double nodeHeight) {
-		return random.nextInt(2)+0.5;
+		return random.nextInt(2) + 0.5;
 	}
-
-
 
 	@Override
 	public double getTrunkHeight(double scale) {
-		
-		return 12 + random.nextInt(12) + 12*scale;
+		return 12 + random.nextInt(12) + 12 * scale;
 	}
 
 	@Override
 	public double getRootLength(double trunkHeight) {
-		return trunkHeight/5;
+		return trunkHeight / 5;
 	}
 
 	@Override
@@ -79,44 +73,36 @@ public class PoplarTree extends AbstractTreeType{
 
 	@Override
 	public int getNumRoots(double trunkDiameter) {
-		return random.nextInt(3)+2;
+		return random.nextInt(3) + 2;
 	}
 
 	@Override
 	public void doLeafNode(TreeInstance tree, Branch branch, BlockPos pos) {
-		double height = pos.getY()-tree.y;
+		double height = pos.getY() - tree.y;
 		double taper = MathHelper.clamp((tree.type.leafTaper) * (tree.trunkHeight-height)/tree.trunkHeight, tree.type.leafTaper, 1);
-
 		double radius = MathHelper.clamp(tree.type.leafRad*taper, 1, tree.type.leafRad);
 		double ymin = tree.type.leafYMin;
 		double ymax = tree.type.leafYMax;
 
-
-		for (double yloop = ymin; yloop < ymax; yloop++){
-
-			double sliceRadSq = (radius+1) * (radius+1) - (yloop*yloop);
+		for (double yloop = ymin; yloop < ymax; yloop++) {
+			double sliceRadSq = (radius + 1) * (radius + 1) - (yloop * yloop);
 			double slicedRadSqSmall = radius * radius - (yloop * yloop);
 
-			if (sliceRadSq > 0){
+			if (sliceRadSq > 0) {
+				for (double xloop = -radius; xloop < radius + 1; xloop++) {
+					for (double zloop = -radius; zloop < radius + 1; zloop++) {
+						double xzDistanceSq = xloop * xloop + zloop * zloop;
 
-				for (double xloop = -radius; xloop < radius+1; xloop++){
-					for (double zloop = -radius; zloop < radius+1; zloop++){
+						BlockPos leafPos = new BlockPos(xloop + pos.getX(), yloop + pos.getY(), zloop + pos.getZ());
 
-						double xzDistanceSq = xloop*xloop + zloop*zloop;
-
-						BlockPos leafPos = new BlockPos(xloop+pos.getX(), yloop+pos.getY(), zloop+pos.getZ());
-
-						if (xzDistanceSq < slicedRadSqSmall){
+						if (xzDistanceSq < slicedRadSqSmall)
 							tree.setLeaf(leafPos);
-						}
-						else if (xzDistanceSq < sliceRadSq){
-							if (tree.random.nextBoolean()){
+						else if (xzDistanceSq < sliceRadSq) {
+							if (tree.random.nextBoolean()) {
 								tree.setLeaf(leafPos);
 
-
-								if (tree.type.vines > 0 && MathHelper.absMax(xloop, zloop) > yloop && tree.random.nextBoolean()){
+								if (tree.type.vines > 0 && MathHelper.absMax(xloop, zloop) > yloop && tree.random.nextBoolean())
 									TreeGenMethods.genVine(tree, leafPos, xloop, zloop);
-								}
 							}
 						}
 					}
@@ -124,5 +110,4 @@ public class PoplarTree extends AbstractTreeType{
 			}
 		}
 	}
-
 }

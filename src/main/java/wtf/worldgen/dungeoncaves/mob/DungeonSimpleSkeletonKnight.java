@@ -14,20 +14,20 @@ import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.dungeoncaves.DungeonAbstractSimple;
 
-public class DungeonSimpleSkeletonKnight extends DungeonAbstractSimple{
+public class DungeonSimpleSkeletonKnight extends DungeonAbstractSimple {
 
 	public DungeonSimpleSkeletonKnight(String name) {
 		super(name);
 	}
 	
-IBlockState block = null;
+	IBlockState block = null;
 	
 	@Override
 	public boolean canGenerateAt(GeneratorMethods gen, CaveListWrapper cave) {
 		block = BlockSets.getTransformedState(gen.getWorld().getBlockState(cave.centerpos.getFloorPos()), Modifier.BRICK);
-		if (block==null){
+		if (block == null)
 			block = Blocks.STONEBRICK.getDefaultState();
-		}
+
 		return true;
 	}
 	
@@ -37,10 +37,7 @@ IBlockState block = null;
 	}
 
 	public void generate(GeneratorMethods gen, Random random, BlockPos pos) {
-		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.8){
+		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.8)
 			gen.replaceBlock(pos, block);
-		}
-	
 	}
-
 }

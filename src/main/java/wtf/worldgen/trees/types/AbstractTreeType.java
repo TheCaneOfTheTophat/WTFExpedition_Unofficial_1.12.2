@@ -15,29 +15,27 @@ import wtf.worldgen.trees.components.Branch;
 public abstract class AbstractTreeType {
 	
 	protected final Random random;
-	protected double PId2 = Math.PI/2;
-	
+	protected double PId2 = Math.PI / 2;
 	
 	//Constants
 	public final IBlockState wood;// = Blocks.LOG.getDefaultState();
 	public final IBlockState branch;// = Blocks.LOG.getDefaultState();
 	public final IBlockState leaf;// = Blocks.LEAVES.getDefaultState();
 
-	public enum LeafStyle{BASIC, SPRUCE, POPLAR};
+	public enum LeafStyle{BASIC, SPRUCE, POPLAR}
 
 	public static final SimplexHelper simplex = new SimplexHelper("TreeVars");
 	
-	public AbstractTreeType(World world, IBlockState wood, IBlockState branch, IBlockState leaf){
+	public AbstractTreeType(World world, IBlockState wood, IBlockState branch, IBlockState leaf) {
 		random = new Random();
 		
 		canGrowOn.add(Blocks.DIRT); canGrowOn.add(Blocks.GRASS);  canGrowOn.add(Block.getBlockFromName("dirt0decoStatic"));
 		this.wood = wood;
 		this.branch = branch;
 		this.leaf = leaf;
-		
 	}
 	
-	public HashSet<Block> canGrowOn = new HashSet<Block>();
+	public HashSet<Block> canGrowOn = new HashSet<>();
 
 	public int waterGenerate = 0;
 	public int vines = 0;
@@ -47,8 +45,7 @@ public abstract class AbstractTreeType {
 	public double leafYMin = -1;
 	public double leafYMax = 2;
 	public double leafTaper = 1;
-	
-	
+
 	public boolean airGenerate = false;
 	public double airGenHeight = 0;
 	
@@ -60,7 +57,6 @@ public abstract class AbstractTreeType {
 	public double rootLevel = 0;
 	
 	//public double trunkTaper = 1;
-	
 
 	public boolean rootWall = false;
 	public boolean growDense = false;
@@ -73,7 +69,7 @@ public abstract class AbstractTreeType {
 
 	//public boolean leafNoise = true;
 	
-	public AbstractTreeType setWaterGen(int depth){
+	public AbstractTreeType setWaterGen(int depth) {
 		waterGenerate = depth;
 		canGrowOn.add(Blocks.WATER);
 		canGrowOn.add(Blocks.SAND);
@@ -82,10 +78,12 @@ public abstract class AbstractTreeType {
 	}
 
 	public abstract int getBranchesPerNode(double nodeHeight, double scale);
+
 	public abstract double getBranchRotation(double scale, double numBranches);
+
 	public abstract double getBranchSeperation(double scale);
+
 	public abstract double getBranchPitch(double scale);
-	
 
 	//public double  lowestBranchRatio = 0.7F;
 

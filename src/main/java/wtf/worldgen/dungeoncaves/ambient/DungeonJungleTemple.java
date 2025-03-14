@@ -13,7 +13,7 @@ import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.dungeoncaves.AbstractDungeonType;
 
-public class DungeonJungleTemple extends AbstractDungeonType{
+public class DungeonJungleTemple extends AbstractDungeonType {
 
 	public DungeonJungleTemple(String name) {
 		super(name, 5, 0);
@@ -30,73 +30,52 @@ public class DungeonJungleTemple extends AbstractDungeonType{
 		gen.replaceBlock(pos.getFloorPos().down(), Blocks.STONEBRICK.getDefaultState().withProperty(BlockStoneBrick.VARIANT, BlockStoneBrick.EnumType.CHISELED));
 		gen.replaceBlock(pos.getFloorPos().up(), Blocks.STONEBRICK.getDefaultState().withProperty(BlockStoneBrick.VARIANT, BlockStoneBrick.EnumType.CHISELED));
 		gen.replaceBlock(pos.getFloorPos().up(2), Blocks.TORCH.getDefaultState());
-		
 	}
 
 	@Override
 	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.25){
+		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.25)
 			gen.replaceBlock(pos, Blocks.STONEBRICK.getDefaultState().withProperty(BlockStoneBrick.VARIANT, BlockStoneBrick.EnumType.CHISELED));
-		}
-		else {
+		else
 			gen.replaceBlock(pos, Blocks.STONEBRICK.getDefaultState());
-		} 	
-	
-		
 	}
 
 	@Override
 	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.25){
+		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.25)
 			gen.replaceBlock(pos, Blocks.STONEBRICK.getDefaultState().withProperty(BlockStoneBrick.VARIANT, BlockStoneBrick.EnumType.CHISELED));
-		}
-		else {
+		else
 			gen.replaceBlock(pos, Blocks.STONEBRICK.getDefaultState());
-		} 	
-	
-		
 	}
 
 	@Override
 	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.25){
+		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.25)
 			gen.replaceBlock(pos, Blocks.STONEBRICK.getDefaultState().withProperty(BlockStoneBrick.VARIANT, BlockStoneBrick.EnumType.CHISELED));
-		}
-		else {
+		else
 			gen.replaceBlock(pos, Blocks.STONEBRICK.getDefaultState());
-		} 	
 	}
 
 	@Override
 	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (random.nextFloat() < depth && gen.setCeilingAddon(pos, Modifier.FRACTURED)){
-			for (int loop = random.nextInt(3)+1; loop > -1; loop--){
+		if (random.nextFloat() < depth && gen.setCeilingAddon(pos, Modifier.FRACTURED)) {
+			for (int loop = random.nextInt(3) + 1; loop > -1; loop--)
 				gen.GenVines(pos.east().down(loop), EnumFacing.WEST);
-			}
-			for (int loop = random.nextInt(3)+1; loop > -1; loop--){
+			for (int loop = random.nextInt(3) + 1; loop > -1; loop--)
 				gen.GenVines(pos.west().down(loop), EnumFacing.EAST);
-			}
-			for (int loop = random.nextInt(3)+1; loop > -1; loop--){
+			for (int loop = random.nextInt(3) + 1; loop > -1; loop--)
 				gen.GenVines(pos.north().down(loop), EnumFacing.SOUTH);
-			}
-			for (int loop = random.nextInt(3)+1; loop > -1; loop--){
+			for (int loop = random.nextInt(3) + 1; loop > -1; loop--)
 				gen.GenVines(pos.south().down(loop), EnumFacing.NORTH);
-			}
 		}
-		
 	}
 
 	@Override
-	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		
-	}
+	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
 	
 	@Override
-	public void generateAdjacentWall(GeneratorMethods gen, Random random, AdjPos pos, float depth, int height){
-		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.15){
+	public void generateAdjacentWall(GeneratorMethods gen, Random random, AdjPos pos, float depth, int height) {
+		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.15)
 			gen.GenVines(pos, pos.getFace(random));
-		}
 	}
-
-
 }
