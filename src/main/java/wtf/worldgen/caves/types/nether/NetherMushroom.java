@@ -1,43 +1,45 @@
 package wtf.worldgen.caves.types.nether;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHugeMushroom;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import wtf.init.WTFContent;
-import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
 
-public class NetherMushroom extends AbstractCaveType{
+import java.util.Random;
+
+import static wtf.worldgen.GenMethods.*;
+
+public class NetherMushroom extends AbstractCaveType {
 
 	public NetherMushroom() {
 		super("NetherMushroom", 0, 1);
 	}
 
 	@Override
-	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
+	public void generateCeiling(World world, Random rand, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		gen.replaceBlock(pos, WTFContent.mycorrack.getDefaultState());
+	public void generateFloor(World world, Random rand, BlockPos pos, float depth) {
+		replace(world, pos, WTFContent.mycorrack.getDefaultState());
     }
 
 	@Override
-	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
+	public void generateCeilingAddons(World world, Random rand, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		generateMushroom(gen, random, pos);
+	public void generateFloorAddons(World world, Random rand, BlockPos pos, float depth) {
+		generateMushroom(world, rand, pos);
     }
 
 	@Override
-	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {}
+	public void generateWall(World world, Random rand, BlockPos pos, float depth, int height) {}
 
 	
-	public boolean generateMushroom(GeneratorMethods gen, Random rand, BlockPos position) {
+	public boolean generateMushroom(World world, Random rand, BlockPos position) {
         Block block = rand.nextBoolean() ? Blocks.BROWN_MUSHROOM_BLOCK : Blocks.RED_MUSHROOM_BLOCK;
         
         int i = rand.nextInt(3) + 4;
@@ -59,7 +61,7 @@ public class NetherMushroom extends AbstractCaveType{
                 for (int l = position.getX() - k; l <= position.getX() + k && flag; ++l) {
                     for (int i1 = position.getZ() - k; i1 <= position.getZ() + k && flag; ++i1) {
                         if (j >= 0 && j < 256) {
-                            IBlockState state = gen.getWorld().getBlockState(blockpos$mutableblockpos.setPos(l, j, i1));
+                            IBlockState state = world.getBlockState(blockpos$mutableblockpos.setPos(l, j, i1));
 
                             if (state.getBlock().hashCode() != Blocks.AIR.hashCode())
                                 flag = false;
@@ -72,7 +74,7 @@ public class NetherMushroom extends AbstractCaveType{
             if (!flag)
                 return false;
             else {
-                Block block1 = gen.getWorld().getBlockState(position.down()).getBlock();
+                Block block1 = world.getBlockState(position.down()).getBlock();
 
                 if (block1.hashCode() != WTFContent.mycorrack.hashCode())
                     return false;
@@ -146,18 +148,18 @@ public class NetherMushroom extends AbstractCaveType{
 
                                 if (position.getY() >= position.getY() + i - 1 || blockhugemushroom$enumtype != BlockHugeMushroom.EnumType.ALL_INSIDE) {
                                     BlockPos blockpos = new BlockPos(l1, l2, i2);
-                                    IBlockState state = gen.getWorld().getBlockState(blockpos);
-                                    gen.replaceBlock(blockpos, block.getDefaultState().withProperty(BlockHugeMushroom.VARIANT, blockhugemushroom$enumtype));
+                                    IBlockState state = world.getBlockState(blockpos);
+                                    replace(world, blockpos, block.getDefaultState().withProperty(BlockHugeMushroom.VARIANT, blockhugemushroom$enumtype));
                                 }
                             }
                         }
                     }
 
                     for (int i3 = 0; i3 < i; ++i3) {
-                        IBlockState iblockstate = gen.getWorld().getBlockState(position.up(i3));
+                        IBlockState iblockstate = world.getBlockState(position.up(i3));
 
-                        if (iblockstate.getBlock().canBeReplacedByLeaves(iblockstate, gen.chunk.getWorld(), position.up(i3)))
-                            gen.replaceBlock(position.up(i3), block.getDefaultState().withProperty(BlockHugeMushroom.VARIANT, BlockHugeMushroom.EnumType.STEM));
+                        if (iblockstate.getBlock().canBeReplacedByLeaves(iblockstate, world, position.up(i3)))
+                            replace(world, position.up(i3), block.getDefaultState().withProperty(BlockHugeMushroom.VARIANT, BlockHugeMushroom.EnumType.STEM));
                     }
 
                     return true;

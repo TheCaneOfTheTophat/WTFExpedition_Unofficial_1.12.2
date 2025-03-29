@@ -4,12 +4,15 @@ package wtf.init;
 import java.util.*;
 
 import net.minecraft.block.BlockFalling;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Biomes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeForest;
 import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -37,11 +40,17 @@ import wtf.blocks.BlockOreSand;
 import wtf.entities.customentities.*;
 import wtf.entities.simpleentities.*;
 import wtf.items.*;
-import wtf.ores.OreGenAbstract;
-import wtf.ores.VanillOreGenCatcher;
-import wtf.ores.oregenerators.*;
+import wtf.worldgen.WorldGenListener;
+import wtf.worldgen.ores.OreGenAbstract;
+import wtf.worldgen.ores.VanillaOreGenCatcher;
+import wtf.worldgen.ores.oregenerators.*;
+import wtf.worldgen.ores.oregenerators.secondary.OreGenCaveFloor;
+import wtf.worldgen.ores.oregenerators.secondary.OreGenUnderWater;
 import wtf.utilities.wrappers.StoneAndOre;
-import wtf.worldgen.generators.OreGenerator;
+import wtf.worldgen.SubBiomeGenerator;
+import wtf.worldgen.replacers.LavaReplacer;
+import wtf.worldgen.replacers.NetherrackReplacer;
+import wtf.worldgen.subbiomes.BiomeAutumnForest;
 
 @Mod.EventBusSubscriber
 @GameRegistry.ObjectHolder(WTFExpedition.modID)
@@ -80,15 +89,13 @@ public class WTFContent {
 
 	public static final Block lit_torch = null;
 	public static final Block extinguished_torch = null;
-	
-	public static final Block natural_sandstone = null;
-	public static final Block natural_red_sandstone = null;
-
-	public static final Block gen_marker = null;
 
 	public static final Item sulfur = null;
 	public static final Item nitre = null;
 	public static final Item home_scroll = null;
+
+	public static final BiomeAutumnForest autumn_forest = null;
+	public static final BiomeAutumnForest autumn_hills = null;
 
 	public static ArrayList<Item> items = new ArrayList<>();
 	public static ArrayList<Block> blocks = new ArrayList<>();
@@ -139,12 +146,8 @@ public class WTFContent {
 		// wcicTable = registerBlock(new WCICTable(), "wcic_table");
 		// GameRegistry.registerTileEntity(WCICTileEntity.class, "WCICTable");
 
-		// new NetherrackReplacer();
-
-		registerSimpleBlock(reg, new BlockNaturalSandstone(Blocks.SANDSTONE.getDefaultState()), "natural_sandstone");
-		registerSimpleBlock(reg, new BlockNaturalSandstone(Blocks.RED_SANDSTONE.getDefaultState()), "natural_red_sandstone");
-
-		registerBlockWithoutItem(reg, new Block(Material.AIR), "gen_marker");
+		new LavaReplacer();
+		new NetherrackReplacer();
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -238,8 +241,8 @@ public class WTFContent {
 				for(String biome : entry.getBiomeTypeList())
 					generator.reqBiomeTypes.add(BiomeDictionary.Type.getType(biome));
 
-				OreGenerator.oreGenRegister.add(generator);
-				VanillOreGenCatcher.vanillaCanceler(oreState);
+				WorldGenListener.oreGenRegister.add(generator);
+				VanillaOreGenCatcher.vanillaCanceler(oreState);
 			}
 		}
 
@@ -274,21 +277,17 @@ public class WTFContent {
 				speleothem.setRegistryName(WTFExpedition.modID, blockName + "_speleothem");
 				speleothem.setCreativeTab(WTFExpedition.wtfTab);
 
-				blocks.add(speleothem);
-				reg.register(speleothem);
-
 				BlockSpeleothemFrozen frozenSpeleothem = new BlockSpeleothemFrozen(speleothem);
 				frozenSpeleothem.setRegistryName(WTFExpedition.modID, "frozen_" + blockName + "_speleothem");
 				frozenSpeleothem.setCreativeTab(WTFExpedition.wtfTab);
 
+				speleothem.frozen = frozenSpeleothem;
+
+				blocks.add(speleothem);
+				reg.register(speleothem);
+
 				blocks.add(frozenSpeleothem);
 				reg.register(frozenSpeleothem);
-
-				for(SpeleothemType type : SpeleothemType.values()) {
-					IBlockState speleothemState = speleothem.getBlockState(type);
-					IBlockState frozenSpeleothemState = frozenSpeleothem.getBlockState(type);
-					BlockSets.blockTransformer.put(Pair.of(speleothemState, Modifier.FROZEN), frozenSpeleothemState);
-				}
 			}
 
 			for(Modifier modifier : Modifier.values()) {
@@ -341,25 +340,37 @@ public class WTFContent {
 			================= TRANSFORMER ================
 		    ============================================== */
 
+		HashMap<Pair<IBlockState, Modifier>, IBlockState> blockTransformer = new HashMap<>(BlockSets.blockTransformer);
+		ArrayList<Pair<IBlockState, Modifier>> blockTransformerList = new ArrayList<>(new HashSet<>(blockTransformer.keySet()));
+
+		blockTransformerList.sort((o1, o2) -> {
+            int mod = o1.getValue().toString().compareToIgnoreCase(o2.getValue().toString());
+
+            if(mod == 0)
+                return o1.getKey().toString().compareToIgnoreCase(o2.getKey().toString());
+            else
+                return mod;
+        });
+
 		// Iterate again after all registration and basic transformer stuff has been done.
-		for(Pair<IBlockState, Modifier> entry : new HashSet<>(BlockSets.blockTransformer.keySet())) {
+		for(Pair<IBlockState, Modifier> entry : blockTransformerList) {
 			IBlockState blockState = entry.getKey();
 			Modifier modifier = entry.getValue();
-			IBlockState modState = BlockSets.getTransformedState(blockState, modifier);
+			IBlockState modState = blockTransformer.get(Pair.of(blockState, modifier));
 
 			ArrayList<Modifier> modValues2 = new ArrayList<>();
 			Collections.addAll(modValues2, Modifier.values());
 			modValues2.remove(modifier);
 
 			for(Modifier modifier2 : modValues2) {
-				IBlockState modState2 = BlockSets.getTransformedState(blockState, modifier2);
+				IBlockState modState2 = blockTransformer.get(Pair.of(blockState, modifier2));
 
 				if(modState2 == null)
 					continue;
 
-				IBlockState modState3 = BlockSets.getTransformedState(modState2, modifier);
+				IBlockState modState3 = blockTransformer.get(Pair.of(modState2, modifier));
 
-				if(modState3 == null)
+				if(modState3 == null || modState == modState3)
 					continue;
 
 				BlockSets.blockTransformer.remove(Pair.of(modState, modifier2));
@@ -427,6 +438,31 @@ public class WTFContent {
 		reg.register(buildEntry(EntityZombieMiner.class, "zombie_miner"));
 
 		WTFExpedition.proxy.registerEntityRenderers();
+	}
+
+	@SubscribeEvent()
+	public static void registerBiomes(RegistryEvent.Register<Biome> event) {
+		IForgeRegistry<Biome> reg = event.getRegistry();
+
+		BiomeAutumnForest autumnForest = new BiomeAutumnForest(BiomeForest.Type.NORMAL, new Biome.BiomeProperties("Autumn Forest").setTemperature(0.4F).setRainfall(0.8F), Biomes.FOREST);
+
+		reg.register(autumnForest.setRegistryName(WTFExpedition.modID, "autumn_forest"));
+		BiomeDictionary.addTypes(autumnForest, BiomeDictionary.Type.FOREST);
+		SubBiomeGenerator.subBiomeRegistry.put((byte) 4, autumnForest);
+
+		BiomeManager.BiomeEntry entry = new BiomeManager.BiomeEntry(autumnForest, WTFExpeditionConfig.autumnForestID);
+		BiomeManager.addBiome(BiomeManager.BiomeType.COOL, entry);
+		BiomeManager.removeBiome(BiomeManager.BiomeType.COOL, entry);
+
+		BiomeAutumnForest autumnHills = new BiomeAutumnForest(BiomeForest.Type.NORMAL, new Biome.BiomeProperties("Autumn Hills").setTemperature(0.3F).setRainfall(0.8F), Biomes.FOREST_HILLS);
+
+		reg.register(autumnHills.setRegistryName(WTFExpedition.modID, "autumn_hills"));
+		BiomeDictionary.addTypes(autumnHills, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.HILLS);
+		SubBiomeGenerator.subBiomeRegistry.put((byte) 18, autumnHills);
+
+		entry = new BiomeManager.BiomeEntry(autumnHills, WTFExpeditionConfig.autumnHillsID);
+		BiomeManager.addBiome(BiomeManager.BiomeType.COOL, entry);
+		BiomeManager.removeBiome(BiomeManager.BiomeType.COOL, entry);
 	}
 
 	/*

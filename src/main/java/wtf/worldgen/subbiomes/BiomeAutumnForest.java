@@ -11,7 +11,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import wtf.config.WTFExpeditionConfig;
 import wtf.utilities.simplex.Simplex;
-import wtf.utilities.wrappers.ChunkScan;
 
 public class BiomeAutumnForest extends BiomeForest implements SubBiome {
 
@@ -73,7 +72,7 @@ public class BiomeAutumnForest extends BiomeForest implements SubBiome {
 	}
 
 	@Override
-	public WorldGenerator getTree(ChunkScan chunkscan,  Random random) {
+	public WorldGenerator getTree(Random random) {
 		return parentBiome.getRandomTreeFeature(random);
 	}
 }

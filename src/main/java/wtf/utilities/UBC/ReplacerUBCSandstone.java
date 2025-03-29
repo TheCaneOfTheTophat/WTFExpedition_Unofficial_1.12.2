@@ -3,8 +3,7 @@ package wtf.utilities.UBC;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.chunk.Chunk;
-import wtf.worldgen.GeneratorMethods;
+import net.minecraft.world.World;
 
 public class ReplacerUBCSandstone extends ReplacerUBCAbstract{
 
@@ -14,15 +13,15 @@ public class ReplacerUBCSandstone extends ReplacerUBCAbstract{
 	}
 
 	@Override
-	public boolean isNonSolidAndReplacement(Chunk chunk, BlockPos pos, GeneratorMethods gen, IBlockState oldState) {
+	public boolean replace(World world, BlockPos pos, IBlockState oldState) {
 		/*
 		IBlockState state = getUBCStone(pos);
 		if (state.getBlock().hashCode() == sedHash){
-			gen.replaceBlock(pos, state);
+			replace(world, pos, state);
 		}*/
-		double noise =getSimplexSand(chunk.getWorld(), pos);
+		double noise =getSimplexSand(world, pos);
 		if (noise < 8){
-			gen.replaceBlock(pos, sands[(int)noise]);
+			// replace(world, pos, sands[(int)noise]);
 		}
 		return false;
 	}

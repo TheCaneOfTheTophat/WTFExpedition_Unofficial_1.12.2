@@ -36,7 +36,7 @@ public class SimplexHelper {
 			return simplex.noise(x, z) * 0.5 + 0.5;
 		} catch (NullPointerException e) {
 			int seed = (int) world.getSeed();
-			simplex = new Simplex(seed * this.hashCode());
+			simplex = new Simplex(seed * name.hashCode());
 			return simplex.noise(x, z)*0.5+0.5;
 		}
 	}
@@ -66,7 +66,7 @@ public class SimplexHelper {
 			return simplex.noise(d, y, f) * 0.5 + 0.5;
 		} catch (NullPointerException e){
 			int seed = (int) world.getSeed();
-			simplex = new Simplex(seed * this.hashCode());
+			simplex = new Simplex(seed * name.hashCode());
 			return simplex.noise(d, y, f) * 0.5 + 0.5;
 		}
 	}

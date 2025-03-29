@@ -1,10 +1,10 @@
 package wtf.worldgen.dungeoncaves;
 
-import java.util.Random;
-
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import wtf.utilities.wrappers.CaveListWrapper;
-import wtf.worldgen.GeneratorMethods;
+
+import java.util.Random;
 
 public abstract class DungeonAbstractSimple extends AbstractDungeonType {
 
@@ -13,34 +13,34 @@ public abstract class DungeonAbstractSimple extends AbstractDungeonType {
 	}
 
 	@Override
-	public boolean canGenerateAt(GeneratorMethods gen, CaveListWrapper cave) {
+	public boolean canGenerateAt(World world, CaveListWrapper cave) {
 		return true;
 	}
 
-	public abstract void generate(GeneratorMethods gen, Random random, BlockPos pos);
+	public abstract void generate(World world, BlockPos pos);
 	
 	@Override
-	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		generate(gen, random, pos);
+	public void generateCeiling(World world, Random rand, BlockPos pos, float depth) {
+		generate(world, pos);
 	}
 
 	@Override
-	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		generate(gen, random, pos);
+	public void generateFloor(World world, Random rand, BlockPos pos, float depth) {
+		generate(world, pos);
 	}
 
 	@Override
-	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
+	public void generateCeilingAddons(World world, Random rand, BlockPos pos, float depth) {
 		//no ceiling addons
 	}
 
 	@Override
-	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
+	public void generateFloorAddons(World world, Random rand, BlockPos pos, float depth) {
 		//no floor addons
 	}
 
 	@Override
-	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		generate(gen, random, pos);
+	public void generateWall(World world, Random rand, BlockPos pos, float depth, int height) {
+		generate(world, pos);
 	}
 }

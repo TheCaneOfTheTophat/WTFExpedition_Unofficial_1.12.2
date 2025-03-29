@@ -1,14 +1,16 @@
 package wtf.worldgen.dungeoncaves.mob;
 
-import java.util.Random;
-
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import wtf.WTFExpedition;
 import wtf.utilities.wrappers.CaveListWrapper;
 import wtf.utilities.wrappers.CavePosition;
-import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.dungeoncaves.AbstractDungeonType;
+
+import java.util.Random;
+
+import static wtf.worldgen.GenMethods.*;
 
 public class DungeonBogLantern extends AbstractDungeonType {
 
@@ -17,27 +19,27 @@ public class DungeonBogLantern extends AbstractDungeonType {
 	}
 
 	@Override
-	public boolean canGenerateAt(GeneratorMethods gen, CaveListWrapper cave) {
+	public boolean canGenerateAt(World world, CaveListWrapper cave) {
 		return isHeight(cave, 4);
 	}
 
 	@Override
-	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID, "bog_lantern"), 8);
+	public void generateCenter(World world, Random rand, CavePosition pos, float depth) {
+		spawnVanillaSpawner(world, pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID, "bog_lantern"), 8);
 	}
 
 	@Override
-	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
+	public void generateCeiling(World world, Random rand, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
+	public void generateFloor(World world, Random rand, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
+	public void generateCeilingAddons(World world, Random rand, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
+	public void generateFloorAddons(World world, Random rand, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {}
+	public void generateWall(World world, Random rand, BlockPos pos, float depth, int height) {}
 }

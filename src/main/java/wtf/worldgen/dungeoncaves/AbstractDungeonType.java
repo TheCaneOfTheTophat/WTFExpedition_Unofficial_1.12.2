@@ -1,14 +1,14 @@
 package wtf.worldgen.dungeoncaves;
 
-import java.util.Random;
-
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import wtf.utilities.simplex.SimplexHelper;
 import wtf.utilities.wrappers.CaveListWrapper;
 import wtf.utilities.wrappers.CavePosition;
-import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
+
+import java.util.Random;
 
 public abstract class AbstractDungeonType extends AbstractCaveType {
 	
@@ -21,7 +21,7 @@ public abstract class AbstractDungeonType extends AbstractCaveType {
 	//core idea- that the dungeon wrapper calls the cave method if it doens't choose to generate something
 	//issue- the generators need to be seperate, so nevermind
 
-	public abstract boolean canGenerateAt(GeneratorMethods gen, CaveListWrapper cave);
+	public abstract boolean canGenerateAt(World world, CaveListWrapper cave);
 	
 	protected boolean isHeight(CaveListWrapper cave, int n) {
 		return cave.getAvgCeiling() - cave.getAvgFloor() >= n;
@@ -38,7 +38,7 @@ public abstract class AbstractDungeonType extends AbstractCaveType {
 		wallDist = cave.getWallDist(cave.centerpos);
 	}
 	
-	public boolean shouldPosGen(GeneratorMethods gen, BlockPos pos) {
+	public boolean shouldPosGen(World world, BlockPos pos) {
 		double rad = cave.distFromCenter(pos);
 		
 		if (pos.getX()==midpos.getX() && pos.getZ()==midpos.getZ()) {
@@ -56,7 +56,7 @@ public abstract class AbstractDungeonType extends AbstractCaveType {
 		double pitchX = Math.acos(n);
 		double pitchZ = Math.asin(n);
 		 
-		double noise = simplex.get3DNoise(gen.chunk.getWorld(), pitchX * 2, pitchY * 3, pitchZ * 2);
+		double noise = simplex.get3DNoise(world, pitchX * 2, pitchY * 3, pitchZ * 2);
         double variable = 5;
         double maxDist = noise * variable + wallDist+1;
 		
@@ -71,9 +71,5 @@ public abstract class AbstractDungeonType extends AbstractCaveType {
 	/**
 	 * called once, at the center of the dungeon, used to generate mob spawners and the like
 	 */
-	public abstract void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth);
-
-	/**
-	 * generates fill blocks- used by cave in and frozen dungeons, to replace all air blocks within the dungeon with whatever is supplied.
-	 **/
+	public abstract void generateCenter(World world, Random rand, CavePosition pos, float depth);
 }

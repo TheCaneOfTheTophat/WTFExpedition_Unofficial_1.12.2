@@ -32,12 +32,8 @@ public class CaveTypeRegister {
 
 	public static HashMap<Biome, CaveProfile> cavebiomemap = new HashMap<>();
 
-	//jacko lantern
-	//mineshaft, nether portal, mushroom, cave in,
-	//carved stone, carved sandstone
-
-	private static int floorChance = 2;
-	private static int ceilingChance = 3;
+	private static final int floorChance = 2;
+	private static final int ceilingChance = 3;
 
 	//shallow caves
 	public static final AbstractCaveType simple = new CaveTypeDefault("default", floorChance, ceilingChance);
@@ -133,7 +129,7 @@ public class CaveTypeRegister {
 			shallow = plains;
 			dungeonShallow.addAll(DungeonTypeRegister.wetList());
 		} else if(BiomeDictionary.hasType(biome,BiomeDictionary.Type.CONIFEROUS)) {
-			shallow  =podzol;
+			shallow = podzol;
 			dungeonShallow.addAll(DungeonTypeRegister.forestList());
 			dungeonShallow.addAll(DungeonTypeRegister.coldList());
 		} else if(BiomeDictionary.hasType(biome,BiomeDictionary.Type.FOREST)) {

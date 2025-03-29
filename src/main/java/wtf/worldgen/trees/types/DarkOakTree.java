@@ -7,7 +7,6 @@ import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 import wtf.blocks.BlockFoxfire;
 import wtf.init.WTFContent;
 import wtf.worldgen.trees.TreeGenMethods;
@@ -16,15 +15,15 @@ import wtf.worldgen.trees.components.Branch;
 
 public class DarkOakTree extends AbstractTreeType {
 
-	public DarkOakTree(World world) {
-		super(world,  Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.DARK_OAK),
+	public DarkOakTree() {
+		super(Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.DARK_OAK),
 				 Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.DARK_OAK),
 				 Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.DARK_OAK).withProperty(BlockLeaves.CHECK_DECAY, false));
 		
 		this.leafRad = 3;
 		this.leafYMax = 3;
 		this.leafYMin = -2;
-		this.rootDecoRate = 0.01F;
+		this.rootDecoRate = 0.02F;
 		this.decoDown = WTFContent.foxfire.getDefaultState().withProperty(BlockFoxfire.HANGING, true);
 		this.decoUp = WTFContent.foxfire.getDefaultState();
 		this.genBuffer = -10;

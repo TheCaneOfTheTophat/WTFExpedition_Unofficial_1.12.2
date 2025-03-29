@@ -11,10 +11,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 import wtf.init.BlockSets;
-import wtf.worldgen.GeneratorMethods;
-import wtf.worldgen.generators.TreeGenerator;
 import wtf.worldgen.trees.components.Branch;
 import wtf.worldgen.trees.components.ColumnTrunk;
 import wtf.worldgen.trees.components.Root;
@@ -22,31 +19,18 @@ import wtf.worldgen.trees.types.AbstractTreeType;
 
 public class TreeGenMethods {
 
-	//Start a new class, clean it up with optimisation in mind
-
 	private static final float PIx2 = (float) Math.PI * 2;
-	//private static final float PId2 = (float)Math.PI/2;
-	private static final float PId4 = (float)Math.PI / 4;
+	private static final float PId4 = (float) Math.PI / 4;
 
-	public static boolean tryGenerate(TreeInstance tree, GeneratorMethods gen) {
-		if (tree.chunkscan.checkGenerated(tree.pos, tree.type.genBuffer+tree.type.getBranchLength(tree.scale, tree.trunkHeight, tree.trunkHeight*tree.type.getLowestBranchRatio())))
-			return false;
+	public static void tryGenerate(TreeInstance tree) {
+//		if (tree.chunkscan.checkGenerated(tree.pos, tree.type.genBuffer+tree.type.getBranchLength(tree.scale, tree.trunkHeight, tree.trunkHeight*tree.type.getLowestBranchRatio())))
+//			return;
 
 		if (genTrunk(tree)) {
-			//System.out.println("trunk generated");
-			float offset = genTop(tree, tree.random.nextFloat()*PIx2);
-			//System.out.println("top generated");
+			float offset = genTop(tree, tree.random.nextFloat() * PIx2);
 			doBranches(tree, offset);
-			//System.out.println("branches generated");
 			genMainRoots(tree);
-			//System.out.println("roots generated");
-			tree.setBlocksForPlacement(gen);
-			//System.out.println("blocks placed in world");
-			
-			return true;
-		} else {
-			//System.out.println("GenFailed");
-			return false;
+			tree.setBlocksForPlacement(tree.world);
 		}
 	}
 	
@@ -64,7 +48,7 @@ public class TreeGenMethods {
 
 					BlockPos pos = column.currentPos();
 					
-					while (BlockSets.nonSolidBlockSet.contains(getBlockState(tree.world, pos).getBlock()) && pos.getY() > tree.y-4){
+					while (BlockSets.nonSolidBlockSet.contains(tree.world.getBlockState(pos).getBlock()) && pos.getY() > tree.y-4){
 						if (!tree.type.airGenerate || pos.getY()-tree.pos.getY() > tree.type.airGenHeight)
 							tree.setTrunk(pos);
 						
@@ -77,7 +61,7 @@ public class TreeGenMethods {
 						return false;
 					}
 					
-					IBlockState surface = getBlockState(tree.world, pos);
+					IBlockState surface = tree.world.getBlockState(pos);
 					
 					if (tree.type.waterGenerate < 1 && tree.world.getBlockState(pos.up()).getMaterial().isLiquid())
 						return false;
@@ -204,17 +188,17 @@ public class TreeGenMethods {
 
 					tree.setRoot(pos);
 					if (tree.type.rootWall) {
-						for (int loop = 1; BlockSets.nonSolidBlockSet.contains(getBlockState(tree.world, pos.down(loop)).getBlock()) && loop > tree.type.airGenHeight+1; loop++)
+						for (int loop = 1; BlockSets.nonSolidBlockSet.contains(tree.world.getBlockState(pos.down(loop)).getBlock()) && loop > tree.type.airGenHeight+1; loop++)
 							tree.setRoot(pos.down(loop));
 					} else {
 						if (tree.random.nextFloat() < tree.type.rootDecoRate) {
 							if (tree.random.nextBoolean()){
 								BlockPos decoPos = pos.down();
-								if (getBlockState(tree.world, decoPos).getBlock().hashCode() == airHash)
+								if (tree.world.getBlockState(decoPos).getBlock().hashCode() == airHash)
 									tree.setDeco(pos.down(), tree.type.decoDown);
 							} else {
 								BlockPos decoPos = pos.up();
-								if (getBlockState(tree.world, decoPos).getBlock().hashCode() == airHash)
+								if (tree.world.getBlockState(decoPos).getBlock().hashCode() == airHash)
 									tree.setDeco(pos.up(), tree.type.decoUp);
 							}
 						}
@@ -301,8 +285,8 @@ public class TreeGenMethods {
 			}
 		}
 
-		for (int loop = tree.random.nextInt(tree.type.vines)+1; loop > -1; loop--) {
-			if (getBlockState(tree.world, pos.down(loop)).getBlock().hashCode() == tree.airHash)
+		for (int loop = tree.random.nextInt(tree.type.vines) + 1; loop > -1; loop--) {
+			if (tree.world.isAirBlock(pos.down(loop)))
 				tree.setDeco(pos.down(loop), block);
 			else
 				break;
@@ -339,9 +323,9 @@ public class TreeGenMethods {
 	}
 
 	protected static boolean canReplace(TreeInstance tree, BlockPos pos) {
-		IBlockState state = getBlockState(tree.world, pos);
+		IBlockState state = tree.world.getBlockState(pos);
 
-		if (BlockSets.treeReplaceableBlocks.contains(getBlockState(tree.world, pos).getBlock())) {
+		if (BlockSets.treeReplaceableBlocks.contains(tree.world.getBlockState(pos).getBlock())) {
 			return true;
 		}
 
@@ -356,11 +340,6 @@ public class TreeGenMethods {
 	protected static HashSet<Material> rootReplaceable = new HashSet<>(Arrays.asList(replaceables));
 
 	protected static boolean canReplaceRoot(TreeInstance tree, BlockPos pos) {
-		return rootReplaceable.contains( tree.world.getBlockState(pos).getMaterial());
-	}
-
-	public static IBlockState getBlockState(World world, BlockPos pos) {
-		IBlockState state = TreeGenerator.getTreeMapPos(pos);
-		return state == null ? world.getBlockState(pos) : state;
+		return rootReplaceable.contains(tree.world.getBlockState(pos).getMaterial());
 	}
 }

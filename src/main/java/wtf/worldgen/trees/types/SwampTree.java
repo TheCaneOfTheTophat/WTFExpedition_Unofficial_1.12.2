@@ -4,15 +4,14 @@ import net.minecraft.block.BlockLeaves;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 import wtf.worldgen.trees.TreeGenMethods;
 import wtf.worldgen.trees.TreeInstance;
 import wtf.worldgen.trees.components.Branch;
 
 public class SwampTree extends AbstractTreeType {
 
-	public SwampTree(World world) {
-		super(world, Blocks.LOG.getDefaultState(), Blocks.LOG.getDefaultState(), Blocks.LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, false));
+	public SwampTree() {
+		super(Blocks.LOG.getDefaultState(), Blocks.LOG.getDefaultState(), Blocks.LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, false));
 		leafRad = 3;
 		leafYMax = 2;
 		leafYMin = -1;

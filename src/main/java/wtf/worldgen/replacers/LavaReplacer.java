@@ -1,50 +1,46 @@
 package wtf.worldgen.replacers;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import wtf.enums.Modifier;
 import wtf.utilities.simplex.SimplexHelper;
-import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.CaveTypeRegister;
 import wtf.worldgen.caves.types.CaveTypeHell.hellBiome;
 
+import static wtf.worldgen.GenMethods.*;
+
 public class LavaReplacer extends Replacer {
 
-	public LavaReplacer(Block block) {
-		super(block);
+	public LavaReplacer() {
+		super(Blocks.LAVA);
 	}
 
 	private static SimplexHelper simplex = new SimplexHelper("LavaReplacer");
 	
 	@Override
-	public boolean isNonSolidAndReplacement(Chunk chunk, BlockPos pos, GeneratorMethods gen, IBlockState oldState) {
-		//if (pos.getY() < 11){
-			
-			double n = simplex.get3DNoiseScaled(gen.getWorld(),pos, 0.33);
-	
-			
-			World world = chunk.getWorld();
+	public boolean replace(World world, BlockPos pos, IBlockState oldState) {
+			double n = simplex.get3DNoiseScaled(world, pos, 0.33);
+
 			Biome biome = world.getBiomeForCoordsBody(pos);
 			
 			if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.OCEAN)) {
-				gen.replaceBlock(pos, Blocks.WATER.getDefaultState());
+				override(world, pos, Blocks.WATER.getDefaultState().withProperty(BlockLiquid.LEVEL, oldState.getValue(BlockLiquid.LEVEL)), false);
 				return true;
 			} else if (BiomeDictionary.hasType(biome,BiomeDictionary.Type.SNOWY)) {
 				if (n < 0.33)
 					return true;
 				else if (n < 0.66) {
-					gen.replaceBlock(pos, Blocks.OBSIDIAN.getDefaultState());
-					gen.transformBlock(pos, Modifier.LAVA_CRUST);
+					override(world, pos, Blocks.OBSIDIAN.getDefaultState(), false);
+					modify(world, pos, Modifier.LAVA_CRUST);
 				}
 				else
-					gen.replaceBlock(pos, Blocks.OBSIDIAN.getDefaultState());
+					override(world, pos, Blocks.OBSIDIAN.getDefaultState(), false);
 			} else if (BiomeDictionary.hasType(biome, Type.NETHER)){
 				hellBiome netherbiome = CaveTypeRegister.nether.getSubType(pos);
 
@@ -66,9 +62,5 @@ public class LavaReplacer extends Replacer {
 				}
 			}
 			return false;
-			
-		//}
-		//return true;
 	}
-
 }

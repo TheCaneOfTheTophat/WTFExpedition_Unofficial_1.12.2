@@ -1,14 +1,16 @@
 package wtf.worldgen.dungeoncaves.ambient;
 
-import java.util.Random;
-
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import wtf.utilities.wrappers.CaveListWrapper;
 import wtf.utilities.wrappers.CavePosition;
-import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.dungeoncaves.AbstractDungeonType;
+
+import java.util.Random;
+
+import static wtf.worldgen.GenMethods.*;
 
 public class DungeonSpeleothemGrotto extends AbstractDungeonType {
 
@@ -17,32 +19,32 @@ public class DungeonSpeleothemGrotto extends AbstractDungeonType {
 	}
 
 	@Override
-	public boolean canGenerateAt(GeneratorMethods gen, CaveListWrapper cave) {
+	public boolean canGenerateAt(World world, CaveListWrapper cave) {
 		return  isHeight(cave, 4);
 	}
 
 	@Override
-	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (simplex.get2DRandom(gen.getWorld(), pos) < 0.5)
-			gen.genSpeleothem(pos, random.nextInt(5), depth, BiomeDictionary.hasType(gen.getWorld().getBiome(pos), Type.SNOWY));
+	public void generateCeilingAddons(World world, Random rand, BlockPos pos, float depth) {
+		if (simplex.get2DRandom(world, pos) < 0.5)
+			genSpeleothem(world, pos, rand.nextInt(5), depth, BiomeDictionary.hasType(world.getBiome(pos), Type.SNOWY));
 	}
 
 	@Override
-	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (simplex.get2DRandom(gen.getWorld(), pos) < 0.5)
-			gen.genSpeleothem(pos, random.nextInt(3), depth, BiomeDictionary.hasType(gen.getWorld().getBiome(pos), Type.SNOWY));
+	public void generateFloorAddons(World world, Random rand, BlockPos pos, float depth) {
+		if (simplex.get2DRandom(world, pos) < 0.5)
+			genSpeleothem(world, pos, rand.nextInt(3), depth, BiomeDictionary.hasType(world.getBiome(pos), Type.SNOWY));
 	}
 	
 	@Override
-	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {}
+	public void generateCenter(World world, Random rand, CavePosition pos, float depth) {}
 
 	@Override
-	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
+	public void generateCeiling(World world, Random rand, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
+	public void generateFloor(World world, Random rand, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {}
+	public void generateWall(World world, Random rand, BlockPos pos, float depth, int height) {}
 
 }

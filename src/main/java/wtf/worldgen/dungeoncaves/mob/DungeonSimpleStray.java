@@ -1,19 +1,21 @@
 package wtf.worldgen.dungeoncaves.mob;
 
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import wtf.utilities.wrappers.CavePosition;
+
 import java.util.Random;
 
-import net.minecraft.util.ResourceLocation;
-import wtf.utilities.wrappers.CavePosition;
-import wtf.worldgen.GeneratorMethods;
+import static wtf.worldgen.GenMethods.*;
 
-public class DungeonSimpleStray extends DungeonSimpleSkeleton{
+public class DungeonSimpleStray extends DungeonSimpleSkeleton {
 
 	public DungeonSimpleStray(String name) {
 		super(name);
 	}
 	
 	@Override
-	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation("stray"), 5);
+	public void generateCenter(World world, Random rand, CavePosition pos, float depth) {
+		spawnVanillaSpawner(world, pos.getFloorPos().up(), new ResourceLocation("stray"), 5);
 	}
 }

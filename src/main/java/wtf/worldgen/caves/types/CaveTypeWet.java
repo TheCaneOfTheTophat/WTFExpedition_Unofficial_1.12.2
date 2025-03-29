@@ -1,11 +1,13 @@
 package wtf.worldgen.caves.types;
 
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import wtf.enums.Modifier;
+import wtf.worldgen.caves.AbstractCaveType;
+
 import java.util.Random;
 
-import net.minecraft.util.math.BlockPos;
-import wtf.enums.Modifier;
-import wtf.worldgen.GeneratorMethods;
-import wtf.worldgen.caves.AbstractCaveType;
+import static wtf.worldgen.GenMethods.*;
 
 public class CaveTypeWet extends AbstractCaveType {
 
@@ -14,28 +16,28 @@ public class CaveTypeWet extends AbstractCaveType {
 	}
 
 	@Override
-	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (random.nextFloat()<0.1)
-			gen.transformBlock(pos, Modifier.WET);
+	public void generateCeiling(World world, Random rand, BlockPos pos, float depth) {
+		if (rand.nextFloat() < 0.1)
+			modify(world, pos, Modifier.WET);
 	}
 
 	@Override
-	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.25) < 0.33)
-			gen.setWaterPatch(pos);
+	public void generateFloor(World world, Random rand, BlockPos pos, float depth) {
+		if (simplex.get3DNoiseScaled(world, pos, 0.25) < 0.33)
+			setWaterPatch(world, pos);
 	}
 
 	@Override
-	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		gen.genSpeleothem(pos, getSpelSize(random, depth), depth, false);
+	public void generateCeilingAddons(World world, Random rand, BlockPos pos, float depth) {
+		genSpeleothem(world, pos, getSpeleothemSize(rand, depth), depth, false);
 	}
 
 	@Override
-	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		gen.genSpeleothem(pos, getSpelSize(random, depth), depth, false);
+	public void generateFloorAddons(World world, Random rand, BlockPos pos, float depth) {
+		genSpeleothem(world, pos, getSpeleothemSize(rand, depth), depth, false);
 	}
 
 	@Override
-	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {}
+	public void generateWall(World world, Random rand, BlockPos pos, float depth, int height) {}
 
 }

@@ -7,7 +7,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import wtf.utilities.simplex.SimplexHelper;
 import wtf.worldgen.trees.TreeInstance;
 import wtf.worldgen.trees.components.Branch;
@@ -26,7 +25,7 @@ public abstract class AbstractTreeType {
 
 	public static final SimplexHelper simplex = new SimplexHelper("TreeVars");
 	
-	public AbstractTreeType(World world, IBlockState wood, IBlockState branch, IBlockState leaf) {
+	public AbstractTreeType(IBlockState wood, IBlockState branch, IBlockState leaf) {
 		random = new Random();
 		
 		canGrowOn.add(Blocks.DIRT); canGrowOn.add(Blocks.GRASS);  canGrowOn.add(Block.getBlockFromName("dirt0decoStatic"));

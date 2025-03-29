@@ -6,7 +6,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import wtf.init.WTFContent;
 import wtf.utilities.simplex.SimplexHelper;
 import wtf.worldgen.replacers.Replacer;
 

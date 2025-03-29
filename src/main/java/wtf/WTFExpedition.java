@@ -24,10 +24,9 @@ import wtf.gameplay.eventlisteners.*;
 import wtf.init.BlockSets;
 import wtf.init.JSONLoader;
 import wtf.network.WTFMessageBlockCrackEvent;
-import wtf.ores.VanillOreGenCatcher;
-import wtf.worldgen.CoreWorldGenListener;
-import wtf.worldgen.SandstoneNaturaliser;
-import wtf.worldgen.generators.TickGenBuffer;
+import wtf.worldgen.WorldGenListener;
+import wtf.worldgen.ores.VanillaOreGenCatcher;
+import wtf.worldgen.replacers.TorchReplacer;
 import wtf.worldgen.trees.WorldGenTreeCancel;
 
 import javax.annotation.Nonnull;
@@ -76,13 +75,16 @@ public class WTFExpedition {
 		JSONLoader.loadJsonContent();
 
 		UBC = Loader.isModLoaded("undergroundbiomes");
+
+		if(WTFExpeditionConfig.overworldGenerationEnabled) {
+			// WTFBiomes.init();
+		}
 		
 //		if (UBC)
 //			UBCCompat.loadUBCStone();
 //		else
 //			coreLog.info("Underground Biomes Construct not detected");
 
-		BlockSets.initBlockSets();
 //		proxy.initWCICRender();
 //		WTFRecipes.initRecipes();
 //
@@ -93,12 +95,9 @@ public class WTFExpedition {
 	
 	@EventHandler
 	public void initialization(FMLInitializationEvent event) {
-		MinecraftForge.EVENT_BUS.register(new CoreWorldGenListener());
-		MinecraftForge.TERRAIN_GEN_BUS.register(new CoreWorldGenListener());
-
-		MinecraftForge.EVENT_BUS.register(new TickGenBuffer());
-
 		CHANNEL_INSTANCE.registerMessage(WTFMessageBlockCrackEvent.Handler.class, WTFMessageBlockCrackEvent.class, 0, Side.CLIENT);
+
+		BlockSets.initBlockSets();
 
 		// GAMEPLAY TWEAKS
 		if (WTFExpeditionConfig.gameplayTweaksEnabled) {
@@ -145,25 +144,22 @@ public class WTFExpedition {
 			if (WTFExpeditionConfig.replaceTorches) {
 				MinecraftForge.EVENT_BUS.register(new ListenerReplaceTorch());
 				WTFExpedition.wtfLog.info("Finite torches enabled!");
-				// TODO Replace torches in worldgen
+				new TorchReplacer();
 			}
 
 			MinecraftForge.EVENT_BUS.register(new ListenerLoot());
 		}
 
+		MinecraftForge.EVENT_BUS.register(new WorldGenListener());
+
 		if (WTFExpeditionConfig.oreGenEnabled) {
-			MinecraftForge.ORE_GEN_BUS.register(new VanillOreGenCatcher());
+			MinecraftForge.ORE_GEN_BUS.register(new VanillaOreGenCatcher());
 		}
 
-		if (WTFExpeditionConfig.overworldGenerationEnabled){
+		if (WTFExpeditionConfig.overworldGenerationEnabled) {
 			if (WTFExpeditionConfig.bigTreesEnabled){
 				MinecraftForge.TERRAIN_GEN_BUS.register(new WorldGenTreeCancel());
 			}
-		}
-
-		if (WTFExpeditionConfig.replaceSandstone) {
-			MinecraftForge.TERRAIN_GEN_BUS.register(new SandstoneNaturaliser());
-			MinecraftForge.EVENT_BUS.register(new SandstoneNaturaliser());
 		}
 	}
 	

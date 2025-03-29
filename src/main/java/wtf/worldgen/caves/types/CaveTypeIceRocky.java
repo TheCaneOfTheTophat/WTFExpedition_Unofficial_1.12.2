@@ -1,10 +1,12 @@
 package wtf.worldgen.caves.types;
 
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import wtf.init.WTFContent;
+
 import java.util.Random;
 
-import net.minecraft.util.math.BlockPos;
-import wtf.init.WTFContent;
-import wtf.worldgen.GeneratorMethods;
+import static wtf.worldgen.GenMethods.*;
 
 public class CaveTypeIceRocky extends CaveTypeRocky {
 
@@ -13,10 +15,10 @@ public class CaveTypeIceRocky extends CaveTypeRocky {
 	}
 
 	@Override
-	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		super.generateFloor(gen, random, pos, depth);
+	public void generateFloor(World world, Random rand, BlockPos pos, float depth) {
+		super.generateFloor(world, rand, pos, depth);
 
-		if (simplex.get3DNoiseScaled(gen.getWorld(),pos, 0.2) < 0.5 )
-			gen.setPatch(pos, WTFContent.ice_patch.getDefaultState());
+		if (simplex.get3DNoiseScaled(world,pos, 0.2) < 0.5 )
+			setPatch(world, pos, WTFContent.ice_patch.getDefaultState());
 	}
 }

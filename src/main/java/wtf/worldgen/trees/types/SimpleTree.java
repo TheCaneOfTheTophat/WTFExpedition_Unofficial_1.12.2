@@ -3,15 +3,14 @@ package wtf.worldgen.trees.types;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 import wtf.worldgen.trees.TreeGenMethods;
 import wtf.worldgen.trees.TreeInstance;
 import wtf.worldgen.trees.components.Branch;
 
 public class SimpleTree extends AbstractTreeType {
 
-	public SimpleTree(World world, IBlockState wood, IBlockState branch, IBlockState leaf, boolean vines) {
-		super(world, wood, branch, leaf);
+	public SimpleTree(IBlockState wood, IBlockState branch, IBlockState leaf, boolean vines) {
+		super(wood, branch, leaf);
 		if (vines)
 			this.vines = random.nextInt(3) + 1;
 	}

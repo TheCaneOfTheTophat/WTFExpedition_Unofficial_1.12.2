@@ -15,11 +15,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import wtf.init.WTFContent;
-import wtf.utilities.simplex.SimplexHelper;
-import wtf.utilities.wrappers.ChunkScan;
-import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.trees.types.AbstractTreeType;
+
+import static wtf.worldgen.GenMethods.*;
 
 public class TreeInstance {
 
@@ -37,14 +35,10 @@ public class TreeInstance {
 
 	public final double trunkHeight;
 	public final double rootLevel;
-	
 
 	public final double scale;
-	public static SimplexHelper simplex = new SimplexHelper("treeSimplex");
 	
 	public final boolean snow;
-
-	public ChunkScan chunkscan;
 	
 	private final HashMap<BlockPos, IBlockState> trunkBlocks;
 	private final HashMap<BlockPos, IBlockState> leafBlocks;
@@ -52,8 +46,7 @@ public class TreeInstance {
 	private final HashMap<BlockPos, IBlockState> decoBlocks;
 
 
-	public TreeInstance(World world, Random random, ChunkScan chunkscan, BlockPos pos, AbstractTreeType tree) {
-		//tree.canGrowOn.add(CaveBlocks.MossyDirt);
+	public TreeInstance(World world, Random random, BlockPos pos, double scale, AbstractTreeType tree) {
 		trunkBlocks = new HashMap<>();
 		leafBlocks = new HashMap<>();
 		rootBlocks = new HashMap<>();
@@ -62,13 +55,13 @@ public class TreeInstance {
 		this.world = world;
 		this.random = random;
 		this.pos = pos;
-		this.oriX = pos.getX()+0.5;
+		this.oriX = pos.getX() + 0.5;
 		this.y = pos.getY();
-		this.oriZ = pos.getZ()+0.5;
+		this.oriZ = pos.getZ() + 0.5;
 		this.snow = BiomeDictionary.hasType(world.getBiome(pos), Type.SNOWY);
 		this.type = tree;
 
-		scale = simplex.get2DNoise(world, pos.getX() / 100D, pos.getZ() / 100D);
+		this.scale = scale;
 		
 		trunkHeight = tree.getTrunkHeight(scale);
 		trunkDiameter = tree.getTrunkDiameter(scale);
@@ -80,38 +73,29 @@ public class TreeInstance {
 			rootLevel = tree.rootLevel == 0 ? random.nextInt(2): tree.rootLevel;
 		else
 			rootLevel = tree.airGenHeight; // +1 because generation height is cut off at > airGenHeight
-
-		this.chunkscan = chunkscan;
 	}
 
-	Block[] groundArray = { Blocks.DIRT, Blocks.GRASS, Blocks.GRAVEL, Block.getBlockFromName("dirt0decoStatic") };
+	Block[] groundArray = {Blocks.DIRT, Blocks.GRASS, Blocks.GRAVEL};
 	public HashSet<Block> groundBlocks = new HashSet<>(Arrays.asList(groundArray));
 	
 	public void setTrunk(BlockPos pos) {
 		trunkBlocks.put(pos, type.wood);
-		//this.chunkscan.setGenerated(pos);
 	}
 
 	public void setRoot(BlockPos pos) {
 		rootBlocks.put(pos, type.wood.withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.NONE));
-		this.chunkscan.setGenerated(pos);
 	}
 
 	public void setBranch(BlockPos pos, BlockLog.EnumAxis axis) {
 		rootBlocks.put(pos, type.branch.withProperty(BlockLog.LOG_AXIS, axis));
-		this.chunkscan.setGenerated(pos);
 	}
 
-	public int airHash = Blocks.AIR.hashCode();
 	public void setLeaf(BlockPos pos) {
-		if (world.getBlockState(pos).getBlock().hashCode() == airHash) {
+		if (world.isAirBlock(pos)) {
 			leafBlocks.put(pos, type.leaf.withProperty(BlockLeaves.CHECK_DECAY, false));
-			if (snow) {
+
+			if (snow)
 				setDeco(pos.up(), Blocks.SNOW_LAYER.getDefaultState());
-				if (random.nextInt(100) < 0) {
-					setDeco(pos.down(), WTFContent.icicle.getDefaultState());
-				}
-			}
 		}
 	}
 	
@@ -119,20 +103,19 @@ public class TreeInstance {
 		decoBlocks.put(pos, state);
 	}
 
-	public void setBlocksForPlacement(GeneratorMethods gen) {
+	public void setBlocksForPlacement(World world) {
 		HashMap<BlockPos, IBlockState> masterMap = new HashMap<>();
+
 		masterMap.putAll(decoBlocks);
 		masterMap.putAll(leafBlocks);
 		masterMap.putAll(rootBlocks);
 		masterMap.putAll(trunkBlocks);
 		
-		for (Entry<BlockPos, IBlockState> entry: masterMap.entrySet())
-			gen.setTreeBlock(entry.getKey(), entry.getValue());
-
+		for (Entry<BlockPos, IBlockState> entry : masterMap.entrySet())
+			replace(world, entry.getKey(), entry.getValue());
 	}
 
 	public boolean inTrunk(BlockPos pos) {
-		//System.out.println(relPosZ(zpos) - z);
 		return trunkBlocks.containsKey(pos);
 	}
 }

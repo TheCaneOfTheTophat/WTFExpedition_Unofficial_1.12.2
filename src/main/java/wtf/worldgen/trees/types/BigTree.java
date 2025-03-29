@@ -3,15 +3,14 @@ package wtf.worldgen.trees.types;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 import wtf.worldgen.trees.TreeGenMethods;
 import wtf.worldgen.trees.TreeInstance;
 import wtf.worldgen.trees.components.Branch;
 
 public class BigTree extends AbstractTreeType {
 
-	public BigTree(World world, IBlockState wood, IBlockState branch, IBlockState leaf) {
-		super(world, wood, branch, leaf);
+	public BigTree(IBlockState wood, IBlockState branch, IBlockState leaf) {
+		super(wood, branch, leaf);
 		topLimitDown = Math.PI / 2;
 		this.genBuffer = 1;
 	}

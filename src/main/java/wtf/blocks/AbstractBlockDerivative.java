@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBush;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -129,6 +132,11 @@ public abstract class AbstractBlockDerivative extends Block {
     @Override
     public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face) {
         return parentBackground.getBlock().getFlammability(world, pos, face);
+    }
+
+    @Override
+    public boolean canSustainPlant(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing direction, net.minecraftforge.common.IPlantable plantable) {
+        return parentBackground.getBlock().canSustainPlant(state, world, pos, direction, plantable);
     }
 
     @Override

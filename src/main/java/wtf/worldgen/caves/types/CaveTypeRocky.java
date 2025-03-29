@@ -1,11 +1,13 @@
 package wtf.worldgen.caves.types;
 
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import wtf.enums.Modifier;
+import wtf.worldgen.caves.AbstractCaveType;
+
 import java.util.Random;
 
-import net.minecraft.util.math.BlockPos;
-import wtf.enums.Modifier;
-import wtf.worldgen.GeneratorMethods;
-import wtf.worldgen.caves.AbstractCaveType;
+import static wtf.worldgen.GenMethods.*;
 
 public class CaveTypeRocky extends AbstractCaveType {
 
@@ -14,47 +16,47 @@ public class CaveTypeRocky extends AbstractCaveType {
 	}
 
 	@Override
-	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		double noise = simplex.get3DNoise(gen.getWorld(), pos);
+	public void generateCeiling(World world, Random rand, BlockPos pos, float depth) {
+		double noise = simplex.get3DNoise(world, pos);
 
 		if (noise < 0.05)
-			gen.transformBlock(pos, Modifier.CRACKED);
+			modify(world, pos, Modifier.CRACKED);
 
 		else if (noise > 0.75)
-			gen.transformBlock(pos, Modifier.FRACTURED);
+			modify(world, pos, Modifier.FRACTURED);
 	}
 
 	@Override
-	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		double noise = simplex.get3DNoise(gen.getWorld(), pos);
+	public void generateFloor(World world, Random rand, BlockPos pos, float depth) {
+		double noise = simplex.get3DNoise(world, pos);
 
 		if (noise < 0.05)
-			gen.transformBlock(pos, Modifier.CRACKED);
+			modify(world, pos, Modifier.CRACKED);
 
 		else if (noise > 0.75)
-			gen.transformBlock(pos, Modifier.FRACTURED);
+			modify(world, pos, Modifier.FRACTURED);
 	}
 
 	@Override
-	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		gen.genSpeleothem(pos, getSpelSize(random, depth), depth, false);
+	public void generateCeilingAddons(World world, Random rand, BlockPos pos, float depth) {
+		genSpeleothem(world, pos, getSpeleothemSize(rand, depth), depth, false);
 	}
 
 	@Override
-	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (random.nextBoolean())
-			gen.genSpeleothem(pos, getSpelSize(random, depth), depth, false);
+	public void generateFloorAddons(World world, Random rand, BlockPos pos, float depth) {
+		if (rand.nextBoolean())
+			genSpeleothem(world, pos, getSpeleothemSize(rand, depth), depth, false);
 		else
-			gen.setFloorAddon(pos, Modifier.FRACTURED);
+			setFloorAddon(world, pos, Modifier.FRACTURED);
 	}
 
 	@Override
-	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		double noise = simplex.get3DNoise(gen.getWorld(), pos);
+	public void generateWall(World world, Random rand, BlockPos pos, float depth, int height) {
+		double noise = simplex.get3DNoise(world, pos);
 
 		if (noise < 0.05)
-			gen.transformBlock(pos, Modifier.CRACKED);
+			modify(world, pos, Modifier.CRACKED);
 		else if (noise > 0.75)
-			gen.transformBlock(pos, Modifier.FRACTURED);
+			modify(world, pos, Modifier.FRACTURED);
 	}
 }

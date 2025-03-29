@@ -4,9 +4,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
 import wtf.utilities.simplex.SimplexHelper;
-import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.CaveTypeRegister;
 import wtf.worldgen.caves.types.CaveTypeHell.hellBiome;
 
@@ -19,7 +17,7 @@ public class NetherrackReplacer extends Replacer {
 	private static SimplexHelper simplex = new SimplexHelper("NetherrackReplacer");
 
 	@Override
-	public boolean isNonSolidAndReplacement(Chunk chunk, BlockPos pos, GeneratorMethods gen,IBlockState oldState) {
+	public boolean replace(World world, BlockPos pos, IBlockState oldState) {
 		hellBiome biome = CaveTypeRegister.nether.getSubType(pos);
 
 		switch (biome) {
@@ -37,15 +35,15 @@ public class NetherrackReplacer extends Replacer {
 			/*
 			double noise = desertNoise(chunk.getWorld(), pos); 
 			if (noise < 0.3){
-				gen.replaceBlock(pos, Blocks.SANDSTONE.getDefaultState());
+				replace(world, pos, Blocks.SANDSTONE.getDefaultState());
 				if (random.nextBoolean()){
-					gen.transformBlock(pos, Modifier.SOUL);
+					modify(world, pos, Modifier.SOUL);
 				}
 			}
 			else if (noise < 0.6){	
-				gen.replaceBlock(pos, Blocks.RED_SANDSTONE.getDefaultState());
+				replace(world, pos, Blocks.RED_SANDSTONE.getDefaultState());
 				if (random.nextBoolean()){
-					gen.transformBlock(pos, Modifier.SOUL);
+					modify(world, pos, Modifier.SOUL);
 				}
 			}
 			*/

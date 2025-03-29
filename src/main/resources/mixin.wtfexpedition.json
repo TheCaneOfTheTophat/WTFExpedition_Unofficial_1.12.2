@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "wtf.worldgen.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "mixin.wtfexpedition.refmap.json",
+  "mixins": [
+    "MixinSurfaceScan"
+  ],
+  "client": [],
+  "minVersion": "0.8"
+}

@@ -4,7 +4,7 @@ package wtf.worldgen.trees;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
-import wtf.worldgen.generators.TreeGenerator;
+import wtf.worldgen.TreeGenerator;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class WorldGenTreeCancel {

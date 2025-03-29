@@ -6,7 +6,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import wtf.utilities.wrappers.ChunkScan;
 
 public interface SubBiome {
 
@@ -22,5 +21,5 @@ public interface SubBiome {
 
 	Biome getParentBiome();
 
-	WorldGenerator getTree(ChunkScan chunkscan, Random random);
+	WorldGenerator getTree(Random random);
 }

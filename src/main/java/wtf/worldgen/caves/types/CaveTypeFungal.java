@@ -1,11 +1,13 @@
 package wtf.worldgen.caves.types;
 
-import java.util.Random;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
-import wtf.worldgen.GeneratorMethods;
+import net.minecraft.world.World;
 import wtf.worldgen.caves.AbstractCaveType;
+
+import java.util.Random;
+
+import static wtf.worldgen.GenMethods.*;
 
 public class CaveTypeFungal extends AbstractCaveType {
 
@@ -14,37 +16,37 @@ public class CaveTypeFungal extends AbstractCaveType {
 	}
 
 	@Override
-	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.33) < 0.33)
-			gen.replaceBlock(pos, Blocks.DIRT.getDefaultState());
+	public void generateCeiling(World world, Random rand, BlockPos pos, float depth) {
+		if (simplex.get3DNoiseScaled(world, pos, 0.33) < 0.33)
+			replace(world, pos, Blocks.DIRT.getDefaultState());
 	}
 
 
 	@Override
-	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (simplex.get3DNoise(gen.getWorld(), pos.getX() / 3D, pos.getY(), pos.getZ() / 3D) < 0.33)
-			gen.replaceBlock(pos, Blocks.MYCELIUM.getDefaultState());
+	public void generateFloor(World world, Random rand, BlockPos pos, float depth) {
+		if (simplex.get3DNoise(world, pos.getX() / 3D, pos.getY(), pos.getZ() / 3D) < 0.33)
+			replace(world, pos, Blocks.MYCELIUM.getDefaultState());
 	}
 
 	@Override
-	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		gen.genSpeleothem(pos, getSpelSize(random, depth), depth, false);
+	public void generateCeilingAddons(World world, Random rand, BlockPos pos, float depth) {
+		genSpeleothem(world, pos, getSpeleothemSize(rand, depth), depth, false);
 	}
 
 	@Override
-	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (random.nextBoolean())
+	public void generateFloorAddons(World world, Random rand, BlockPos pos, float depth) {
+		if (rand.nextBoolean())
 			if (pos.getY() < 53)
-				gen.replaceBlock(pos, Blocks.BROWN_MUSHROOM.getDefaultState());
+				replace(world, pos, Blocks.BROWN_MUSHROOM.getDefaultState());
 			else
-				gen.replaceBlock(pos, Blocks.RED_MUSHROOM.getDefaultState());
+				replace(world, pos, Blocks.RED_MUSHROOM.getDefaultState());
 		else
-			gen.genSpeleothem(pos, getSpelSize(random, depth), depth, false);
+			genSpeleothem(world, pos, getSpeleothemSize(rand, depth), depth, false);
 	}
 
 	@Override
-	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		if (simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.33) < 0.33)
-			gen.replaceBlock(pos, Blocks.DIRT.getDefaultState());
+	public void generateWall(World world, Random rand, BlockPos pos, float depth, int height) {
+		if (simplex.get3DNoiseScaled(world, pos, 0.33) < 0.33)
+			replace(world, pos, Blocks.DIRT.getDefaultState());
 	}
 }

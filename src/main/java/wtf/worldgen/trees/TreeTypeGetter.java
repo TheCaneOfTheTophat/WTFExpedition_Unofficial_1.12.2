@@ -23,6 +23,7 @@ import net.minecraft.world.gen.feature.WorldGenTaiga1;
 import net.minecraft.world.gen.feature.WorldGenTaiga2;
 import net.minecraft.world.gen.feature.WorldGenTrees;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import wtf.worldgen.trees.types.AbstractTreeType;
 import wtf.worldgen.trees.types.AcaciaTree;
 import wtf.worldgen.trees.types.BigTree;
@@ -63,47 +64,44 @@ public class TreeTypeGetter {
 		}
 
 		if (oldTree instanceof WorldGenTrees) {
-
-			IBlockState wood = net.minecraftforge.fml.common.ObfuscationReflectionHelper.getPrivateValue(WorldGenTrees.class, (WorldGenTrees)oldTree, 4);
-			//IBlockState leaf = net.minecraftforge.fml.common.ObfuscationReflectionHelper.getPrivateValue(WorldGenTrees.class, (WorldGenTrees)oldTree, 5);
-			Boolean vines = net.minecraftforge.fml.common.ObfuscationReflectionHelper.getPrivateValue(WorldGenTrees.class, (WorldGenTrees)oldTree, 3);
-
-			IBlockState leaf = Blocks.LEAVES.getStateFromMeta(wood.getBlock().getMetaFromState(wood));
+			IBlockState wood = ObfuscationReflectionHelper.getPrivateValue(WorldGenTrees.class, (WorldGenTrees)oldTree, "metaWood");
+			IBlockState leaf = ObfuscationReflectionHelper.getPrivateValue(WorldGenTrees.class, (WorldGenTrees)oldTree, "metaLeaves");
+			Boolean vines = ObfuscationReflectionHelper.getPrivateValue(WorldGenTrees.class, (WorldGenTrees)oldTree, "vinesGrow");
 
 			if (wood == woodJungle) {
-				treeTypes.put(oldTree, new JungleTree(world));
-				return new JungleTree(world);
+				treeTypes.put(oldTree, new JungleTree());
+				return new JungleTree();
 			} else {
-				treeTypes.put(oldTree, new SimpleTree(world, wood, wood, leaf, vines));
-				return new SimpleTree(world, wood, wood, leaf, vines);
+				treeTypes.put(oldTree, new SimpleTree(wood, wood, leaf, vines));
+				return new SimpleTree(wood, wood, leaf, vines);
 			}
 		} else if (oldTree instanceof WorldGenMegaPineTree) {
-			treeTypes.put(oldTree, new RedwoodTree(world));
-			return new RedwoodTree(world);
+			treeTypes.put(oldTree, new RedwoodTree());
+			return new RedwoodTree();
 		} else if (oldTree instanceof WorldGenCanopyTree) {
-			treeTypes.put(oldTree, new DarkOakTree(world));
-			return new DarkOakTree(world);
+			treeTypes.put(oldTree, new DarkOakTree());
+			return new DarkOakTree();
 		} else if (oldTree instanceof WorldGenBigTree) {
-			treeTypes.put(oldTree, new BigTree(world, woodOak, woodOak, leavesOak));
-			return new BigTree(world, woodOak, woodOak, leavesOak);
+			treeTypes.put(oldTree, new BigTree(woodOak, woodOak, leavesOak));
+			return new BigTree(woodOak, woodOak, leavesOak);
 		} else if (oldTree instanceof WorldGenBirchTree) {
-			treeTypes.put(oldTree, new SimpleTree(world, woodBirch, woodBirch, leavesBirch, false));
-			return new SimpleTree(world, woodBirch, woodBirch, leavesBirch, false);
+			treeTypes.put(oldTree, new SimpleTree(woodBirch, woodBirch, leavesBirch, false));
+			return new SimpleTree(woodBirch, woodBirch, leavesBirch, false);
 		} else if (oldTree instanceof WorldGenMegaJungle) {
-			treeTypes.put(oldTree, new JungleGiant(world));
-			return new JungleGiant(world);
+			treeTypes.put(oldTree, new JungleGiant());
+			return new JungleGiant();
 		} else if (oldTree instanceof WorldGenSavannaTree) {
-			treeTypes.put(oldTree, new AcaciaTree(world));
-			return new AcaciaTree(world);
+			treeTypes.put(oldTree, new AcaciaTree());
+			return new AcaciaTree();
 		} else if (oldTree instanceof WorldGenSwamp) {
-			treeTypes.put(oldTree, new SwampTree(world));
-			return new SwampTree(world);
+			treeTypes.put(oldTree, new SwampTree());
+			return new SwampTree();
 		} else if (oldTree instanceof WorldGenTaiga1) {
-			treeTypes.put(oldTree, new Taiga1Tree(world));
-			return new Taiga1Tree(world);
+			treeTypes.put(oldTree, new Taiga1Tree());
+			return new Taiga1Tree();
 		} else if (oldTree instanceof WorldGenTaiga2) {
-			treeTypes.put(oldTree, new Taiga2Tree(world));
-			return new Taiga2Tree(world);
+			treeTypes.put(oldTree, new Taiga2Tree());
+			return new Taiga2Tree();
 		}
 		//else if (Loader.isModLoaded("RTG") && OverworldGenConfig.replaceRTGBirches && oldTree instanceof TreeRTGBetulaPapyrifera){
 		//	treeTypes.put(oldTree, new PoplarTree(world));

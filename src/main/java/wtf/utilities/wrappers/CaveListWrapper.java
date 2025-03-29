@@ -8,6 +8,7 @@ import java.util.Random;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import wtf.init.BlockSets;
@@ -15,10 +16,10 @@ import wtf.init.BlockSets;
 public class CaveListWrapper {
 
 	private final HashMap<XZ, CavePosition> cave;
-	private ArrayList<CavePosition> cavelist = new ArrayList<>();
-	private final ChunkCoords coords;
+	private ArrayList<CavePosition> caveList = new ArrayList<>();
+	private final ChunkPos chunkPos;
 
-	private ArrayList<BlockPos> wallpos = new ArrayList<>();
+	private ArrayList<BlockPos> wallPos = new ArrayList<>();
 
 	private double totalFloor = 0;
 	private double totalCeiling = 0;
@@ -62,8 +63,8 @@ public class CaveListWrapper {
 		}
 	}
 
-	public CaveListWrapper(CavePosition pos, ChunkCoords coords) {
-		this.coords = coords;
+	public CaveListWrapper(CavePosition pos, ChunkPos chunkPos) {
+		this.chunkPos = chunkPos;
 		cave = new HashMap<>();
 		addPos(pos);
 		maxFloor = pos.floor;
@@ -85,7 +86,7 @@ public class CaveListWrapper {
 	}
 
 	public void addPos(CavePosition pos) {
-		wallpos.addAll(pos.wall);
+		wallPos.addAll(pos.wall);
 		cave.put(pos.xz(), pos);
 
 		totalFloor += pos.floor;
@@ -104,8 +105,8 @@ public class CaveListWrapper {
 	}
 
 	public boolean isAwayFromEdge() {
-		double chunkx = getAvgX() - coords.getWorldX();
-		double chunkz = getAvgZ() - coords.getWorldZ();
+		double chunkx = getAvgX() - chunkPos.getXStart();
+		double chunkz = getAvgZ() - chunkPos.getZStart();
 
 		boolean inX = chunkx + getSizeX() / 2D < 17 && chunkx - getSizeX() / 2D > -1;
 		boolean inZ = chunkx + getSizeZ() / 2D < 17 && chunkz - getSizeZ() / 2D > -1;
@@ -159,7 +160,7 @@ public class CaveListWrapper {
 		CavePosition bestpos = null;
 		double bestscore = 10;
 
-		for (CavePosition checkpos : this.cavelist) {
+		for (CavePosition checkpos : this.caveList) {
 			double posFailScore = getClearance(checkpos) ;
 			if (posFailScore < bestscore) {
 				bestpos = checkpos;
@@ -254,11 +255,11 @@ public class CaveListWrapper {
 	}
 
 	public CavePosition getRandomPosition(Random random) {
-		return cavelist.get(random.nextInt(cavelist.size()));
+		return caveList.get(random.nextInt(caveList.size()));
 	}
 
 	public BlockPos getRandomWall(Random random) {
-		return !wallpos.isEmpty() ? this.wallpos.get(random.nextInt(wallpos.size())) : null;
+		return !wallPos.isEmpty() ? this.wallPos.get(random.nextInt(wallPos.size())) : null;
 	}
 
 	public int size() {
@@ -282,7 +283,7 @@ public class CaveListWrapper {
 	}
 
 	public void setCaveArrayList() {
-		cavelist.addAll(this.cave.values());
+		caveList.addAll(this.cave.values());
 	}
 	
 	public double getWallDist(CavePosition pos1) {
@@ -302,10 +303,10 @@ public class CaveListWrapper {
 
 		//and now it checks that this distance is less than the distance to the edge of the chunk
 
-		smallest = pos1.x - this.coords.getWorldX() < smallest ? pos1.x - this.coords.getWorldX() : smallest;
-		smallest = this.coords.getWorldX() + 16 - pos1.x < smallest ? this.coords.getWorldX() + 16 - pos1.x : smallest;
-		smallest = pos1.z - this.coords.getWorldZ() < smallest ? pos1.z - this.coords.getWorldZ() : smallest;
-		smallest = this.coords.getWorldZ() + 16 - pos1.z < smallest ? this.coords.getWorldZ() + 16 - pos1.z : smallest;
+		smallest = pos1.x - this.chunkPos.getXStart() < smallest ? pos1.x - this.chunkPos.getXStart() : smallest;
+		smallest = this.chunkPos.getXStart() + 16 - pos1.x < smallest ? this.chunkPos.getXStart() + 16 - pos1.x : smallest;
+		smallest = pos1.z - this.chunkPos.getZStart() < smallest ? pos1.z - this.chunkPos.getZStart() : smallest;
+		smallest = this.chunkPos.getZStart() + 16 - pos1.z < smallest ? this.chunkPos.getZStart() + 16 - pos1.z : smallest;
 		
 		return smallest;
 	}

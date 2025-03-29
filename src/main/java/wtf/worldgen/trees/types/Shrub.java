@@ -7,18 +7,17 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenShrub;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
-import wtf.worldgen.GeneratorMethods;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+
+import static wtf.worldgen.GenMethods.*;
 
 public class Shrub {
-	private final GeneratorMethods gen;
     private final IBlockState leaves;
     private final IBlockState wood;
 	
-	public Shrub(WorldGenShrub oldshrub, GeneratorMethods gen){
-		this.leaves = ReflectionHelper.getPrivateValue(WorldGenShrub.class, oldshrub, 0);
-		this.wood = ReflectionHelper.getPrivateValue(WorldGenShrub.class, oldshrub, 1);
-		this.gen = gen;
+	public Shrub(WorldGenShrub oldshrub) {
+		this.leaves = ObfuscationReflectionHelper.getPrivateValue(WorldGenShrub.class, oldshrub, "leavesMetadata");
+		this.wood = ObfuscationReflectionHelper.getPrivateValue(WorldGenShrub.class, oldshrub, "woodMetadata");
 	}
 	
 	public boolean generate(World worldIn, Random rand, BlockPos position) {
@@ -29,7 +28,7 @@ public class Shrub {
 
         if (state.getBlock().canSustainPlant(state, worldIn, position, net.minecraft.util.EnumFacing.UP, ((net.minecraft.block.BlockSapling)Blocks.SAPLING))) {
             position = position.up();
-            gen.setTreeBlock(position, wood);
+            replace(worldIn, position, wood);
             //this.setBlockAndNotifyAdequately(worldIn, position, this.woodMetadata);
 
             for (int i = position.getY(); i <= position.getY() + 2; ++i) {
@@ -46,7 +45,7 @@ public class Shrub {
                             BlockPos blockpos = new BlockPos(l, i, j1);
                            
                             // this.setBlockAndNotifyAdequately(worldIn, blockpos, this.leavesMetadata);
-                            gen.setTreeBlock(blockpos, leaves);
+                            replace(worldIn, blockpos, leaves);
                         }
                     }
                 }

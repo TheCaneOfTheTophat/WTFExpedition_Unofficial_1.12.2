@@ -1,16 +1,18 @@
 package wtf.worldgen.caves.types;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import wtf.init.WTFContent;
 import wtf.enums.Modifier;
-import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.caves.AbstractCaveType;
+
+import java.util.Random;
+
+import static wtf.worldgen.GenMethods.*;
 
 public class CaveTypePodzol extends AbstractCaveType {
 
@@ -21,35 +23,35 @@ public class CaveTypePodzol extends AbstractCaveType {
 	IBlockState podzol = Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.PODZOL);
 
 	@Override
-	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (simplex.get3DNoise(gen.getWorld(), pos) > 0.66)
-			gen.transformBlock(pos, Modifier.MOSS);
+	public void generateCeiling(World world, Random rand, BlockPos pos, float depth) {
+		if (simplex.get3DNoise(world, pos) > 0.66)
+			modify(world, pos, Modifier.MOSS);
 	}
 
 	@Override
-	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		if (simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.2) < 0.33)
-			gen.replaceBlock(pos.up(), WTFContent.podzol_patch.getDefaultState());
-		else if (simplex.get3DNoise(gen.getWorld(), pos) > 0.66)
-			gen.transformBlock(pos, Modifier.MOSS);
+	public void generateFloor(World world, Random rand, BlockPos pos, float depth) {
+		if (simplex.get3DNoiseScaled(world, pos, 0.2) < 0.33)
+			replace(world, pos.up(), WTFContent.podzol_patch.getDefaultState());
+		else if (simplex.get3DNoise(world, pos) > 0.66)
+			modify(world, pos, Modifier.MOSS);
 	}
 
 	@Override
-	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		gen.genSpeleothem(pos, getSpelSize(random, depth), depth, false);
+	public void generateCeilingAddons(World world, Random rand, BlockPos pos, float depth) {
+		genSpeleothem(world, pos, getSpeleothemSize(rand, depth), depth, false);
 	}
 
 	@Override
-	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		Block mushroom = simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.2) > 0.5 ? Blocks.BROWN_MUSHROOM : Blocks.RED_MUSHROOM;
-		gen.replaceBlock(pos, mushroom.getDefaultState());
+	public void generateFloorAddons(World world, Random rand, BlockPos pos, float depth) {
+		Block mushroom = simplex.get3DNoiseScaled(world, pos, 0.2) > 0.5 ? Blocks.BROWN_MUSHROOM : Blocks.RED_MUSHROOM;
+		replace(world, pos, mushroom.getDefaultState());
 	}
 
 	@Override
-	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		if (height < 3 && simplex.get3DNoiseScaled(gen.getWorld(), pos, 0.2) < 0.33)
-			gen.replaceBlock(pos, podzol);
-		if (simplex.get3DNoise(gen.getWorld(), pos) > 0.66)
-			gen.transformBlock(pos, Modifier.MOSS);
+	public void generateWall(World world, Random rand, BlockPos pos, float depth, int height) {
+		if (height < 3 && simplex.get3DNoiseScaled(world, pos, 0.2) < 0.33)
+			replace(world, pos, podzol);
+		if (simplex.get3DNoise(world, pos) > 0.66)
+			modify(world, pos, Modifier.MOSS);
 	}
 }

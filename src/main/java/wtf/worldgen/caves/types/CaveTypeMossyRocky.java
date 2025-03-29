@@ -1,10 +1,12 @@
 package wtf.worldgen.caves.types;
 
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import wtf.enums.Modifier;
+
 import java.util.Random;
 
-import net.minecraft.util.math.BlockPos;
-import wtf.enums.Modifier;
-import wtf.worldgen.GeneratorMethods;
+import static wtf.worldgen.GenMethods.*;
 
 public class CaveTypeMossyRocky extends CaveTypeRocky {
 
@@ -13,27 +15,27 @@ public class CaveTypeMossyRocky extends CaveTypeRocky {
 	}
 
 	@Override
-	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		super.generateCeiling(gen, random, pos, depth);
+	public void generateCeiling(World world, Random rand, BlockPos pos, float depth) {
+		super.generateCeiling(world, rand, pos, depth);
 
-		if (simplex.get3DNoiseShifted(gen.getWorld(), pos, 100) > 0.80)
-			gen.transformBlock(pos, Modifier.MOSS);
+		if (simplex.get3DNoiseShifted(world, pos, 100) > 0.80)
+			modify(world, pos, Modifier.MOSS);
 	}
 
 	@Override
-	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		super.generateFloor(gen, random, pos, depth);
+	public void generateFloor(World world, Random rand, BlockPos pos, float depth) {
+		super.generateFloor(world, rand, pos, depth);
 
-		if (simplex.get3DNoiseShifted(gen.getWorld(), pos, 100) > 0.80)
-			gen.transformBlock(pos, Modifier.MOSS);
+		if (simplex.get3DNoiseShifted(world, pos, 100) > 0.80)
+			modify(world, pos, Modifier.MOSS);
 	}
 
 
 	@Override
-	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {
-		super.generateWall(gen, random, pos, depth, height);
+	public void generateWall(World world, Random rand, BlockPos pos, float depth, int height) {
+		super.generateWall(world, rand, pos, depth, height);
 
-		if (simplex.get3DNoiseShifted(gen.getWorld(), pos, 100) > 0.80)
-			gen.transformBlock(pos, Modifier.MOSS);
+		if (simplex.get3DNoiseShifted(world, pos, 100) > 0.80)
+			modify(world, pos, Modifier.MOSS);
 	}
 }

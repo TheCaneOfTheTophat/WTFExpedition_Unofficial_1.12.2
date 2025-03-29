@@ -1,10 +1,12 @@
 package wtf.worldgen.caves.types;
 
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import wtf.worldgen.caves.AbstractCaveType;
+
 import java.util.Random;
 
-import net.minecraft.util.math.BlockPos;
-import wtf.worldgen.GeneratorMethods;
-import wtf.worldgen.caves.AbstractCaveType;
+import static wtf.worldgen.GenMethods.*;
 
 public class CaveTypeDefault extends AbstractCaveType {
 
@@ -13,23 +15,22 @@ public class CaveTypeDefault extends AbstractCaveType {
 	}
 
 	@Override
-	public void generateCeiling(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
+	public void generateCeiling(World world, Random rand, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateFloor(GeneratorMethods gen, Random random, BlockPos pos, float depth) {}
+	public void generateFloor(World world, Random rand, BlockPos pos, float depth) {}
 
 	@Override
-	public void generateCeilingAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		//size calculation for speleothem?
-		gen.genSpeleothem(pos, getSpelSize(random, depth), depth, false);
+	public void generateCeilingAddons(World world, Random rand, BlockPos pos, float depth) {
+		genSpeleothem(world, pos, getSpeleothemSize(rand, depth), depth, false);
 	}
 
 	@Override
-	public void generateFloorAddons(GeneratorMethods gen, Random random, BlockPos pos, float depth) {
-		gen.genSpeleothem(pos, getSpelSize(random, depth), depth, false);
+	public void generateFloorAddons(World world, Random rand, BlockPos pos, float depth) {
+		genSpeleothem(world, pos, getSpeleothemSize(rand, depth), depth, false);
 	}
 
 	@Override
-	public void generateWall(GeneratorMethods gen, Random random, BlockPos pos, float depth, int height) {}
+	public void generateWall(World world, Random rand, BlockPos pos, float depth, int height) {}
 
 }

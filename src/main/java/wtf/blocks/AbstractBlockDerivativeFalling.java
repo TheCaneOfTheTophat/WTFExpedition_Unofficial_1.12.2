@@ -132,6 +132,11 @@ public abstract class AbstractBlockDerivativeFalling extends BlockFalling {
     }
 
     @Override
+    public boolean canSustainPlant(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing direction, net.minecraftforge.common.IPlantable plantable) {
+        return parentBackground.getBlock().canSustainPlant(state, world, pos, direction, plantable);
+    }
+
+    @Override
     public SoundType getSoundType() {
         return parentBackground.getBlock().getSoundType();
     }

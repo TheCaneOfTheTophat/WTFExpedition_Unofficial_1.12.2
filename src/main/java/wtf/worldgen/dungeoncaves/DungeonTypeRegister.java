@@ -3,15 +3,7 @@ package wtf.worldgen.dungeoncaves;
 import java.util.ArrayList;
 
 import wtf.config.WTFExpeditionConfig;
-import wtf.worldgen.dungeoncaves.ambient.DungeonJungleTemple;
-import wtf.worldgen.dungeoncaves.ambient.DungeonSpeleothemGrotto;
-import wtf.worldgen.dungeoncaves.ambient.DungeonTypeBatCave;
-import wtf.worldgen.dungeoncaves.ambient.DungeonTypeCaveIn;
-import wtf.worldgen.dungeoncaves.ambient.DungeonTypeFoxfire;
-import wtf.worldgen.dungeoncaves.ambient.DungeonTypeFrozenSolid;
-import wtf.worldgen.dungeoncaves.ambient.DungeonTypePrismarine;
-import wtf.worldgen.dungeoncaves.ambient.DungeonTypeRain;
-import wtf.worldgen.dungeoncaves.ambient.DungeonTypeSoulsand;
+import wtf.worldgen.dungeoncaves.ambient.*;
 import wtf.worldgen.dungeoncaves.mob.*;
 
 public class DungeonTypeRegister {

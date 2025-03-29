@@ -3,8 +3,8 @@ package wtf.worldgen.caves;
 import java.util.ArrayList;
 import java.util.Random;
 
+import net.minecraft.world.World;
 import wtf.utilities.wrappers.CaveListWrapper;
-import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.dungeoncaves.AbstractDungeonType;
 
 public class CaveProfile {
@@ -33,24 +33,24 @@ public class CaveProfile {
 			return caveShallow;
 	}
 
-	public AbstractDungeonType getDungeonForCave(GeneratorMethods gen, Random random, CaveListWrapper cave, int surface) {
+	public AbstractDungeonType getDungeonForCave(World world, Random rand, CaveListWrapper cave, int surface) {
 		for (int loop = 0; loop < 5; loop++) {
 			float height = (float) cave.getAvgFloor() / (surface);
 
 			if (height < 0.33) {
-				int chance = random.nextInt(dungeonDeep.size());
+				int chance = rand.nextInt(dungeonDeep.size());
 
-				if (dungeonDeep.get(chance).canGenerateAt(gen, cave))
+				if (dungeonDeep.get(chance).canGenerateAt(world, cave))
 					return dungeonDeep.get(chance);
 			} else if (height < 0.66) {
-				int chance = random.nextInt(dungeonMid.size());
+				int chance = rand.nextInt(dungeonMid.size());
 
-				if (dungeonMid.get(chance).canGenerateAt(gen, cave))
+				if (dungeonMid.get(chance).canGenerateAt(world, cave))
 					return dungeonMid.get(chance);
 			} else {
-				int chance = random.nextInt(dungeonShallow.size());
+				int chance = rand.nextInt(dungeonShallow.size());
 
-				if (dungeonShallow.get(chance).canGenerateAt(gen, cave))
+				if (dungeonShallow.get(chance).canGenerateAt(world, cave))
 					return dungeonShallow.get(chance);
 			}
 		}

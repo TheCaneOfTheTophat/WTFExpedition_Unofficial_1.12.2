@@ -1,34 +1,36 @@
 package wtf.worldgen.dungeoncaves.mob;
 
-import java.util.Random;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import wtf.init.BlockSets;
 import wtf.enums.Modifier;
 import wtf.utilities.wrappers.CaveListWrapper;
 import wtf.utilities.wrappers.CavePosition;
-import wtf.worldgen.GeneratorMethods;
 import wtf.worldgen.dungeoncaves.DungeonAbstractSimple;
 
-public class DungeonSimpleMagma  extends DungeonAbstractSimple {
+import java.util.Random;
+
+import static wtf.worldgen.GenMethods.*;
+
+public class DungeonSimpleMagma extends DungeonAbstractSimple {
 
 	public DungeonSimpleMagma(String name) {
 		super(name);
 	}
 
 	@Override
-	public void generateCenter(GeneratorMethods gen, Random rand, CavePosition pos, float depth) {
-		gen.spawnVanillaSpawner(pos.getFloorPos().up(), new ResourceLocation("magma_cube"), 3);
+	public void generateCenter(World world, Random rand, CavePosition pos, float depth) {
+		spawnVanillaSpawner(world, pos.getFloorPos().up(), new ResourceLocation("magma_cube"), 3);
 	}
 	
 	IBlockState block = null;
 	
 	@Override
-	public boolean canGenerateAt(GeneratorMethods gen, CaveListWrapper cave) {
-		block = BlockSets.getTransformedState(gen.getWorld().getBlockState(cave.centerpos.getFloorPos()), Modifier.LAVA_CRUST);
+	public boolean canGenerateAt(World world, CaveListWrapper cave) {
+		block = BlockSets.getTransformedState(world.getBlockState(cave.centerpos.getFloorPos()), Modifier.LAVA_CRUST);
 
 		if (block == null)
 			block = BlockSets.getTransformedState(Blocks.OBSIDIAN.getDefaultState(), Modifier.LAVA_CRUST);
@@ -37,8 +39,8 @@ public class DungeonSimpleMagma  extends DungeonAbstractSimple {
 	}
 
 	@Override
-	public void generate(GeneratorMethods gen, Random random, BlockPos pos) {
-		if (simplex.get3DNoise(gen.getWorld(), pos) < 0.8)
-			gen.replaceBlock(pos, block);
+	public void generate(World world, BlockPos pos) {
+		if (simplex.get3DNoise(world, pos) < 0.8)
+			replace(world, pos, block);
 	}
 }

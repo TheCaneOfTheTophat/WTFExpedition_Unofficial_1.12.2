@@ -1,6 +1,6 @@
 [
   {
-    "blockId": "wtfexpedition:natural_sandstone",
+    "blockId": "minecraft:sandstone@0",
     "name": "sandstone",
     "fracturedBlockId": "sand",
     "texture": "minecraft:blocks/sandstone_top",
@@ -9,7 +9,7 @@
     "speleothems": true
   },
   {
-    "blockId": "wtfexpedition:natural_red_sandstone",
+    "blockId": "minecraft:red_sandstone@0",
     "name": "red_sandstone",
     "fracturedBlockId": "red_sand",
     "texture": "minecraft:blocks/red_sandstone_top",
