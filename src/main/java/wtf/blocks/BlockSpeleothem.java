@@ -19,7 +19,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import wtf.WTFExpedition;
 import wtf.enums.SpeleothemType;
-import wtf.init.WTFContent;
+import wtf.init.BlockSets;
 
 import java.util.Random;
 
@@ -33,7 +33,7 @@ public class BlockSpeleothem extends AbstractBlockDerivative {
 	public BlockSpeleothem(IBlockState state) {
 		super(state, state);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, SpeleothemType.stalactite_small));
-		WTFContent.speleothemMap.put(state, this);
+		BlockSets.speleothemMap.put(state, this);
 	}
 
 	protected BlockSpeleothem(IBlockState backState, IBlockState foreState) {

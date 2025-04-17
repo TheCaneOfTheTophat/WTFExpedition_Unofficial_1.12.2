@@ -44,14 +44,16 @@ public class CaveTypeSwamp extends AbstractCaveType {
 	@Override
 	public void generateCeilingAddons(World world, Random rand, BlockPos pos, float depth) {
 		if (rand.nextBoolean() && setCeilingAddon(world, pos, Modifier.FRACTURED)) {
-			for (int loop = rand.nextInt(3)+1; loop > -1; loop--)
-				genVines(world, pos.east().down(loop), EnumFacing.WEST);
-			for (int loop = rand.nextInt(3)+1; loop > -1; loop--)
-				genVines(world, pos.west().down(loop), EnumFacing.EAST);
-			for (int loop = rand.nextInt(3)+1; loop > -1; loop--)
-				genVines(world, pos.north().down(loop), EnumFacing.SOUTH);
-			for (int loop = rand.nextInt(3)+1; loop > -1; loop--)
-				genVines(world, pos.south().down(loop), EnumFacing.NORTH);
+			for(EnumFacing facing : EnumFacing.HORIZONTALS) {
+				boolean cancel;
+
+				for (int loop = rand.nextInt(3) + 1; loop > -1; loop--) {
+					cancel = !genVines(world, pos.offset(facing.getOpposite()).down(loop), facing);
+
+					if (cancel)
+						break;
+				}
+			}
 		} else
 			genSpeleothem(world, pos, getSpeleothemSize(rand, depth), depth, false);
 	}
@@ -59,10 +61,8 @@ public class CaveTypeSwamp extends AbstractCaveType {
 	@Override
 	public void generateFloorAddons(World world, Random rand, BlockPos pos, float depth) {
 		if (rand.nextBoolean() && setFloorAddon(world, pos, Modifier.FRACTURED)) {
-			genVines(world, pos.east(), EnumFacing.WEST);
-			genVines(world, pos.west(), EnumFacing.EAST);
-			genVines(world, pos.north(), EnumFacing.SOUTH);
-			genVines(world, pos.south(), EnumFacing.NORTH);
+			for(EnumFacing facing : EnumFacing.HORIZONTALS)
+				genVines(world, pos.offset(facing.getOpposite()), facing);
 		} else
 			genSpeleothem(world, pos, getSpeleothemSize(rand, depth), depth, false);
 	}

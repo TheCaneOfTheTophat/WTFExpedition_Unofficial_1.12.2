@@ -65,25 +65,21 @@ public class CaveTypeJungleVolcano extends AbstractCaveType {
 		double noise = simplex.get3DNoiseScaled(world, pos.up(), 0.1);
 		
 		if (noise < 0.66) {
-			setCeilingAddon(world, pos, Modifier.FRACTURED);
 
-			if (rand.nextBoolean())
-				for (int loop = rand.nextInt(3)+1; loop > -1; loop--)
-					genVines(world, pos.east().down(loop), EnumFacing.WEST);
+			if(setCeilingAddon(world, pos, Modifier.FRACTURED)) {
+				for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+					boolean cancel;
 
-			if (rand.nextBoolean())
-				for (int loop = rand.nextInt(3)+1; loop > -1; loop--)
-					genVines(world, pos.west().down(loop), EnumFacing.EAST);
+					if (rand.nextBoolean()) {
+						for (int loop = rand.nextInt(3) + 1; loop > -1; loop--) {
+							cancel = !genVines(world, pos.offset(facing.getOpposite()).down(loop), facing);
 
-
-			if (rand.nextBoolean())
-				for (int loop = rand.nextInt(3)+1; loop > -1; loop--)
-					genVines(world, pos.north().down(loop), EnumFacing.SOUTH);
-
-
-			if (rand.nextBoolean())
-				for (int loop = rand.nextInt(3)+1; loop > -1; loop--)
-					genVines(world, pos.south().down(loop), EnumFacing.NORTH);
+							if (cancel)
+								break;
+						}
+					}
+				}
+			}
 		} else
 			genSpeleothem(world, pos, getSpeleothemSize(rand, depth), depth, false);
 	}

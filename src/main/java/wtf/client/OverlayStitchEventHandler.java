@@ -15,8 +15,9 @@ public class OverlayStitchEventHandler {
         ImmutableList<String> decoOverlays = ImmutableList.of("moss_overlay", "soul_overlay", "cracked_overlay", "lava_overlay");
 
         for(OreEntry entry : JSONLoader.oreEntries)
-            for(String path : entry.getAllOverlayPaths())
-                event.getMap().registerSprite(new ResourceLocation(path));
+            if(!entry.getRawOverlayPath().isEmpty())
+                for(String path : entry.getAllOverlayPaths())
+                    event.getMap().registerSprite(new ResourceLocation(path));
 
         for(String overlay : decoOverlays)
             event.getMap().registerSprite(new ResourceLocation(WTFExpedition.modID + ":overlays/" + overlay));

@@ -13,8 +13,8 @@ import wtf.blocks.AbstractBlockDerivative;
 import wtf.blocks.IDeco;
 import wtf.config.BlockEntry;
 import wtf.config.WTFExpeditionConfig;
-import wtf.init.BlockSets;
 import wtf.init.JSONLoader;
+import wtf.worldgen.GenMethods;
 
 public class GravityMethods {
 
@@ -43,7 +43,7 @@ public class GravityMethods {
 			return;
 
 		// if the block beneath isn't solid
-		if (BlockSets.nonSolidBlockSet.contains(world.getBlockState(pos.down()).getBlock())) {
+		if (GenMethods.isNonSolid(world.getBlockState(pos.down()))) {
 			int blockhash = block.hashCode();
 			double fallchance = 1;
 
@@ -104,6 +104,9 @@ public class GravityMethods {
 
 	public static void dropBlock(World world, BlockPos pos, Boolean checkSupport) {
 		if(world.isAirBlock(pos))
+			return;
+
+		if(!world.isAirBlock(pos.down()))
 			return;
 
 		IBlockState state = world.getBlockState(pos);

@@ -27,11 +27,8 @@ public class BlockDecoAnim extends AbstractBlockDerivative implements IDeco {
 		super(state, state);
 		this.type = type;
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FAST, false));
-
-//		BlockSpeleothem block = WTFContent.speleothemMap.get(state);
-//		WTFContent.speleothemMap.put(this.getDefaultState().withProperty(TYPE, AnimatedDecoType.DRIP_WATER), block);
 	}
-	
+
     @Override
 	public void onBlockDestroyedByPlayer(World world, BlockPos pos, IBlockState state) {
     	if (type == AnimatedDecoType.LAVA_CRUST)
@@ -45,7 +42,7 @@ public class BlockDecoAnim extends AbstractBlockDerivative implements IDeco {
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		IBlockState state = this.getDefaultState().withProperty(FAST, meta == 0 ? false : true);
+		IBlockState state = this.getDefaultState().withProperty(FAST, meta != 0);
 		return state;
 	}
 
@@ -108,11 +105,4 @@ public class BlockDecoAnim extends AbstractBlockDerivative implements IDeco {
 	public AnimatedDecoType getType() {
 		return type;
 	}
-
-	public void setFast(World world, BlockPos pos) {
-		IBlockState blockstate = world.getBlockState(pos);
-		if (blockstate.getBlock() instanceof BlockDecoAnim)
-			world.setBlockState(pos, getStateFromMeta(this.getMetaFromState(blockstate)+8));
-	}
-
 }

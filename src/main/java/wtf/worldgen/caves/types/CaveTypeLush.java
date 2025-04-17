@@ -27,7 +27,7 @@ public class CaveTypeLush extends AbstractCaveType {
 	}
 	
 	final IBlockState leaves = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.JUNGLE).withProperty(BlockLeaves.DECAYABLE, Boolean.FALSE);
-	final IBlockState roots = WTFContent.roots.getDefaultState().withProperty(BlockRoots.VARIANT, BlockPlanks.EnumType.JUNGLE);
+	final IBlockState wood = Blocks.LOG.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.JUNGLE);
 	final IBlockState fern = Blocks.TALLGRASS.getDefaultState().withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.FERN);
 	final IBlockState sapling = Blocks.SAPLING.getDefaultState().withProperty(BlockSapling.TYPE, BlockPlanks.EnumType.JUNGLE);
 
@@ -71,27 +71,22 @@ public class CaveTypeLush extends AbstractCaveType {
 		double noise = simplex.get3DNoiseScaled(world, pos.up(), 0.1);
 
 		if (noise < 0.33)
-			replace(world, pos, roots);
+			genRoots(world, pos);
 		else {
 			setCeilingAddon(world, pos, Modifier.FRACTURED);
 
-			if (rand.nextBoolean())
-				for (int loop = rand.nextInt(3) + 1; loop > -1; loop--)
-					genVines(world, pos.east().down(loop), EnumFacing.WEST);
+			for(EnumFacing facing : EnumFacing.HORIZONTALS) {
+				boolean cancel;
 
-			if (rand.nextBoolean())
-				for (int loop = rand.nextInt(3) + 1; loop > -1; loop--)
-					genVines(world, pos.west().down(loop), EnumFacing.EAST);
+				if(rand.nextBoolean()) {
+					for (int loop = rand.nextInt(3) + 1; loop > -1; loop--) {
+						cancel = !genVines(world, pos.offset(facing.getOpposite()).down(loop), facing);
 
-
-			if (rand.nextBoolean())
-				for (int loop = rand.nextInt(3) + 1; loop > -1; loop--)
-					genVines(world, pos.north().down(loop), EnumFacing.SOUTH);
-
-
-			if (rand.nextBoolean())
-				for (int loop = rand.nextInt(3) + 1; loop > -1; loop--)
-					genVines(world, pos.south().down(loop), EnumFacing.NORTH);
+						if (cancel)
+							break;
+					}
+				}
+			}
 		}
 	}
 
@@ -101,17 +96,18 @@ public class CaveTypeLush extends AbstractCaveType {
 
 		if (noise < 0.165)
 			replace(world, pos, fern);
-
 		else if (noise < 0.33)
 			replace(world, pos, sapling);
-
 		else if (rand.nextBoolean()) {
-			replace(world, pos, leaves);
-			replace(world, pos.north(), leaves);
-			replace(world, pos.south(), leaves);
-			replace(world, pos.east(), leaves);
-			replace(world, pos.west(), leaves);
-			replace(world, pos.up(), leaves);
+			if(replace(world, pos, wood)) {
+				for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+					if (isNonSolid(world.getBlockState(pos.offset(facing))))
+						replace(world, pos.offset(facing), leaves);
+				}
+
+				if (isNonSolid(world.getBlockState(pos.up())))
+					replace(world, pos.up(), leaves);
+			}
 		}
 	}
 

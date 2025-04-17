@@ -1,0 +1,21 @@
+[
+  {
+    "blockId": "type#cracked",
+    "name": "cracked",
+    "minAmountPerChunk": -25,
+    "maxAmountPerChunk": 110,
+    "surfaceHeightMinPercentage": 10,
+    "surfaceHeightMaxPercentage": 110,
+    "dimensionList": [0],
+    "veinPercentDensity": 50,
+    "generation_settings": {
+      "primaryGenerationType": "vein",
+      "vein_generation": {
+        "veinPitchAverage": 0.0,
+        "veinLength": 10,
+        "veinWidth": 2,
+        "veinVerticalThickness": 1
+      }
+    }
+  }
+]

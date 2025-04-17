@@ -148,7 +148,8 @@ public class JSONLoader {
                     continue;
                 }
 
-                blockId = addMeta(blockId);
+                if(!(parent.contains("ores") && blockId.contains("type#")))
+                    blockId = addMeta(blockId);
 
                 if(parent.contains("ores")) {
                     // TODO Use array of "generator" objects

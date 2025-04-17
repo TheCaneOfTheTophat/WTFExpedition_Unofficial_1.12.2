@@ -148,7 +148,7 @@ public class EntityFracture extends Entity {
 	public static void fractureBlock(World world, BlockPos pos, boolean indirectFracture, boolean breakBlockEffect) {
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
-		IBlockState cobble;
+		IBlockState cobble = BlockSets.getTransformedState(state, Modifier.FRACTURED);
 
 		if (state.getMaterial() == Material.AIR || block instanceof BlockFluidBase)
 			return;
@@ -162,12 +162,10 @@ public class EntityFracture extends Entity {
 				return;
 			}
 
-			if(indirectFracture && ((IDeco) block).getType() == StaticDecoType.CRACKED)
+			if(indirectFracture && ((IDeco) block).getType() == StaticDecoType.CRACKED && cobble != null)
 				fractureAdjacent(world, pos);
-
 		}
 
-		cobble = BlockSets.getTransformedState(state, Modifier.FRACTURED);
 
 		if(cobble == null)
 			return;

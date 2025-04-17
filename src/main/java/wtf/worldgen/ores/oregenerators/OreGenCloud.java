@@ -18,8 +18,8 @@ public class OreGenCloud extends OreGenAbstract {
 
 	public final double radius;
 
-	public OreGenCloud(IBlockState state, int[] genRange, int[] minMaxPerChunk, boolean denseGen, int diameter) {
-		super(state, genRange, minMaxPerChunk, denseGen);
+	public OreGenCloud(IBlockState state, String name, int[] genRange, int[] minMaxPerChunk, boolean denseGen, int diameter) {
+		super(state, name, genRange, minMaxPerChunk, denseGen);
 		this.radius = diameter / 2F;
 	}
 

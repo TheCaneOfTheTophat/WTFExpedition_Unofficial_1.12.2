@@ -30,6 +30,20 @@ import wtf.utilities.wrappers.StoneAndOre;
 
 public class GenMethods {
 
+    public static boolean isNonSolid(IBlockState state) {
+        Material material = state.getMaterial();
+
+        return !state.isFullBlock() || isFluid(state) || material == Material.WATER || material == Material.SNOW || material == Material.LAVA || material == Material.AIR;
+    }
+
+    public static boolean isTreeReplaceable(World world, BlockPos pos, IBlockState state) {
+        return state.getBlock().isReplaceable(world, pos) || state.getMaterial() == Material.PLANTS;
+    }
+
+    public static boolean isMaterialReplaceable(IBlockState state) {
+        return BlockSets.replaceableMaterial.contains(state.getMaterial()) || isFluid(state);
+    }
+
     public static boolean isFluid(IBlockState state) {
         return (state.getBlock() instanceof BlockFluidBase || state.getBlock() instanceof BlockLiquid);
     }
@@ -45,14 +59,11 @@ public class GenMethods {
     public static boolean replace(World world, BlockPos pos, IBlockState state) {
         IBlockState prevState = world.getBlockState(pos);
         Block prevBlock = prevState.getBlock();
-        Material material = prevState.getMaterial();
 
         if(!state.isFullBlock() && isFluid(prevState))
             return false;
 
-        if(!prevBlock.hasTileEntity(state) &&
-          ((material == Material.ROCK || material == Material.GROUND || material == Material.SAND || material == Material.PLANTS || material == Material.AIR || material == Material.WEB)
-          || prevBlock.isReplaceable(world, pos)) && !(prevBlock == Blocks.FARMLAND) && !(prevState.getBlockHardness(world, pos) == -1.0F) || isFluid(prevState))
+        if(!prevBlock.hasTileEntity(state) && ((isMaterialReplaceable(prevState)) || prevBlock.isReplaceable(world, pos)) && !(prevBlock == Blocks.FARMLAND) && !(prevState.getBlockHardness(world, pos) == -1.0F))
             return override(world, pos, state, false);
 
         return false;
@@ -68,6 +79,11 @@ public class GenMethods {
     }
 
     public static void setOre(World world, BlockPos pos, IBlockState oreState, int density) {
+        if(oreState.getBlock() instanceof DummyModifierBlock) {
+            modify(world, pos, ((DummyModifierBlock) oreState.getBlock()).modifier);
+            return;
+        }
+
         IBlockState denseOreState = BlockSets.stoneAndOre.get(new StoneAndOre(world.getBlockState(pos), oreState));
 
         if (denseOreState != null) {
@@ -131,10 +147,10 @@ public class GenMethods {
 
         if (world.isAirBlock(pos.up()) && !world.isAirBlock(pos.down())){
             direction = 1;
-            speleothem = WTFContent.speleothemMap.get(below);
+            speleothem = BlockSets.speleothemMap.get(below);
         } else if (!world.isAirBlock(pos.up()) && world.isAirBlock(pos.down())){
             direction = -1;
-            speleothem = WTFContent.speleothemMap.get(above);
+            speleothem = BlockSets.speleothemMap.get(above);
         } else
             return false;
 
@@ -214,9 +230,9 @@ public class GenMethods {
             replace(world, pos, WTFContent.icicle.getDefaultState().withProperty(BlockIcicle.TYPE, IcicleType.icicle_small));
     }
 
-    public static void genVines(World world, BlockPos pos, EnumFacing facing) {
+    public static boolean genVines(World world, BlockPos pos, EnumFacing facing) {
         if (!world.isAirBlock(pos))
-            return;
+            return false;
 
         IBlockState block = null;
 
@@ -235,7 +251,7 @@ public class GenMethods {
                 break;
         }
 
-        replace(world, pos, block);
+       return replace(world, pos, block);
     }
 
     public static void genRoots(World world, BlockPos pos) {

@@ -29,14 +29,14 @@ public abstract class OreGenAbstract {
 	public boolean genDenseOres;
 	public final ArrayList<BiomeDictionary.Type> reqBiomeTypes = new ArrayList<>();
 	
-	public OreGenAbstract(IBlockState state, int[] genRange, int[] minMaxPerChunk, boolean denseGen) {
+	public OreGenAbstract(IBlockState state, String name, int[] genRange, int[] minMaxPerChunk, boolean denseGen) {
 		this.oreBlock = state;
 		this.maxGenRangeHeight = genRange[1] / 100F;
 		this.minGenRangeHeight = genRange[0] / 100F;
 		this.maxPerChunk = minMaxPerChunk[1];
 		this.minPerChunk = minMaxPerChunk[0];
 		genDenseOres = denseGen;
-		this.simplex = new SimplexHelper(state.toString(), true);
+		this.simplex = new SimplexHelper(name, true);
 	}
 
 	public OreGenAbstract(IBlockState state, int[] genRange, int[] minMaxPerChunk, boolean denseGen, SimplexHelper simplex) {

@@ -11,8 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import wtf.WTFExpedition;
-import wtf.init.BlockSets;
+import wtf.worldgen.GenMethods;
 
 public class CaveListWrapper {
 
@@ -223,7 +222,7 @@ public class CaveListWrapper {
 		IBlockState state = world.getBlockState(centerPos.getFloorPos());
 		IBlockState up = world.getBlockState(centerPos.getFloorPos().up());
 
-		if (!BlockSets.ReplaceHashset.contains(state.getBlock()) && up.getMaterial() != Material.AIR)
+		if (!GenMethods.isMaterialReplaceable(state) && up.getMaterial() != Material.AIR)
 			return 0;
 
 		return 100 - failScore;

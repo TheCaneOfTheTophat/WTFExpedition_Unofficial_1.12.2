@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class OreGenVanilla extends OreGenAbstract {
-	public OreGenVanilla(IBlockState state, int[] genRange, int[] minMaxPerChunk, boolean denseGen, int blocks) {
-		super(state, genRange, minMaxPerChunk, denseGen);
+	public OreGenVanilla(IBlockState state, String name, int[] genRange, int[] minMaxPerChunk, boolean denseGen, int blocks) {
+		super(state, name, genRange, minMaxPerChunk, denseGen);
 		blocksPerCluster = blocks;
 	}
 

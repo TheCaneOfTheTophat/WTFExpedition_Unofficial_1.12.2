@@ -12,6 +12,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import wtf.init.BlockSets;
+import wtf.worldgen.GenMethods;
 import wtf.worldgen.trees.components.Branch;
 import wtf.worldgen.trees.components.ColumnTrunk;
 import wtf.worldgen.trees.components.Root;
@@ -23,9 +24,6 @@ public class TreeGenMethods {
 	private static final float PId4 = (float) Math.PI / 4;
 
 	public static void tryGenerate(TreeInstance tree) {
-//		if (tree.chunkscan.checkGenerated(tree.pos, tree.type.genBuffer+tree.type.getBranchLength(tree.scale, tree.trunkHeight, tree.trunkHeight*tree.type.getLowestBranchRatio())))
-//			return;
-
 		if (genTrunk(tree)) {
 			float offset = genTop(tree, tree.random.nextFloat() * PIx2);
 			doBranches(tree, offset);
@@ -48,7 +46,7 @@ public class TreeGenMethods {
 
 					BlockPos pos = column.currentPos();
 					
-					while (BlockSets.nonSolidBlockSet.contains(tree.world.getBlockState(pos).getBlock()) && pos.getY() > tree.y-4){
+					while (GenMethods.isNonSolid(tree.world.getBlockState(pos)) && pos.getY() > tree.y - 4){
 						if (!tree.type.airGenerate || pos.getY()-tree.pos.getY() > tree.type.airGenHeight)
 							tree.setTrunk(pos);
 						
@@ -188,7 +186,7 @@ public class TreeGenMethods {
 
 					tree.setRoot(pos);
 					if (tree.type.rootWall) {
-						for (int loop = 1; BlockSets.nonSolidBlockSet.contains(tree.world.getBlockState(pos.down(loop)).getBlock()) && loop > tree.type.airGenHeight+1; loop++)
+						for (int loop = 1; GenMethods.isNonSolid(tree.world.getBlockState(pos.down(loop))) && loop > tree.type.airGenHeight+1; loop++)
 							tree.setRoot(pos.down(loop));
 					} else {
 						if (tree.random.nextFloat() < tree.type.rootDecoRate) {
@@ -325,19 +323,16 @@ public class TreeGenMethods {
 	protected static boolean canReplace(TreeInstance tree, BlockPos pos) {
 		IBlockState state = tree.world.getBlockState(pos);
 
-		if (BlockSets.treeReplaceableBlocks.contains(tree.world.getBlockState(pos).getBlock())) {
+		if (GenMethods.isTreeReplaceable(tree.world, pos, tree.world.getBlockState(pos)))
 			return true;
-		}
 
-		if (tree.type.growDense) {
-            return state.getMaterial().hashCode() == Material.LEAVES.hashCode();
-		}
+		if (tree.type.growDense)
+            return state.getMaterial() == Material.LEAVES;
 
 		return false;
 	}
 
-	static Material[] replaceables = {Material.AIR, Material.CACTUS, Material.GOURD, Material.GRASS, Material.LEAVES, Material.VINE, Material.PLANTS, Material.ICE, Material.PACKED_ICE, Material.GROUND, Material.SAND, Material.WATER, Material.SNOW};
-	protected static HashSet<Material> rootReplaceable = new HashSet<>(Arrays.asList(replaceables));
+	protected static HashSet<Material> rootReplaceable = new HashSet<>(Arrays.asList(Material.AIR, Material.CACTUS, Material.GOURD, Material.GRASS, Material.LEAVES, Material.VINE, Material.PLANTS, Material.ICE, Material.PACKED_ICE, Material.GROUND, Material.SAND, Material.WATER, Material.SNOW));
 
 	protected static boolean canReplaceRoot(TreeInstance tree, BlockPos pos) {
 		return rootReplaceable.contains(tree.world.getBlockState(pos).getMaterial());

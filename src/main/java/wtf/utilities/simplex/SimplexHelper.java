@@ -75,7 +75,5 @@ public class SimplexHelper {
 			System.out.println("Clearing world variable for simplex " + this.name);
 			simplex = null;
 		}
-
-		MinecraftForge.EVENT_BUS.unregister(this);
 	}
 }

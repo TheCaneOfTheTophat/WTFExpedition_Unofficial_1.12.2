@@ -16,8 +16,8 @@ import wtf.utilities.wrappers.UnsortedChunkCaves;
 
 public class OreGenCluster extends OreGenAbstract {
 	
-	public OreGenCluster(IBlockState state, int[] genRange, int[] minMaxPerChunk, boolean denseGen) {
-		super(state, genRange, minMaxPerChunk, denseGen);
+	public OreGenCluster(IBlockState state, String name, int[] genRange, int[] minMaxPerChunk, boolean denseGen) {
+		super(state, name, genRange, minMaxPerChunk, denseGen);
 	}
 
 	@Override

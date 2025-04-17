@@ -24,8 +24,8 @@ public class OreGenVein extends OreGenAbstract {
 	public static final float pi4 = (float) (Math.PI / 4);
 	public static final float pi = (float) (Math.PI);
 	
-	public OreGenVein(IBlockState state, int[] genRange, int[] minMaxPerChunk, int[] dimensions, float pitch, boolean genDense) {
-		super(state, genRange, minMaxPerChunk, genDense);
+	public OreGenVein(IBlockState state, String name, int[] genRange, int[] minMaxPerChunk, int[] dimensions, float pitch, boolean genDense) {
+		super(state, name, genRange, minMaxPerChunk, genDense);
 
 		this.veinLength = dimensions[0];
 		this.veinWidth = dimensions[1];

@@ -61,14 +61,17 @@ public class DungeonJungleTemple extends AbstractDungeonType {
 	@Override
 	public void generateCeilingAddons(World world, Random rand, BlockPos pos, float depth) {
 		if (rand.nextFloat() < depth && setCeilingAddon(world, pos, Modifier.FRACTURED)) {
-			for (int loop = rand.nextInt(3) + 1; loop > -1; loop--)
-				genVines(world, pos.east().down(loop), EnumFacing.WEST);
-			for (int loop = rand.nextInt(3) + 1; loop > -1; loop--)
-				genVines(world, pos.west().down(loop), EnumFacing.EAST);
-			for (int loop = rand.nextInt(3) + 1; loop > -1; loop--)
-				genVines(world, pos.north().down(loop), EnumFacing.SOUTH);
-			for (int loop = rand.nextInt(3) + 1; loop > -1; loop--)
-				genVines(world, pos.south().down(loop), EnumFacing.NORTH);
+
+			for(EnumFacing facing : EnumFacing.HORIZONTALS) {
+				boolean cancel;
+
+				for (int loop = rand.nextInt(3) + 1; loop > -1; loop--) {
+					cancel = !genVines(world, pos.offset(facing.getOpposite()).down(loop), facing);
+
+					if (cancel)
+						break;
+				}
+			}
 		}
 	}
 
