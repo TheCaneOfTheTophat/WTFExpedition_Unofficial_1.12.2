@@ -19,7 +19,7 @@
       "primaryGenerationType": "vein",
       "vein_generation": {
         "veinPitchAverage": 0.0,
-        "veinLength": 16,
+        "veinLength": 32,
         "veinWidth": 1,
         "veinVerticalThickness": 1
       }

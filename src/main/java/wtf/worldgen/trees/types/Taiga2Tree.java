@@ -17,7 +17,6 @@ public class Taiga2Tree extends AbstractTreeType {
 				Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.SPRUCE), 
 				Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.SPRUCE).withProperty(BlockLeaves.CHECK_DECAY, false));
 		leaftype = LeafStyle.SPRUCE;
-		this.genBuffer = 4;
 		this.leafRad = 2;
 	}
 

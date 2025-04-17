@@ -10,14 +10,12 @@ public class SimplexHelper {
 
 	public final String name;
 	public Simplex simplex = null;
-	
-	public SimplexHelper(String simplexName) {
+
+	public SimplexHelper(String simplexName, boolean register) {
 		name = simplexName;
-		MinecraftForge.EVENT_BUS.register(this);
-	}
-	
-	public SimplexHelper(String simplexName, boolean boo) {
-		name = simplexName;
+
+		if(register)
+			MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	//I could make a simplex wrapper, to hold the simplex, and control the interface for it.
@@ -64,7 +62,7 @@ public class SimplexHelper {
 	public double get3DNoise(World world, double d, double y, double f){
 		try {
 			return simplex.noise(d, y, f) * 0.5 + 0.5;
-		} catch (NullPointerException e){
+		} catch (NullPointerException e) {
 			int seed = (int) world.getSeed();
 			simplex = new Simplex(seed * name.hashCode());
 			return simplex.noise(d, y, f) * 0.5 + 0.5;

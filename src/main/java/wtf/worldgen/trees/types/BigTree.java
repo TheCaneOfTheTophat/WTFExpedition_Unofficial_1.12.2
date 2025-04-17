@@ -3,6 +3,7 @@ package wtf.worldgen.trees.types;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import wtf.config.WTFExpeditionConfig;
 import wtf.worldgen.trees.TreeGenMethods;
 import wtf.worldgen.trees.TreeInstance;
 import wtf.worldgen.trees.components.Branch;
@@ -12,7 +13,6 @@ public class BigTree extends AbstractTreeType {
 	public BigTree(IBlockState wood, IBlockState branch, IBlockState leaf) {
 		super(wood, branch, leaf);
 		topLimitDown = Math.PI / 2;
-		this.genBuffer = 1;
 	}
 
 	@Override
@@ -22,7 +22,8 @@ public class BigTree extends AbstractTreeType {
 		double branchSectionLength = trunkHeight - bottom;
 		double taper = 1 - MathHelper.clamp(distFromBottom/branchSectionLength, 0.1, 0.9);
 		double halfLength = trunkHeight / 4;
-		return halfLength*taper+halfLength;
+		double length = halfLength * taper + halfLength;
+		return WTFExpeditionConfig.shrinkMassiveTrees ? Math.min(length, 5) : length;
 	}
 
 	@Override

@@ -11,15 +11,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import wtf.WTFExpedition;
 import wtf.init.BlockSets;
 
 public class CaveListWrapper {
 
 	private final HashMap<XZ, CavePosition> cave;
-	private ArrayList<CavePosition> caveList = new ArrayList<>();
-	private final ChunkPos chunkPos;
-
-	private ArrayList<BlockPos> wallPos = new ArrayList<>();
+	private final ArrayList<CavePosition> caveList = new ArrayList<>();
+	private final ArrayList<BlockPos> wallPos = new ArrayList<>();
+	public final int xStart;
+	private final int xEnd;
+	public final int zStart;
+	private final int zEnd;
 
 	private double totalFloor = 0;
 	private double totalCeiling = 0;
@@ -35,36 +38,12 @@ public class CaveListWrapper {
 	int maxCeiling;
 	int maxX;
 	int maxZ;
-	
-	int centerDistToWall = -1;
-
-	//Rewrite of the metric tracking
-	//What metrics am I interested in?
-
-	public void printMetrics() {
-		/*
-		System.out.println("average floor = " + this.getAvgFloor());
-		System.out.println("average ceiling = " + this.getAvgCeiling());
-		System.out.println("average x = " + this.getAvgX());
-		System.out.println("average z = " + this.getAvgZ());
-		System.out.println("maxFloor = " + this.maxFloor);
-		System.out.println("maxCeiling = " + this.maxCeiling);
-		System.out.println("minFloor = " + this.minFloor);
-		System.out.println("minCeiling = " + this.minCeiling);
-		 */
-		System.out.println("sizeX = " + this.getSizeX());
-		//System.out.println("maxX = " + this.maxX);
-		System.out.println("sizeZ = " + this.getSizeZ());
-		//System.out.println("maxZ = " + this.maxZ);
-
-		if (this.size() > 10) {
-			System.out.println("is away from Edge " + isAwayFromEdge());
-			System.out.println("density = " + this.density());
-		}
-	}
 
 	public CaveListWrapper(CavePosition pos, ChunkPos chunkPos) {
-		this.chunkPos = chunkPos;
+		xStart = chunkPos.getXStart() + 8;
+		xEnd = chunkPos.getXEnd() + 8;
+		zStart = chunkPos.getZStart() + 8;
+		zEnd = chunkPos.getZEnd() + 8;
 		cave = new HashMap<>();
 		addPos(pos);
 		maxFloor = pos.floor;
@@ -105,14 +84,15 @@ public class CaveListWrapper {
 	}
 
 	public boolean isAwayFromEdge() {
-		double chunkx = getAvgX() - chunkPos.getXStart();
-		double chunkz = getAvgZ() - chunkPos.getZStart();
+		int chunkX = this.centerPos.x - xStart;
+		int chunkZ = this.centerPos.z - zStart;
 
-		boolean inX = chunkx + getSizeX() / 2D < 17 && chunkx - getSizeX() / 2D > -1;
-		boolean inZ = chunkx + getSizeZ() / 2D < 17 && chunkz - getSizeZ() / 2D > -1;
+		int radiusX = (int) Math.round((this.getSizeX() - 1) / 2);
+		int radiusZ = (int) Math.round((this.getSizeZ() - 1) / 2);
 
-		//System.out.println("checking x " + chunkx + " " + getSizeX()/2 + " " + inX);
-		//System.out.println("checking z " + chunkz + " " + getSizeZ()/2 + " " + inZ);
+		boolean inX = chunkX <= (17 - radiusX) && chunkX > radiusX - 2;
+		boolean inZ = chunkZ <= (17 - radiusZ) && chunkZ > radiusZ - 2;
+
 		return inX && inZ;
 	}
 
@@ -150,10 +130,10 @@ public class CaveListWrapper {
 		return maxZ - minZ;
 	}
 
-	public CavePosition centerpos = null;
+	public CavePosition centerPos = null;
 
 	public CavePosition getCenter() {
-		return centerpos;
+		return centerPos;
 	}
 
 	public double getCenterScore() {
@@ -161,20 +141,17 @@ public class CaveListWrapper {
 		double bestscore = 10;
 
 		for (CavePosition checkpos : this.caveList) {
-			double posFailScore = getClearance(checkpos) ;
+			double posFailScore = getClearance(checkpos);
 			if (posFailScore < bestscore) {
 				bestpos = checkpos;
 				bestscore = posFailScore;
-			} else if(posFailScore == bestscore){
+			} else if(posFailScore == bestscore) {
 				if (checkpos.ceiling - checkpos.floor > bestpos.ceiling - bestpos.floor)
 					bestpos = checkpos;
-				else if (checkpos.ceiling - checkpos.floor == bestpos.ceiling - bestpos.floor) {
-					//System.out.println("still equivelant");
-				}
 			}
 		}
 		
-		centerpos = bestpos;
+		centerPos = bestpos;
 		return bestscore;
 	}
 
@@ -188,16 +165,16 @@ public class CaveListWrapper {
 		double failScore = 0;
 
 		for (int xloop = -loop; xloop <= loop; xloop++) {
-			for (int zloop = -loop; zloop <=loop; zloop++) {
+			for (int zloop = -loop; zloop <= loop; zloop++) {
 				CavePosition checkpos = cave.get(new XZ(pos.x + xloop, pos.z + zloop));
 				if (checkpos != null) {
 					if (pos.floor != checkpos.floor) {
-						double floorDif = pos.floor -checkpos.floor;
-						double score = (floorDif*floorDif)/(xloop*xloop+zloop*zloop); 
+						double floorDif = pos.floor - checkpos.floor;
+						double score = (floorDif * floorDif) / (xloop * xloop + zloop * zloop);
 						failScore += score;
 					}
 				} else {
-					double score = 10 / (double)(xloop * xloop + zloop * zloop);
+					double score = 10 / (double) (xloop * xloop + zloop * zloop);
 					failScore += score;
 				}
 			}
@@ -207,9 +184,7 @@ public class CaveListWrapper {
 
 	}
 
-	int airHash = Material.AIR.hashCode();
-
-	public double dungeonScore(World world, double surfaceAvg){
+	public double dungeonScore(World world, double surfaceAvg) {
 		if (this.size() < 25)
 			return 0;
 		
@@ -232,23 +207,23 @@ public class CaveListWrapper {
 		//	return 0;
 		//}
 
-		if (!this.isAwayFromEdge())
-			return 0;
-
 		//and because it we just did check center, we know that pos can't == null
 		double failScore = this.getCenterScore();
 
 		//has at 5x5 block area that is totally clear
-		if (this.centerpos == null)
+		if (this.centerPos == null)
 			return 0;
 
-		if (4 > this.centerpos.ceiling-this.centerpos.floor || 4 > this.getAvgCeiling() - this.getAvgFloor())
+		if (4 > this.centerPos.ceiling-this.centerPos.floor || 4 > this.getAvgCeiling() - this.getAvgFloor())
+			return 0;
+
+		if (!this.isAwayFromEdge())
 			return 0;
 		
-		IBlockState state = world.getBlockState(centerpos.getFloorPos());
-		IBlockState up = world.getBlockState(centerpos.getFloorPos().up());
+		IBlockState state = world.getBlockState(centerPos.getFloorPos());
+		IBlockState up = world.getBlockState(centerPos.getFloorPos().up());
 
-		if (!BlockSets.ReplaceHashset.contains(state.getBlock()) && up.getMaterial().hashCode() != airHash)
+		if (!BlockSets.ReplaceHashset.contains(state.getBlock()) && up.getMaterial() != Material.AIR)
 			return 0;
 
 		return 100 - failScore;
@@ -266,14 +241,8 @@ public class CaveListWrapper {
 		return this.cave.size();
 	}
 
-	public double distFromCenter(CavePosition cavepos) {
-		int x = this.centerpos.getFloorPos().getX() - cavepos.getFloorPos().getX();
-		int z = this.centerpos.getFloorPos().getZ() - cavepos.getFloorPos().getZ();
-		return x * x + z * z;
-	}
-
 	public double distFromCenter(BlockPos pos) {
-		BlockPos center = this.centerpos.getMidPos();
+		BlockPos center = this.centerPos.getMidPos();
 
 		int x = center.getX() - pos.getX();
 		int y = center.getY() - pos.getY();
@@ -303,10 +272,10 @@ public class CaveListWrapper {
 
 		//and now it checks that this distance is less than the distance to the edge of the chunk
 
-		smallest = pos1.x - this.chunkPos.getXStart() < smallest ? pos1.x - this.chunkPos.getXStart() : smallest;
-		smallest = this.chunkPos.getXStart() + 16 - pos1.x < smallest ? this.chunkPos.getXStart() + 16 - pos1.x : smallest;
-		smallest = pos1.z - this.chunkPos.getZStart() < smallest ? pos1.z - this.chunkPos.getZStart() : smallest;
-		smallest = this.chunkPos.getZStart() + 16 - pos1.z < smallest ? this.chunkPos.getZStart() + 16 - pos1.z : smallest;
+		smallest = pos1.x - xStart < smallest ? pos1.x - xStart : smallest;
+		smallest = xEnd - pos1.x < smallest ? xEnd - pos1.x : smallest;
+		smallest = pos1.z - zStart < smallest ? pos1.z - zStart : smallest;
+		smallest = zEnd - pos1.z < smallest ? zEnd - pos1.z : smallest;
 		
 		return smallest;
 	}

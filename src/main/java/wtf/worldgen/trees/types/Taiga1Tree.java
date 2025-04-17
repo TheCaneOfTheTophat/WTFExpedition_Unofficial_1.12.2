@@ -10,7 +10,7 @@ import net.minecraft.util.math.MathHelper;
 import wtf.worldgen.trees.TreeInstance;
 import wtf.worldgen.trees.components.Branch;
 
-public class Taiga1Tree extends AbstractTreeType{
+public class Taiga1Tree extends AbstractTreeType {
 
 	public Taiga1Tree() {
 		super(Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.SPRUCE), 
@@ -19,7 +19,6 @@ public class Taiga1Tree extends AbstractTreeType{
 		leaftype = LeafStyle.SPRUCE;
 		this.topLimitDown = 1.5;
 		this.topLimitUp = 0;
-		this.genBuffer = 3;
 		this.leafRad = 2;
 	}
 

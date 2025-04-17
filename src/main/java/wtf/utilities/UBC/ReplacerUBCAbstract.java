@@ -39,7 +39,7 @@ public abstract class ReplacerUBCAbstract extends Replacer{
 			UBCCompat.SedimentaryStone[4],
 	};
 	
-	public static SimplexHelper simplex = new SimplexHelper("UBCSedimentaryOverride");
+	public static SimplexHelper simplex = new SimplexHelper("UBCSedimentaryOverride", true);
 	
 	
 	public ReplacerUBCAbstract(Block block) {

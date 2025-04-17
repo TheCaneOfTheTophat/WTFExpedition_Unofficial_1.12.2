@@ -22,8 +22,6 @@ public class WTFExpeditionConfig {
 	public static boolean enableSubtypes;
 	public static double subtypeChance;
 	public static boolean enablePuddles;
-	public static boolean replaceSandstone;
-	public static boolean updateSandstone;
 
 	// Tweaks: Miscellaneous
 	public static double cropGrowthPercentModifier;
@@ -89,6 +87,7 @@ public class WTFExpeditionConfig {
 	public static boolean bigTreesEnabled;
 	public static double bigTreeReplacementPercentage;
 	public static double simplexBigTreeScale;
+	public static boolean shrinkMassiveTrees;
 	
 	// General Miscellaneous
 	public static boolean loadDefaultFiles;
@@ -152,14 +151,6 @@ public class WTFExpeditionConfig {
 
 		property = config.get(category, "Allow generation of puddles in wet cave biomes", true);
 		enablePuddles = property.getBoolean();
-		propertyOrder.add(property.getName());
-
-		property = config.get(category, "Replace sandstone during world gen. This prevents stalactites forming in pyramid ruins", true);
-		replaceSandstone = property.getBoolean();
-		propertyOrder.add(property.getName());
-
-		property = config.get(category, "Update sandstone after replacement. Required only if you've changed the texture of naturalised sandstone", true);
-		updateSandstone = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		config.setCategoryPropertyOrder(category, propertyOrder);
@@ -430,6 +421,10 @@ public class WTFExpeditionConfig {
 
 		property = config.get(category, "Scale for the simplex tree replacement - smaller values allow more mixing of tree types, larger values separate them out more", 3.0D);
 		simplexBigTreeScale = property.getDouble();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Shrink exceptionally massive trees such as redwoods, mega swamp and jungle trees. Disabling this may cause immense cascading worldgen lag.", true);
+		shrinkMassiveTrees = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		config.setCategoryPropertyOrder(category, propertyOrder);

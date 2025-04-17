@@ -21,7 +21,7 @@ public class LavaReplacer extends Replacer {
 		super(Blocks.LAVA);
 	}
 
-	private static SimplexHelper simplex = new SimplexHelper("LavaReplacer");
+	private static SimplexHelper simplex = new SimplexHelper("LavaReplacer", true);
 	
 	@Override
 	public boolean replace(World world, BlockPos pos, IBlockState oldState) {

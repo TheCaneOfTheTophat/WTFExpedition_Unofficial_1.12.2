@@ -24,7 +24,6 @@ public class AcaciaTree extends AbstractTreeType {
 		this.topLimitUp = 0.4;
 		this.topLimitDown = 1;
 		this.topLimitIncrement = 0.5;
-		this.genBuffer = 6;
 	}
 
 	@Override

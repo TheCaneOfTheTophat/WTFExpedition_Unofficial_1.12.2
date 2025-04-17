@@ -7,6 +7,7 @@ import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import wtf.config.WTFExpeditionConfig;
 import wtf.worldgen.trees.TreeGenMethods;
 import wtf.worldgen.trees.TreeInstance;
 import wtf.worldgen.trees.components.Branch;
@@ -19,7 +20,7 @@ public class JungleGiant extends AbstractTreeType{
 		
 		leafYMin = 0;
 		leafYMax = 2;
-		leafRad = 3.5;
+		leafRad = WTFExpeditionConfig.shrinkMassiveTrees ? 2.0 : 3.5;
 		airGenerate = true;
 		airGenHeight = 4;
 		this.rootWall = true;
@@ -29,7 +30,6 @@ public class JungleGiant extends AbstractTreeType{
 		vines = 3;
 		rootInitialAngle = 1F;
 		rootIncrementAngle = 0.3F;
-		this.genBuffer = -6;
 	}
 
 	@Override
@@ -54,11 +54,11 @@ public class JungleGiant extends AbstractTreeType{
 
 	@Override
 	public double getBranchLength(double scale, double trunkHeight, double nodeHeight) {
-		double bottom = this.getLowestBranchRatio()*trunkHeight;
+		double bottom = this.getLowestBranchRatio() * trunkHeight;
 		double distFromBottom = nodeHeight - bottom;
 		double branchSectionLength = trunkHeight-bottom;
 		double taper = 1D - MathHelper.clamp(distFromBottom/branchSectionLength, 0.1, 0.9);
-		return trunkHeight/3*taper;
+		return (trunkHeight / 3 * taper) * (WTFExpeditionConfig.shrinkMassiveTrees ? 0.33 : 1);
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class JungleGiant extends AbstractTreeType{
 
 	@Override
 	public double getRootLength(double trunkHeight) {
-		return trunkHeight/3;
+		return trunkHeight / (WTFExpeditionConfig.shrinkMassiveTrees ? 6 : 3);
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class JungleGiant extends AbstractTreeType{
 
 	@Override
 	public double getLowestBranchRatio() {
-		return 0.25+random.nextFloat()/5;
+		return 0.25 + random.nextFloat() / 5;
 	}
 
 

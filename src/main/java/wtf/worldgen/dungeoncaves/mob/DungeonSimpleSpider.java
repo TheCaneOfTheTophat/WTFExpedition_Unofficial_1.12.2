@@ -24,7 +24,7 @@ public class DungeonSimpleSpider extends DungeonAbstractSimple {
 
 	@Override
 	public boolean canGenerateAt(World world, CaveListWrapper cave) {
-		IBlockState temp = BlockSets.getTransformedState(world.getBlockState(cave.centerpos.getFloorPos()), Modifier.FRACTURED);
+		IBlockState temp = BlockSets.getTransformedState(world.getBlockState(cave.centerPos.getFloorPos()), Modifier.FRACTURED);
 		block = BlockSets.getTransformedState(temp, Modifier.MOSS);
 		
 		if (block == null)
@@ -37,7 +37,7 @@ public class DungeonSimpleSpider extends DungeonAbstractSimple {
 	
 	@Override
 	public void generateCenter(World world, Random rand, CavePosition pos, float depth) {
-		BlockPos midpos = pos.getMidPos().down();
+		BlockPos midpos = pos.getCeilingPos().down();
 
 		while (midpos.getY() > pos.floor) {
 			replace(world, midpos, Blocks.MOSSY_COBBLESTONE.getDefaultState());

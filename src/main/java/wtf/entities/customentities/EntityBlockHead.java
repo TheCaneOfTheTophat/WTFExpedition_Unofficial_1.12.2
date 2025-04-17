@@ -145,11 +145,6 @@ public class EntityBlockHead extends EntityMob implements IRangedAttackMob {
 	}
 
 	@Override
-	protected boolean canEquipItem(ItemStack stack) {
-		return super.canEquipItem(stack);
-	}
-
-	@Override
 	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
 	    EntityTippedArrow entitytippedarrow = new EntityTippedArrow(this.world, this);
 	    double d0 = target.posX - this.posX;

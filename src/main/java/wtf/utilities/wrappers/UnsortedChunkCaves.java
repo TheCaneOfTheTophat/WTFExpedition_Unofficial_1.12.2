@@ -18,25 +18,6 @@ public class UnsortedChunkCaves {
 	public UnsortedChunkCaves(ChunkPos chunkPos) {
 		this.chunkPos = chunkPos;
 	}
-	
-	public boolean addWallPos(BlockPos wall, AdjPos adj) {
-		XZ xz = new XZ(adj.getX(), adj.getZ());
-		ArrayList<CavePosition> list = unsortedCavePos.get(xz);
-
-		try {
-			for (CavePosition pos : list) {
-				if (pos.floor < adj.getY() && pos.ceiling > adj.getY()) {
-					pos.wall.add(wall);
-					pos.adj.add(adj);
-					return true;
-				}
-			}
-		} catch (Exception e) {
-			System.out.println("While trying to add a wall pos on a previous column, a cave list was null");	
-		}
-		
-		return false;
-	}
 
 	public void add(CavePosition pos) {
 		XZ xz = pos.xz();
@@ -108,17 +89,6 @@ public class UnsortedChunkCaves {
 					newcavelist.addPos(usepos); //add the new position
 					addAllAdj(newcavelist, usepos, newxz);
 				}
-			}
-		}
-	}
-
-	public void printReport() {
-		System.out.println("Caves per chunk " + sortedCaveLists.size());
-		for (CaveListWrapper list : sortedCaveLists) {
-			if (list.size() > 10) {
-				System.out.println("New Cave");
-				System.out.println(list.size());
-				list.printMetrics();
 			}
 		}
 	}

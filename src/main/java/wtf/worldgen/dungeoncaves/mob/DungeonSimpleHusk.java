@@ -6,6 +6,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import wtf.WTFExpedition;
 import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.dungeoncaves.DungeonAbstractSimple;
 
@@ -21,7 +22,7 @@ public class DungeonSimpleHusk extends DungeonAbstractSimple {
 
 	@Override
 	public void generateCenter(World world, Random rand, CavePosition pos, float depth) {
-		spawnVanillaSpawner(world, pos.getFloorPos().up(), new ResourceLocation("husk"), 5);
+		spawnVanillaSpawner(world, pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID, "cave_husk"), 5);
 	}
 
 	IBlockState sandstone = Blocks.SANDSTONE.getDefaultState().withProperty(BlockSandStone.TYPE, BlockSandStone.EnumType.SMOOTH);

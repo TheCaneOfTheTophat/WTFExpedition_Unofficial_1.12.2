@@ -31,7 +31,6 @@ import wtf.WTFExpedition;
 import wtf.blocks.*;
 import wtf.enums.AnimatedDecoType;
 import wtf.enums.Modifier;
-import wtf.enums.SpeleothemType;
 import wtf.enums.StaticDecoType;
 import wtf.blocks.BlockDenseRedstoneOre;
 import wtf.blocks.BlockWTFTorch;
@@ -49,7 +48,6 @@ import wtf.worldgen.ores.oregenerators.secondary.OreGenUnderWater;
 import wtf.utilities.wrappers.StoneAndOre;
 import wtf.worldgen.SubBiomeGenerator;
 import wtf.worldgen.replacers.LavaReplacer;
-import wtf.worldgen.replacers.NetherrackReplacer;
 import wtf.worldgen.subbiomes.BiomeAutumnForest;
 
 @Mod.EventBusSubscriber
@@ -147,7 +145,6 @@ public class WTFContent {
 		// GameRegistry.registerTileEntity(WCICTileEntity.class, "WCICTable");
 
 		new LavaReplacer();
-		new NetherrackReplacer();
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -430,6 +427,8 @@ public class WTFContent {
 		reg.register(buildEntry(EntityBlockHead.class, "blockhead"));
 		reg.register(buildEntry(EntityFireElemental.class, "fire_elemental"));
 
+		reg.register(buildEntry(EntityCaveHusk.class, "cave_husk"));
+		reg.register(buildEntry(EntityCaveStray.class, "cave_stray"));
 		reg.register(buildEntry(EntityFarmerZombie.class, "zombie_farmer"));
 		reg.register(buildEntry(EntityLumberjackZombie.class, "zombie_lumberjack"));
 		reg.register(buildEntry(EntityMummy.class, "mummy"));

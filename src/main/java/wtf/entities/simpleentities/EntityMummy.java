@@ -1,12 +1,11 @@
 package wtf.entities.simpleentities;
 
-import net.minecraft.entity.monster.EntityHusk;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class EntityMummy extends EntityHusk {
+public class EntityMummy extends EntityCaveHusk {
 
 	static int mummyCount = 0;
 	

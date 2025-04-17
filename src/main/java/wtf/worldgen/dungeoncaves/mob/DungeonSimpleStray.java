@@ -2,6 +2,7 @@ package wtf.worldgen.dungeoncaves.mob;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import wtf.WTFExpedition;
 import wtf.utilities.wrappers.CavePosition;
 
 import java.util.Random;
@@ -16,6 +17,6 @@ public class DungeonSimpleStray extends DungeonSimpleSkeleton {
 	
 	@Override
 	public void generateCenter(World world, Random rand, CavePosition pos, float depth) {
-		spawnVanillaSpawner(world, pos.getFloorPos().up(), new ResourceLocation("stray"), 5);
+		spawnVanillaSpawner(world, pos.getFloorPos().up(), new ResourceLocation(WTFExpedition.modID, "cave_stray"), 5);
 	}
 }

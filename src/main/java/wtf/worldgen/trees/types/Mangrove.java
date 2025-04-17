@@ -27,7 +27,6 @@ public class Mangrove extends AbstractTreeType {
 		rootInitialAngle = 1F;
 		rootIncrementAngle = 99F;
 		this.setWaterGen(2);
-		genBuffer = -10;
 	}
 
 	@Override

@@ -42,7 +42,7 @@ public class DungeonZombieFarmer extends AbstractDungeonType {
 
 	@Override
 	public boolean canGenerateAt(World world, CaveListWrapper cave) {
-		return false;
+		return true;
 	}
 
 	@Override

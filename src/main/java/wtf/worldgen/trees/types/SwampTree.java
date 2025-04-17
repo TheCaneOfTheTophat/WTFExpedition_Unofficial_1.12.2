@@ -4,6 +4,7 @@ import net.minecraft.block.BlockLeaves;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import wtf.config.WTFExpeditionConfig;
 import wtf.worldgen.trees.TreeGenMethods;
 import wtf.worldgen.trees.TreeInstance;
 import wtf.worldgen.trees.components.Branch;
@@ -12,13 +13,12 @@ public class SwampTree extends AbstractTreeType {
 
 	public SwampTree() {
 		super(Blocks.LOG.getDefaultState(), Blocks.LOG.getDefaultState(), Blocks.LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, false));
-		leafRad = 3;
+		leafRad = WTFExpeditionConfig.shrinkMassiveTrees ? 2 : 3;
 		leafYMax = 2;
 		leafYMin = -1;
 		vines = 6;
 		leafYMax = 3;
 		topLimitDown = Math.PI / 2;
-		this.genBuffer = -10;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class SwampTree extends AbstractTreeType {
 		double distFromBottom = nodeHeight - bottom;
 		double branchSectionLength = trunkHeight - bottom;
 		double taper = 1 - MathHelper.clamp(distFromBottom/branchSectionLength, 0.1, 0.9);
-		return trunkHeight / 2 + trunkHeight / 2 * taper;
+		return (trunkHeight / 2 + trunkHeight / 2 * taper) * (WTFExpeditionConfig.shrinkMassiveTrees ? 0.33 : 1);
 	}
 
 	@Override

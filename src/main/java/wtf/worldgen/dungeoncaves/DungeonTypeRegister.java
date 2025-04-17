@@ -84,6 +84,7 @@ public class DungeonTypeRegister {
 
 		if (WTFExpeditionConfig.enableDungeons) {
 			list.add(Spider);
+			list.add(ZombieFarm);
 		}
 
 		return list;

@@ -31,91 +31,62 @@ import java.util.Random;
 import static wtf.worldgen.GenMethods.*;
 
 public class WorldGenListener {
-
     public static HashMap<Pair<ChunkPos, Integer>, SurfacePos[][]> surfacePosMap = new HashMap<>();
-
-    // TODO Save scan results and chunk status as NBT
-    public static HashSet<Pair<ChunkPos, Integer>> chunkGenMap = new HashSet<>();
     public static ArrayList<OreGenAbstract> oreGenRegister = new ArrayList<>();
 
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void populate(PopulateChunkEvent.Post event) {
+    public void newPopulate(PopulateChunkEvent.Post event) {
         World world = event.getWorld();
-        ChunkProviderServer cps = (ChunkProviderServer) world.getChunkProvider();
+        int x = event.getChunkX();
+        int z = event.getChunkZ();
+        Random rand = event.getRand();
 
-        // Get chunks surrounding the chunk being vanilla populated
-        for (int x0 = -2; x0 < 3; x0++) {
-            for (int z0 = -2; z0 < 3; z0++) {
-
-                boolean pop = true;
-                ChunkPos chunkPos0 = new ChunkPos(event.getChunkX() + x0, event.getChunkZ() + z0);
-
-                // Get chunks surrounding the chunks surrounding the chunk being vanilla populated
-                for (int x1 = -1; x1 < 2; x1++) {
-
-                    if(!pop)
-                        break;
-
-                    for (int z1 = -1; z1 < 2; z1++) {
-
-                        // Discount that chunk
-                        if (x1 == 0 && z1 == 0)
-                            continue;
-
-                        ChunkPos chunkPos1 = new ChunkPos(chunkPos0.x + x1, chunkPos0.z + z1);
-
-                        // If one of the chunks surrounding that chunk do not exist or aren't populated, break and set pop to false
-                        if (cps.chunkExists(chunkPos1.x, chunkPos1.z)) {
-                            if (!world.getChunkFromChunkCoords(chunkPos1.x, chunkPos1.z).isTerrainPopulated()) {
-                                pop = false;
-                                break;
-                            }
-                        } else {
-                            pop = false;
-                            break;
-                        }
-                    }
-                }
-
-                // TODO scan only, then generate with Expedition features when a chunk and it's +X, +Z and +XZ have been scanned
-                if (cps.chunkExists(chunkPos0.x, chunkPos0.z)) {
-                    if (pop && !chunkGenMap.contains(Pair.of(chunkPos0, world.provider.getDimension()))) {
-                        wtfPopulate(world, chunkPos0.x, chunkPos0.z);
-                        chunkGenMap.add(Pair.of(chunkPos0, world.provider.getDimension()));
-                    }
-                }
-            }
-        }
-    }
-
-    // TODO Offset all generation by 8 on X and Z
-    public static void wtfPopulate(World world, int x, int z) {
         Chunk chunk = world.getChunkFromChunkCoords(x, z);
         ChunkPos chunkPos = new ChunkPos(x, z);
 
-        SurfacePos[][] surfacePositions = WorldGenListener.surfacePosMap.get(Pair.of(new ChunkPos(chunk.x, chunk.z), world.provider.getDimension()));
+        SurfacePos[][] surfacePositions = WorldGenListener.surfacePosMap.get(Pair.of(new ChunkPos(x, z), world.provider.getDimension()));
+        SurfacePos[][] surfacePositionsX = WorldGenListener.surfacePosMap.get(Pair.of(new ChunkPos(x + 1, z), world.provider.getDimension()));
+        SurfacePos[][] surfacePositionsZ = WorldGenListener.surfacePosMap.get(Pair.of(new ChunkPos(x, z + 1), world.provider.getDimension()));
+        SurfacePos[][] surfacePositionsXZ = WorldGenListener.surfacePosMap.get(Pair.of(new ChunkPos(x + 1, z + 1), world.provider.getDimension()));
+
+        SurfacePos[][] surfacePositionsOffset = new SurfacePos[16][16];
+
+        for(int xOffset = 8; xOffset < 24; xOffset++) {
+            for (int zOffset = 8; zOffset < 24; zOffset++) {
+                int actualX = xOffset % 16;
+                int actualZ = zOffset % 16;
+
+                boolean xOver = actualX != xOffset;
+                boolean zOver = actualZ != zOffset;
+                SurfacePos surfacePos = surfacePositions[actualX][actualZ];
+
+                if(xOver && zOver)
+                    surfacePos = surfacePositionsXZ[actualX][actualZ];
+                else if (xOver)
+                    surfacePos = surfacePositionsX[actualX][actualZ];
+                else if (zOver)
+                    surfacePos = surfacePositionsZ[actualX][actualZ];
+
+                surfacePositionsOffset[xOffset - 8][zOffset - 8] = surfacePos;
+            }
+        }
+
         int surfaceAvg = 0;
+
         UnsortedChunkCaves unsortedCavePos = new UnsortedChunkCaves(new ChunkPos(x, z));
         ArrayList<BlockPos> water = new ArrayList<>();
 
         int maxY = Math.min(255, getMaxY(chunk));
 
         for (int chunkX = 0; chunkX < 16; chunkX++) {
-            int worldX = (chunk.x << 4) + chunkX;
+            int worldX = (x << 4) + chunkX + 8;
 
-            for (int chunkZ0 = 0; chunkZ0 < 16; chunkZ0++) {
-                int chunkZ;
-
-                if ((chunkX & 1) == 0)
-                    chunkZ = chunkZ0;
-                else
-                    chunkZ = 15 - chunkZ0;
-
-                int worldZ = (chunk.z << 4) + chunkZ;
+            for (int chunkZ = 0; chunkZ < 16; chunkZ++) {
+                int worldZ = (z << 4) + chunkZ + 8;
 
                 int Y = maxY;
 
-                SurfacePos columnSurfacePos = surfacePositions[chunkX][chunkZ];
+                SurfacePos columnSurfacePos = surfacePositionsOffset[chunkX][chunkZ];
 
                 boolean surfaceFound = false;
                 boolean adjustSurface = false;
@@ -145,15 +116,15 @@ public class WorldGenListener {
                                 surfaceAvg += Y;
 
                                 if (world.getBlockState(columnPos.up()).isFullBlock())
-                                    surfacePositions[chunkX][chunkZ].setGenerated();
+                                    surfacePositionsOffset[chunkX][chunkZ].setGenerated();
                             }
                         } else if (adjustSurface && fullBlock) {
                             adjustSurface = false;
                             surfaceAvg += Y;
-                            surfacePositions[chunkX][chunkZ] = new SurfacePos(worldX, Y, worldZ);
+                            surfacePositionsOffset[chunkX][chunkZ] = new SurfacePos(worldX, Y, worldZ);
 
                             if (world.getBlockState(columnPos.up()).isFullBlock())
-                                surfacePositions[chunkX][chunkZ].setGenerated();
+                                surfacePositionsOffset[chunkX][chunkZ].setGenerated();
                         }
                     } else {
                         if (!fullBlock) {
@@ -190,11 +161,6 @@ public class WorldGenListener {
         surfaceAvg = Math.round(surfaceAvg / 256F);
         unsortedCavePos.getSortedCaves();
 
-        Random rand = new Random(world.getSeed());
-        long k = rand.nextLong() / 2L * 2L + 1L;
-        long l = rand.nextLong() / 2L * 2L + 1L;
-        rand.setSeed((long) x * k + (long) z * l ^ world.getSeed());
-
         if (WTFExpeditionConfig.oreGenEnabled)
             for (OreGenAbstract generators : WorldGenListener.oreGenRegister)
                 generators.generate(world, rand, chunkPos, surfaceAvg, unsortedCavePos, water);
@@ -206,7 +172,7 @@ public class WorldGenListener {
             CaveGenerator.generate(world, rand, surfaceAvg, unsortedCavePos);
 
         if (WTFExpeditionConfig.overworldGenerationEnabled && WTFExpeditionConfig.bigTreesEnabled)
-            TreeGenerator.generate(world, rand, surfacePositions);
+            TreeGenerator.generate(world, rand, surfacePositionsOffset);
 
         // TODO I don't have this under a config at the moment
         // TODO Probably shouldn't change biomes on post-populate methinks
@@ -214,8 +180,44 @@ public class WorldGenListener {
             SubBiomeGenerator.generate(world, chunkPos);
 
         if (WTFExpeditionConfig.enableSurfaceModification && WTFExpeditionConfig.overworldGenerationEnabled)
-            SurfaceGenerator.generate(world, surfacePositions);
+            SurfaceGenerator.generate(world, surfacePositionsOffset);
 
-        WorldGenListener.surfacePosMap.remove(Pair.of(new ChunkPos(chunk.x, chunk.z), world.provider.getDimension()));
+        if(!world.isRemote) {
+            for (int x1 = -1; x1 < 2; x1++) {
+                for (int z1 = -1; z1 < 2; z1++) {
+                    ChunkPos chunkPos0 = new ChunkPos(x + x1, z + z1);
+
+                    if (eligibleForUnload(chunkPos0, world)) {
+                        Pair<ChunkPos, Integer> key = Pair.of(chunkPos0, world.provider.getDimension());
+                        WorldGenListener.surfacePosMap.remove(key);
+                    }
+                }
+            }
+        }
+    }
+
+    public static boolean eligibleForUnload(ChunkPos pos, World world) {
+        ChunkProviderServer cps = (ChunkProviderServer) world.getChunkProvider();
+
+        boolean unload = true;
+
+        for (int x1 = -1; x1 < 2; x1++) {
+
+            if (!unload)
+                break;
+
+            for (int z1 = -1; z1 < 2; z1++) {
+                if ((!(x1 == 1 && z1 == -1) && !(x1 == -1 && z1 == 1))) {
+                    ChunkPos chunkPos1 = new ChunkPos(pos.x + x1, pos.z + z1);
+
+                    if (!cps.chunkExists(chunkPos1.x, chunkPos1.z) || !world.getChunkFromChunkCoords(chunkPos1.x, chunkPos1.z).isPopulated()) {
+                        unload = false;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return unload;
     }
 }

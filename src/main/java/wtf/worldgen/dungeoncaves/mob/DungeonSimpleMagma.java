@@ -30,7 +30,7 @@ public class DungeonSimpleMagma extends DungeonAbstractSimple {
 	
 	@Override
 	public boolean canGenerateAt(World world, CaveListWrapper cave) {
-		block = BlockSets.getTransformedState(world.getBlockState(cave.centerpos.getFloorPos()), Modifier.LAVA_CRUST);
+		block = BlockSets.getTransformedState(world.getBlockState(cave.centerPos.getFloorPos()), Modifier.LAVA_CRUST);
 
 		if (block == null)
 			block = BlockSets.getTransformedState(Blocks.OBSIDIAN.getDefaultState(), Modifier.LAVA_CRUST);

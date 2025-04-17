@@ -39,9 +39,9 @@ public class OreGenVein extends OreGenAbstract {
 		int blocksReq = this.blocksReq();
 
 		while (blocksPerChunk > blocksReq || (blocksPerChunk > 0 && rand.nextInt(blocksReq) < blocksPerChunk)) {
-			int x = pos.getXStart() + rand.nextInt(16);
+			int x = pos.getXStart() + rand.nextInt(16) + 8;
 			int y = this.getGenStartHeight(surfaceAverage, rand);
-			int z = pos.getZStart() + rand.nextInt(16);
+			int z = pos.getZStart() + rand.nextInt(16) + 8;
 			boolean generate = true;
 
 			BlockPos orePos = new BlockPos(x, y, z);
@@ -64,7 +64,8 @@ public class OreGenVein extends OreGenAbstract {
 	@Override
 	public int genVein(World world, Random rand, BlockPos pos, int surfaceAverage, UnsortedChunkCaves caves) {
 		
-		int length = veinLength * rand.nextInt(5) - 2;
+		//int length = veinLength * rand.nextInt(5) - 2;
+		int length = veinLength;
 		int blocksSet = 0;
 		
 		float pitchY = veinPitch + (rand.nextFloat() * pi4) - pi8;
@@ -94,7 +95,7 @@ public class OreGenVein extends OreGenAbstract {
 					
 					if (rand.nextFloat() < this.veinDensity) {
 						blocksSet += densityToSet + 1;
-						GenMethods.setOre(world, new BlockPos(xpos - (veinWidth / 2D), ypos , zpos - ((veinWidth / 2D))), this.oreBlock, densityToSet);
+						GenMethods.setOre(world, new BlockPos(xpos, ypos , zpos), this.oreBlock, densityToSet);
 					}
 						
 					xpos += vecX;

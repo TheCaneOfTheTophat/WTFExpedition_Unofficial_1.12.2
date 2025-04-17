@@ -23,7 +23,7 @@ public abstract class AbstractTreeType {
 
 	public enum LeafStyle{BASIC, SPRUCE, POPLAR}
 
-	public static final SimplexHelper simplex = new SimplexHelper("TreeVars");
+	public static final SimplexHelper simplex = new SimplexHelper("TreeVars", true);
 	
 	public AbstractTreeType(IBlockState wood, IBlockState branch, IBlockState leaf) {
 		random = new Random();
@@ -102,8 +102,7 @@ public abstract class AbstractTreeType {
 	public abstract int getNumRoots(double trunkDiameter);
 	
 	public abstract void doLeafNode(TreeInstance tree, Branch branch, BlockPos pos);
-	
-	public int genBuffer = 0;
+
 	public float rootDecoRate = 0;
 	public IBlockState decoUp = null;
 	public IBlockState decoDown = null;

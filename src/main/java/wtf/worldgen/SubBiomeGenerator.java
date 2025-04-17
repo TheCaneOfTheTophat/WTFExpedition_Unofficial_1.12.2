@@ -10,7 +10,7 @@ import wtf.worldgen.subbiomes.SubBiome;
 public class SubBiomeGenerator {
 
 	public static HashMap <Byte, SubBiome> subBiomeRegistry = new HashMap<>();
-	private static SimplexHelper simplex = new SimplexHelper("SubBiome");
+	private static SimplexHelper simplex = new SimplexHelper("SubBiome", true);
 	
 	public static void generate(World world, ChunkPos chunkPos) {
 		byte[] newBiomes = world.getChunkFromChunkCoords(chunkPos.x, chunkPos.z).getBiomeArray();

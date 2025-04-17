@@ -13,7 +13,7 @@ public abstract class AbstractCaveType {
 	public final int ceilingAddonChance;
 	public final int floorAddonChance;
 	public boolean genAir = false;
-	protected static SimplexHelper simplex = new SimplexHelper("CaveGenerator");
+	protected static SimplexHelper simplex = new SimplexHelper("CaveGenerator", true);
 
 	public AbstractCaveType(String name, int ceilingAddonPercentChance, int floorAddonPercentChance) {
 		this.name = name;

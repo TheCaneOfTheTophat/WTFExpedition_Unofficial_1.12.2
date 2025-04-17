@@ -12,7 +12,7 @@ import static wtf.worldgen.GenMethods.modify;
 
 public class SurfaceGenerator {
 
-    private static final SimplexHelper simplex = new SimplexHelper("SurfaceGenerator");
+    private static final SimplexHelper simplex = new SimplexHelper("SurfaceGenerator", true);
 
     public static void generate(World world, SurfacePos[][] surfacePos) {
         for (SurfacePos[] posArray : surfacePos) {

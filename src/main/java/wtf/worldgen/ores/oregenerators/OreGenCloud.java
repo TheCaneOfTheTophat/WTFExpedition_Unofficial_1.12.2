@@ -29,9 +29,9 @@ public class OreGenCloud extends OreGenAbstract {
 		int blocksReq = this.blocksReq();
 
 		while (blocksPerChunk > blocksReq || (blocksPerChunk > 0 && rand.nextInt(blocksReq) < blocksPerChunk)) {
-			int x = pos.getXStart() + rand.nextInt(16);
+			int x = pos.getXStart() + rand.nextInt(16) + 8;
 			int y = this.getGenStartHeight(surfaceAverage, rand);
-			int z = pos.getZStart() + rand.nextInt(16);
+			int z = pos.getZStart() + rand.nextInt(16) + 8;
 			boolean generate = true;
 
 			BlockPos orePos = new BlockPos(x, y, z);

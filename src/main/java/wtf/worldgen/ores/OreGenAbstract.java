@@ -25,7 +25,7 @@ public abstract class OreGenAbstract {
 	public int maxPerChunk;
 	public int minPerChunk;
 	public float veinDensity = 1F;
-	private final SimplexHelper simplex;
+	public final SimplexHelper simplex;
 	public boolean genDenseOres;
 	public final ArrayList<BiomeDictionary.Type> reqBiomeTypes = new ArrayList<>();
 	
@@ -36,7 +36,17 @@ public abstract class OreGenAbstract {
 		this.maxPerChunk = minMaxPerChunk[1];
 		this.minPerChunk = minMaxPerChunk[0];
 		genDenseOres = denseGen;
-		simplex = new SimplexHelper(state.toString());
+		this.simplex = new SimplexHelper(state.toString(), true);
+	}
+
+	public OreGenAbstract(IBlockState state, int[] genRange, int[] minMaxPerChunk, boolean denseGen, SimplexHelper simplex) {
+		this.oreBlock = state;
+		this.maxGenRangeHeight = genRange[1] / 100F;
+		this.minGenRangeHeight = genRange[0] / 100F;
+		this.maxPerChunk = minMaxPerChunk[1];
+		this.minPerChunk = minMaxPerChunk[0];
+		genDenseOres = denseGen;
+		this.simplex = simplex;
 	}
 
 	public final void generate(World world, Random random, ChunkPos pos, int surfaceAverage, UnsortedChunkCaves caves, ArrayList<BlockPos> water) {
@@ -51,9 +61,9 @@ public abstract class OreGenAbstract {
 	public abstract int blocksReq();
 	
 	protected int getBlocksPerChunk(World world, Random rand, ChunkPos pos, double surfaceAvg) {
-		int genNum = WTFExpeditionConfig.simplexOreGen ? (int) (simplex.get2DNoise(world, pos.getXStart() / 8D, pos.getZStart() / 8D) * (this.maxPerChunk - this.minPerChunk) + this.minPerChunk) : (int) (rand.nextFloat() * (maxPerChunk - minPerChunk) + minPerChunk);
+		int genNum = WTFExpeditionConfig.simplexOreGen ? (int) (simplex.get2DNoise(world, (pos.getXStart() + 8) / 8D, (pos.getZStart() + 8) / 8D) * (this.maxPerChunk - this.minPerChunk) + this.minPerChunk) : (int) (rand.nextFloat() * (maxPerChunk - minPerChunk) + minPerChunk);
 
-		Set<Type> biomeTypes = BiomeDictionary.getTypes(world.getBiome(new BlockPos(pos.getXStart() + 8, surfaceAvg, pos.getZStart() + 8)));
+		Set<Type> biomeTypes = BiomeDictionary.getTypes(world.getBiome(new BlockPos(pos.getXStart() + 16, surfaceAvg, pos.getZStart() + 16)));
 		for (Type biome : biomeTypes) {
 			if (biomeModifier.containsKey(biome)) {
 				genNum += (int) ((minPerChunk + (maxPerChunk - minPerChunk) / 2F) * biomeModifier.get(biome));

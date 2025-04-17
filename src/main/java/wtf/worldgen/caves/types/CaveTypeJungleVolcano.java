@@ -85,7 +85,7 @@ public class CaveTypeJungleVolcano extends AbstractCaveType {
 				for (int loop = rand.nextInt(3)+1; loop > -1; loop--)
 					genVines(world, pos.south().down(loop), EnumFacing.NORTH);
 		} else
-			genSpeleothem(world, pos, this.getSpeleothemSize(rand, depth), depth, false);
+			genSpeleothem(world, pos, getSpeleothemSize(rand, depth), depth, false);
 	}
 
 	@Override
@@ -94,9 +94,9 @@ public class CaveTypeJungleVolcano extends AbstractCaveType {
 
 		if (noise < 0.66) {
 			if (rand.nextBoolean())
-				genSpeleothem(world, pos, this.getSpeleothemSize(rand, depth), depth, false);
+				genSpeleothem(world, pos, getSpeleothemSize(rand, depth), depth, false);
 		} else
-			genSpeleothem(world, pos, this.getSpeleothemSize(rand, depth), depth, false);
+			genSpeleothem(world, pos, getSpeleothemSize(rand, depth), depth, false);
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class CaveTypeJungleVolcano extends AbstractCaveType {
 			else if (n > 0.5)
 				modify(world, pos, Modifier.LAVA_CRUST);
 		} else {
-			boolean mossy =  simplex.get3DNoise(world, pos) > depth;
+			boolean mossy = simplex.get3DNoise(world, pos) > depth;
 
 			if (mossy)
 				modify(world, pos, Modifier.MOSS);

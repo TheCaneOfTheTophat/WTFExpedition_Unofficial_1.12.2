@@ -22,7 +22,7 @@ import wtf.worldgen.trees.types.Shrub;
 
 public class TreeGenerator {
 
-	private static SimplexHelper simplex = new SimplexHelper("TreeSimplex");
+	private static SimplexHelper simplex = new SimplexHelper("TreeSimplex", true);
 
 	public static boolean shouldTreePosGenerate(World world, Random random, BlockPos pos) {
 		double noise = (simplex.get2DNoise(world, pos.getX() / 32D, pos.getZ() / 32D));
@@ -61,21 +61,16 @@ public class TreeGenerator {
 				AbstractTreeType treeType = TreeTypeGetter.getTree(world, oldTree);
 				
 				if (treeType != null) {
-					try {
-						for(int x0 = -2; x0 < 3; x0++) {
-							for (int z0 = -2; z0 < 3; z0++) {
-								int x = Math.max(Math.min(4 * loopx + rand1 + x0, 15), 0);
-								int z = Math.max(Math.min(4 * loopz + rand2 + z0, 15), 0);
+					for (int x0 = -2; x0 < 3; x0++) {
+						for (int z0 = -2; z0 < 3; z0++) {
+							int x = Math.max(Math.min(4 * loopx + rand1 + x0, 15), 0);
+							int z = Math.max(Math.min(4 * loopz + rand2 + z0, 15), 0);
 
-								surfacePositions[x][z].setGenerated();
-							}
+							surfacePositions[x][z].setGenerated();
 						}
-
-                        TreeGenMethods.tryGenerate(new TreeInstance(world, random, pos, simplex.get2DNoise(world, pos.getX() / 100D, pos.getZ() / 100D), treeType));
-                    }
-					catch (Exception e) {
-						e.printStackTrace();
 					}
+
+					TreeGenMethods.tryGenerate(new TreeInstance(world, random, pos, simplex.get2DNoise(world, pos.getX() / 100D, pos.getZ() / 100D), treeType));
 				}
 			}
 		}

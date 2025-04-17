@@ -24,9 +24,9 @@ public class OreGenSingle extends OreGenAbstract {
 		int blocksPerChunk = this.getBlocksPerChunk(world, rand, pos, surfaceAverage);
 
 		while (blocksPerChunk > 0) {
-			int x = pos.getXStart() + rand.nextInt(16);
+			int x = pos.getXStart() + rand.nextInt(16) + 8;
 			int y = this.getGenStartHeight(surfaceAverage, rand);
-			int z = pos.getZStart() + rand.nextInt(16);
+			int z = pos.getZStart() + rand.nextInt(16) + 8;
 			boolean generate = true;
 
 			BlockPos orePos = new BlockPos(x, y, z);

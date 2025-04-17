@@ -2,6 +2,7 @@ package wtf.worldgen.caves;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
@@ -70,10 +71,8 @@ public class CaveTypeRegister {
 	public static final CaveTypeHell nether = new CaveTypeHell("nether", floorChance, ceilingChance);
 
 	public static CaveProfile getCaveProfile(Biome biome) {
-		//System.out.println("Getting cave profile for " + biome.getBiomeName());
 		return cavebiomemap.get(biome) != null ? cavebiomemap.get(biome) : getNewProfile(biome);
 	}
-
 
 	public static CaveProfile getNewProfile(Biome biome) {
 
@@ -190,9 +189,9 @@ public class CaveTypeRegister {
 
 		CaveProfile profile = new CaveProfile(deep, mid, shallow);
 		System.out.println("Setting up cave biomes for " + biome.getBiomeName() + " SHALLOW: " + shallow.name + " MID: " + mid.name + " DEEP: " + deep.name);
-		profile.dungeonDeep = dungeonDeep;
-		profile.dungeonMid = dungeonMid;
-		profile.dungeonShallow = dungeonShallow;
+		profile.dungeonDeep = new ArrayList<>(new HashSet<>(dungeonDeep));
+		profile.dungeonMid = new ArrayList<>(new HashSet<>(dungeonMid));
+		profile.dungeonShallow = new ArrayList<>(new HashSet<>(dungeonShallow));
 
 		cavebiomemap.put(biome, profile);
 		return profile;

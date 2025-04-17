@@ -7,6 +7,7 @@ import net.minecraft.block.BlockPlanks;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import wtf.config.WTFExpeditionConfig;
 import wtf.worldgen.trees.TreeInstance;
 import wtf.worldgen.trees.components.Branch;
 
@@ -18,8 +19,7 @@ public class RedwoodTree extends AbstractTreeType {
 		leaftype = LeafStyle.SPRUCE;
 		this.topLimitDown = 2;
 		this.topLimitUp = 0;
-		this.topLimitIncrement = Math.PI/8;
-		this.genBuffer = -25;
+		this.topLimitIncrement = Math.PI / 8;
 		this.leafRad = 2;
 	}
 
@@ -54,7 +54,7 @@ public class RedwoodTree extends AbstractTreeType {
 		double distFromBottom = nodeHeight - bottom;
 		double branchSectionLength = trunkHeight-bottom;
 		double taper = 1 - MathHelper.clamp(distFromBottom/branchSectionLength, 0.1, 0.9);
-		return trunkHeight / 4 * taper;
+		return (trunkHeight / 4 * taper) * (WTFExpeditionConfig.shrinkMassiveTrees ? 0.25 : 1);
 	}
 
 	@Override
@@ -64,12 +64,12 @@ public class RedwoodTree extends AbstractTreeType {
 
 	@Override
 	public double getRootLength(double trunkHeight) {
-		return trunkHeight / 4;
+		return trunkHeight / (WTFExpeditionConfig.shrinkMassiveTrees ? 8 : 4);
 	}
 
 	@Override
 	public double getTrunkDiameter(double scale) {
-		return random.nextInt(4) + 4 + scale * 4;
+		return random.nextInt(4) + 4 + scale * (WTFExpeditionConfig.shrinkMassiveTrees ? 1.5 : 4);
 	}
 
 	@Override

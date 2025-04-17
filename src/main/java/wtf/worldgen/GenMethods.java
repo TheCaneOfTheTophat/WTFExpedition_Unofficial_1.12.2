@@ -1,5 +1,7 @@
 package wtf.worldgen;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockVine;
 import net.minecraft.block.material.Material;
@@ -15,6 +17,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.fluids.BlockFluidBase;
 import org.apache.commons.lang3.tuple.Pair;
 import wtf.blocks.*;
 import wtf.config.WTFExpeditionConfig;
@@ -27,6 +30,10 @@ import wtf.utilities.wrappers.StoneAndOre;
 
 public class GenMethods {
 
+    public static boolean isFluid(IBlockState state) {
+        return (state.getBlock() instanceof BlockFluidBase || state.getBlock() instanceof BlockLiquid);
+    }
+
     public static boolean override(World world, BlockPos pos, IBlockState state, boolean update) {
         return world.setBlockState(pos, state, update ? 19 : 18);
     }
@@ -37,11 +44,15 @@ public class GenMethods {
 
     public static boolean replace(World world, BlockPos pos, IBlockState state) {
         IBlockState prevState = world.getBlockState(pos);
+        Block prevBlock = prevState.getBlock();
         Material material = prevState.getMaterial();
 
-        if(!prevState.getBlock().hasTileEntity(state) &&
-          ((material == Material.ROCK || material == Material.GROUND || material == Material.SAND || material == Material.PLANTS || material == Material.AIR)
-          || prevState.getBlock().isReplaceable(world, pos)) && !(state.getBlock() == Blocks.FARMLAND) && !(prevState.getBlockHardness(world, pos) == -1.0F))
+        if(!state.isFullBlock() && isFluid(prevState))
+            return false;
+
+        if(!prevBlock.hasTileEntity(state) &&
+          ((material == Material.ROCK || material == Material.GROUND || material == Material.SAND || material == Material.PLANTS || material == Material.AIR || material == Material.WEB)
+          || prevBlock.isReplaceable(world, pos)) && !(prevBlock == Blocks.FARMLAND) && !(prevState.getBlockHardness(world, pos) == -1.0F) || isFluid(prevState))
             return override(world, pos, state, false);
 
         return false;
@@ -56,7 +67,7 @@ public class GenMethods {
         return false;
     }
 
-    public static boolean setOre(World world, BlockPos pos, IBlockState oreState, int density) {
+    public static void setOre(World world, BlockPos pos, IBlockState oreState, int density) {
         IBlockState denseOreState = BlockSets.stoneAndOre.get(new StoneAndOre(world.getBlockState(pos), oreState));
 
         if (denseOreState != null) {
@@ -65,16 +76,14 @@ public class GenMethods {
             else if (denseOreState.getBlock() instanceof BlockDenseOreFalling)
                 denseOreState = denseOreState.withProperty(BlockDenseOreFalling.DENSITY, density);
 
-            return override(world, pos, denseOreState);
+            override(world, pos, denseOreState);
         }
-
-        return false;
     }
 
     public static boolean setFloorAddon(World world, BlockPos pos, Modifier modifier) {
         IBlockState modState = BlockSets.blockTransformer.get(Pair.of(world.getBlockState(pos.down()), modifier));
 
-        if (modState != null)
+        if (modState != null && world.isAirBlock(pos))
             return replace(world, pos, modState);
 
         return false;
@@ -83,16 +92,17 @@ public class GenMethods {
     public static boolean setCeilingAddon(World world, BlockPos pos, Modifier modifier) {
         IBlockState modState = BlockSets.blockTransformer.get(Pair.of(world.getBlockState(pos.up()), modifier));
 
-        if (modState != null)
+        if (modState != null && world.isAirBlock(pos))
             return replace(world, pos, modState);
 
         return false;
     }
 
     public static void setPatch(World world, BlockPos pos, IBlockState patch) {
-        Material material = world.getBlockState(pos).getMaterial();
+        IBlockState state = world.getBlockState(pos);
+        Material material = state.getMaterial();
 
-        if (world.isAirBlock(pos.up()) && !(material == Material.SNOW || material == Material.ICE || material == Material.PACKED_ICE || material == Material.LAVA || material == Material.WATER || material == Material.AIR || material == Material.GRASS))
+        if (world.isAirBlock(pos.up()) && state.isFullBlock() && !isFluid(state) && !(material == Material.SNOW || material == Material.ICE || material == Material.PACKED_ICE || material == Material.AIR || material == Material.GRASS))
             replace(world, pos.up(), patch);
     }
 
@@ -128,6 +138,9 @@ public class GenMethods {
         } else
             return false;
 
+        if(isFluid(world.getBlockState(pos)))
+            return false;
+
         if (speleothem == null) {
             if (direction == -1) {
                 if (above.getMaterial() == Material.GROUND && depth > 0.7) {
@@ -136,9 +149,17 @@ public class GenMethods {
                 } else if (frozen || above.getMaterial() == Material.ICE || above.getMaterial() == Material.PACKED_ICE) {
                     genIcicle(world, pos);
                     return true;
-                } else if (above.getMaterial() == Material.WOOD && BiomeDictionary.hasType(world.getBiome(pos), BiomeDictionary.Type.FOREST))
-                    return true;
-                //hanging glow shrooms
+                } else if (BiomeDictionary.hasType(world.getBiome(pos), BiomeDictionary.Type.FOREST)) {
+                    boolean aboveWoodAndSolid = above.getMaterial() == Material.WOOD && above.isSideSolid(world, pos.up(), EnumFacing.DOWN);
+
+                    if (aboveWoodAndSolid)
+                        return replace(world, pos, WTFContent.foxfire.getDefaultState().withProperty(BlockFoxfire.HANGING, true));
+                }
+            } else if (BiomeDictionary.hasType(world.getBiome(pos), BiomeDictionary.Type.FOREST)) {
+                boolean belowWoodAndSolid = below.getMaterial() == Material.WOOD && below.isSideSolid(world, pos.down(), EnumFacing.UP);
+
+                if (belowWoodAndSolid)
+                    return replace(world, pos, WTFContent.foxfire.getDefaultState());
             }
 
             return false;
@@ -165,13 +186,16 @@ public class GenMethods {
             } else if (remaining > 1) {
                 if (world.isAirBlock(pos.up(direction)))
                     set = speleothem.getBlockState(SpeleothemType.speleothem_column);
-                else if (next.hashCode() == speleothem.parentBackground.hashCode()) {
+                else if (next == speleothem.parentBackground) {
                     set = direction == 1 ? speleothem.getBlockState(SpeleothemType.stalactite_base) : speleothem.getBlockState(SpeleothemType.stalagmite_base);
                     remaining = 0;
-                } else
+                } else {
                     set = direction == 1 ? speleothem.getBlockState(SpeleothemType.stalagmite_tip) : speleothem.getBlockState(SpeleothemType.stalactite_tip);
+                    remaining = 0;
+                }
             } else {
                 set = direction == 1 ? speleothem.getBlockState(SpeleothemType.stalagmite_tip) : speleothem.getBlockState(SpeleothemType.stalactite_tip);
+                remaining = 0;
             }
 
             replace(world, pos, set);
@@ -242,7 +266,7 @@ public class GenMethods {
 
             nbt.setShort("Delay", (short) 20);
             nbt.setShort("MinSpawnDelay", (short) 200);
-            nbt.setShort("MaxSpawnDelay", (short) 800);
+            nbt.setShort("MaxSpawnDelay", (short) 400);
             nbt.setShort("SpawnCount",(short) count);
             nbt.setShort("MaxNearbyEntities", (short) 6);
             nbt.setShort("RequiredPlayerRange", (short) 16);
@@ -264,9 +288,5 @@ public class GenMethods {
         }
 
         return maxY * 16;
-    }
-
-    public static boolean setTreeBlock(BlockPos pos, IBlockState state) {
-        return false; //blockmap.add(pos, new QTreeReplace(pos, state));
     }
 }
