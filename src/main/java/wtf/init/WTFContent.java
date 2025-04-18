@@ -29,6 +29,7 @@ import net.minecraft.init.Blocks;
 import org.apache.commons.lang3.tuple.Pair;
 import wtf.WTFExpedition;
 import wtf.blocks.*;
+import wtf.client.WTFModelRegistry;
 import wtf.enums.AnimatedDecoType;
 import wtf.enums.Modifier;
 import wtf.enums.StaticDecoType;
@@ -295,10 +296,23 @@ public class WTFContent {
 				continue;
 			}
 
+			WTFModelRegistry.textureMap.put(blockState, entry.getTexture());
+
 			boolean fractures = fracturedBlockState != null;
 
-			if(fractures)
+			if(fractures) {
 				BlockSets.blockTransformer.put(Pair.of(blockState, Modifier.FRACTURED), fracturedBlockState);
+
+				if(entry.fracturesFirstWhenMined())
+					BlockSets.fractureWhenMinedBlocks.add(blockState);
+			}
+
+			if(entry.getPercentageMineSpeedModifier() != 1)
+				BlockSets.miningSpeedModifierMap.put(blockState, entry.getPercentageMineSpeedModifier());
+
+
+			if(entry.getPercentageStability() != 100)
+				BlockSets.percentageStabilityMap.put(blockState, entry.getPercentageStability());
 
 			// SPELEOTHEMS
 			if(entry.hasSpeleothems()) {

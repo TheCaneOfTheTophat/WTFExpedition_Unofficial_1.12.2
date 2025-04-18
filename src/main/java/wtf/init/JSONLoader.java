@@ -391,10 +391,6 @@ public class JSONLoader {
         return entry != null ? entry.getBlockId() : id;
     }
 
-    public static BlockEntry getEntryFromState(IBlockState state) {
-        return identifierToBlockEntry.get(state.getBlock().getRegistryName() + "@" + state.getBlock().getMetaFromState(state));
-    }
-
     public static IBlockState getStateFromId(String id) {
         String[] idSplit = addMeta(id).split("@");
 

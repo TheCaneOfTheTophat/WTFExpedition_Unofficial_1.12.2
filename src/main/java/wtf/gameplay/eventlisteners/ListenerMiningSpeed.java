@@ -7,10 +7,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import wtf.blocks.AbstractBlockDerivative;
 import wtf.blocks.BlockDecoAnim;
 import wtf.blocks.BlockDecoStatic;
-import wtf.config.BlockEntry;
 import wtf.enums.AnimatedDecoType;
 import wtf.enums.StaticDecoType;
-import wtf.init.JSONLoader;
+import wtf.init.BlockSets;
 
 public class ListenerMiningSpeed {
 
@@ -29,9 +28,9 @@ public class ListenerMiningSpeed {
 				return;
 		}
 
-		BlockEntry entry = JSONLoader.getEntryFromState(state);
+		float modifier = BlockSets.miningSpeedModifierMap.get(state) == null ? -1 : BlockSets.miningSpeedModifierMap.get(state);
 
-		if (!event.getEntityPlayer().capabilities.isCreativeMode && entry != null)
-			event.setNewSpeed(entry.getPercentageMineSpeedModifier() * event.getOriginalSpeed());
+		if (!event.getEntityPlayer().capabilities.isCreativeMode && modifier != -1)
+			event.setNewSpeed(modifier * event.getOriginalSpeed());
 	}
 }

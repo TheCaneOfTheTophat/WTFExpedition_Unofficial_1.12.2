@@ -13,14 +13,10 @@ import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import wtf.WTFExpedition;
 import wtf.blocks.*;
-import wtf.enums.AnimatedDecoType;
 import wtf.enums.Modifier;
-import wtf.enums.StaticDecoType;
-import wtf.config.BlockEntry;
 import wtf.config.WTFExpeditionConfig;
 import wtf.gameplay.fracturing.EntityFracture;
 import wtf.init.BlockSets;
-import wtf.init.JSONLoader;
 import wtf.network.WTFMessageBlockCrackEvent;
 
 public class ListenerBreakFracture {
@@ -43,9 +39,7 @@ public class ListenerBreakFracture {
 				block = state.getBlock();
 			}
 
-			BlockEntry entry = JSONLoader.getEntryFromState(state);
-
-			if (entry != null && entry.fracturesFirstWhenMined()) {
+			if (BlockSets.fractureWhenMinedBlocks.contains(state)) {
 				event.getWorld().capturedBlockSnapshots.add(new BlockSnapshot(event.getWorld(), event.getPos(), event.getState()));
 				event.setCanceled(true);
 				EntityFracture.fractureBlock(event.getWorld(), event.getPos(), false, false);

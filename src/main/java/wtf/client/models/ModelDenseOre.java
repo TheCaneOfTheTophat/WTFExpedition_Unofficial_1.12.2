@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import wtf.WTFExpedition;
 import wtf.client.DerivativeFallingResourceLocation;
 import wtf.client.DerivativeResourceLocation;
-import wtf.init.JSONLoader;
+import wtf.client.WTFModelRegistry;
 import wtf.init.WTFContent;
 
 import java.util.function.Function;
@@ -31,7 +31,7 @@ public class ModelDenseOre implements IModel {
     public ModelDenseOre(DerivativeResourceLocation location) {
         IBlockState parentState = location.block.parentBackground;
 
-        cubeTexture = new ResourceLocation(JSONLoader.getEntryFromState(parentState).getTexture());
+        cubeTexture = new ResourceLocation(WTFModelRegistry.textureMap.get(parentState));
 
         overlayTexture = new ResourceLocation(WTFContent.oreEntryMap.get(location.block).getRawOverlayPath());
 
@@ -41,7 +41,7 @@ public class ModelDenseOre implements IModel {
     public ModelDenseOre(DerivativeFallingResourceLocation location) {
         IBlockState parentState = location.block.parentBackground;
 
-        cubeTexture = new ResourceLocation(JSONLoader.getEntryFromState(parentState).getTexture());
+        cubeTexture = new ResourceLocation(WTFModelRegistry.textureMap.get(parentState));
 
         overlayTexture = new ResourceLocation(WTFContent.oreEntryMap.get(location.block).getRawOverlayPath());
 

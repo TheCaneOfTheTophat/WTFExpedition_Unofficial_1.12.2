@@ -14,12 +14,18 @@ import wtf.worldgen.replacers.Replacer;
 
 public class BlockSets {
 
-	public static HashMap<IBlockState, BlockSpeleothem> speleothemMap = new HashMap<>();
-    public static HashSet<String> adjacentFracturingBlocks = new HashSet<>();
-	public static HashMap<StoneAndOre, IBlockState> stoneAndOre = new HashMap<>();
+	// Gameplay
+	public static HashSet<String> adjacentFracturingBlocks = new HashSet<>();
 	public static HashMap<Block, Float> explosiveBlocks = new HashMap<>();
-    public static HashSet<Material> replaceableMaterial = new HashSet<>(Arrays.asList(Material.AIR, Material.GROUND, Material.ROCK, Material.WATER, Material.LAVA, Material.PLANTS, Material.SAND, Material.CLAY, Material.SNOW, Material.WEB));
+	public static HashSet<IBlockState> fractureWhenMinedBlocks = new HashSet<>();
 	public static HashSet<Block> meltBlocks = new HashSet<>(Arrays.asList(Blocks.LAVA, Blocks.FLOWING_LAVA, Blocks.FLOWING_WATER, Blocks.FIRE));
+	public static HashMap<IBlockState, Float> miningSpeedModifierMap = new HashMap<>();
+	public static HashMap<IBlockState, Integer> percentageStabilityMap = new HashMap<>();
+
+	// Worldgen
+	public static HashMap<IBlockState, BlockSpeleothem> speleothemMap = new HashMap<>();
+	public static HashMap<StoneAndOre, IBlockState> stoneAndOre = new HashMap<>();
+    public static HashSet<Material> replaceableMaterial = new HashSet<>(Arrays.asList(Material.AIR, Material.GROUND, Material.ROCK, Material.WATER, Material.LAVA, Material.PLANTS, Material.SAND, Material.CLAY, Material.SNOW, Material.WEB));
 	public static HashMap<Block, Replacer> replacementMap = new HashMap<>();
 	public static HashMap<Pair<IBlockState, Modifier>, IBlockState> blockTransformer = new HashMap<>();
 

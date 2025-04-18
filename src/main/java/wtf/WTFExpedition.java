@@ -19,10 +19,12 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
+import wtf.client.WTFModelRegistry;
 import wtf.config.WTFExpeditionConfig;
 import wtf.gameplay.eventlisteners.*;
 import wtf.init.BlockSets;
 import wtf.init.JSONLoader;
+import wtf.init.WTFContent;
 import wtf.network.WTFMessageBlockCrackEvent;
 import wtf.worldgen.ListenerChunkScanStorage;
 import wtf.worldgen.WorldGenListener;
@@ -92,6 +94,14 @@ public class WTFExpedition {
 	
 	@EventHandler
 	public void initialization(FMLInitializationEvent event) {
+		// Clear useless entry maps and sets
+
+		JSONLoader.identifierToBlockEntry.clear();
+		JSONLoader.blockEntries.clear();
+		JSONLoader.oreEntries.clear();
+		WTFModelRegistry.textureMap.clear();
+		WTFContent.oreEntryMap.clear();
+
 		CHANNEL_INSTANCE.registerMessage(WTFMessageBlockCrackEvent.Handler.class, WTFMessageBlockCrackEvent.class, 0, Side.CLIENT);
 
 		BlockSets.initBlockSets();

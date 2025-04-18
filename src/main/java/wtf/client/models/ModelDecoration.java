@@ -17,8 +17,7 @@ import wtf.WTFExpedition;
 import wtf.blocks.BlockDecoAnim;
 import wtf.blocks.BlockDecoStatic;
 import wtf.client.DerivativeResourceLocation;
-import wtf.config.BlockEntry;
-import wtf.init.JSONLoader;
+import wtf.client.WTFModelRegistry;
 
 import java.util.function.Function;
 
@@ -39,8 +38,7 @@ public class ModelDecoration implements IModel {
         else
             decoStatic = (BlockDecoStatic) location.block;
 
-        BlockEntry entry = JSONLoader.getEntryFromState(state);
-        cubeTexture = new ResourceLocation(entry.getTexture());
+        cubeTexture = new ResourceLocation(WTFModelRegistry.textureMap.get(state));
 
         if(location.block instanceof BlockDecoAnim)
             overlayName = decoAnim.getType().getOverlayName();

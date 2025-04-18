@@ -11,9 +11,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import wtf.blocks.AbstractBlockDerivative;
 import wtf.blocks.IDeco;
-import wtf.config.BlockEntry;
 import wtf.config.WTFExpeditionConfig;
-import wtf.init.JSONLoader;
+import wtf.init.BlockSets;
 import wtf.worldgen.GenMethods;
 
 public class GravityMethods {
@@ -21,7 +20,10 @@ public class GravityMethods {
 	private final static Random random = new Random();
 
 	private static final int grassHash = Blocks.GRASS.hashCode();
-	private static final int airHash = Blocks.AIR.hashCode();
+
+	private static int getPercentageStability(IBlockState state) {
+		return BlockSets.percentageStabilityMap.get(state) == null ? -1 : BlockSets.percentageStabilityMap.get(state);
+	}
 
 	public static void checkPos(World world, BlockPos pos) {
 		if(world.isAirBlock(pos))
@@ -29,26 +31,25 @@ public class GravityMethods {
 
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
-		BlockEntry entry = JSONLoader.getEntryFromState(state.getBlock() instanceof IDeco ? ((AbstractBlockDerivative) state.getBlock()).parentForeground : state);
+		int percentageStability = getPercentageStability(state.getBlock() instanceof IDeco ? ((AbstractBlockDerivative) state.getBlock()).parentForeground : state);
 		boolean grass = false;
 
 		if (block.hashCode() == grassHash) {
 			block = Blocks.DIRT;
 			state = block.getDefaultState();
-			entry = JSONLoader.getEntryFromState(state);
+			percentageStability = getPercentageStability(state);
 			grass = true;
 		}
 
-		if (entry == null || entry.getPercentageStability() == 100)
+		if (percentageStability == -1)
 			return;
 
 		// if the block beneath isn't solid
 		if (GenMethods.isNonSolid(world.getBlockState(pos.down()))) {
-			int blockhash = block.hashCode();
 			double fallchance = 1;
 
-			for (int loop = 1; loop < 6 && blockhash == world.getBlockState(pos.up(loop)).getBlock().hashCode(); loop++)
-				fallchance *= (1 - entry.getPercentageStability() / 100F);
+			for (int loop = 1; loop < 6 && block == world.getBlockState(pos.up(loop)).getBlock(); loop++)
+				fallchance *= (1 - percentageStability / 100F);
 
 			if (random.nextFloat() < fallchance) {
 				if (grass)
@@ -62,15 +63,15 @@ public class GravityMethods {
 		// start check for tower conditions : all adjacent are air, and unstable block below
 		BlockPos downpos = pos.down();
 		IBlockState downBlockState = world.getBlockState(downpos);
-		BlockEntry downBlockEntry = JSONLoader.getEntryFromState(downBlockState.getBlock() instanceof IDeco ? ((AbstractBlockDerivative) downBlockState.getBlock()).parentForeground : downBlockState);
+		int downBlockStability = getPercentageStability(downBlockState.getBlock() instanceof IDeco ? ((AbstractBlockDerivative) downBlockState.getBlock()).parentForeground : downBlockState);
 
 		if (downBlockState.getBlock().hashCode() == grassHash) {
 			downBlockState = Blocks.DIRT.getDefaultState();
-			downBlockEntry = JSONLoader.getEntryFromState(downBlockState);
+			downBlockStability = getPercentageStability(downBlockState);
 		}
 
 		// we check for fences down two blocks at the start, then in each posCheck it checks down 1 level
-		if (WTFExpeditionConfig.antiNerdPole && (downBlockEntry != null && !(downBlockEntry.getPercentageStability() >= 100)) && unstableTowerPos(world, pos.down()) && !fenceNear(world, pos, 1, 2)) {
+		if (WTFExpeditionConfig.antiNerdPole && (downBlockStability != -1 && !(downBlockStability >= 100)) && unstableTowerPos(world, pos.down()) && !fenceNear(world, pos, 1, 2)) {
 			int count = 1;
 			while (count < 5) {
 				if (unstableTowerPos(world, pos.down(count)))
@@ -79,7 +80,7 @@ public class GravityMethods {
 					break;
 			}
 
-			if (random.nextFloat() * count > downBlockEntry.getPercentageStability() / 100F) {
+			if (random.nextFloat() * count > downBlockStability / 100F) {
 				if (grass)
 					world.setBlockState(pos, state);
 
@@ -91,14 +92,10 @@ public class GravityMethods {
 	}
 
 	public static boolean unstableTowerPos(World world, BlockPos pos) {
-		return world.getBlockState(pos.north()).getBlock().hashCode() == airHash
-				&& world.getBlockState(pos.north().east()).getBlock().hashCode() == airHash
-				&& world.getBlockState(pos.north().west()).getBlock().hashCode() == airHash
-				&& world.getBlockState(pos.south()).getBlock().hashCode() == airHash
-				&& world.getBlockState(pos.south().east()).getBlock().hashCode() == airHash
-				&& world.getBlockState(pos.south().west()).getBlock().hashCode() == airHash
-				&& world.getBlockState(pos.east()).getBlock().hashCode() == airHash
-				&& world.getBlockState(pos.west()).getBlock().hashCode() == airHash
+		return world.isAirBlock(pos.north()) && world.isAirBlock(pos.north().east())
+				&& world.isAirBlock(pos.north().west()) && world.isAirBlock(pos.south())
+				&& world.isAirBlock(pos.south().east()) && world.isAirBlock(pos.south().west())
+				&& world.isAirBlock(pos.east()) && world.isAirBlock(pos.west())
 				&& !fenceNear(world, pos.down(2), 1, 0);
 	}
 
@@ -110,9 +107,9 @@ public class GravityMethods {
 			return;
 
 		IBlockState state = world.getBlockState(pos);
-		BlockEntry entry = JSONLoader.getEntryFromState(state.getBlock() instanceof IDeco ? ((AbstractBlockDerivative) state.getBlock()).parentForeground : state);
+		int percentageStability = getPercentageStability(state.getBlock() instanceof IDeco ? ((AbstractBlockDerivative) state.getBlock()).parentForeground : state);
 
-		if (entry != null && !(entry.getPercentageStability() >= 100)) {
+		if (percentageStability != -1 && !(percentageStability == 100)) {
 			if (checkSupport && fenceNear(world, pos, 1, 1))
 				return;
 
@@ -129,8 +126,8 @@ public class GravityMethods {
 
 
 	public static boolean fenceNear(World world, BlockPos pos, int radius, int down) {
-		for (BlockPos boxpos : BlockPos.getAllInBoxMutable(pos.add(radius, 0, radius), pos.add(-radius, -down, -radius)))
-			if (world.getBlockState(boxpos).getBlock() instanceof BlockFence)
+		for (BlockPos boxPos : BlockPos.getAllInBoxMutable(pos.add(radius, 0, radius), pos.add(-radius, -down, -radius)))
+			if (world.getBlockState(boxPos).getBlock() instanceof BlockFence)
 				return true;
 
 		return false;

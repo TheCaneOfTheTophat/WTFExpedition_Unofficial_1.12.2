@@ -2,6 +2,7 @@ package wtf.client;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlanks;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
@@ -15,9 +16,13 @@ import wtf.blocks.*;
 import wtf.enums.IcicleType;
 import wtf.init.WTFContent;
 
+import java.util.HashMap;
+
 @SuppressWarnings("unused")
 @Mod.EventBusSubscriber(value = Side.CLIENT)
 public class WTFModelRegistry {
+
+    public static HashMap<IBlockState, String> textureMap = new HashMap<>();
 
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent register) {

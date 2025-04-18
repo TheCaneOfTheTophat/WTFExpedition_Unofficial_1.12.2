@@ -162,7 +162,7 @@ public class EntityFracture extends Entity {
 				return;
 			}
 
-			if(indirectFracture && ((IDeco) block).getType() == StaticDecoType.CRACKED && cobble != null)
+			if(((IDeco) block).getType() == StaticDecoType.CRACKED && cobble != null)
 				fractureAdjacent(world, pos);
 		}
 

@@ -22,6 +22,7 @@ import wtf.WTFExpedition;
 import wtf.blocks.BlockSpeleothem;
 import wtf.blocks.BlockSpeleothemFrozen;
 import wtf.client.DerivativeResourceLocation;
+import wtf.client.WTFModelRegistry;
 import wtf.init.JSONLoader;
 
 import javax.annotation.Nullable;
@@ -49,7 +50,7 @@ public class ModelSpeleothem implements IModel {
             frozen = false;
         }
 
-        blockTexture = new ResourceLocation(JSONLoader.getEntryFromState(parentState).getTexture());
+        blockTexture = new ResourceLocation(WTFModelRegistry.textureMap.get(parentState));
 
         typeName = location.block.getStateFromMeta(location.meta).getValue(BlockSpeleothem.TYPE).getName();
     }
