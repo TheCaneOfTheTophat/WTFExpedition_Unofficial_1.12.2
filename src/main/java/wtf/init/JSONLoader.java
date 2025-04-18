@@ -164,7 +164,7 @@ public class JSONLoader {
                     String overlayPath = "";
                     int veinPercentDensity = 100;
                     ArrayList<String> biomeTypeList = new ArrayList<>();
-                    boolean biomeTypeListWhitelist = false;
+                    boolean biomeTypeListWhitelist = true;
                     int biomeLeniency = 0;
                     HashMap<String, Integer> percentGenerationPerBiomeType = new HashMap<>();
 

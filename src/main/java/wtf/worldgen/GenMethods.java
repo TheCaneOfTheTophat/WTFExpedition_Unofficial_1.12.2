@@ -13,9 +13,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
+import net.minecraft.world.gen.ChunkProviderServer;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fluids.BlockFluidBase;
 import org.apache.commons.lang3.tuple.Pair;
@@ -29,6 +31,21 @@ import wtf.init.WTFContent;
 import wtf.utilities.wrappers.StoneAndOre;
 
 public class GenMethods {
+
+    public static boolean isPosInSurfaceStructure(World world, BlockPos pos) {
+        if(!world.isRemote) {
+            ChunkProviderServer cps = ((WorldServer) world).getChunkProvider();
+            boolean inVillage = cps.isInsideStructure(world, "Village", pos);
+            boolean inMansion = cps.isInsideStructure(world, "Mansion", pos);
+            boolean inMonument = cps.isInsideStructure(world, "Monument", pos);
+            boolean inTemple = cps.isInsideStructure(world, "Temple", pos);
+            boolean inCity = cps.isInsideStructure(world, "EndCity", pos);
+
+            return inVillage || inMansion || inMonument || inTemple || inCity;
+        }
+
+        return false;
+    }
 
     public static boolean isNonSolid(IBlockState state) {
         Material material = state.getMaterial();

@@ -26,7 +26,6 @@ import wtf.init.BlockSets;
 import wtf.init.JSONLoader;
 import wtf.init.WTFContent;
 import wtf.network.WTFMessageBlockCrackEvent;
-import wtf.worldgen.ListenerChunkScanStorage;
 import wtf.worldgen.WorldGenListener;
 import wtf.worldgen.ores.VanillaOreGenCatcher;
 import wtf.worldgen.replacers.TorchReplacer;
@@ -158,7 +157,6 @@ public class WTFExpedition {
 		}
 
 		MinecraftForge.EVENT_BUS.register(new WorldGenListener());
-		MinecraftForge.EVENT_BUS.register(new ListenerChunkScanStorage());
 
 		if (WTFExpeditionConfig.oreGenEnabled) {
 			MinecraftForge.ORE_GEN_BUS.register(new VanillaOreGenCatcher());

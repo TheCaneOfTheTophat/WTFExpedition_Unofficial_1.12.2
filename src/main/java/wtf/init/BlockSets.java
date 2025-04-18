@@ -26,6 +26,7 @@ public class BlockSets {
 	public static HashMap<IBlockState, BlockSpeleothem> speleothemMap = new HashMap<>();
 	public static HashMap<StoneAndOre, IBlockState> stoneAndOre = new HashMap<>();
     public static HashSet<Material> replaceableMaterial = new HashSet<>(Arrays.asList(Material.AIR, Material.GROUND, Material.ROCK, Material.WATER, Material.LAVA, Material.PLANTS, Material.SAND, Material.CLAY, Material.SNOW, Material.WEB));
+	public static HashSet<Material> surfaceMaterial = new HashSet<>(Arrays.asList(Material.GRASS, Material.GROUND, Material.ROCK, Material.SAND, Material.CLAY));
 	public static HashMap<Block, Replacer> replacementMap = new HashMap<>();
 	public static HashMap<Pair<IBlockState, Modifier>, IBlockState> blockTransformer = new HashMap<>();
 
