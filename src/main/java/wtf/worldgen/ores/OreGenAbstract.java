@@ -7,6 +7,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import wtf.config.WTFExpeditionConfig;
@@ -28,24 +29,27 @@ public abstract class OreGenAbstract {
 	public final SimplexHelper simplex;
 	public boolean genDenseOres;
 	public final ArrayList<BiomeDictionary.Type> reqBiomeTypes = new ArrayList<>();
+	public int biomeLeniency;
 	
-	public OreGenAbstract(IBlockState state, String name, int[] genRange, int[] minMaxPerChunk, boolean denseGen) {
+	public OreGenAbstract(IBlockState state, String name, int[] genRange, int[] minMaxPerChunk, boolean denseGen, int biomeLeniency) {
 		this.oreBlock = state;
 		this.maxGenRangeHeight = genRange[1] / 100F;
 		this.minGenRangeHeight = genRange[0] / 100F;
 		this.maxPerChunk = minMaxPerChunk[1];
 		this.minPerChunk = minMaxPerChunk[0];
 		genDenseOres = denseGen;
+		this.biomeLeniency = biomeLeniency;
 		this.simplex = new SimplexHelper(name, true);
 	}
 
-	public OreGenAbstract(IBlockState state, int[] genRange, int[] minMaxPerChunk, boolean denseGen, SimplexHelper simplex) {
+	public OreGenAbstract(IBlockState state, int[] genRange, int[] minMaxPerChunk, boolean denseGen, int biomeLeniency, SimplexHelper simplex) {
 		this.oreBlock = state;
 		this.maxGenRangeHeight = genRange[1] / 100F;
 		this.minGenRangeHeight = genRange[0] / 100F;
 		this.maxPerChunk = minMaxPerChunk[1];
 		this.minPerChunk = minMaxPerChunk[0];
 		genDenseOres = denseGen;
+		this.biomeLeniency = biomeLeniency;
 		this.simplex = simplex;
 	}
 
@@ -60,10 +64,19 @@ public abstract class OreGenAbstract {
 	
 	public abstract int blocksReq();
 	
-	protected int getBlocksPerChunk(World world, Random rand, ChunkPos pos, double surfaceAvg) {
+	protected int getBlocksPerChunk(World world, Random rand, ChunkPos pos, double surfaceAvg, int biomeLeniency) {
 		int genNum = WTFExpeditionConfig.simplexOreGen ? (int) (simplex.get2DNoise(world, (pos.getXStart() + 8) / 8D, (pos.getZStart() + 8) / 8D) * (this.maxPerChunk - this.minPerChunk) + this.minPerChunk) : (int) (rand.nextFloat() * (maxPerChunk - minPerChunk) + minPerChunk);
 
-		Set<Type> biomeTypes = BiomeDictionary.getTypes(world.getBiome(new BlockPos(pos.getXStart() + 16, surfaceAvg, pos.getZStart() + 16)));
+		BlockPos centerPos = new BlockPos(pos.getXStart() + 16, surfaceAvg, pos.getZStart() + 16);
+		Set<Type> biomeTypes = new HashSet<>();
+
+		if(biomeLeniency == 0)
+			biomeTypes = BiomeDictionary.getTypes(world.getBiome(centerPos));
+		else {
+			for(BlockPos boxPos : BlockPos.getAllInBoxMutable(centerPos.add(biomeLeniency, 0, biomeLeniency), centerPos.add(-biomeLeniency, 0, -biomeLeniency)))
+				biomeTypes.addAll(BiomeDictionary.getTypes(world.getBiome(boxPos)));
+		}
+
 		for (Type biome : biomeTypes) {
 			if (biomeModifier.containsKey(biome)) {
 				genNum += (int) ((minPerChunk + (maxPerChunk - minPerChunk) / 2F) * biomeModifier.get(biome));
@@ -100,6 +113,31 @@ public abstract class OreGenAbstract {
 
 	public void setVeinDensity(float density) {
 		this.veinDensity = density;
+	}
+
+	public boolean checkBiomes(World world, BlockPos pos, int biomeLeniency) {
+		boolean valid = true;
+
+		if (!reqBiomeTypes.isEmpty()) {
+			valid = false;
+			Set<Biome> biomes = new HashSet<>();
+
+			if(biomeLeniency == 0)
+				biomes.add(world.getBiomeForCoordsBody(pos));
+			else {
+				for(BlockPos boxPos : BlockPos.getAllInBoxMutable(pos.add(biomeLeniency, 0, biomeLeniency), pos.add(-biomeLeniency, 0, -biomeLeniency)))
+					biomes.add(world.getBiomeForCoordsBody(boxPos));
+			}
+
+			for (BiomeDictionary.Type type : reqBiomeTypes) {
+				for(Biome biome : biomes) {
+					if (BiomeDictionary.hasType(biome, type))
+						valid = true;
+				}
+			}
+		}
+
+		return valid;
 	}
 }
 

@@ -9,8 +9,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraftforge.common.BiomeDictionary;
 import wtf.worldgen.ores.OreGenAbstract;
 import wtf.utilities.wrappers.CaveListWrapper;
 import wtf.utilities.wrappers.CavePosition;
@@ -26,8 +24,8 @@ public class OreGenCaveFloor extends OreGenAbstract {
 		floor, wall, ceiling
 	}
 	
-	public OreGenCaveFloor(OreGenAbstract vein, IBlockState state, int[] genRange, int[] minMaxPerChunk, boolean denseGen, ArrayList<surface> list) {
-		super(state, genRange, minMaxPerChunk, denseGen, vein.simplex);
+	public OreGenCaveFloor(OreGenAbstract vein, IBlockState state, int[] genRange, int[] minMaxPerChunk, boolean denseGen, int biomeLeniency, ArrayList<surface> list) {
+		super(state, genRange, minMaxPerChunk, denseGen, biomeLeniency, vein.simplex);
 		veinType = vein;
 		surfaceList = list;
 	}
@@ -39,7 +37,7 @@ public class OreGenCaveFloor extends OreGenAbstract {
 	@Override
 	public void doOreGen(World world, Random rand, ChunkPos pos, int surfaceAverage, UnsortedChunkCaves caves, ArrayList<BlockPos> water) {
 		if (caves.size() > 0) {
-			int blocksPerChunk = this.getBlocksPerChunk(world, rand, pos, surfaceAverage);
+			int blocksPerChunk = this.getBlocksPerChunk(world, rand, pos, surfaceAverage, biomeLeniency);
 			int maxHeight = MathHelper.floor(maxGenRangeHeight * surfaceAverage);
 			int minHeight = MathHelper.floor(minGenRangeHeight * surfaceAverage);
 
@@ -52,7 +50,6 @@ public class OreGenCaveFloor extends OreGenAbstract {
 				BlockPos orePos = null;
 				CaveListWrapper cave = caves.getRandomCave(rand);
 				CavePosition cavepos = cave.getRandomPosition(rand);
-				boolean generate = true;
 				
 				if (cavepos != null) {
 					switch (surfaceGen) {
@@ -70,14 +67,7 @@ public class OreGenCaveFloor extends OreGenAbstract {
 					}
 
 					if (orePos != null) {
-						Biome biome = world.getBiomeForCoordsBody(orePos);
-
-						if (!reqBiomeTypes.isEmpty()) {
-							for (BiomeDictionary.Type type : reqBiomeTypes) {
-								if (!BiomeDictionary.hasType(biome, type))
-									generate = false;
-							}
-						}
+						boolean generate = checkBiomes(world, orePos, biomeLeniency);
 
 						if(!(orePos.getY() <= maxHeight) || !(orePos.getY() >= minHeight))
 							generate = false;

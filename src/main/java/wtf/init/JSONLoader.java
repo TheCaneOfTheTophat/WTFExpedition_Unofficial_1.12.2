@@ -165,6 +165,7 @@ public class JSONLoader {
                     int veinPercentDensity = 100;
                     ArrayList<String> biomeTypeList = new ArrayList<>();
                     boolean biomeTypeListWhitelist = false;
+                    int biomeLeniency = 0;
                     HashMap<String, Integer> percentGenerationPerBiomeType = new HashMap<>();
 
                     OreGeneratorSettings settings = null;
@@ -235,6 +236,9 @@ public class JSONLoader {
 
                     if(object.has("biomeTypeListWhitelist"))
                         biomeTypeListWhitelist = object.get("biomeTypeListWhitelist").getAsBoolean();
+
+                    if(object.has("biomeLeniency"))
+                        biomeLeniency = Math.max(Math.min(object.get("biomeLeniency").getAsInt(), 4), 0);
 
                     if(object.has("percentGenerationPerBiomeType"))
                         for(Map.Entry<String, JsonElement> entry : object.getAsJsonObject("percentGenerationPerBiomeType").entrySet())
@@ -309,7 +313,7 @@ public class JSONLoader {
                         settings = new OreGeneratorSettings(primaryGenerationType, secondaryGenerationType, veinPitchAverage, veinLength, veinWidth, veinVerticalThickness, cloudDiameter, ceiling, wall, floor, blocksPerCluster);
                     }
 
-                    OreEntry entryOre = new OreEntry(blockId, name, stoneList, minAmountPerChunk, maxAmountPerChunk, surfaceHeightMinPercentage, surfaceHeightMaxPercentage, dimensionList, dimensionListWhitelist, useDenseBlock, overlayPath, veinPercentDensity, biomeTypeList, biomeTypeListWhitelist, percentGenerationPerBiomeType, settings);
+                    OreEntry entryOre = new OreEntry(blockId, name, stoneList, minAmountPerChunk, maxAmountPerChunk, surfaceHeightMinPercentage, surfaceHeightMaxPercentage, dimensionList, dimensionListWhitelist, useDenseBlock, overlayPath, veinPercentDensity, biomeTypeList, biomeTypeListWhitelist, biomeLeniency, percentGenerationPerBiomeType, settings);
 
                      oreEntries.add(entryOre);
                 } else {

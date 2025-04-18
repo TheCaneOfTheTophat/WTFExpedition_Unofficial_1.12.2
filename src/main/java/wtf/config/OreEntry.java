@@ -27,12 +27,13 @@ public class OreEntry {
 
     private final ArrayList<String> biomeTypeList;
     private final boolean biomeTypeListWhitelist;
+    private final int biomeLeniency;
 
     private final HashMap<String, Integer> percentGenerationPerBiomeType;
 
     private final OreGeneratorSettings settings;
 
-    public OreEntry(String blockId, String name, ArrayList<String> stoneList, int minAmountPerChunk, int maxAmountPerChunk, int surfaceHeightMinPercentage, int surfaceHeightMaxPercentage, ArrayList<Integer> dimensionList, boolean dimensionListWhitelist, boolean useDenseBlock, String overlayPath, int veinPercentDensity, ArrayList<String> biomeTypeList, boolean biomeTypeListWhitelist, HashMap<String, Integer> percentGenerationPerBiomeType, OreGeneratorSettings settings) {
+    public OreEntry(String blockId, String name, ArrayList<String> stoneList, int minAmountPerChunk, int maxAmountPerChunk, int surfaceHeightMinPercentage, int surfaceHeightMaxPercentage, ArrayList<Integer> dimensionList, boolean dimensionListWhitelist, boolean useDenseBlock, String overlayPath, int veinPercentDensity, ArrayList<String> biomeTypeList, boolean biomeTypeListWhitelist, int biomeLeniency, HashMap<String, Integer> percentGenerationPerBiomeType, OreGeneratorSettings settings) {
         this.blockId = blockId;
         this.name = name;
         this.stoneList = stoneList;
@@ -47,6 +48,7 @@ public class OreEntry {
         this.veinPercentDensity = veinPercentDensity;
         this.biomeTypeList = biomeTypeList;
         this.biomeTypeListWhitelist = biomeTypeListWhitelist;
+        this.biomeLeniency = biomeLeniency;
         this.percentGenerationPerBiomeType = percentGenerationPerBiomeType;
         this.settings = settings;
     }
@@ -114,6 +116,10 @@ public class OreEntry {
 
     public boolean isBiomeTypeListWhitelist() {
         return biomeTypeListWhitelist;
+    }
+
+    public int getBiomeLeniency() {
+        return biomeLeniency;
     }
 
     public Map<String, Integer> getPercentGenerationPerBiomeType() {

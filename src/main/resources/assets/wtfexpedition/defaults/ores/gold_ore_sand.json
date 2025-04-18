@@ -13,6 +13,7 @@
     "veinPercentDensity": 100,
     "biomeTypeList": ["river"],
     "biomeTypeListWhitelist": true,
+    "biomeLeniency": 4,
     "generation_settings": {
       "primaryGenerationType": "single",
       "secondaryGenerationType": "underwater"

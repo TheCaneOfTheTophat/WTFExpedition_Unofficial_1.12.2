@@ -5,8 +5,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraftforge.common.BiomeDictionary;
 import wtf.worldgen.GenMethods;
 import wtf.worldgen.ores.OreGenAbstract;
 import wtf.utilities.wrappers.UnsortedChunkCaves;
@@ -15,8 +13,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class OreGenVanilla extends OreGenAbstract {
-	public OreGenVanilla(IBlockState state, String name, int[] genRange, int[] minMaxPerChunk, boolean denseGen, int blocks) {
-		super(state, name, genRange, minMaxPerChunk, denseGen);
+	public OreGenVanilla(IBlockState state, String name, int[] genRange, int[] minMaxPerChunk, boolean denseGen, int biomeLeniency, int blocks) {
+		super(state, name, genRange, minMaxPerChunk, denseGen, biomeLeniency);
 		blocksPerCluster = blocks;
 	}
 
@@ -24,23 +22,14 @@ public class OreGenVanilla extends OreGenAbstract {
 
 	@Override
 	public void doOreGen(World world, Random rand, ChunkPos pos, int surfaceAverage, UnsortedChunkCaves caves, ArrayList<BlockPos> water) {
-		int blocksPerChunk = this.getBlocksPerChunk(world, rand , pos, surfaceAverage);
+		int blocksPerChunk = this.getBlocksPerChunk(world, rand, pos, surfaceAverage, biomeLeniency);
 		int blocksReq = this.blocksReq();
 		
 		while (blocksPerChunk > blocksReq || (blocksPerChunk > 0 && rand.nextInt(blocksReq) < blocksPerChunk)) {
 			int genHeight = getGenStartHeight(surfaceAverage, rand);
-			boolean generate = true;
 
 			BlockPos orePos = new BlockPos(pos.getXStart() + 8, genHeight, pos.getZStart() + 8);
-
-			Biome biome = world.getBiomeForCoordsBody(orePos);
-
-			if (!reqBiomeTypes.isEmpty()) {
-				for (BiomeDictionary.Type type : reqBiomeTypes) {
-					if (!BiomeDictionary.hasType(biome, type))
-						generate = false;
-				}
-			}
+			boolean generate = checkBiomes(world, orePos, biomeLeniency);
 
 			blocksPerChunk -= generate ? genVein(world, rand , orePos, surfaceAverage, caves) : 1;
 		}
