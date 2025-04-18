@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class OreGenVanilla extends OreGenAbstract {
-	public OreGenVanilla(IBlockState state, String name, int[] genRange, int[] minMaxPerChunk, boolean denseGen, int biomeLeniency, int blocks) {
-		super(state, name, genRange, minMaxPerChunk, denseGen, biomeLeniency);
+	public OreGenVanilla(IBlockState state, String name, int[] genRange, int[] minMaxPerChunk, boolean dimensionWhiteList, boolean biomeWhiteList, boolean denseGen, int biomeLeniency, int blocks) {
+		super(state, name, genRange, minMaxPerChunk, dimensionWhiteList, biomeWhiteList, denseGen, biomeLeniency);
 		blocksPerCluster = blocks;
 	}
 

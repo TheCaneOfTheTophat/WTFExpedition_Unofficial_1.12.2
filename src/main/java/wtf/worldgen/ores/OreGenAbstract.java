@@ -20,6 +20,7 @@ public abstract class OreGenAbstract {
 
 	public HashMap<BiomeDictionary.Type, Float> biomeModifier = new HashMap<>();
 	public HashSet<Integer> dimension = new HashSet<>();
+	public boolean dimensionWhiteList;
 	
 	public float maxGenRangeHeight;
 	public float minGenRangeHeight;
@@ -29,9 +30,10 @@ public abstract class OreGenAbstract {
 	public final SimplexHelper simplex;
 	public boolean genDenseOres;
 	public final ArrayList<BiomeDictionary.Type> reqBiomeTypes = new ArrayList<>();
+	public boolean biomeWhiteList;
 	public int biomeLeniency;
 	
-	public OreGenAbstract(IBlockState state, String name, int[] genRange, int[] minMaxPerChunk, boolean denseGen, int biomeLeniency) {
+	public OreGenAbstract(IBlockState state, String name, int[] genRange, int[] minMaxPerChunk, boolean dimensionWhiteList, boolean biomeWhiteList, boolean denseGen, int biomeLeniency) {
 		this.oreBlock = state;
 		this.maxGenRangeHeight = genRange[1] / 100F;
 		this.minGenRangeHeight = genRange[0] / 100F;
@@ -39,10 +41,12 @@ public abstract class OreGenAbstract {
 		this.minPerChunk = minMaxPerChunk[0];
 		genDenseOres = denseGen;
 		this.biomeLeniency = biomeLeniency;
+		this.dimensionWhiteList = dimensionWhiteList;
+		this.biomeWhiteList = biomeWhiteList;
 		this.simplex = new SimplexHelper(name, true);
 	}
 
-	public OreGenAbstract(IBlockState state, int[] genRange, int[] minMaxPerChunk, boolean denseGen, int biomeLeniency, SimplexHelper simplex) {
+	public OreGenAbstract(IBlockState state, int[] genRange, int[] minMaxPerChunk, boolean dimensionWhiteList, boolean biomeWhiteList, boolean denseGen, int biomeLeniency, SimplexHelper simplex) {
 		this.oreBlock = state;
 		this.maxGenRangeHeight = genRange[1] / 100F;
 		this.minGenRangeHeight = genRange[0] / 100F;
@@ -50,11 +54,15 @@ public abstract class OreGenAbstract {
 		this.minPerChunk = minMaxPerChunk[0];
 		genDenseOres = denseGen;
 		this.biomeLeniency = biomeLeniency;
+		this.dimensionWhiteList = dimensionWhiteList;
+		this.biomeWhiteList = biomeWhiteList;
 		this.simplex = simplex;
 	}
 
 	public final void generate(World world, Random random, ChunkPos pos, int surfaceAverage, UnsortedChunkCaves caves, ArrayList<BlockPos> water) {
-		if (this.dimension.contains(world.provider.getDimension()))
+		boolean dimensionInList = this.dimension.contains(world.provider.getDimension());
+
+		if (dimensionWhiteList == dimensionInList)
 			doOreGen(world, random, pos, surfaceAverage, caves, water);
 	}
 	
@@ -131,7 +139,9 @@ public abstract class OreGenAbstract {
 
 			for (BiomeDictionary.Type type : reqBiomeTypes) {
 				for(Biome biome : biomes) {
-					if (BiomeDictionary.hasType(biome, type))
+					boolean biomeInList = BiomeDictionary.hasType(biome, type);
+
+					if (biomeWhiteList == biomeInList)
 						valid = true;
 				}
 			}

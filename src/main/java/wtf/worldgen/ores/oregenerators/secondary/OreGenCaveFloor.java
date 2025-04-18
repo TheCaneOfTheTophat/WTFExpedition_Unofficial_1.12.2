@@ -24,8 +24,8 @@ public class OreGenCaveFloor extends OreGenAbstract {
 		floor, wall, ceiling
 	}
 	
-	public OreGenCaveFloor(OreGenAbstract vein, IBlockState state, int[] genRange, int[] minMaxPerChunk, boolean denseGen, int biomeLeniency, ArrayList<surface> list) {
-		super(state, genRange, minMaxPerChunk, denseGen, biomeLeniency, vein.simplex);
+	public OreGenCaveFloor(OreGenAbstract vein, IBlockState state, int[] genRange, int[] minMaxPerChunk, boolean denseGen, boolean dimensionWhiteList, boolean biomeWhiteList, int biomeLeniency, ArrayList<surface> list) {
+		super(state, genRange, minMaxPerChunk, dimensionWhiteList, biomeWhiteList, denseGen, biomeLeniency, vein.simplex);
 		veinType = vein;
 		surfaceList = list;
 	}

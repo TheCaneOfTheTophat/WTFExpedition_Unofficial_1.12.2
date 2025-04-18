@@ -13,8 +13,8 @@ import wtf.utilities.wrappers.UnsortedChunkCaves;
 
 public class OreGenUnderWater extends OreGenAbstract {
 
-	public OreGenUnderWater(OreGenAbstract vein, IBlockState state, int[] genRange, int[] minMaxPerChunk, boolean denseGen, int biomeLeniency) {
-		super(state, genRange, minMaxPerChunk, denseGen, biomeLeniency, vein.simplex);
+	public OreGenUnderWater(OreGenAbstract vein, IBlockState state, int[] genRange, int[] minMaxPerChunk, boolean dimensionWhiteList, boolean biomeWhiteList, boolean denseGen, int biomeLeniency) {
+		super(state, genRange, minMaxPerChunk, dimensionWhiteList, biomeWhiteList, denseGen, biomeLeniency, vein.simplex);
 		veinType = vein;
 	}
 

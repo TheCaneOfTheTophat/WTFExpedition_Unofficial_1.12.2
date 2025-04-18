@@ -568,6 +568,9 @@ public class WTFContent {
 		
 		int[] genRange = {oreEntry.getSurfaceHeightMinPercentage(), oreEntry.getSurfaceHeightMaxPercentage()};
 		int[] orePerChunk = {oreEntry.getMinAmountPerChunk(), oreEntry.getMaxAmountPerChunk()};
+
+		boolean biomeWhitelist = oreEntry.isBiomeTypeListWhitelist();
+		boolean dimensionWhitelist = oreEntry.isDimensionListWhitelist();
 		
 		boolean denseBlock = oreEntry.usesDenseBlocks();
 
@@ -588,23 +591,23 @@ public class WTFContent {
 				if (settings.floor)
 					surfaceList.add(OreGenCaveFloor.surface.floor);
 				
-				return new OreGenCaveFloor(primaryGen, oreState, genRange, orePerChunk, denseBlock, biomeLeniency, surfaceList);
+				return new OreGenCaveFloor(primaryGen, oreState, genRange, orePerChunk, dimensionWhitelist, biomeWhitelist, denseBlock, biomeLeniency, surfaceList);
 			}
 
 			if (secondary.equals("underwater"))
-				return new OreGenUnderWater(primaryGen, oreState, genRange, orePerChunk, denseBlock, biomeLeniency);
+				return new OreGenUnderWater(primaryGen, oreState, genRange, orePerChunk, dimensionWhitelist, biomeWhitelist, denseBlock, biomeLeniency);
 		} else {
             switch (primary) {
                 case "cloud":
-                    return new OreGenCloud(oreState, oreEntry.getName(), genRange, orePerChunk, denseBlock, biomeLeniency, settings.cloudDiameter);
+                    return new OreGenCloud(oreState, oreEntry.getName(), genRange, orePerChunk, dimensionWhitelist, biomeWhitelist, denseBlock, biomeLeniency, settings.cloudDiameter);
                 case "cluster":
-                    return new OreGenCluster(oreState, oreEntry.getName(), genRange, orePerChunk, denseBlock, biomeLeniency);
+                    return new OreGenCluster(oreState, oreEntry.getName(), genRange, orePerChunk, dimensionWhitelist, biomeWhitelist, denseBlock, biomeLeniency);
                 case "single":
-                    return new OreGenSingle(oreState, oreEntry.getName(), genRange, orePerChunk, denseBlock, biomeLeniency);
+                    return new OreGenSingle(oreState, oreEntry.getName(), genRange, orePerChunk, dimensionWhitelist, biomeWhitelist, denseBlock, biomeLeniency);
                 case "vanilla":
-                    return new OreGenVanilla(oreState, oreEntry.getName(), genRange, orePerChunk, denseBlock, biomeLeniency, settings.blocksPerCluster);
+                    return new OreGenVanilla(oreState, oreEntry.getName(), genRange, orePerChunk, dimensionWhitelist, biomeWhitelist, denseBlock, biomeLeniency, settings.blocksPerCluster);
                 case "vein":
-                    return new OreGenVein(oreState, oreEntry.getName(), genRange, orePerChunk, new int[]{settings.veinLength, settings.veinWidth, settings.veinVerticalThickness}, (float) settings.veinPitchAverage, denseBlock, biomeLeniency);
+                    return new OreGenVein(oreState, oreEntry.getName(), genRange, orePerChunk, dimensionWhitelist, biomeWhitelist, new int[]{settings.veinLength, settings.veinWidth, settings.veinVerticalThickness}, (float) settings.veinPitchAverage, denseBlock, biomeLeniency);
             }
         }
 
