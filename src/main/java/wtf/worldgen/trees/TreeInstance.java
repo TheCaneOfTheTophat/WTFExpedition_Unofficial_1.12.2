@@ -1,12 +1,9 @@
 package wtf.worldgen.trees;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
@@ -15,6 +12,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
+import wtf.WTFExpedition;
+import wtf.blocks.BlockFoxfire;
 import wtf.worldgen.trees.types.AbstractTreeType;
 
 import static wtf.worldgen.GenMethods.*;
@@ -74,9 +73,6 @@ public class TreeInstance {
 		else
 			rootLevel = tree.airGenHeight; // +1 because generation height is cut off at > airGenHeight
 	}
-
-	Block[] groundArray = {Blocks.DIRT, Blocks.GRASS, Blocks.GRAVEL};
-	public HashSet<Block> groundBlocks = new HashSet<>(Arrays.asList(groundArray));
 	
 	public void setTrunk(BlockPos pos) {
 		trunkBlocks.put(pos, type.wood);
@@ -111,8 +107,10 @@ public class TreeInstance {
 		masterMap.putAll(rootBlocks);
 		masterMap.putAll(trunkBlocks);
 		
-		for (Entry<BlockPos, IBlockState> entry : masterMap.entrySet())
-			replace(world, entry.getKey(), entry.getValue());
+		for (Entry<BlockPos, IBlockState> entry : masterMap.entrySet()) {
+			if(replace(world, entry.getKey(), entry.getValue()) && entry.getValue().getBlock() instanceof BlockFoxfire)
+				WTFExpedition.wtfLog.info("Foxfire at " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
+		}
 	}
 
 	public boolean inTrunk(BlockPos pos) {

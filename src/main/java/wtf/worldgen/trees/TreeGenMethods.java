@@ -159,8 +159,6 @@ public class TreeGenMethods {
 		}
 		//end branch node loop
 	}
-
-	static int airHash = Blocks.AIR.hashCode();
 	
 	public static void genMainRoots(TreeInstance tree) {
 		double offset = tree.random.nextDouble() * PIx2;
@@ -175,7 +173,7 @@ public class TreeGenMethods {
 				double sinY = Math.sin(angleDown);
 				double vecX = Math.cos(offSetForBranch) * sinY;
 				double vecZ = Math.sin(offSetForBranch) * sinY;
-				Root root = new Root(tree, tree.oriX, tree.y+tree.rootLevel + tree.type.airGenHeight, tree.oriZ, vecX, vecY, vecZ, tree.type.getRootLength(tree.trunkHeight));
+				Root root = new Root(tree, tree.oriX, tree.y + tree.rootLevel + tree.type.airGenHeight, tree.oriZ, vecX, vecY, vecZ, tree.type.getRootLength(tree.trunkHeight));
 
 				while (tree.inTrunk(root.lateralNext())) {
 					//just incrementing out with lateralNext(), no need to do anything here
@@ -185,26 +183,25 @@ public class TreeGenMethods {
 					BlockPos pos = root.pos();
 
 					tree.setRoot(pos);
-					if (tree.type.rootWall) {
-						for (int loop = 1; GenMethods.isNonSolid(tree.world.getBlockState(pos.down(loop))) && loop > tree.type.airGenHeight+1; loop++)
+					if (tree.type.rootWall)
+						for (int loop = 1; GenMethods.isNonSolid(tree.world.getBlockState(pos.down(loop))) && loop > tree.type.airGenHeight + 1; loop++)
 							tree.setRoot(pos.down(loop));
-					} else {
-						if (tree.random.nextFloat() < tree.type.rootDecoRate) {
-							if (tree.random.nextBoolean()){
-								BlockPos decoPos = pos.down();
-								if (tree.world.getBlockState(decoPos).getBlock().hashCode() == airHash)
-									tree.setDeco(pos.down(), tree.type.decoDown);
-							} else {
-								BlockPos decoPos = pos.up();
-								if (tree.world.getBlockState(decoPos).getBlock().hashCode() == airHash)
-									tree.setDeco(pos.up(), tree.type.decoUp);
-							}
+
+					if (tree.random.nextFloat() < tree.type.rootDecoRate) {
+						if (tree.random.nextBoolean() && tree.type.decoDown != null) {
+							BlockPos decoPos = pos.down();
+							if (tree.world.isAirBlock(decoPos))
+								tree.setDeco(decoPos, tree.type.decoDown);
+						} else if(tree.type.decoUp != null) {
+							BlockPos decoPos = pos.up();
+							if (tree.world.isAirBlock(decoPos))
+								tree.setDeco(decoPos, tree.type.decoUp);
 						}
 					}
 
 					if (canReplaceRoot(tree, pos.down()))
 						root.growDown(tree);
-					else if (!tree.groundBlocks.contains(tree.world.getBlockState(pos.down())))
+					else if (!BlockSets.groundMaterial.contains(tree.world.getBlockState(pos.down()).getMaterial()))
 						root.growLateral();
 					else
 						root.next();
@@ -233,7 +230,6 @@ public class TreeGenMethods {
 					tree.setBranch(pos, branch.axis);
 					break;
 				case SPRUCE:
-					double remaining = branch.length - branch.count;
 					tree.type.doLeafNode(tree, branch, pos);
 					break;
 				default:

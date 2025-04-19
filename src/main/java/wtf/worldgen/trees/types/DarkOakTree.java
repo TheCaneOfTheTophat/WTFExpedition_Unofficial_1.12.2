@@ -23,7 +23,7 @@ public class DarkOakTree extends AbstractTreeType {
 		this.leafRad = 3;
 		this.leafYMax = 3;
 		this.leafYMin = -2;
-		this.rootDecoRate = 0.02F;
+		this.rootDecoRate = 0.01F;
 		this.decoDown = WTFContent.foxfire.getDefaultState().withProperty(BlockFoxfire.HANGING, true);
 		this.decoUp = WTFContent.foxfire.getDefaultState();
 		this.rootInitialAngle = 1.35;
