@@ -26,7 +26,7 @@ public class BlockPuddle extends Block {
 
 	protected static final AxisAlignedBB height1 = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D);
 
-	public static SoundType puddle = new SoundType(1.0F, 1.0F, SoundEvents.ENTITY_GENERIC_SPLASH, SoundEvents.BLOCK_SLIME_STEP, SoundEvents.ENTITY_GENERIC_SPLASH, SoundEvents.ENTITY_PLAYER_SPLASH, SoundEvents.ENTITY_GENERIC_SPLASH);;
+	public static SoundType puddle = new SoundType(1.0F, 1.0F, SoundEvents.ENTITY_GENERIC_SPLASH, SoundEvents.BLOCK_SLIME_STEP, SoundEvents.ENTITY_GENERIC_SPLASH, SoundEvents.ENTITY_PLAYER_SPLASH, SoundEvents.ENTITY_GENERIC_SPLASH);
 	
 	public BlockPuddle() {
 		super(Material.SPONGE);
@@ -104,7 +104,7 @@ public class BlockPuddle extends Block {
 
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-        return blockAccess.getBlockState(pos.offset(side)).getMaterial() == this.blockMaterial ? false : (side == EnumFacing.UP ? true : super.shouldSideBeRendered(blockState, blockAccess, pos, side));
+        return blockAccess.getBlockState(pos.offset(side)).getMaterial() != this.blockMaterial && (side == EnumFacing.UP || super.shouldSideBeRendered(blockState, blockAccess, pos, side));
     }
 
     public Vec3d modifyAcceleration(World worldIn, BlockPos pos, Entity entityIn, Vec3d motion) {

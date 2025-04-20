@@ -324,6 +324,8 @@ public class JSONLoader {
                     int percentageMineSpeedModifier = 100;
                     int percentageStability = 100;
                     HashMap<Modifier, String> modifierMap = new HashMap<>();
+                    boolean irreplaceable = false;
+                    boolean noAddons = false;
 
                     if(object.has("fracturedBlockId"))
                         fracturedBlockId = object.get("fracturedBlockId").getAsString();
@@ -371,7 +373,13 @@ public class JSONLoader {
                     if(object.has("speleothems"))
                         speleothems = object.get("speleothems").getAsBoolean();
 
-                    BlockEntry entryBlock = new BlockEntry(blockId, fracturedBlockId, name, texture, fracturesFirstWhenMined, percentageMineSpeedModifier, percentageStability, modifierMap, speleothems);
+                    if(object.has("irreplaceable"))
+                        irreplaceable = object.get("irreplaceable").getAsBoolean();
+
+                    if(object.has("noAddons"))
+                        noAddons = object.get("noAddons").getAsBoolean();
+
+                    BlockEntry entryBlock = new BlockEntry(blockId, fracturedBlockId, name, texture, fracturesFirstWhenMined, percentageMineSpeedModifier, percentageStability, modifierMap, speleothems, irreplaceable, noAddons);
 
                     blockEntries.add(entryBlock);
                     identifierToBlockEntry.put(name, entryBlock);

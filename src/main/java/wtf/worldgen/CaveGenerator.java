@@ -25,11 +25,11 @@ public class CaveGenerator {
 				caveType.generateFloor(world, rand, position.getFloorPos(), depth);
 				caveType.generateCeiling(world, rand, position.getCeilingPos(), depth);
 
-				for (BlockPos wallpos : position.wall)
-					caveType.generateWall(world, rand, wallpos, depth, wallpos.getY() - position.floor);
+				for (BlockPos wallPos : position.wall)
+					caveType.generateWall(world, rand, wallPos, depth, wallPos.getY() - position.floor);
 
-				for (AdjPos adjpos : position.adj)
-					caveType.generateAdjacentWall(world, rand, adjpos, depth, adjpos.getY() - position.floor);
+				for (AdjPos adjPos : position.adj)
+					caveType.generateAdjacentWall(world, rand, adjPos, depth, adjPos.getY() - position.floor);
 
 				if (rand.nextInt(100) < caveType.ceilingAddonChance + (depth) * 5)
 					caveType.generateCeilingAddons(world, rand, position.getCeilingPos().down(), depth);
@@ -38,8 +38,8 @@ public class CaveGenerator {
 					caveType.generateFloorAddons(world, rand, position.getFloorPos().up(), depth);
 
 				if (caveType.genAir)
-					for (BlockPos airpos : position.getAirPos())
-						caveType.generateAir(world, rand, airpos, depth);
+					for (BlockPos airPos : position.getAirPos())
+						caveType.generateAir(world, rand, airPos, depth);
 			}
 		}
 	}	

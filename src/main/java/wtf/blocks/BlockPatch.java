@@ -23,7 +23,7 @@ public class BlockPatch extends BlockFalling {
 
 	protected static final AxisAlignedBB height1 = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D);
 
-	private IBlockState state;
+	private final IBlockState state;
 
 	public BlockPatch(IBlockState state) {
 		super(state.getMaterial());
@@ -95,7 +95,7 @@ public class BlockPatch extends BlockFalling {
 
 	@Override
 	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
-		if (layer == layer.TRANSLUCENT || layer == layer.SOLID)
+		if (layer == BlockRenderLayer.TRANSLUCENT || layer == BlockRenderLayer.SOLID)
 			return true;
 
 		return super.canRenderInLayer(state, layer);

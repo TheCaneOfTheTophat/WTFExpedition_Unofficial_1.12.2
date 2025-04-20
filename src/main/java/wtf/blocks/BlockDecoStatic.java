@@ -13,22 +13,12 @@ import wtf.enums.StaticDecoType;
 import wtf.gameplay.fracturing.EntityFracture;
 
 public class BlockDecoStatic extends AbstractBlockDerivative implements IDeco {
-	private final StaticDecoType type;
 
-	public static ArrayList<BlockDecoStatic> crackedList = new ArrayList<>();
+	private final StaticDecoType type;
 
 	public BlockDecoStatic(IBlockState state, StaticDecoType type) {
 		super(state, state);
 		this.type = type;
-//		if (BlockSets.fallingBlocks.containsKey(this.parentBackground)){
-//			BlockSets.fallingBlocks.put(this, BlockSets.fallingBlocks.get(this.parentBackground));
-//		}
-//
-//		//BlockSets.blockMiningSpeed
-//		if (BlockSets.fallingBlocks.containsKey(state.getBlock())){
-//			BlockSets.fallingBlocks.put(this, BlockSets.fallingBlocks.get(state.getBlock()));
-//		}
-//		BlockSets.ReplaceHashset.add(this);
 	//	OreDictionary.registerOre("moss", new ItemStack(this, 1, 0));
 	}
 

@@ -310,9 +310,14 @@ public class WTFContent {
 			if(entry.getPercentageMineSpeedModifier() != 1)
 				BlockSets.miningSpeedModifierMap.put(blockState, entry.getPercentageMineSpeedModifier());
 
-
 			if(entry.getPercentageStability() != 100)
 				BlockSets.percentageStabilityMap.put(blockState, entry.getPercentageStability());
+
+			if(entry.isIrreplaceable())
+				BlockSets.irreplaceable.add(blockState);
+
+			if(entry.hasNoAddons())
+				BlockSets.noAddons.add(blockState);
 
 			// SPELEOTHEMS
 			if(entry.hasSpeleothems()) {

@@ -19,8 +19,10 @@ public class BlockEntry {
     private final HashMap<Modifier, String> modifiers;
 
     private final boolean speleothems;
+    private final boolean irreplaceable;
+    private final boolean noAddons;
 
-    public BlockEntry(String blockId, String fracturedBlockId, String name, String texture, boolean fracturesFirstWhenMined, int percentageMineSpeedModifier, int percentageStability, HashMap<Modifier, String> modifiers, boolean speleothems) {
+    public BlockEntry(String blockId, String fracturedBlockId, String name, String texture, boolean fracturesFirstWhenMined, int percentageMineSpeedModifier, int percentageStability, HashMap<Modifier, String> modifiers, boolean speleothems, boolean irreplaceable, boolean noAddons) {
         this.blockId = blockId;
         this.fracturedBlockId = fracturedBlockId;
         this.name = name;
@@ -30,6 +32,8 @@ public class BlockEntry {
         this.modifiers = modifiers;
         this.percentageMineSpeedModifier = percentageMineSpeedModifier;
         this.percentageStability = percentageStability;
+        this.irreplaceable = irreplaceable;
+        this.noAddons = noAddons;
     }
 
     public String getBlockId() {
@@ -66,5 +70,13 @@ public class BlockEntry {
 
     public boolean hasSpeleothems() {
         return speleothems;
+    }
+
+    public boolean isIrreplaceable() {
+        return irreplaceable;
+    }
+
+    public boolean hasNoAddons() {
+        return noAddons;
     }
 }

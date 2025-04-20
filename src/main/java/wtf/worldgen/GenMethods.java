@@ -77,6 +77,9 @@ public class GenMethods {
         IBlockState prevState = world.getBlockState(pos);
         Block prevBlock = prevState.getBlock();
 
+        if(BlockSets.irreplaceable.contains(prevState))
+            return false;
+
         if(!state.isFullBlock() && isFluid(prevState))
             return false;
 
@@ -114,7 +117,12 @@ public class GenMethods {
     }
 
     public static boolean setFloorAddon(World world, BlockPos pos, Modifier modifier) {
-        IBlockState modState = BlockSets.blockTransformer.get(Pair.of(world.getBlockState(pos.down()), modifier));
+        IBlockState floorState = world.getBlockState(pos.down());
+
+        if(BlockSets.noAddons.contains(floorState))
+            return false;
+
+        IBlockState modState = BlockSets.blockTransformer.get(Pair.of(floorState, modifier));
 
         if (modState != null && world.isAirBlock(pos))
             return replace(world, pos, modState);
@@ -123,7 +131,12 @@ public class GenMethods {
     }
 
     public static boolean setCeilingAddon(World world, BlockPos pos, Modifier modifier) {
-        IBlockState modState = BlockSets.blockTransformer.get(Pair.of(world.getBlockState(pos.up()), modifier));
+        IBlockState ceilingState = world.getBlockState(pos.up());
+
+        if(BlockSets.noAddons.contains(ceilingState))
+            return false;
+
+        IBlockState modState = BlockSets.blockTransformer.get(Pair.of(ceilingState, modifier));
 
         if (modState != null && world.isAirBlock(pos))
             return replace(world, pos, modState);

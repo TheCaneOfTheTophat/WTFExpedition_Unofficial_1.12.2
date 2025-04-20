@@ -39,8 +39,6 @@ public abstract class AbstractBlockDerivativeFalling extends BlockFalling {
      * backState is used to determine the properties of the block
      * foreState is used to determine a block's harvesting and drops
      * they can be the same block, for simple blocks, or more different for things like ores, with an ore and a background stone
-     * @param backState
-     * @param foreState
      */
 
     public AbstractBlockDerivativeFalling(IBlockState backState, IBlockState foreState) {

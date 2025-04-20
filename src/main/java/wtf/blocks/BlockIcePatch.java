@@ -77,12 +77,7 @@ public class BlockIcePatch extends BlockBreakable {
 		return false;
 	}
 
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
-	}
-
-	@Override
+    @Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return height1;
 	}

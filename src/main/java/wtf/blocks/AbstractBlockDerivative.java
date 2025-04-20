@@ -39,8 +39,6 @@ public abstract class AbstractBlockDerivative extends Block {
 	 * backState is used to determine the properties of the block
 	 * foreState is used to determine a block's harvesting and drops
 	 * they can be the same block, for simple blocks, or more different for things like ores, with an ore and a background stone
-	 * @param backState
-	 * @param foreState
 	 */
 
 	public AbstractBlockDerivative(IBlockState backState, IBlockState foreState) {
@@ -75,7 +73,7 @@ public abstract class AbstractBlockDerivative extends Block {
         player.addExhaustion(0.025F);
 
         if (this.canSilkHarvest(worldIn, pos, state, player) && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0) {
-            List<ItemStack> items = new ArrayList<ItemStack>();
+            List<ItemStack> items = new ArrayList<>();
             int meta = this.parentForeground.getBlock().getMetaFromState(this.parentForeground);
             ItemStack itemstack = new ItemStack(this.parentForeground.getBlock(),1, meta);
 

@@ -37,12 +37,7 @@ public class BlockFoxfire extends BlockBush {
 		this.setDefaultState(this.blockState.getBaseState().withProperty(HANGING, false).withProperty(ACTIVE, false));
 	}
 
-	@Override
-	public int damageDropped(IBlockState state) {
-		return 0;
-	}
-
-	@Override
+    @Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		worldIn.scheduleBlockUpdate(pos, this, 0, 10);
 	}
@@ -144,11 +139,10 @@ public class BlockFoxfire extends BlockBush {
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		switch (meta) {
-			case 0: return getDefaultState();
-			case 1: return getDefaultState().withProperty(HANGING, true);
+            case 1: return getDefaultState().withProperty(HANGING, true);
 			case 2: return getDefaultState().withProperty(ACTIVE, true);
 			case 3: return getDefaultState().withProperty(ACTIVE, true).withProperty(HANGING, true);
-			default : return null;
+			default: return getDefaultState();
 		}
 	}
 

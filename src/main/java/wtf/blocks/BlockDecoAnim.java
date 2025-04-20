@@ -19,6 +19,7 @@ import wtf.WTFExpedition;
 import wtf.enums.AnimatedDecoType;
 
 public class BlockDecoAnim extends AbstractBlockDerivative implements IDeco {
+
 	private final AnimatedDecoType type;
 
 	public static final PropertyBool FAST = PropertyBool.create("fast");
@@ -42,8 +43,7 @@ public class BlockDecoAnim extends AbstractBlockDerivative implements IDeco {
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		IBlockState state = this.getDefaultState().withProperty(FAST, meta != 0);
-		return state;
+        return this.getDefaultState().withProperty(FAST, meta != 0);
 	}
 
 	@Override

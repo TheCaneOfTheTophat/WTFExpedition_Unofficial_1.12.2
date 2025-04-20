@@ -60,10 +60,16 @@ public class BlockIcicle extends AbstractBlockDerivative {
     	if(!canBlockStay(worldIn, pos, state))
 			worldIn.destroyBlock(pos, true);
     }
+
+	@Override
+	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+		if(!canBlockStay(worldIn, pos, state))
+			worldIn.destroyBlock(pos, true);
+	}
 	
 	public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
-		for(BlockPos relpos : BlockPos.getAllInBoxMutable(pos.add(-1, -2, -1), pos.add(1, 1, 1)))
-			if(BlockSets.meltBlocks.contains(world.getBlockState(relpos).getBlock()))
+		for(BlockPos relPos : BlockPos.getAllInBoxMutable(pos.add(-1, -2, -1), pos.add(1, 1, 1)))
+			if(BlockSets.meltBlocks.contains(world.getBlockState(relPos).getBlock()))
 				return false;
 
 		if (state.getBlock() == this)
@@ -93,10 +99,8 @@ public class BlockIcicle extends AbstractBlockDerivative {
 	}
 
 	@Override
-	@Deprecated
-	@Nullable
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-		return null;
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+		return state.getValue(TYPE).boundingBox;
 	}
 
 	@Override
