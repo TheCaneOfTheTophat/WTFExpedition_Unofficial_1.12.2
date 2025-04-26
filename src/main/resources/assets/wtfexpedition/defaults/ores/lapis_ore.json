@@ -3,20 +3,22 @@
     "blockId": "minecraft:lapis_ore@0",
     "name": "lapis_ore",
     "stoneList": ["stone"],
-    "minAmountPerChunk": 1,
-    "maxAmountPerChunk": 5,
-    "surfaceHeightMinPercentage": 1,
-    "surfaceHeightMaxPercentage": 50,
-    "dimensionList": [0],
     "useDenseBlock": true,
     "overlayPath": "wtfexpedition:overlays/lapis_ore",
-    "veinPercentDensity": 100,
-    "percentGenerationPerBiomeType": {
-      "ocean": 150,
-      "dry": 50
-    },
-    "generation_settings": {
-      "primaryGenerationType": "cluster"
-    }
+    "generation": [
+      {
+        "minAmountPerChunk": 1,
+        "maxAmountPerChunk": 5,
+        "surfaceHeightMinPercentage": 1,
+        "surfaceHeightMaxPercentage": 50,
+        "dimensionList": [0],
+        "veinPercentDensity": 100,
+        "percentGenerationPerBiomeType": {
+          "ocean": 150,
+          "dry": 50
+        },
+        "primaryGenerationType": "cluster"
+      }
+    ]
   }
 ]

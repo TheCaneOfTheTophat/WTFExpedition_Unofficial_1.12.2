@@ -259,20 +259,13 @@ public class WTFContent {
 				oreState = new DummyModifierBlock(modifier).getDefaultState();
 			}
 
-			OreGenAbstract generator = getOreGenerator(oreState, entry, true);
+			for(OreGeneratorSettings generatorSettings : entry.getGenerators()) {
+				OreGenAbstract generator = getOreGenerator(oreState, entry, generatorSettings, true);
 
-			if(generator != null) {
-				generator.dimension.addAll(entry.getDimensionList());
-				generator.setVeinDensity(entry.getVeinPercentDensity() / 100F);
-
-				for(Map.Entry<String, Integer> mapentry : entry.getPercentGenerationPerBiomeType().entrySet())
-					generator.biomeModifier.put(BiomeDictionary.Type.getType(mapentry.getKey()), mapentry.getValue() / 100F);
-
-				for(String biome : entry.getBiomeTypeList())
-					generator.reqBiomeTypes.add(BiomeDictionary.Type.getType(biome));
-
-				WorldGenListener.oreGenRegister.add(generator);
-				VanillaOreGenCatcher.vanillaCanceler(oreState);
+				if (generator != null) {
+					WorldGenListener.oreGenRegister.add(generator);
+					VanillaOreGenCatcher.vanillaCanceler(oreState);
+				}
 			}
 		}
 
@@ -565,24 +558,22 @@ public class WTFContent {
 		return EntityEntryBuilder.create().id(rl, entityCounter).entity(entityClass).name(rl.toString()).tracker(64, 1, true).egg(entityCounter * 16, entityCounter * 22).build();
 	}
 
-	public static OreGenAbstract getOreGenerator(IBlockState oreState, OreEntry oreEntry, boolean getSecondary) {
-		OreGeneratorSettings settings = oreEntry.getSettings();
-		
+	public static OreGenAbstract getOreGenerator(IBlockState oreState, OreEntry oreEntry, OreGeneratorSettings settings, boolean getSecondary) {
 		String primary = settings.primaryGenerationType;
 		String secondary = settings.secondaryGenerationType;
 		
-		int[] genRange = {oreEntry.getSurfaceHeightMinPercentage(), oreEntry.getSurfaceHeightMaxPercentage()};
-		int[] orePerChunk = {oreEntry.getMinAmountPerChunk(), oreEntry.getMaxAmountPerChunk()};
+		int[] genRange = {settings.surfaceHeightMinPercentage, settings.surfaceHeightMaxPercentage};
+		int[] orePerChunk = {settings.minAmountPerChunk, settings.maxAmountPerChunk};
 
-		boolean biomeWhitelist = oreEntry.isBiomeTypeListWhitelist();
-		boolean dimensionWhitelist = oreEntry.isDimensionListWhitelist();
+		boolean biomeWhitelist = settings.biomeTypeListWhitelist;
+		boolean dimensionWhitelist = settings.dimensionListWhitelist;
 		
 		boolean denseBlock = oreEntry.usesDenseBlocks();
 
-		int biomeLeniency = oreEntry.getBiomeLeniency();
+		OreGenAbstract generator = null;
 		
 		if(getSecondary && !secondary.isEmpty()) {
-			OreGenAbstract primaryGen = getOreGenerator(oreState, oreEntry, false);
+			OreGenAbstract primaryGen = getOreGenerator(oreState, oreEntry, settings, false);
 			
 			if (secondary.equals("cave")) {
 				ArrayList<OreGenCaveFloor.surface> surfaceList = new ArrayList<>();
@@ -595,27 +586,49 @@ public class WTFContent {
 
 				if (settings.floor)
 					surfaceList.add(OreGenCaveFloor.surface.floor);
-				
-				return new OreGenCaveFloor(primaryGen, oreState, genRange, orePerChunk, dimensionWhitelist, biomeWhitelist, denseBlock, biomeLeniency, surfaceList);
+
+				generator = new OreGenCaveFloor(primaryGen, oreState, settings.name, surfaceList);
 			}
 
 			if (secondary.equals("underwater"))
-				return new OreGenUnderWater(primaryGen, oreState, genRange, orePerChunk, dimensionWhitelist, biomeWhitelist, denseBlock, biomeLeniency);
+				generator = new OreGenUnderWater(primaryGen, oreState, settings.name);
 		} else {
             switch (primary) {
                 case "cloud":
-                    return new OreGenCloud(oreState, oreEntry.getName(), genRange, orePerChunk, dimensionWhitelist, biomeWhitelist, denseBlock, biomeLeniency, settings.cloudDiameter);
+					generator = new OreGenCloud(oreState, settings.name, settings.cloudDiameter);
+					break;
                 case "cluster":
-                    return new OreGenCluster(oreState, oreEntry.getName(), genRange, orePerChunk, dimensionWhitelist, biomeWhitelist, denseBlock, biomeLeniency);
+					generator = new OreGenCluster(oreState, settings.name);
+					break;
                 case "single":
-                    return new OreGenSingle(oreState, oreEntry.getName(), genRange, orePerChunk, dimensionWhitelist, biomeWhitelist, denseBlock, biomeLeniency);
+					generator = new OreGenSingle(oreState, settings.name);
+					break;
                 case "vanilla":
-                    return new OreGenVanilla(oreState, oreEntry.getName(), genRange, orePerChunk, dimensionWhitelist, biomeWhitelist, denseBlock, biomeLeniency, settings.blocksPerCluster);
+					generator = new OreGenVanilla(oreState, settings.name, settings.blocksPerCluster);
+					break;
                 case "vein":
-                    return new OreGenVein(oreState, oreEntry.getName(), genRange, orePerChunk, dimensionWhitelist, biomeWhitelist, new int[]{settings.veinLength, settings.veinWidth, settings.veinVerticalThickness}, (float) settings.veinPitchAverage, denseBlock, biomeLeniency);
+					generator = new OreGenVein(oreState, settings.name, new int[]{settings.veinLength, settings.veinWidth, settings.veinVerticalThickness}, (float) settings.veinPitchAverage);
+					break;
             }
         }
 
-		return null;
+		if(generator != null) {
+			generator.setGenRange(genRange);
+			generator.setMinMaxPerChunk(orePerChunk);
+			generator.setBiomeWhiteList(biomeWhitelist);
+			generator.setDimensionWhiteList(dimensionWhitelist);
+			generator.setGenDenseOres(denseBlock);
+
+			generator.dimension.addAll(settings.dimensionList);
+			generator.setVeinDensity(settings.veinPercentDensity / 100F);
+
+			for (Map.Entry<String, Integer> mapentry : settings.percentGenerationPerBiomeType.entrySet())
+				generator.biomeModifier.put(BiomeDictionary.Type.getType(mapentry.getKey()), mapentry.getValue() / 100F);
+
+			for (String biome : settings.biomeTypeList)
+				generator.reqBiomeTypes.add(BiomeDictionary.Type.getType(biome));
+		}
+
+		return generator;
 	}
 }

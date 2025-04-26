@@ -13,6 +13,7 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 import wtf.config.WTFExpeditionConfig;
 import wtf.utilities.simplex.SimplexHelper;
 import wtf.utilities.wrappers.UnsortedChunkCaves;
+import wtf.worldgen.WorldGenListener;
 
 public abstract class OreGenAbstract {
 
@@ -33,30 +34,14 @@ public abstract class OreGenAbstract {
 	public boolean biomeWhiteList;
 	public int biomeLeniency;
 	
-	public OreGenAbstract(IBlockState state, String name, int[] genRange, int[] minMaxPerChunk, boolean dimensionWhiteList, boolean biomeWhiteList, boolean denseGen, int biomeLeniency) {
+	public OreGenAbstract(IBlockState state, String name) {
 		this.oreBlock = state;
-		this.maxGenRangeHeight = genRange[1] / 100F;
-		this.minGenRangeHeight = genRange[0] / 100F;
-		this.maxPerChunk = minMaxPerChunk[1];
-		this.minPerChunk = minMaxPerChunk[0];
-		genDenseOres = denseGen;
-		this.biomeLeniency = biomeLeniency;
-		this.dimensionWhiteList = dimensionWhiteList;
-		this.biomeWhiteList = biomeWhiteList;
-		this.simplex = new SimplexHelper(name, true);
-	}
 
-	public OreGenAbstract(IBlockState state, int[] genRange, int[] minMaxPerChunk, boolean dimensionWhiteList, boolean biomeWhiteList, boolean denseGen, int biomeLeniency, SimplexHelper simplex) {
-		this.oreBlock = state;
-		this.maxGenRangeHeight = genRange[1] / 100F;
-		this.minGenRangeHeight = genRange[0] / 100F;
-		this.maxPerChunk = minMaxPerChunk[1];
-		this.minPerChunk = minMaxPerChunk[0];
-		genDenseOres = denseGen;
-		this.biomeLeniency = biomeLeniency;
-		this.dimensionWhiteList = dimensionWhiteList;
-		this.biomeWhiteList = biomeWhiteList;
-		this.simplex = simplex;
+		if(WorldGenListener.oreSimplexMap.get(name) == null) {
+			this.simplex = new SimplexHelper(name, true);
+			WorldGenListener.oreSimplexMap.put(name, this.simplex);
+		} else
+			this.simplex = WorldGenListener.oreSimplexMap.get(name);
 	}
 
 	public final void generate(World world, Random random, ChunkPos pos, int surfaceAverage, UnsortedChunkCaves caves, ArrayList<BlockPos> water) {
@@ -119,10 +104,6 @@ public abstract class OreGenAbstract {
 		return 1;
 	}
 
-	public void setVeinDensity(float density) {
-		this.veinDensity = density;
-	}
-
 	public boolean checkBiomes(World world, BlockPos pos, int biomeLeniency) {
 		boolean valid = true;
 
@@ -148,6 +129,36 @@ public abstract class OreGenAbstract {
 		}
 
 		return valid;
+	}
+
+	public void setVeinDensity(float density) {
+		this.veinDensity = density;
+	}
+
+	public void setGenRange(int[] genRange) {
+		this.maxGenRangeHeight = genRange[1] / 100F;
+		this.minGenRangeHeight = genRange[0] / 100F;
+	}
+
+	public void setMinMaxPerChunk(int[] minMaxPerChunk) {
+		this.maxPerChunk = minMaxPerChunk[1];
+		this.minPerChunk = minMaxPerChunk[0];
+	}
+
+	public void setDimensionWhiteList(boolean whiteList) {
+		this.dimensionWhiteList = whiteList;
+	}
+
+	public void setBiomeWhiteList(boolean whiteList) {
+		this.biomeWhiteList = whiteList;
+	}
+
+	public void setGenDenseOres(boolean denseOres) {
+		this.genDenseOres = denseOres;
+	}
+
+	public void setBiomeLeniency(int biomeLeniency) {
+		this.biomeLeniency = biomeLeniency;
 	}
 }
 

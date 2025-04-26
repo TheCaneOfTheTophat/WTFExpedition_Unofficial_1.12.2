@@ -3,20 +3,22 @@
     "blockId": "wtfexpedition:nitre_ore@0",
     "name": "nitre_ore",
     "stoneList": ["stone"],
-    "minAmountPerChunk": -10,
-    "maxAmountPerChunk": 10,
-    "surfaceHeightMinPercentage": 15,
-    "surfaceHeightMaxPercentage": 95,
-    "dimensionList": [0],
     "useDenseBlock": true,
     "overlayPath": "wtfexpedition:overlays/nitre_ore",
-    "veinPercentDensity": 100,
-    "generation_settings": {
-      "primaryGenerationType": "single",
-      "secondaryGenerationType": "cave",
-      "cave_generation": {
-        "floor": true
+    "generation": [
+      {
+        "minAmountPerChunk": -10,
+        "maxAmountPerChunk": 10,
+        "surfaceHeightMinPercentage": 15,
+        "surfaceHeightMaxPercentage": 95,
+        "dimensionList": [0],
+        "veinPercentDensity": 100,
+        "primaryGenerationType": "single",
+        "secondaryGenerationType": "cave",
+        "cave_generation": {
+          "floor": true
+        }
       }
-    }
+    ]
   }
 ]

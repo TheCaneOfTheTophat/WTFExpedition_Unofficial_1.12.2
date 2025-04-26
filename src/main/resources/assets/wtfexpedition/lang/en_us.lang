@@ -62,9 +62,6 @@ tile.wtfexpedition:terracotta_patch_stained.15.name=Black Terracotta Patch
 
 tile.wtfexpedition:puddle.name=Puddle
 
-tile.wtfexpedition:natural_sandstone.name=Natural Sandstone
-tile.wtfexpedition:natural_red_sandstone.name=Natural Red Sandstone
-
 tile.wtfexpedition:roots.0.name=Oak Roots
 tile.wtfexpedition:roots.1.name=Spruce Roots
 tile.wtfexpedition:roots.2.name=Birch Roots
@@ -83,6 +80,8 @@ entity.wtfexpedition:bog_lantern.name=Bog Lantern
 entity.wtfexpedition:cursed_armor.name=Cursed Armor
 entity.wtfexpedition:fire_elemental.name=Fire Elemental
 entity.wtfexpedition:mummy.name=Mummy
+entity.wtfexpedition:cave_husk.name=Cave Husk
+entity.wtfexpedition:cave_stray.name=Cave Stray
 entity.wtfexpedition:zombie_miner.name=Zombie Miner
 entity.wtfexpedition:skeleton_knight.name=Skeleton Knight
 entity.wtfexpedition:zombie_farmer.name=Zombie Farmer

@@ -12,8 +12,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import wtf.WTFExpedition;
-import wtf.blocks.BlockFoxfire;
 import wtf.worldgen.trees.types.AbstractTreeType;
 
 import static wtf.worldgen.GenMethods.*;
@@ -106,11 +104,9 @@ public class TreeInstance {
 		masterMap.putAll(leafBlocks);
 		masterMap.putAll(rootBlocks);
 		masterMap.putAll(trunkBlocks);
-		
-		for (Entry<BlockPos, IBlockState> entry : masterMap.entrySet()) {
-			if(replace(world, entry.getKey(), entry.getValue()) && entry.getValue().getBlock() instanceof BlockFoxfire)
-				WTFExpedition.wtfLog.info("Foxfire at " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
-		}
+
+		for (Entry<BlockPos, IBlockState> entry : masterMap.entrySet())
+			replace(world, entry.getKey(), entry.getValue());
 	}
 
 	public boolean inTrunk(BlockPos pos) {

@@ -3,26 +3,28 @@
     "blockId": "minecraft:redstone_ore@0",
     "name": "redstone_ore",
     "stoneList": ["stone"],
-    "minAmountPerChunk": 10,
-    "maxAmountPerChunk": 38,
-    "surfaceHeightMinPercentage": 5,
-    "surfaceHeightMaxPercentage": 60,
-    "dimensionList": [0],
     "useDenseBlock": true,
     "overlayPath": "wtfexpedition:overlays/redstone_ore",
-    "veinPercentDensity": 100,
-    "percentGenerationPerBiomeType": {
-      "sandy": 150,
-      "wet": 50
-    },
-    "generation_settings": {
-      "primaryGenerationType": "vein",
-      "vein_generation": {
-        "veinPitchAverage": 0.0,
-        "veinLength": 32,
-        "veinWidth": 1,
-        "veinVerticalThickness": 1
+    "generation": [
+      {
+        "minAmountPerChunk": 10,
+        "maxAmountPerChunk": 38,
+        "surfaceHeightMinPercentage": 5,
+        "surfaceHeightMaxPercentage": 60,
+        "dimensionList": [0],
+        "veinPercentDensity": 100,
+        "percentGenerationPerBiomeType": {
+          "sandy": 150,
+          "wet": 50
+        },
+        "primaryGenerationType": "vein",
+        "vein_generation": {
+          "veinPitchAverage": 0.0,
+          "veinLength": 32,
+          "veinWidth": 1,
+          "veinVerticalThickness": 1
+        }
       }
-    }
+    ]
   }
 ]

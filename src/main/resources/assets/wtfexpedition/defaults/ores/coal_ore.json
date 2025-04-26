@@ -3,26 +3,28 @@
     "blockId": "minecraft:coal_ore@0",
     "name": "coal_ore",
     "stoneList": ["stone", "gravel"],
-    "minAmountPerChunk": 20,
-    "maxAmountPerChunk": 220,
-    "surfaceHeightMinPercentage": 20,
-    "surfaceHeightMaxPercentage": 120,
-    "dimensionList": [0],
     "useDenseBlock": true,
     "overlayPath": "wtfexpedition:overlays/coal_ore",
-    "veinPercentDensity": 75,
-    "percentGenerationPerBiomeType": {
-      "swamp": 150,
-      "hot": 50
-    },
-    "generation_settings": {
-      "primaryGenerationType": "vein",
-      "vein_generation": {
-        "veinPitchAverage": 1.5,
-        "veinLength": 8,
-        "veinWidth": 8,
-        "veinVerticalThickness": 1
+    "generation": [
+      {
+        "minAmountPerChunk": 20,
+        "maxAmountPerChunk": 220,
+        "surfaceHeightMinPercentage": 20,
+        "surfaceHeightMaxPercentage": 120,
+        "dimensionList": [0],
+        "veinPercentDensity": 75,
+        "percentGenerationPerBiomeType": {
+          "swamp": 150,
+          "hot": 50
+        },
+        "primaryGenerationType": "vein",
+        "vein_generation": {
+          "veinPitchAverage": 1.5,
+          "veinLength": 8,
+          "veinWidth": 8,
+          "veinVerticalThickness": 1
+        }
       }
-    }
+    ]
   }
 ]

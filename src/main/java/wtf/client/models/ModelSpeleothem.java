@@ -23,7 +23,6 @@ import wtf.blocks.BlockSpeleothem;
 import wtf.blocks.BlockSpeleothemFrozen;
 import wtf.client.DerivativeResourceLocation;
 import wtf.client.WTFModelRegistry;
-import wtf.init.JSONLoader;
 
 import javax.annotation.Nullable;
 import javax.vecmath.Matrix4f;

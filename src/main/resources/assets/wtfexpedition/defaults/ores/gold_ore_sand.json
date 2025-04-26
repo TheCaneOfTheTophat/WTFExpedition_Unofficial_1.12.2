@@ -3,20 +3,22 @@
     "blockId": "wtfexpedition:gold_ore_sand@0",
     "name": "gold_nugget_ore",
     "stoneList": ["sand", "red_sand"],
-    "minAmountPerChunk": -10,
-    "maxAmountPerChunk": 10,
-    "surfaceHeightMinPercentage": 80,
-    "surfaceHeightMaxPercentage": 120,
-    "dimensionList": [0],
     "useDenseBlock": true,
     "overlayPath": "wtfexpedition:overlays/gold_ore",
-    "veinPercentDensity": 100,
-    "biomeTypeList": ["river"],
-    "biomeTypeListWhitelist": true,
-    "biomeLeniency": 4,
-    "generation_settings": {
-      "primaryGenerationType": "single",
-      "secondaryGenerationType": "underwater"
-    }
+    "generation": [
+      {
+        "minAmountPerChunk": -10,
+        "maxAmountPerChunk": 10,
+        "surfaceHeightMinPercentage": 80,
+        "surfaceHeightMaxPercentage": 120,
+        "dimensionList": [0],
+        "veinPercentDensity": 100,
+        "biomeTypeList": ["river"],
+        "biomeTypeListWhitelist": true,
+        "biomeLeniency": 4,
+        "primaryGenerationType": "single",
+        "secondaryGenerationType": "underwater"
+      }
+    ]
   }
 ]

@@ -22,8 +22,8 @@ public class OreGenVein extends OreGenAbstract {
 	public static final float pi4 = (float) (Math.PI / 4);
 	public static final float pi = (float) (Math.PI);
 	
-	public OreGenVein(IBlockState state, String name, int[] genRange, int[] minMaxPerChunk, boolean dimensionWhiteList, boolean biomeWhiteList, int[] dimensions, float pitch, boolean genDense, int biomeLeniency) {
-		super(state, name, genRange, minMaxPerChunk, dimensionWhiteList, biomeWhiteList, genDense, biomeLeniency);
+	public OreGenVein(IBlockState state, String name, int[] dimensions, float pitch) {
+		super(state, name);
 
 		this.veinLength = dimensions[0];
 		this.veinWidth = dimensions[1];
@@ -44,7 +44,7 @@ public class OreGenVein extends OreGenAbstract {
 			BlockPos orePos = new BlockPos(x, y, z);
 			boolean generate = checkBiomes(world, orePos, biomeLeniency);
 
-			blocksPerChunk -= generate ? genVein(world, rand , orePos, surfaceAverage, caves) : 1;
+			blocksPerChunk -= generate ? genVein(world, rand, orePos, surfaceAverage, caves) : 1;
 			
 			//The core issue, is that using the density function makes exponentially dense veins
 		}

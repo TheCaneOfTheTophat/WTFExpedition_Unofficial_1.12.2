@@ -1,8 +1,6 @@
 package wtf.config;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class OreEntry {
     private final String blockId;
@@ -10,46 +8,18 @@ public class OreEntry {
 
     private final ArrayList<String> stoneList;
 
-    private final int minAmountPerChunk;
-    private final int maxAmountPerChunk;
-
-    private final int surfaceHeightMinPercentage;
-    private final int surfaceHeightMaxPercentage;
-
-    private final ArrayList<Integer> dimensionList;
-    private final boolean dimensionListWhitelist;
-
     private final boolean useDenseBlock;
 
     private final String overlayPath;
 
-    private final int veinPercentDensity;
+    private final ArrayList<OreGeneratorSettings> settings;
 
-    private final ArrayList<String> biomeTypeList;
-    private final boolean biomeTypeListWhitelist;
-    private final int biomeLeniency;
-
-    private final HashMap<String, Integer> percentGenerationPerBiomeType;
-
-    private final OreGeneratorSettings settings;
-
-    public OreEntry(String blockId, String name, ArrayList<String> stoneList, int minAmountPerChunk, int maxAmountPerChunk, int surfaceHeightMinPercentage, int surfaceHeightMaxPercentage, ArrayList<Integer> dimensionList, boolean dimensionListWhitelist, boolean useDenseBlock, String overlayPath, int veinPercentDensity, ArrayList<String> biomeTypeList, boolean biomeTypeListWhitelist, int biomeLeniency, HashMap<String, Integer> percentGenerationPerBiomeType, OreGeneratorSettings settings) {
+    public OreEntry(String blockId, String name, ArrayList<String> stoneList, boolean useDenseBlock, String overlayPath, ArrayList<OreGeneratorSettings> settings) {
         this.blockId = blockId;
         this.name = name;
         this.stoneList = stoneList;
-        this.minAmountPerChunk = minAmountPerChunk;
-        this.maxAmountPerChunk = maxAmountPerChunk;
-        this.surfaceHeightMinPercentage = surfaceHeightMinPercentage;
-        this.surfaceHeightMaxPercentage = surfaceHeightMaxPercentage;
-        this.dimensionList = dimensionList;
-        this.dimensionListWhitelist = dimensionListWhitelist;
         this.useDenseBlock = useDenseBlock;
         this.overlayPath = overlayPath;
-        this.veinPercentDensity = veinPercentDensity;
-        this.biomeTypeList = biomeTypeList;
-        this.biomeTypeListWhitelist = biomeTypeListWhitelist;
-        this.biomeLeniency = biomeLeniency;
-        this.percentGenerationPerBiomeType = percentGenerationPerBiomeType;
         this.settings = settings;
     }
 
@@ -65,32 +35,8 @@ public class OreEntry {
         return stoneList;
     }
 
-    public int getMinAmountPerChunk() {
-        return minAmountPerChunk;
-    }
-
-    public int getMaxAmountPerChunk() {
-        return maxAmountPerChunk;
-    }
-
-    public int getSurfaceHeightMinPercentage() {
-        return surfaceHeightMinPercentage;
-    }
-
-    public int getSurfaceHeightMaxPercentage() {
-        return surfaceHeightMaxPercentage;
-    }
-
     public boolean usesDenseBlocks() {
         return useDenseBlock;
-    }
-
-    public ArrayList<Integer> getDimensionList() {
-        return dimensionList;
-    }
-
-    public boolean isDimensionListWhitelist() {
-        return dimensionListWhitelist;
     }
 
     public String getRawOverlayPath() {
@@ -106,27 +52,7 @@ public class OreEntry {
         return paths;
     }
 
-    public int getVeinPercentDensity() {
-        return veinPercentDensity;
-    }
-
-    public ArrayList<String> getBiomeTypeList() {
-        return biomeTypeList;
-    }
-
-    public boolean isBiomeTypeListWhitelist() {
-        return biomeTypeListWhitelist;
-    }
-
-    public int getBiomeLeniency() {
-        return biomeLeniency;
-    }
-
-    public Map<String, Integer> getPercentGenerationPerBiomeType() {
-        return percentGenerationPerBiomeType;
-    }
-
-    public OreGeneratorSettings getSettings() {
+    public ArrayList<OreGeneratorSettings> getGenerators() {
         return settings;
     }
 }

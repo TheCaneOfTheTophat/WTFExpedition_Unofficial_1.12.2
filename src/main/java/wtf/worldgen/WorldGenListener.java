@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import wtf.config.WTFExpeditionConfig;
 import wtf.init.BlockSets;
+import wtf.utilities.simplex.SimplexHelper;
 import wtf.worldgen.ores.OreGenAbstract;
 import wtf.utilities.wrappers.AdjPos;
 import wtf.utilities.wrappers.CavePosition;
@@ -21,6 +22,7 @@ import wtf.utilities.wrappers.UnsortedChunkCaves;
 import wtf.worldgen.replacers.Replacer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -28,6 +30,7 @@ import static wtf.worldgen.GenMethods.*;
 
 public class WorldGenListener {
     public static ArrayList<OreGenAbstract> oreGenRegister = new ArrayList<>();
+    public static HashMap<String, SimplexHelper> oreSimplexMap = new HashMap<>();
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void newPopulate(PopulateChunkEvent.Post event) {
