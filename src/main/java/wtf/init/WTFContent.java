@@ -563,6 +563,7 @@ public class WTFContent {
 		String secondary = settings.secondaryGenerationType;
 		
 		int[] genRange = {settings.surfaceHeightMinPercentage, settings.surfaceHeightMaxPercentage};
+		int[] hardYGenRange = {settings.minY, settings.maxY};
 		int[] orePerChunk = {settings.minAmountPerChunk, settings.maxAmountPerChunk};
 
 		boolean biomeWhitelist = settings.biomeTypeListWhitelist;
@@ -613,7 +614,8 @@ public class WTFContent {
         }
 
 		if(generator != null) {
-			generator.setGenRange(genRange);
+			generator.setSurfaceGenRange(genRange);
+			generator.setHardYGenRange(hardYGenRange);
 			generator.setMinMaxPerChunk(orePerChunk);
 			generator.setBiomeWhiteList(biomeWhitelist);
 			generator.setDimensionWhiteList(dimensionWhitelist);

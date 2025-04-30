@@ -26,8 +26,8 @@ public class OreGenUnderWater extends OreGenAbstract {
 			int blocksPerChunk = this.getBlocksPerChunk(world, rand, pos, surfaceAverage, biomeLeniency);
 			int blocksReq = this.blocksReq();
 
-			int maxHeight = MathHelper.floor(maxGenRangeHeight * surfaceAverage);
-			int minHeight = MathHelper.floor(minGenRangeHeight * surfaceAverage);
+			int maxHeight = Math.min(MathHelper.floor(maxGenRangeHeight * surfaceAverage), maxY);
+			int minHeight = Math.max(MathHelper.floor(minGenRangeHeight * surfaceAverage), minY);
 		
 			while (blocksPerChunk > blocksReq || (blocksPerChunk > 0 && rand.nextInt(blocksReq) < blocksPerChunk)) {
 				if(water.isEmpty())

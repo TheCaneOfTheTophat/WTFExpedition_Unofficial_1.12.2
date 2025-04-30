@@ -182,6 +182,8 @@ public class JSONLoader {
                             int maxAmountPerChunk = 0;
                             int surfaceHeightMinPercentage = 0;
                             int surfaceHeightMaxPercentage = 100;
+                            int minY = 0;
+                            int maxY = 255;
                             ArrayList<Integer> dimensionList = new ArrayList<>();
                             boolean dimensionListWhitelist = true;
                             int veinPercentDensity = 100;
@@ -229,8 +231,20 @@ public class JSONLoader {
                             if(generationSettings.has("surfaceHeightMaxPercentage"))
                                 surfaceHeightMaxPercentage = generationSettings.get("surfaceHeightMaxPercentage").getAsInt();
 
+                            if(generationSettings.has("minY"))
+                                minY = Math.max(generationSettings.get("minY").getAsInt(), 0);
+
+                            if(generationSettings.has("maxY"))
+                                maxY = Math.min(generationSettings.get("maxY").getAsInt(), 255);
+
                             if(surfaceHeightMaxPercentage - surfaceHeightMinPercentage < 1) {
                                 WTFExpedition.wtfLog.error("Minimum surface height percentage greater than maximum surface height percentage in ore entry \"" + name + "\" at path \"" + jsonPath + "\", skipping!");
+                                index++;
+                                continue;
+                            }
+
+                            if(maxY - minY < 1) {
+                                WTFExpedition.wtfLog.error("Minimum Y greater than maximum Y in ore entry \"" + name + "\" at path \"" + jsonPath + "\", skipping!");
                                 index++;
                                 continue;
                             }
@@ -321,7 +335,7 @@ public class JSONLoader {
                                 }
                             }
 
-                            generators.add(new OreGeneratorSettings(generatorName, minAmountPerChunk, maxAmountPerChunk, surfaceHeightMinPercentage, surfaceHeightMaxPercentage, dimensionList, dimensionListWhitelist, veinPercentDensity, biomeTypeList, biomeTypeListWhitelist, biomeLeniency, percentGenerationPerBiomeType, primaryGenerationType, secondaryGenerationType, veinPitchAverage, veinLength, veinWidth, veinVerticalThickness, cloudDiameter, ceiling, wall, floor, blocksPerCluster));
+                            generators.add(new OreGeneratorSettings(generatorName, minAmountPerChunk, maxAmountPerChunk, surfaceHeightMinPercentage, surfaceHeightMaxPercentage, minY, maxY, dimensionList, dimensionListWhitelist, veinPercentDensity, biomeTypeList, biomeTypeListWhitelist, biomeLeniency, percentGenerationPerBiomeType, primaryGenerationType, secondaryGenerationType, veinPitchAverage, veinLength, veinWidth, veinVerticalThickness, cloudDiameter, ceiling, wall, floor, blocksPerCluster));
                         }
                     }
 

@@ -38,8 +38,9 @@ public class OreGenCaveFloor extends OreGenAbstract {
 	public void doOreGen(World world, Random rand, ChunkPos pos, int surfaceAverage, UnsortedChunkCaves caves, ArrayList<BlockPos> water) {
 		if (caves.size() > 0) {
 			int blocksPerChunk = this.getBlocksPerChunk(world, rand, pos, surfaceAverage, biomeLeniency);
-			int maxHeight = MathHelper.floor(maxGenRangeHeight * surfaceAverage);
-			int minHeight = MathHelper.floor(minGenRangeHeight * surfaceAverage);
+
+			int maxHeight = Math.min(MathHelper.floor(maxGenRangeHeight * surfaceAverage), maxY);
+			int minHeight = Math.max(MathHelper.floor(minGenRangeHeight * surfaceAverage), minY);
 
 			//I will need to access the size of the vein to do partial generation chances like I am for the other veins- which means I would need to seperate out the veinsize method, and throw it in
 			//the abstract

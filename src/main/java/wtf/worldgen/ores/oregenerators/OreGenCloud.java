@@ -67,7 +67,7 @@ public class OreGenCloud extends OreGenAbstract {
 	}
 
 	public int getDensityToSet(Random random, double height, double surfaceAvg, double radius, double maxRadius) {
-		double depth = height / (surfaceAvg * maxGenRangeHeight);
+		double depth = height / Math.min(surfaceAvg * maxGenRangeHeight, maxY);
 		double rand = random.nextFloat() + random.nextFloat() - 1;
 		double radRatio = radius / maxRadius;
 		double density = depth * 1.5 + radRatio * 1.5 + rand;

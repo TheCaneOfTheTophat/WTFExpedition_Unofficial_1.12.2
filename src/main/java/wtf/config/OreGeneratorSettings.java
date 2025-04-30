@@ -13,6 +13,9 @@ public class OreGeneratorSettings {
     public final int surfaceHeightMinPercentage;
     public final int surfaceHeightMaxPercentage;
 
+    public final int minY;
+    public final int maxY;
+
     public final ArrayList<Integer> dimensionList;
     public final boolean dimensionListWhitelist;
 
@@ -44,12 +47,14 @@ public class OreGeneratorSettings {
     // Vanilla fields
     public final int blocksPerCluster;
 
-    public OreGeneratorSettings(String name, int minAmountPerChunk, int maxAmountPerChunk, int surfaceHeightMinPercentage, int surfaceHeightMaxPercentage, ArrayList<Integer> dimensionList, boolean dimensionListWhitelist, int veinPercentDensity, ArrayList<String> biomeTypeList, boolean biomeTypeListWhitelist, int biomeLeniency, HashMap<String, Integer> percentGenerationPerBiomeType, String primary, String secondary, double veinPitchAverage, int veinLength, int veinWidth, int veinVerticalThickness, int cloudDiameter, boolean ceiling, boolean wall, boolean floor, int blocksPerCluster) {
+    public OreGeneratorSettings(String name, int minAmountPerChunk, int maxAmountPerChunk, int surfaceHeightMinPercentage, int surfaceHeightMaxPercentage, int minY, int maxY, ArrayList<Integer> dimensionList, boolean dimensionListWhitelist, int veinPercentDensity, ArrayList<String> biomeTypeList, boolean biomeTypeListWhitelist, int biomeLeniency, HashMap<String, Integer> percentGenerationPerBiomeType, String primary, String secondary, double veinPitchAverage, int veinLength, int veinWidth, int veinVerticalThickness, int cloudDiameter, boolean ceiling, boolean wall, boolean floor, int blocksPerCluster) {
         this.name = name;
         this.minAmountPerChunk = minAmountPerChunk;
         this.maxAmountPerChunk = maxAmountPerChunk;
         this.surfaceHeightMinPercentage = surfaceHeightMinPercentage;
         this.surfaceHeightMaxPercentage = surfaceHeightMaxPercentage;
+        this.minY = minY;
+        this.maxY = maxY;
         this.dimensionList = dimensionList;
         this.dimensionListWhitelist = dimensionListWhitelist;
         this.veinPercentDensity = veinPercentDensity;

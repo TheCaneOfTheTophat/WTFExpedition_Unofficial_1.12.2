@@ -25,6 +25,8 @@ public abstract class OreGenAbstract {
 	
 	public float maxGenRangeHeight;
 	public float minGenRangeHeight;
+	public int maxY;
+	public int minY;
 	public int maxPerChunk;
 	public int minPerChunk;
 	public float veinDensity = 1F;
@@ -80,9 +82,9 @@ public abstract class OreGenAbstract {
 	}
 
 	public int getGenStartHeight(double surfaceAvg, Random random) {
-		int maxHeight = MathHelper.floor((float) (maxGenRangeHeight * surfaceAvg));
-		int minHeight = MathHelper.floor((float) (minGenRangeHeight * surfaceAvg));
-		int range = maxHeight - minHeight;
+		int maxHeight = Math.min(MathHelper.floor((float) (maxGenRangeHeight * surfaceAvg)), maxY);
+		int minHeight = Math.max(MathHelper.floor((float) (minGenRangeHeight * surfaceAvg)), minY);
+		int range = (maxHeight - minHeight) + 1;
 
 		if (range < 1)
 			range = 1;
@@ -91,7 +93,7 @@ public abstract class OreGenAbstract {
 	}
 
 	public int getDensityToSet(Random random, double height, double surfaceAvg) {
-		double depth = height / (surfaceAvg * maxGenRangeHeight);
+		double depth = height / Math.min(surfaceAvg * maxGenRangeHeight, maxY);
 		double rand = random.nextFloat() + random.nextFloat() - 1;
 		
 		double density = depth * 3 + rand;
@@ -135,7 +137,7 @@ public abstract class OreGenAbstract {
 		this.veinDensity = density;
 	}
 
-	public void setGenRange(int[] genRange) {
+	public void setSurfaceGenRange(int[] genRange) {
 		this.maxGenRangeHeight = genRange[1] / 100F;
 		this.minGenRangeHeight = genRange[0] / 100F;
 	}
@@ -143,6 +145,11 @@ public abstract class OreGenAbstract {
 	public void setMinMaxPerChunk(int[] minMaxPerChunk) {
 		this.maxPerChunk = minMaxPerChunk[1];
 		this.minPerChunk = minMaxPerChunk[0];
+	}
+
+	public void setHardYGenRange(int[] genRange) {
+		this.maxY = genRange[1];
+		this.minY = genRange[0];
 	}
 
 	public void setDimensionWhiteList(boolean whiteList) {
