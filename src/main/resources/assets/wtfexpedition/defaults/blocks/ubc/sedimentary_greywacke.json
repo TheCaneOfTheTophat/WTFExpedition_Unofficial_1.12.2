@@ -1,0 +1,34 @@
+[
+  {
+    "blockId": "undergroundbiomes:sedimentary_stone@6",
+    "name": "greywacke",
+    "fracturedBlockId": "greywacke_sand",
+    "groups": ["sedimentary"],
+    "texture": "undergroundbiomes:blocks/greywacke",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 30,
+    "modifiers": {
+      "mossy": "mossy_greywacke",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:sedimentary_sand@6",
+    "name": "greywacke_sand",
+    "texture": "undergroundbiomes:blocks/greywacke_sand",
+    "percentageStability": 10
+  },
+  {
+    "blockId": "undergroundbiomes:sedimentary_stone_mossy@6",
+    "name": "mossy_greywacke",
+    "fracturedBlockId": "greywacke_sand",
+    "texture": "undergroundbiomes:blocks/greywacke_mossy",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 30
+  }
+]

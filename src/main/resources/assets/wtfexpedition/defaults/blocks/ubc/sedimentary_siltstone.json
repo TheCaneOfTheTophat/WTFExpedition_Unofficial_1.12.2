@@ -1,0 +1,34 @@
+[
+  {
+    "blockId": "undergroundbiomes:sedimentary_stone@3",
+    "name": "siltstone",
+    "fracturedBlockId": "siltstone_sand",
+    "groups": ["sedimentary"],
+    "texture": "undergroundbiomes:blocks/siltstone",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 30,
+    "modifiers": {
+      "mossy": "mossy_siltstone",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:sedimentary_sand@3",
+    "name": "siltstone_sand",
+    "texture": "undergroundbiomes:blocks/siltstone_sand",
+    "percentageStability": 10
+  },
+  {
+    "blockId": "undergroundbiomes:sedimentary_stone_mossy@3",
+    "name": "mossy_siltstone",
+    "fracturedBlockId": "siltstone_sand",
+    "texture": "undergroundbiomes:blocks/siltstone_mossy",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 30
+  }
+]

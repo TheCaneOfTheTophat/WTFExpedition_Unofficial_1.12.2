@@ -45,7 +45,7 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
 
     implementation fg.deobf("org.teamrtg:RTG:1.12.2-7.3.2:")
-    compileOnly fg.deobf("exterminatorjeff.undergroundbiomes:UndergroundBiomesConstructs:1.12-1.3.14:")
+    implementation fg.deobf("exterminatorjeff.undergroundbiomes:UndergroundBiomesConstructs:1.12-1.3.14:")
 }
 
 fancyGradle {

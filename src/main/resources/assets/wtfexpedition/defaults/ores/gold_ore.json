@@ -2,7 +2,7 @@
   {
     "blockId": "minecraft:gold_ore@0",
     "name": "gold_ore",
-    "stoneList": ["stone"],
+    "stoneList": ["stone", "group#igneous", "group#metamorphic", "group#sedimentary"],
     "useDenseBlock": true,
     "overlayPath": "wtfexpedition:overlays/gold_ore",
     "generation": [

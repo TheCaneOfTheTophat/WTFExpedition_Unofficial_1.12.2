@@ -1,5 +1,7 @@
 package wtf.worldgen;
 
+import exterminatorjeff.undergroundbiomes.api.API;
+import exterminatorjeff.undergroundbiomes.api.UBStrataColumn;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockPlanks;
@@ -20,7 +22,9 @@ import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 import net.minecraft.world.gen.ChunkProviderServer;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fluids.BlockFluidBase;
+import net.minecraftforge.fml.common.Optional;
 import org.apache.commons.lang3.tuple.Pair;
+import wtf.WTFExpedition;
 import wtf.blocks.*;
 import wtf.config.WTFExpeditionConfig;
 import wtf.enums.IcicleType;
@@ -65,6 +69,23 @@ public class GenMethods {
         return (state.getBlock() instanceof BlockFluidBase || state.getBlock() instanceof BlockLiquid);
     }
 
+    public static IBlockState getBlockStateCompatible(World world, BlockPos pos) {
+        IBlockState state = world.getBlockState(pos);
+
+        if(WTFExpedition.UBC)
+            if(state.getBlock() == Blocks.STONE)
+                return getUBCStone(world, pos);
+
+        return state;
+    }
+
+    @Optional.Method(modid = "undergroundbiomes")
+    private static IBlockState getUBCStone(World world, BlockPos pos) {
+        UBStrataColumn column = API.STRATA_COLUMN_PROVIDER.ubStrataColumnProvider(world.provider.getDimension()).strataColumn(pos.getX(), pos.getZ());
+
+        return column.stone(pos.getY());
+    }
+
     public static boolean override(World world, BlockPos pos, IBlockState state, boolean update) {
         return world.setBlockState(pos, state, update ? 19 : 18);
     }
@@ -90,7 +111,7 @@ public class GenMethods {
     }
 
     public static boolean modify(World world, BlockPos pos, Modifier modifier) {
-        IBlockState modState = BlockSets.getTransformedState(world.getBlockState(pos), modifier);
+        IBlockState modState = BlockSets.getTransformedState(getBlockStateCompatible(world, pos), modifier);
 
         if(modState != null)
             return override(world, pos, modState, false);
@@ -104,7 +125,7 @@ public class GenMethods {
             return;
         }
 
-        IBlockState denseOreState = BlockSets.stoneAndOre.get(new StoneAndOre(world.getBlockState(pos), oreState));
+        IBlockState denseOreState = BlockSets.stoneAndOre.get(new StoneAndOre(getBlockStateCompatible(world, pos), oreState));
 
         if (denseOreState != null) {
             if (denseOreState.getBlock() instanceof BlockDenseOre)
@@ -117,7 +138,7 @@ public class GenMethods {
     }
 
     public static boolean setFloorAddon(World world, BlockPos pos, Modifier modifier) {
-        IBlockState floorState = world.getBlockState(pos.down());
+        IBlockState floorState = getBlockStateCompatible(world, pos.down());
 
         if(BlockSets.noAddons.contains(floorState))
             return false;
@@ -131,7 +152,7 @@ public class GenMethods {
     }
 
     public static boolean setCeilingAddon(World world, BlockPos pos, Modifier modifier) {
-        IBlockState ceilingState = world.getBlockState(pos.up());
+        IBlockState ceilingState = getBlockStateCompatible(world, pos.up());
 
         if(BlockSets.noAddons.contains(ceilingState))
             return false;
@@ -158,8 +179,7 @@ public class GenMethods {
     }
 
     public static void genFloatingStone(World world, BlockPos pos) {
-        // TODO UBC compat
-        replace(world, pos, Blocks.STONE.getDefaultState());
+        replace(world, pos, WTFExpedition.UBC ? getUBCStone(world, pos) : Blocks.STONE.getDefaultState());
     }
 
     public static boolean genSpeleothem(World world, BlockPos pos, int size, float depth, boolean frozen) {
@@ -168,8 +188,8 @@ public class GenMethods {
             return true;
         }
 
-        IBlockState above = world.getBlockState(pos.up());
-        IBlockState below = world.getBlockState(pos.down());
+        IBlockState above = getBlockStateCompatible(world, pos.up());
+        IBlockState below = getBlockStateCompatible(world, pos.down());
 
         int remaining = size;
         int direction;
@@ -184,7 +204,7 @@ public class GenMethods {
         } else
             return false;
 
-        if(isFluid(world.getBlockState(pos)))
+        if(isFluid(getBlockStateCompatible(world, pos)))
             return false;
 
         if (speleothem == null) {
@@ -218,7 +238,7 @@ public class GenMethods {
             speleothem = speleothem.frozen;
 
         while (remaining > 0) {
-            IBlockState next = world.getBlockState(pos.up(direction));
+            IBlockState next = getBlockStateCompatible(world, pos.up(direction));
             IBlockState set;
 
             if (remaining == size) {

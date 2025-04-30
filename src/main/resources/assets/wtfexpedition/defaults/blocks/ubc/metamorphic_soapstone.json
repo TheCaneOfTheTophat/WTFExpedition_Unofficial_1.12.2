@@ -1,0 +1,41 @@
+[
+  {
+    "blockId": "undergroundbiomes:metamorphic_stone@6",
+    "name": "soapstone",
+    "fracturedBlockId": "soapstone_cobblestone",
+    "groups": ["metamorphic"],
+    "texture": "undergroundbiomes:blocks/soapstone",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 20,
+    "modifiers": {
+      "mossy": "#generated",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated",
+      "brick": "soapstone_bricks"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_cobble@6",
+    "name": "soapstone_cobblestone",
+    "texture": "undergroundbiomes:blocks/soapstone_cobblestone",
+    "percentageStability": 85,
+	"modifiers": {
+      "mossy": "mossy_soapstone_cobblestone"
+    }
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_cobble_mossy@6",
+    "name": "mossy_soapstone_cobblestone",
+    "percentageStability": 90
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_brick@6",
+    "name": "soapstone_bricks",
+    "irreplaceable": true,
+    "noAddons": true
+  }
+]

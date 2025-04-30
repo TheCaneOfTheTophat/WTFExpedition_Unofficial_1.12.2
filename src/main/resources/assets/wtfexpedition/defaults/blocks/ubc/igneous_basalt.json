@@ -1,0 +1,41 @@
+[
+  {
+    "blockId": "undergroundbiomes:igneous_stone@5",
+    "name": "basalt",
+    "fracturedBlockId": "basalt_cobblestone",
+    "groups": ["igneous"],
+    "texture": "undergroundbiomes:blocks/basalt",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 5,
+    "modifiers": {
+      "mossy": "#generated",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated",
+      "brick": "basalt_bricks"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:igneous_cobble@5",
+    "name": "basalt_cobblestone",
+    "texture": "undergroundbiomes:blocks/basalt_cobblestone",
+    "percentageStability": 90,
+	"modifiers": {
+      "mossy": "mossy_basalt_cobblestone"
+    }
+  },
+  {
+    "blockId": "undergroundbiomes:igneous_cobble_mossy@5",
+    "name": "mossy_basalt_cobblestone",
+    "percentageStability": 95
+  },
+  {
+    "blockId": "undergroundbiomes:igneous_brick@5",
+    "name": "basalt_bricks",
+    "irreplaceable": true,
+    "noAddons": true
+  }
+]

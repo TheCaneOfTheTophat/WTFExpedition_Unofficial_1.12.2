@@ -1,0 +1,34 @@
+[
+  {
+    "blockId": "undergroundbiomes:sedimentary_stone@5",
+    "name": "dolomite",
+    "fracturedBlockId": "dolomite_sand",
+    "groups": ["sedimentary"],
+    "texture": "undergroundbiomes:blocks/dolomite",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 30,
+    "modifiers": {
+      "mossy": "mossy_dolomite",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:sedimentary_sand@5",
+    "name": "dolomite_sand",
+    "texture": "undergroundbiomes:blocks/dolomite_sand",
+    "percentageStability": 10
+  },
+  {
+    "blockId": "undergroundbiomes:sedimentary_stone_mossy@5",
+    "name": "mossy_dolomite",
+    "fracturedBlockId": "dolomite_sand",
+    "texture": "undergroundbiomes:blocks/dolomite_mossy",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 30
+  }
+]

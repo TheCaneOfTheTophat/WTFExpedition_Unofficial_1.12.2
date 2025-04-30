@@ -1,0 +1,41 @@
+[
+  {
+    "blockId": "undergroundbiomes:metamorphic_stone@0",
+    "name": "gneiss",
+    "fracturedBlockId": "gneiss_cobblestone",
+    "groups": ["metamorphic"],
+    "texture": "undergroundbiomes:blocks/gneiss",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 20,
+    "modifiers": {
+      "mossy": "#generated",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated",
+      "brick": "gneiss_bricks"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_cobble@0",
+    "name": "gneiss_cobblestone",
+    "texture": "undergroundbiomes:blocks/gneiss_cobblestone",
+    "percentageStability": 85,
+	"modifiers": {
+      "mossy": "mossy_gneiss_cobblestone"
+    }
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_cobble_mossy@0",
+    "name": "mossy_gneiss_cobblestone",
+    "percentageStability": 90
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_brick@0",
+    "name": "gneiss_bricks",
+    "irreplaceable": true,
+    "noAddons": true
+  }
+]

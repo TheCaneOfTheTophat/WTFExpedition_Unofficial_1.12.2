@@ -1,0 +1,34 @@
+[
+  {
+    "blockId": "undergroundbiomes:sedimentary_stone@4",
+    "name": "lignite",
+    "fracturedBlockId": "lignite_sand",
+    "groups": ["sedimentary"],
+    "texture": "undergroundbiomes:blocks/lignite",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 30,
+    "modifiers": {
+      "mossy": "mossy_lignite",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:sedimentary_sand@4",
+    "name": "lignite_sand",
+    "texture": "undergroundbiomes:blocks/lignite_sand",
+    "percentageStability": 10
+  },
+  {
+    "blockId": "undergroundbiomes:sedimentary_stone_mossy@4",
+    "name": "mossy_lignite",
+    "fracturedBlockId": "lignite_sand",
+    "texture": "undergroundbiomes:blocks/lignite_mossy",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 30
+  }
+]

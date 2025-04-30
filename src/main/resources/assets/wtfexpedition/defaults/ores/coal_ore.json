@@ -2,7 +2,7 @@
   {
     "blockId": "minecraft:coal_ore@0",
     "name": "coal_ore",
-    "stoneList": ["stone", "gravel"],
+    "stoneList": ["stone", "group#igneous", "group#metamorphic", "group#sedimentary", "gravel"],
     "useDenseBlock": true,
     "overlayPath": "wtfexpedition:overlays/coal_ore",
     "generation": [

@@ -77,11 +77,6 @@ public class WTFExpedition {
 		JSONLoader.loadJsonContent();
 
 		UBC = Loader.isModLoaded("undergroundbiomes");
-		
-//		if (UBC)
-//			UBCCompat.loadUBCStone();
-//		else
-//			coreLog.info("Underground Biomes Construct not detected");
 
 //		proxy.initWCICRender();
 //		WTFRecipes.initRecipes();
@@ -98,6 +93,7 @@ public class WTFExpedition {
 		JSONLoader.identifierToBlockEntry.clear();
 		JSONLoader.blockEntries.clear();
 		JSONLoader.oreEntries.clear();
+		JSONLoader.blockGroups.clear();
 		WTFModelRegistry.textureMap.clear();
 		WTFContent.oreEntryMap.clear();
 

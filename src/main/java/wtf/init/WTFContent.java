@@ -14,6 +14,7 @@ import net.minecraft.world.biome.BiomeForest;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -148,6 +149,7 @@ public class WTFContent {
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void registerJSONDependentContent(RegistryEvent.Register<Block> event) {
+		HashSet<String> unknownMods = new HashSet<>();
 		IForgeRegistry<Block> reg = event.getRegistry();
 
 		/*  ==============================================
@@ -157,12 +159,32 @@ public class WTFContent {
 		for(OreEntry entry : JSONLoader.oreEntries) {
 			IBlockState oreState;
 
+			HashSet<String> stoneList = new HashSet<>();
+
+            for (String stone : entry.getStoneList()) {
+                if (stone.contains("group#")) {
+                    ArrayList<String> groupArray = JSONLoader.blockGroups.get(stone.split("#")[1]);
+
+                    if (groupArray != null)
+                        stoneList.addAll(groupArray);
+                } else
+                    stoneList.add(stone);
+            }
+
 			if(!entry.getBlockId().contains("type#")) {
 				oreState = JSONLoader.getStateFromId(entry.getBlockId());
 
 				if (entry.usesDenseBlocks()) {
-					for (String stone : entry.getStoneList()) {
+					for (String stone : stoneList) {
 						BlockEntry stoneEntry = JSONLoader.identifierToBlockEntry.get(stone);
+
+						if (!Loader.isModLoaded(stoneEntry.getBlockId().split(":")[0])) {
+							if(!unknownMods.contains(stoneEntry.getBlockId().split(":")[0])) {
+								WTFExpedition.wtfLog.error("Mod \"" + stoneEntry.getBlockId().split(":")[0] + "\" is not loaded!");
+								unknownMods.add(stoneEntry.getBlockId().split(":")[0]);
+							}
+							continue;
+						}
 
 						if (stoneEntry == null) {
 							WTFExpedition.wtfLog.error("Stone entry \"" + stone + "\" does not exist! (encountered while registering blocks for ore \"" + entry.getName() + "\")");
@@ -278,6 +300,14 @@ public class WTFContent {
 			IBlockState blockState = JSONLoader.getStateFromId(entry.getBlockId());
 			String fracturedId = JSONLoader.processId(entry.getFracturedBlockId());
 			IBlockState fracturedBlockState = JSONLoader.getStateFromId(fracturedId);
+
+			if (!Loader.isModLoaded(entry.getBlockId().split(":")[0])) {
+				if(!unknownMods.contains(entry.getBlockId().split(":")[0])) {
+					WTFExpedition.wtfLog.error("Mod \"" + entry.getBlockId().split(":")[0] + "\" is not loaded!");
+					unknownMods.add(entry.getBlockId().split(":")[0]);
+				}
+				continue;
+			}
 
 			if(blockState == null) {
 				WTFExpedition.wtfLog.error("Block ID " + entry.getBlockId() + " in entry " + entry.getName() + " is invalid! Skipping...");

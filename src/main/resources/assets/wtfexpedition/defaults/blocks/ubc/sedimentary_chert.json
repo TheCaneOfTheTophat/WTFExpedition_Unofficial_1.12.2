@@ -1,0 +1,34 @@
+[
+  {
+    "blockId": "undergroundbiomes:sedimentary_stone@7",
+    "name": "chert",
+    "fracturedBlockId": "chert_sand",
+    "groups": ["sedimentary"],
+    "texture": "undergroundbiomes:blocks/chert",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 30,
+    "modifiers": {
+      "mossy": "mossy_chert",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:sedimentary_sand@7",
+    "name": "chert_sand",
+    "texture": "undergroundbiomes:blocks/chert_sand",
+    "percentageStability": 10
+  },
+  {
+    "blockId": "undergroundbiomes:sedimentary_stone_mossy@7",
+    "name": "mossy_chert",
+    "fracturedBlockId": "chert_sand",
+    "texture": "undergroundbiomes:blocks/chert_mossy",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 30
+  }
+]

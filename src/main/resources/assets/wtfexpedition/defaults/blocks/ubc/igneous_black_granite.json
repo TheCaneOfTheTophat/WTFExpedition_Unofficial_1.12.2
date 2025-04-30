@@ -1,0 +1,41 @@
+[
+  {
+    "blockId": "undergroundbiomes:igneous_stone@1",
+    "name": "black_granite",
+    "fracturedBlockId": "black_granite_cobblestone",
+    "groups": ["igneous"],
+    "texture": "undergroundbiomes:blocks/black_granite",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 5,
+    "modifiers": {
+      "mossy": "#generated",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated",
+      "brick": "black_granite_bricks"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:igneous_cobble@1",
+    "name": "black_granite_cobblestone",
+    "texture": "undergroundbiomes:blocks/black_granite_cobblestone",
+    "percentageStability": 90,
+	"modifiers": {
+      "mossy": "mossy_black_granite_cobblestone"
+    }
+  },
+  {
+    "blockId": "undergroundbiomes:igneous_cobble_mossy@1",
+    "name": "mossy_black_granite_cobblestone",
+    "percentageStability": 95
+  },
+  {
+    "blockId": "undergroundbiomes:igneous_brick@1",
+    "name": "black_granite_bricks",
+    "irreplaceable": true,
+    "noAddons": true
+  }
+]

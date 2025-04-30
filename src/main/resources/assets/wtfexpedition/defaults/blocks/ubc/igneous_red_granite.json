@@ -1,0 +1,41 @@
+[
+  {
+    "blockId": "undergroundbiomes:igneous_stone@0",
+    "name": "red_granite",
+    "fracturedBlockId": "red_granite_cobblestone",
+    "groups": ["igneous"],
+    "texture": "undergroundbiomes:blocks/red_granite",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 5,
+    "modifiers": {
+      "mossy": "#generated",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated",
+      "brick": "red_granite_bricks"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:igneous_cobble@0",
+    "name": "red_granite_cobblestone",
+    "texture": "undergroundbiomes:blocks/red_granite_cobblestone",
+    "percentageStability": 90,
+	"modifiers": {
+      "mossy": "mossy_red_granite_cobblestone"
+    }
+  },
+  {
+    "blockId": "undergroundbiomes:igneous_cobble_mossy@0",
+    "name": "mossy_red_granite_cobblestone",
+    "percentageStability": 95
+  },
+  {
+    "blockId": "undergroundbiomes:igneous_brick@0",
+    "name": "red_granite_bricks",
+    "irreplaceable": true,
+    "noAddons": true
+  }
+]

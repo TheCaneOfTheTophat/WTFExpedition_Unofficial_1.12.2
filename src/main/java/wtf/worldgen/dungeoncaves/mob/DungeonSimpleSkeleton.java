@@ -25,7 +25,7 @@ public class DungeonSimpleSkeleton extends DungeonAbstractSimple {
 	
 	@Override
 	public boolean canGenerateAt(World world, CaveListWrapper cave) {
-		block = BlockSets.getTransformedState(world.getBlockState(cave.centerPos.getFloorPos()), Modifier.BRICK);
+		block = BlockSets.getTransformedState(getBlockStateCompatible(world, cave.centerPos.getFloorPos()), Modifier.BRICK);
 
 		if (block == null)
 			block = Blocks.STONEBRICK.getDefaultState();

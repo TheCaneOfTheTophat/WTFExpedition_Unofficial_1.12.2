@@ -2,7 +2,7 @@
   {
     "blockId": "minecraft:diamond_ore@0",
     "name": "diamond_ore",
-    "stoneList": ["stone", "obsidian"],
+    "stoneList": ["stone", "group#igneous", "group#metamorphic", "group#sedimentary", "obsidian"],
     "useDenseBlock": true,
     "overlayPath": "wtfexpedition:overlays/diamond_ore",
     "generation": [

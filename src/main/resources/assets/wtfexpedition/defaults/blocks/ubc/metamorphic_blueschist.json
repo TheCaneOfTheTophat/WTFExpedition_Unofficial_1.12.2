@@ -1,0 +1,41 @@
+[
+  {
+    "blockId": "undergroundbiomes:metamorphic_stone@4",
+    "name": "blueschist",
+    "fracturedBlockId": "blueschist_cobblestone",
+    "groups": ["metamorphic"],
+    "texture": "undergroundbiomes:blocks/blueschist",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 20,
+    "modifiers": {
+      "mossy": "#generated",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated",
+      "brick": "blueschist_bricks"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_cobble@4",
+    "name": "blueschist_cobblestone",
+    "texture": "undergroundbiomes:blocks/blueschist_cobblestone",
+    "percentageStability": 85,
+	"modifiers": {
+      "mossy": "mossy_blueschist_cobblestone"
+    }
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_cobble_mossy@4",
+    "name": "mossy_blueschist_cobblestone",
+    "percentageStability": 90
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_brick@4",
+    "name": "blueschist_bricks",
+    "irreplaceable": true,
+    "noAddons": true
+  }
+]

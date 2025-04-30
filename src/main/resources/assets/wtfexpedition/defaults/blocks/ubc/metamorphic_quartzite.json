@@ -1,0 +1,41 @@
+[
+  {
+    "blockId": "undergroundbiomes:metamorphic_stone@3",
+    "name": "quartzite",
+    "fracturedBlockId": "quartzite_cobblestone",
+    "groups": ["metamorphic"],
+    "texture": "undergroundbiomes:blocks/quartzite",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 20,
+    "modifiers": {
+      "mossy": "#generated",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated",
+      "brick": "quartzite_bricks"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_cobble@3",
+    "name": "quartzite_cobblestone",
+    "texture": "undergroundbiomes:blocks/quartzite_cobblestone",
+    "percentageStability": 85,
+	"modifiers": {
+      "mossy": "mossy_quartzite_cobblestone"
+    }
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_cobble_mossy@3",
+    "name": "mossy_quartzite_cobblestone",
+    "percentageStability": 90
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_brick@3",
+    "name": "quartzite_bricks",
+    "irreplaceable": true,
+    "noAddons": true
+  }
+]

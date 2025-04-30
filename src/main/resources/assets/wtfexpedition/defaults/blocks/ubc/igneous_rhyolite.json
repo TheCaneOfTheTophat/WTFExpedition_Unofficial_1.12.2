@@ -1,0 +1,41 @@
+[
+  {
+    "blockId": "undergroundbiomes:igneous_stone@2",
+    "name": "rhyolite",
+    "fracturedBlockId": "rhyolite_cobblestone",
+    "groups": ["igneous"],
+    "texture": "undergroundbiomes:blocks/rhyolite",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 5,
+    "modifiers": {
+      "mossy": "#generated",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated",
+      "brick": "rhyolite_bricks"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:igneous_cobble@2",
+    "name": "rhyolite_cobblestone",
+    "texture": "undergroundbiomes:blocks/rhyolite_cobblestone",
+    "percentageStability": 90,
+	"modifiers": {
+      "mossy": "mossy_rhyolite_cobblestone"
+    }
+  },
+  {
+    "blockId": "undergroundbiomes:igneous_cobble_mossy@2",
+    "name": "mossy_rhyolite_cobblestone",
+    "percentageStability": 95
+  },
+  {
+    "blockId": "undergroundbiomes:igneous_brick@2",
+    "name": "rhyolite_bricks",
+    "irreplaceable": true,
+    "noAddons": true
+  }
+]

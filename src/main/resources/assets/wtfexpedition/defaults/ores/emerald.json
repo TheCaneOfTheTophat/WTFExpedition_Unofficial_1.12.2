@@ -2,7 +2,7 @@
   {
     "blockId": "minecraft:emerald_ore@0",
     "name": "emerald_ore",
-    "stoneList": ["stone"],
+    "stoneList": ["stone", "group#igneous", "group#metamorphic", "group#sedimentary"],
     "overlayPath": "wtfexpedition:overlays/emerald_ore",
     "generation": [
       {

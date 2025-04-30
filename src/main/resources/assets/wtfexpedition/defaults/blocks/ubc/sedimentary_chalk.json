@@ -1,0 +1,34 @@
+[
+  {
+    "blockId": "undergroundbiomes:sedimentary_stone@1",
+    "name": "chalk",
+    "fracturedBlockId": "chalk_sand",
+    "groups": ["sedimentary"],
+    "texture": "undergroundbiomes:blocks/chalk",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 30,
+    "modifiers": {
+      "mossy": "mossy_chalk",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:sedimentary_sand@1",
+    "name": "chalk_sand",
+    "texture": "undergroundbiomes:blocks/chalk_sand",
+    "percentageStability": 10
+  },
+  {
+    "blockId": "undergroundbiomes:sedimentary_stone_mossy@1",
+    "name": "mossy_chalk",
+    "fracturedBlockId": "chalk_sand",
+    "texture": "undergroundbiomes:blocks/chalk_mossy",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 30
+  }
+]

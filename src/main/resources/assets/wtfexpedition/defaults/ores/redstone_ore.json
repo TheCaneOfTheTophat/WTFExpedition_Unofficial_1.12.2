@@ -2,7 +2,7 @@
   {
     "blockId": "minecraft:redstone_ore@0",
     "name": "redstone_ore",
-    "stoneList": ["stone"],
+    "stoneList": ["stone", "group#igneous", "group#metamorphic", "group#sedimentary"],
     "useDenseBlock": true,
     "overlayPath": "wtfexpedition:overlays/redstone_ore",
     "generation": [

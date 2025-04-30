@@ -23,7 +23,8 @@ public class JSONLoader {
 
     public static ArrayList<OreEntry> oreEntries = new ArrayList<>();
     public static ArrayList<BlockEntry> blockEntries = new ArrayList<>();
-    public static Map<String, BlockEntry> identifierToBlockEntry = new HashMap<>();
+    public static HashMap<String, BlockEntry> identifierToBlockEntry = new HashMap<>();
+    public static HashMap<String, ArrayList<String>> blockGroups = new HashMap<>();
 
     @SuppressWarnings({"ResultOfMethodCallIgnored", "ConstantConditions"})
     public static void loadJsonContent() {
@@ -65,10 +66,12 @@ public class JSONLoader {
 
                     // Copy over default files
                     for (Path file : defaultFiles) {
-                        String filename = fileSystem.getPath(file.getName(file.getNameCount() - 2).toString(), file.getFileName().toString()).toString();
+                        String filename = file.subpath(defaultsDirectory.getNameCount(), file.getNameCount()).toString();
                         Path configEquivalent = Paths.get(WTFExpedition.configDirectoryString, file.getFileName().toString().equals(guideFilename) ? guideFilename : filename);
 
                         if (Files.notExists(configEquivalent)) {
+                            configEquivalent.getParent().toFile().mkdirs();
+
                             if (fromJar) {
                                 try (Reader reader = new BufferedReader(new InputStreamReader(WTFExpedition.class.getClassLoader().getResourceAsStream(file.toString().substring(1)))); Writer writer = new BufferedWriter(new FileWriter(configEquivalent.toString()))) {
                                     int data;
@@ -355,6 +358,14 @@ public class JSONLoader {
 
                     if(object.has("fracturedBlockId"))
                         fracturedBlockId = object.get("fracturedBlockId").getAsString();
+
+                    if(object.has("groups")) {
+                        for (JsonElement arrayElement : object.get("groups").getAsJsonArray()) {
+                            String group = arrayElement.toString().replace("\"", "");
+
+                            blockGroups.computeIfAbsent(group, k -> new ArrayList<>()).add(blockId);
+                        }
+                    }
 
                     if(object.has("texture"))
                         texture = object.get("texture").getAsString();

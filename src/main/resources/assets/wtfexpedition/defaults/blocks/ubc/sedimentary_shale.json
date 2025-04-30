@@ -1,0 +1,34 @@
+[
+  {
+    "blockId": "undergroundbiomes:sedimentary_stone@2",
+    "name": "shale",
+    "fracturedBlockId": "shale_sand",
+    "groups": ["sedimentary"],
+    "texture": "undergroundbiomes:blocks/shale",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 30,
+    "modifiers": {
+      "mossy": "mossy_shale",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:sedimentary_sand@2",
+    "name": "shale_sand",
+    "texture": "undergroundbiomes:blocks/shale_sand",
+    "percentageStability": 10
+  },
+  {
+    "blockId": "undergroundbiomes:sedimentary_stone_mossy@2",
+    "name": "mossy_shale",
+    "fracturedBlockId": "shale_sand",
+    "texture": "undergroundbiomes:blocks/shale_mossy",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 30
+  }
+]

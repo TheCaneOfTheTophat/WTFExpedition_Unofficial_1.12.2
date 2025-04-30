@@ -24,7 +24,7 @@ public class DungeonSimpleSpider extends DungeonAbstractSimple {
 
 	@Override
 	public boolean canGenerateAt(World world, CaveListWrapper cave) {
-		IBlockState temp = BlockSets.getTransformedState(world.getBlockState(cave.centerPos.getFloorPos()), Modifier.FRACTURED);
+		IBlockState temp = BlockSets.getTransformedState(getBlockStateCompatible(world, cave.centerPos.getFloorPos()), Modifier.FRACTURED);
 		block = BlockSets.getTransformedState(temp, Modifier.MOSS);
 		
 		if (block == null)

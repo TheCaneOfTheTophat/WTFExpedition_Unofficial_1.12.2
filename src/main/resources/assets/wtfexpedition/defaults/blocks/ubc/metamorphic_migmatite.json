@@ -1,0 +1,41 @@
+[
+  {
+    "blockId": "undergroundbiomes:metamorphic_stone@7",
+    "name": "migmatite",
+    "fracturedBlockId": "migmatite_cobblestone",
+    "groups": ["metamorphic"],
+    "texture": "undergroundbiomes:blocks/migmatite",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 20,
+    "modifiers": {
+      "mossy": "#generated",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated",
+      "brick": "migmatite_bricks"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_cobble@7",
+    "name": "migmatite_cobblestone",
+    "texture": "undergroundbiomes:blocks/migmatite_cobblestone",
+    "percentageStability": 85,
+	"modifiers": {
+      "mossy": "mossy_migmatite_cobblestone"
+    }
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_cobble_mossy@7",
+    "name": "mossy_migmatite_cobblestone",
+    "percentageStability": 90
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_brick@7",
+    "name": "migmatite_bricks",
+    "irreplaceable": true,
+    "noAddons": true
+  }
+]

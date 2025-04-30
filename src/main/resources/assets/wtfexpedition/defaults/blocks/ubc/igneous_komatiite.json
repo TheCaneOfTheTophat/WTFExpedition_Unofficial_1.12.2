@@ -1,0 +1,41 @@
+[
+  {
+    "blockId": "undergroundbiomes:igneous_stone@6",
+    "name": "komatiite",
+    "fracturedBlockId": "komatiite_cobblestone",
+    "groups": ["igneous"],
+    "texture": "undergroundbiomes:blocks/komatiite",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 5,
+    "modifiers": {
+      "mossy": "#generated",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated",
+      "brick": "komatiite_bricks"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:igneous_cobble@6",
+    "name": "komatiite_cobblestone",
+    "texture": "undergroundbiomes:blocks/komatiite_cobblestone",
+    "percentageStability": 90,
+	"modifiers": {
+      "mossy": "mossy_komatiite_cobblestone"
+    }
+  },
+  {
+    "blockId": "undergroundbiomes:igneous_cobble_mossy@6",
+    "name": "mossy_komatiite_cobblestone",
+    "percentageStability": 95
+  },
+  {
+    "blockId": "undergroundbiomes:igneous_brick@6",
+    "name": "komatiite_bricks",
+    "irreplaceable": true,
+    "noAddons": true
+  }
+]

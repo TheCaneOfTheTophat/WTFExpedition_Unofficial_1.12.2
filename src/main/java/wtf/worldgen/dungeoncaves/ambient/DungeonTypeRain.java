@@ -33,7 +33,7 @@ public class DungeonTypeRain extends AbstractDungeonType {
 
 	@Override
 	public void generateCeiling(World world, Random rand, BlockPos pos, float depth) {
-		IBlockState state = BlockSets.getTransformedState(world.getBlockState(pos), Modifier.WET);
+		IBlockState state = BlockSets.getTransformedState(getBlockStateCompatible(world, pos), Modifier.WET);
 		
 		if (state != null && rand.nextBoolean())
 			replace(world, pos, state.withProperty(BlockDecoAnim.FAST, true));

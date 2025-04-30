@@ -1,0 +1,34 @@
+[
+  {
+    "blockId": "undergroundbiomes:sedimentary_stone@0",
+    "name": "limestone",
+    "fracturedBlockId": "limestone_sand",
+    "groups": ["sedimentary"],
+    "texture": "undergroundbiomes:blocks/limestone",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 30,
+    "modifiers": {
+      "mossy": "mossy_limestone",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:sedimentary_sand@0",
+    "name": "limestone_sand",
+    "texture": "undergroundbiomes:blocks/limestone_sand",
+    "percentageStability": 10
+  },
+  {
+    "blockId": "undergroundbiomes:sedimentary_stone_mossy@0",
+    "name": "mossy_limestone",
+    "fracturedBlockId": "limestone_sand",
+    "texture": "undergroundbiomes:blocks/limestone_mossy",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 30
+  }
+]

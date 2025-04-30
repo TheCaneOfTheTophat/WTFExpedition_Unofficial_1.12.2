@@ -1,0 +1,41 @@
+[
+  {
+    "blockId": "undergroundbiomes:metamorphic_stone@2",
+    "name": "marble",
+    "fracturedBlockId": "marble_cobblestone",
+    "groups": ["metamorphic"],
+    "texture": "undergroundbiomes:blocks/marble",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 20,
+    "modifiers": {
+      "mossy": "#generated",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated",
+      "brick": "marble_bricks"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_cobble@2",
+    "name": "marble_cobblestone",
+    "texture": "undergroundbiomes:blocks/marble_cobblestone",
+    "percentageStability": 85,
+	"modifiers": {
+      "mossy": "mossy_marble_cobblestone"
+    }
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_cobble_mossy@2",
+    "name": "mossy_marble_cobblestone",
+    "percentageStability": 90
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_brick@2",
+    "name": "marble_bricks",
+    "irreplaceable": true,
+    "noAddons": true
+  }
+]

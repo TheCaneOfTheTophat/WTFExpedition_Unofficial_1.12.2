@@ -1,0 +1,41 @@
+[
+  {
+    "blockId": "undergroundbiomes:igneous_stone@7",
+    "name": "dacite",
+    "fracturedBlockId": "dacite_cobblestone",
+    "groups": ["igneous"],
+    "texture": "undergroundbiomes:blocks/dacite",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 5,
+    "modifiers": {
+      "mossy": "#generated",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated",
+      "brick": "dacite_bricks"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:igneous_cobble@7",
+    "name": "dacite_cobblestone",
+    "texture": "undergroundbiomes:blocks/dacite_cobblestone",
+    "percentageStability": 90,
+	"modifiers": {
+      "mossy": "mossy_dacite_cobblestone"
+    }
+  },
+  {
+    "blockId": "undergroundbiomes:igneous_cobble_mossy@7",
+    "name": "mossy_dacite_cobblestone",
+    "percentageStability": 95
+  },
+  {
+    "blockId": "undergroundbiomes:igneous_brick@7",
+    "name": "dacite_bricks",
+    "irreplaceable": true,
+    "noAddons": true
+  }
+]

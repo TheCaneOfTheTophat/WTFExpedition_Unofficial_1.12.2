@@ -1,0 +1,41 @@
+[
+  {
+    "blockId": "undergroundbiomes:metamorphic_stone@1",
+    "name": "eclogite",
+    "fracturedBlockId": "eclogite_cobblestone",
+    "groups": ["metamorphic"],
+    "texture": "undergroundbiomes:blocks/eclogite",
+    "fracturesFirstWhenMined": true,
+    "percentageMineSpeedModifier": 20,
+    "modifiers": {
+      "mossy": "#generated",
+      "soul": "#generated",
+      "cracked": "#generated",
+      "lava_crust": "#generated",
+      "wet": "#generated",
+      "lava_dripping": "#generated",
+      "brick": "eclogite_bricks"
+    },
+	"speleothems": true
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_cobble@1",
+    "name": "eclogite_cobblestone",
+    "texture": "undergroundbiomes:blocks/eclogite_cobblestone",
+    "percentageStability": 85,
+	"modifiers": {
+      "mossy": "mossy_eclogite_cobblestone"
+    }
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_cobble_mossy@1",
+    "name": "mossy_eclogite_cobblestone",
+    "percentageStability": 90
+  },
+  {
+    "blockId": "undergroundbiomes:metamorphic_brick@1",
+    "name": "eclogite_bricks",
+    "irreplaceable": true,
+    "noAddons": true
+  }
+]
