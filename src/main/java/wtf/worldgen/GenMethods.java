@@ -2,10 +2,10 @@ package wtf.worldgen;
 
 import exterminatorjeff.undergroundbiomes.api.API;
 import exterminatorjeff.undergroundbiomes.api.UBStrataColumn;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.BlockPlanks;
-import net.minecraft.block.BlockVine;
+import exterminatorjeff.undergroundbiomes.common.block.IgneousSand;
+import exterminatorjeff.undergroundbiomes.common.block.MetamorphicSand;
+import exterminatorjeff.undergroundbiomes.common.block.SedimentarySand;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -86,15 +86,52 @@ public class GenMethods {
         return column.stone(pos.getY());
     }
 
-    public static boolean override(World world, BlockPos pos, IBlockState state, boolean update) {
-        return world.setBlockState(pos, state, update ? 19 : 18);
+    @Optional.Method(modid = "undergroundbiomes")
+    private static boolean isUbcFallingBlock(Block block) {
+        return block instanceof IgneousSand || block instanceof MetamorphicSand || block instanceof SedimentarySand;
     }
 
-    public static boolean override(World world, BlockPos pos, IBlockState state) {
-        return override(world, pos, state, true);
+    public static boolean override(World world, BlockPos pos, IBlockState state, boolean update) {
+        if((state.getBlock() instanceof BlockFalling || (WTFExpedition.UBC && isUbcFallingBlock(state.getBlock()))) && !update) {
+            int x = pos.getX() & 15;
+            int y = pos.getY();
+            int z = pos.getZ() & 15;
+
+            IBlockState prevState = world.getBlockState(pos);
+
+            if (prevState == state)
+                return false;
+
+            ExtendedBlockStorage extendedblockstorage = world.getChunkFromBlockCoords(pos).getBlockStorageArray()[y >> 4];
+
+            if (extendedblockstorage == Chunk.NULL_BLOCK_STORAGE) {
+                if (state.getBlock() == Blocks.AIR)
+                    return false;
+
+                extendedblockstorage = new ExtendedBlockStorage(y >> 4 << 4, world.provider.hasSkyLight());
+                world.getChunkFromBlockCoords(pos).getBlockStorageArray()[y >> 4] = extendedblockstorage;
+            }
+
+            extendedblockstorage.set(x, y & 15, z, state);
+
+            if (state.getLightOpacity(world, pos) != prevState.getLightOpacity(world, pos) || state.getLightValue(world, pos) != prevState.getLightValue(world, pos)) {
+                world.profiler.startSection("checkLight");
+                world.checkLight(pos);
+                world.profiler.endSection();
+            }
+
+            world.notifyBlockUpdate(pos, prevState, state, 18);
+
+            return true;
+        } else
+            return world.setBlockState(pos, state, update ? 19 : 18);
     }
 
     public static boolean replace(World world, BlockPos pos, IBlockState state) {
+        return replace(world, pos, state, false);
+    }
+
+    public static boolean replace(World world, BlockPos pos, IBlockState state, boolean update) {
         IBlockState prevState = world.getBlockState(pos);
         Block prevBlock = prevState.getBlock();
 
@@ -105,16 +142,20 @@ public class GenMethods {
             return false;
 
         if(!prevBlock.hasTileEntity(state) && ((isMaterialReplaceable(prevState)) || prevBlock.isReplaceable(world, pos)) && !(prevBlock == Blocks.FARMLAND) && !(prevState.getBlockHardness(world, pos) == -1.0F))
-            return override(world, pos, state, false);
+            return override(world, pos, state, update);
 
         return false;
     }
 
     public static boolean modify(World world, BlockPos pos, Modifier modifier) {
+        return modify(world, pos, modifier, false);
+    }
+
+    public static boolean modify(World world, BlockPos pos, Modifier modifier, boolean update) {
         IBlockState modState = BlockSets.getTransformedState(getBlockStateCompatible(world, pos), modifier);
 
         if(modState != null)
-            return override(world, pos, modState, false);
+            return override(world, pos, modState, update);
 
         return false;
     }
@@ -133,7 +174,7 @@ public class GenMethods {
             else if (denseOreState.getBlock() instanceof BlockDenseOreFalling)
                 denseOreState = denseOreState.withProperty(BlockDenseOreFalling.DENSITY, density);
 
-            override(world, pos, denseOreState);
+            override(world, pos, denseOreState, false);
         }
     }
 
@@ -146,7 +187,7 @@ public class GenMethods {
         IBlockState modState = BlockSets.blockTransformer.get(Pair.of(floorState, modifier));
 
         if (modState != null && world.isAirBlock(pos))
-            return replace(world, pos, modState);
+            return replace(world, pos, modState, true);
 
         return false;
     }
@@ -160,7 +201,7 @@ public class GenMethods {
         IBlockState modState = BlockSets.blockTransformer.get(Pair.of(ceilingState, modifier));
 
         if (modState != null && world.isAirBlock(pos))
-            return replace(world, pos, modState);
+            return replace(world, pos, modState, true);
 
         return false;
     }
@@ -236,6 +277,9 @@ public class GenMethods {
 
         if (frozen)
             speleothem = speleothem.frozen;
+
+        if(WTFExpedition.UBC)
+            override(world, pos.down(direction), direction == 1 ? below : above, false);
 
         while (remaining > 0) {
             IBlockState next = getBlockStateCompatible(world, pos.up(direction));
@@ -321,7 +365,7 @@ public class GenMethods {
     }
 
     public static void spawnVanillaSpawner(World world, BlockPos pos, ResourceLocation entityName, int count) {
-        override(world, pos, Blocks.MOB_SPAWNER.getDefaultState(), false);
+        override(world, pos, Blocks.MOB_SPAWNER.getDefaultState(), true);
 
         TileEntityMobSpawner spawner = (TileEntityMobSpawner) world.getTileEntity(pos);
 

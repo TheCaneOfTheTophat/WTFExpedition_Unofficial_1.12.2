@@ -47,7 +47,7 @@ public class DungeonTypeCaveIn extends AbstractDungeonType {
 
 		if (noise < 0.5) {
 			genFloatingStone(world, floating);
-			modify(world, floating, Modifier.FRACTURED);
+			modify(world, floating, Modifier.FRACTURED, true);
 		}
 	}
 }

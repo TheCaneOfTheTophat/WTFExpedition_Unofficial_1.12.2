@@ -17,6 +17,6 @@ public class TorchReplacer extends Replacer {
 
     @Override
     public boolean replace(World world, BlockPos pos, IBlockState oldState) {
-        return override(world, pos, WTFContent.lit_torch.getDefaultState().withProperty(BlockTorch.FACING, oldState.getValue(BlockTorch.FACING)), false);
+        return override(world, pos, WTFContent.lit_torch.getDefaultState().withProperty(BlockTorch.FACING, oldState.getValue(BlockTorch.FACING)), true);
     }
 }
