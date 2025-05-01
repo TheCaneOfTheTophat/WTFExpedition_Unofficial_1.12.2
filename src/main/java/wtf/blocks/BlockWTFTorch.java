@@ -30,7 +30,7 @@ public class BlockWTFTorch extends BlockTorch {
 		this.setHardness(0.0F);
 		this.setSoundType(SoundType.WOOD);
 		this.setCreativeTab(WTFExpedition.wtfTab);
-		this.setLightLevel((lit ? 14 : 0) / 15F);
+		this.setLightLevel((lit ? WTFExpeditionConfig.litTorchLight : WTFExpeditionConfig.extinguishedTorchLight) / 15F);
 		this.lit = lit;
 	}
 

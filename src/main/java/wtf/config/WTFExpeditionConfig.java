@@ -63,6 +63,8 @@ public class WTFExpeditionConfig {
 	public static int torchLifespan;
 	public static int torchRange;
 	public static boolean relightTorchByHand;
+	public static int litTorchLight;
+	public static int extinguishedTorchLight;
 	
 	// Ores
 	public static boolean simplexOreGen;
@@ -321,6 +323,14 @@ public class WTFExpeditionConfig {
 
 		property = config.get(category, "Torches can be relit by hand (true), or require flint and steel (false)", true);
 		relightTorchByHand = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Light level of lit torches", 14);
+		litTorchLight = Math.max(Math.min(property.getInt(), 15), 0);
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Light level of extinguished torches", 2);
+		extinguishedTorchLight = Math.max(Math.min(property.getInt(), 15), 0);
 		propertyOrder.add(property.getName());
 
 		config.setCategoryPropertyOrder(category, propertyOrder);
