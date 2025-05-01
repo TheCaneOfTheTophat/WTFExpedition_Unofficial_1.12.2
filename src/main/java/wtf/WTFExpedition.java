@@ -96,6 +96,8 @@ public class WTFExpedition {
 		JSONLoader.blockGroups.clear();
 		WTFModelRegistry.textureMap.clear();
 		WTFContent.oreEntryMap.clear();
+		WTFContent.blocks.clear();
+		WTFContent.items.clear();
 
 		CHANNEL_INSTANCE.registerMessage(WTFMessageBlockCrackEvent.Handler.class, WTFMessageBlockCrackEvent.class, 0, Side.CLIENT);
 

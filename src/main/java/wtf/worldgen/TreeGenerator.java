@@ -4,6 +4,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
+import net.minecraft.block.BlockFarmland;
+import net.minecraft.block.BlockGrassPath;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -19,6 +22,8 @@ import wtf.worldgen.trees.TreeInstance;
 import wtf.worldgen.trees.TreeTypeGetter;
 import wtf.worldgen.trees.types.AbstractTreeType;
 import wtf.worldgen.trees.types.Shrub;
+
+import static wtf.worldgen.GenMethods.*;
 
 public class TreeGenerator {
 
@@ -40,6 +45,20 @@ public class TreeGenerator {
 				int rand2 = random.nextInt(4);
 
 				SurfacePos pos = surfacePositions[4 * loopx + rand1][4 * loopz + rand2];
+				IBlockState upState = world.getBlockState(pos.up());
+
+				boolean inStructure = false;
+
+				for(BlockPos relPos : BlockPos.getAllInBoxMutable(pos.add(6, 0, 6), pos.add(-6, 0, -6))) {
+					if (isPosInSurfaceStructure(world, relPos)) {
+						inStructure = true;
+						break;
+					}
+				}
+
+				if(inStructure || upState.getBlock() instanceof BlockFarmland || upState.getBlock() instanceof BlockGrassPath)
+					continue;
+
 				Biome biome = world.getBiome(pos);
 				double numTrees = Math.max(biome.decorator.treesPerChunk, 0);
 
