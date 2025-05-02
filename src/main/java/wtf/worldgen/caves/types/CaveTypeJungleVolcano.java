@@ -27,6 +27,8 @@ public class CaveTypeJungleVolcano extends AbstractCaveType {
 				modify(world, pos, Modifier.FRACTURED);
 			else if (n > 0.5)
 				modify(world, pos, Modifier.LAVA_CRUST);
+			else if (n > 0.25)
+				modify(world, pos, Modifier.LAVA_DRIPPING);
 		else {
 			boolean mossy =  simplex.get3DNoise(world, pos) > depth;
 
@@ -65,7 +67,6 @@ public class CaveTypeJungleVolcano extends AbstractCaveType {
 		double noise = simplex.get3DNoiseScaled(world, pos.up(), 0.1);
 		
 		if (noise < 0.66) {
-
 			if(setCeilingAddon(world, pos, Modifier.FRACTURED)) {
 				for (EnumFacing facing : EnumFacing.HORIZONTALS) {
 					boolean cancel;

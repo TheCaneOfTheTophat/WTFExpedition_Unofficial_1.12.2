@@ -23,7 +23,8 @@ public class CaveTypeVolcanic extends AbstractCaveType {
 			modify(world, pos, Modifier.LAVA_CRUST);
 		else if (noise < 0.4)
 			modify(world, pos, Modifier.FRACTURED);
-
+		else if (noise < 0.6)
+			modify(world, pos, Modifier.LAVA_DRIPPING);
 	}
 
 	@Override
@@ -33,8 +34,7 @@ public class CaveTypeVolcanic extends AbstractCaveType {
 		if (noise < 0.2)
 			modify(world, pos, Modifier.LAVA_CRUST);
 		else if (noise < 0.4)
-				modify(world, pos, Modifier.FRACTURED);
-
+			modify(world, pos, Modifier.FRACTURED);
 	}
 
 	@Override
@@ -42,11 +42,9 @@ public class CaveTypeVolcanic extends AbstractCaveType {
 		double noise = simplex.get3DNoise(world, pos.up());
 
 		if (noise < 0.2)
-			 setCeilingAddon(world, pos, Modifier.FRACTURED);
+			setCeilingAddon(world, pos, Modifier.FRACTURED);
 		else
 			genSpeleothem(world, pos, getSpeleothemSize(rand, depth), depth, false);
-
-		setCeilingAddon(world, pos, Modifier.FRACTURED);
 	}
 
 	@Override
@@ -57,8 +55,6 @@ public class CaveTypeVolcanic extends AbstractCaveType {
 			 setFloorAddon(world, pos, Modifier.FRACTURED);
 		else
 			genSpeleothem(world, pos, getSpeleothemSize(rand, depth), depth, false);
-
-		setFloorAddon(world, pos, Modifier.FRACTURED);
 	}
 
 	@Override
@@ -68,7 +64,6 @@ public class CaveTypeVolcanic extends AbstractCaveType {
 		if (noise < 0.2)
 			modify(world, pos, Modifier.LAVA_CRUST);
 		else if (noise < 0.4)
-				modify(world, pos, Modifier.FRACTURED);
-
+			modify(world, pos, Modifier.FRACTURED);
 	}
 }

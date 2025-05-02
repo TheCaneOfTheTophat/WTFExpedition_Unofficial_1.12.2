@@ -5,6 +5,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import wtf.blocks.BlockDecoAnim;
 import wtf.init.BlockSets;
 import wtf.enums.Modifier;
 import wtf.utilities.wrappers.CaveListWrapper;
@@ -41,6 +42,6 @@ public class DungeonSimpleMagma extends DungeonAbstractSimple {
 	@Override
 	public void generate(World world, BlockPos pos) {
 		if (simplex.get3DNoise(world, pos) < 0.8)
-			replace(world, pos, block);
+			replace(world, pos, block.withProperty(BlockDecoAnim.FAST, true));
 	}
 }
