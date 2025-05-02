@@ -144,7 +144,10 @@ public class WTFContent {
 		// wcicTable = registerBlock(new WCICTable(), "wcic_table");
 		// GameRegistry.registerTileEntity(WCICTileEntity.class, "WCICTable");
 
-		new LavaReplacer();
+		if(WTFExpeditionConfig.replaceLavaWithWater || WTFExpeditionConfig.replaceLavaWithObsidian) {
+			new LavaReplacer(true);
+			new LavaReplacer(false);
+		}
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)

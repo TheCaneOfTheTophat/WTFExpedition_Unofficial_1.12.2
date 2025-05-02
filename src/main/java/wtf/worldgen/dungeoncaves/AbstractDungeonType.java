@@ -65,7 +65,7 @@ public abstract class AbstractDungeonType extends AbstractCaveType {
 		int chunkPosX = pos.getX() - cave.xStart;
 		int chunkPosZ = pos.getZ() - cave.zStart;
 
-		return (x * x + z * z < maxDist * maxDist) && (!(chunkPosX == 0 || chunkPosZ == 0 || chunkPosX == 15 || chunkPosZ == 15) || random.nextFloat() > 0.41F);
+		return (x * x + z * z < maxDist * maxDist) && (!(chunkPosX == 0 || chunkPosZ == 0 || chunkPosX == 15 || chunkPosZ == 15) || random.nextBoolean());
 	}
 
 	public abstract void generateCenter(World world, Random rand, CavePosition pos, float depth);

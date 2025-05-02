@@ -2,6 +2,7 @@ package wtf.worldgen;
 
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -32,8 +33,8 @@ public class WorldGenListener {
     public static ArrayList<OreGenAbstract> oreGenRegister = new ArrayList<>();
     public static HashMap<String, SimplexHelper> oreSimplexMap = new HashMap<>();
 
-    @SubscribeEvent(priority = EventPriority.LOW)
-    public void newPopulate(PopulateChunkEvent.Post event) {
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void wtfPopulate(PopulateChunkEvent.Post event) {
         World world = event.getWorld();
         int x = event.getChunkX();
         int z = event.getChunkZ();
@@ -63,6 +64,7 @@ public class WorldGenListener {
 
                 HashSet<AdjPos> caveAdj = new HashSet<>();
                 HashSet<BlockPos> caveWall = new HashSet<>();
+                IBlockState prevState = Blocks.AIR.getDefaultState();
 
                 while (Y > 0) {
                     BlockPos columnPos = new BlockPos(worldX, Y, worldZ);
@@ -70,10 +72,14 @@ public class WorldGenListener {
                     Replacer replacer = BlockSets.replacementMap.get(state.getBlock());
                     boolean fullBlock = state.isFullBlock();
 
-                    if (replacer != null)
-                        replacer.replace(world, columnPos, state);
+                    if (replacer != null) {
+                        if (replacer.replace(world, columnPos, state)) {
+                            state = world.getBlockState(columnPos);
+                            fullBlock = state.isFullBlock();
+                        }
+                    }
 
-                    if(fullBlock && (world.getBlockState(columnPos.up()).getBlock() instanceof BlockFluidBase || world.getBlockState(columnPos.up()).getBlock() instanceof BlockLiquid))
+                    if(fullBlock && (prevState.getBlock() instanceof BlockFluidBase || prevState.getBlock() instanceof BlockLiquid))
                         water.add(columnPos);
 
                     if (!surfaceFound) {
@@ -83,7 +89,7 @@ public class WorldGenListener {
                             surfaceAvg += Y;
                             surfacePositions[chunkX][chunkZ] = new SurfacePos(worldX, Y, worldZ);
 
-                            if (world.getBlockState(columnPos.up()).isFullBlock())
+                            if (prevState.isFullBlock())
                                 surfacePositions[chunkX][chunkZ].setGenerated();
                         }
                     } else {
@@ -113,6 +119,7 @@ public class WorldGenListener {
                         }
                     }
 
+                    prevState = state;
                     Y--;
                 }
             }

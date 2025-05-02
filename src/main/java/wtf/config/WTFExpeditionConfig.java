@@ -69,7 +69,11 @@ public class WTFExpeditionConfig {
 	// Ores
 	public static boolean simplexOreGen;
 
-	// Overworld : Miscellaneous
+	// Overworld: Miscellaneous
+	public static boolean replaceLavaWithWater;
+	public static boolean replaceLavaWithObsidian;
+
+	// Overworld : Surface modification
 	public static boolean enableSurfaceModification;
 	public static double forestMossyChunkPercent;
 	public static double forestMossyBlockPercent;
@@ -348,7 +352,7 @@ public class WTFExpeditionConfig {
 		propertyOrder.add(property.getName());
 
 		config.setCategoryPropertyOrder(category, propertyOrder);
-		
+
 		/* #####################################
 		              OVERWORLD: MISC
 		   ##################################### */
@@ -356,6 +360,22 @@ public class WTFExpeditionConfig {
 		category = "5a : overworld";
 
 		config.setCategoryComment(category, "Configurations for the Overworld module of WTFExpedition.");
+
+		property = config.get(category, "Replace lava with water in ocean biomes", false);
+		replaceLavaWithWater = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Replace lava with obsidian in cold biomes", true);
+		replaceLavaWithObsidian = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		config.setCategoryPropertyOrder(category, propertyOrder);
+		
+		/* #####################################
+		      OVERWORLD: SURFACE MODIFICATION
+		   ##################################### */
+		propertyOrder = new ArrayList<>();
+		category = "5b : overworld - surface modification";
 
 		property = config.get(category, "Enable all surface modification", true);
 		enableSurfaceModification = property.getBoolean();
@@ -391,7 +411,7 @@ public class WTFExpeditionConfig {
 		   OVERWORLD: SUB-BIOMES - AUTUMN FOREST
 		   ##################################### */
 		propertyOrder = new ArrayList<>();
-		category = "5b : overworld - sub biomes - autumn forest";
+		category = "5c : overworld - sub biomes - autumn forest";
 
 		property = config.get(category, "Autumn Forest ID, set to -1 to disable", 40);
 		autumnForestID = property.getInt();
@@ -419,7 +439,7 @@ public class WTFExpeditionConfig {
 		           OVERWORLD: BIG TREES
 		   ##################################### */
 		propertyOrder = new ArrayList<>();
-		category = "5c : overworld - big trees";
+		category = "5d : overworld - big trees";
 
 		property = config.get(category, "Enable custom tree generation (required for the rest of the tree configs to have effect)", true);
 		bigTreesEnabled = property.getBoolean();
