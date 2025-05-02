@@ -60,7 +60,7 @@ public abstract class OreGenAbstract {
 	public abstract int blocksReq();
 	
 	protected int getBlocksPerChunk(World world, Random rand, ChunkPos pos, double surfaceAvg, int biomeLeniency) {
-		int genNum = WTFExpeditionConfig.simplexOreGen ? (int) (simplex.get2DNoise(world, (pos.getXStart() + 8) / 8D, (pos.getZStart() + 8) / 8D) * (this.maxPerChunk - this.minPerChunk) + this.minPerChunk) : (int) (rand.nextFloat() * (maxPerChunk - minPerChunk) + minPerChunk);
+		int genNum = WTFExpeditionConfig.simplexOreGen ? (int) (simplex.get2DNoise(world, (pos.getXStart() + 16) * WTFExpeditionConfig.oreSimplexScale, (pos.getZStart() + 16) * WTFExpeditionConfig.oreSimplexScale) * (this.maxPerChunk - this.minPerChunk) + this.minPerChunk) : (int) (rand.nextFloat() * (maxPerChunk - minPerChunk) + minPerChunk);
 
 		BlockPos centerPos = new BlockPos(pos.getXStart() + 16, surfaceAvg, pos.getZStart() + 16);
 		Set<Type> biomeTypes = new HashSet<>();

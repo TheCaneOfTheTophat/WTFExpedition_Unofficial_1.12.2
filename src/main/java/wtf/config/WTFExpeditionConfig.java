@@ -68,6 +68,9 @@ public class WTFExpeditionConfig {
 	
 	// Ores
 	public static boolean simplexOreGen;
+	public static double oreSimplexScale;
+	public static boolean enableDenseOres;
+	public static boolean oresDropStone;
 
 	// Overworld: Miscellaneous
 	public static boolean replaceLavaWithWater;
@@ -349,6 +352,18 @@ public class WTFExpeditionConfig {
 
 		property = config.get(category, "Use simplex noise instead of random for ore generation", true);
 		simplexOreGen = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Global ore simplex scale. Smaller values increase the size of the noise.", 0.125);
+		oreSimplexScale = property.getDouble();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Enable dense ores", true);
+		enableDenseOres = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Ores drop stone when harvested", true);
+		oresDropStone = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		config.setCategoryPropertyOrder(category, propertyOrder);

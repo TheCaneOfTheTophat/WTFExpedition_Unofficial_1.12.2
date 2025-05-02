@@ -13,6 +13,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import wtf.blocks.*;
+import wtf.blocks.ores.IDenseOre;
+import wtf.blocks.ores.IOre;
 import wtf.enums.IcicleType;
 import wtf.init.WTFContent;
 
@@ -48,10 +50,10 @@ public class WTFModelRegistry {
         // Get all blocks
         for(Block block : WTFContent.blocks) {
             // Set state mapper for dense ores
-            if(block instanceof BlockDenseOre || block instanceof BlockDenseOreFalling) {
+            if(block instanceof IDenseOre) {
                 ModelLoader.setCustomStateMapper(block, WTFStateMappers.DENSE_ORE_STATE_MAPPER);
                 for (int i = 0; i <= 2; i++) {
-                    ModelResourceLocation mrl = block instanceof BlockDenseOreFalling ? new DerivativeFallingResourceLocation((BlockDenseOreFalling) block, "density", i) : new DerivativeResourceLocation((BlockDenseOre) block, "density", i);
+                    ModelResourceLocation mrl = new DerivativeResourceLocation(block, "density", i);
                     ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), i, mrl);
                 }
             }
@@ -60,13 +62,13 @@ public class WTFModelRegistry {
             else if(block instanceof BlockSpeleothem) {
                 ModelLoader.setCustomStateMapper(block, WTFStateMappers.SPELEOTHEM_STATE_MAPPER);
                 for (int i = 0; i <= 6; i++)
-                    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), i, new DerivativeResourceLocation((BlockSpeleothem) block, "type", i));
+                    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), i, new DerivativeResourceLocation(block, "type", i));
             }
 
-            // Set state mapper for decor
-            else if(block instanceof BlockDecoStatic || block instanceof BlockDecoAnim) {
+            // Set state mapper for decor & non-dense ores
+            else if(block instanceof IDeco || block instanceof IOre) {
                 ModelLoader.setCustomStateMapper(block, WTFStateMappers.DECORATION_STATE_MAPPER);
-                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new DerivativeResourceLocation((AbstractBlockDerivative) block, "normal"));
+                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new DerivativeResourceLocation(block, "normal"));
             }
         }
     }

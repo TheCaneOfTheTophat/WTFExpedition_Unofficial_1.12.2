@@ -14,7 +14,9 @@ import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import wtf.WTFExpedition;
-import wtf.client.DerivativeFallingResourceLocation;
+import wtf.blocks.IDerivative;
+import wtf.blocks.ores.IDenseOre;
+import wtf.blocks.ores.IOre;
 import wtf.client.DerivativeResourceLocation;
 import wtf.client.WTFModelRegistry;
 import wtf.init.WTFContent;
@@ -29,17 +31,7 @@ public class ModelDenseOre implements IModel {
     private final int meta;
 
     public ModelDenseOre(DerivativeResourceLocation location) {
-        IBlockState parentState = location.block.parentBackground;
-
-        cubeTexture = new ResourceLocation(WTFModelRegistry.textureMap.get(parentState));
-
-        overlayTexture = new ResourceLocation(WTFContent.oreEntryMap.get(location.block).getRawOverlayPath());
-
-        meta = location.meta;
-    }
-
-    public ModelDenseOre(DerivativeFallingResourceLocation location) {
-        IBlockState parentState = location.block.parentBackground;
+        IBlockState parentState = ((IDerivative) location.block).getParentBackground();
 
         cubeTexture = new ResourceLocation(WTFModelRegistry.textureMap.get(parentState));
 
@@ -70,15 +62,12 @@ public class ModelDenseOre implements IModel {
 
         @Override
         public boolean accepts(ResourceLocation modelLocation) {
-            return modelLocation.getResourceDomain().equals(WTFExpedition.modID) && modelLocation.getResourcePath().contains("dense") && modelLocation.getResourcePath().contains("hardcoded");
+            return modelLocation instanceof DerivativeResourceLocation && modelLocation.getResourceDomain().equals(WTFExpedition.modID) && (((DerivativeResourceLocation) modelLocation).block instanceof IDenseOre || ((DerivativeResourceLocation) modelLocation).block instanceof IOre);
         }
 
         @Override
         public IModel loadModel(ResourceLocation modelLocation) {
             if (this.accepts(modelLocation))
-                if(modelLocation instanceof DerivativeFallingResourceLocation)
-                    return new ModelDenseOre((DerivativeFallingResourceLocation) modelLocation);
-                else
                     return new ModelDenseOre((DerivativeResourceLocation) modelLocation);
             throw new RuntimeException();
         }

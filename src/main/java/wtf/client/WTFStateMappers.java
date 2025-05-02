@@ -1,10 +1,10 @@
 package wtf.client;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
-import wtf.blocks.*;
 
 public final class WTFStateMappers {
 
@@ -17,20 +17,15 @@ public final class WTFStateMappers {
     public static final IStateMapper DENSE_ORE_STATE_MAPPER = new StateMapperBase() {
         @Override
         protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-            if(state.getBlock() instanceof BlockDenseOreFalling) {
-                BlockDenseOreFalling ore = (BlockDenseOreFalling) state.getBlock();
-                return new DerivativeFallingResourceLocation(ore, "density", ore.getMetaFromState(state));
-            } else {
-                BlockDenseOre ore = (BlockDenseOre) state.getBlock();
-                return new DerivativeResourceLocation(ore, "density", ore.getMetaFromState(state));
-            }
+            Block ore = state.getBlock();
+            return new DerivativeResourceLocation(ore, "density", ore.getMetaFromState(state));
         }
     };
 
     public static final IStateMapper SPELEOTHEM_STATE_MAPPER = new StateMapperBase() {
         @Override
         protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-            BlockSpeleothem block = (BlockSpeleothem) state.getBlock();
+            Block block = state.getBlock();
             return new DerivativeResourceLocation(block, "type", block.getMetaFromState(state));
         }
     };
@@ -38,7 +33,7 @@ public final class WTFStateMappers {
     public static final IStateMapper DECORATION_STATE_MAPPER = new StateMapperBase() {
         @Override
         protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-            AbstractBlockDerivative block = (AbstractBlockDerivative) state.getBlock();
+            Block block = state.getBlock();
             return new DerivativeResourceLocation(block, "normal");
         }
     };

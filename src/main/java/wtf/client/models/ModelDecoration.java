@@ -16,6 +16,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import wtf.WTFExpedition;
 import wtf.blocks.BlockDecoAnim;
 import wtf.blocks.BlockDecoStatic;
+import wtf.blocks.IDeco;
+import wtf.blocks.IDerivative;
 import wtf.client.DerivativeResourceLocation;
 import wtf.client.WTFModelRegistry;
 
@@ -29,7 +31,7 @@ public class ModelDecoration implements IModel {
     private final String overlayName;
 
     public ModelDecoration(DerivativeResourceLocation location) {
-        IBlockState state = location.block.parentBackground;
+        IBlockState state = ((IDerivative) location.block).getParentBackground();
         BlockDecoAnim decoAnim = null;
         BlockDecoStatic decoStatic = null;
 
@@ -70,7 +72,7 @@ public class ModelDecoration implements IModel {
 
         @Override
         public boolean accepts(ResourceLocation modelLocation) {
-            return modelLocation.getResourceDomain().equals(WTFExpedition.modID) && modelLocation.getResourcePath().contains("decoration") && modelLocation.getResourcePath().contains("hardcoded");
+            return modelLocation instanceof DerivativeResourceLocation && modelLocation.getResourceDomain().equals(WTFExpedition.modID) && (((DerivativeResourceLocation) modelLocation).block instanceof IDeco);
         }
 
         @Override

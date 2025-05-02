@@ -29,7 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public abstract class AbstractBlockDerivative extends Block {
+public abstract class AbstractBlockDerivative extends Block implements IDerivative {
 	
 	public final IBlockState parentBackground;
 	public final IBlockState parentForeground;
@@ -141,6 +141,14 @@ public abstract class AbstractBlockDerivative extends Block {
 
     public String getDisplayName(ItemStack stack) {
         return this.getUnlocalizedName();
+    }
+
+    public IBlockState getParentBackground() {
+        return parentBackground;
+    }
+
+    public IBlockState getParentForeground() {
+        return parentForeground;
     }
 
     @Override

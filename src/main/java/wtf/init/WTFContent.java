@@ -30,11 +30,11 @@ import net.minecraft.init.Blocks;
 import org.apache.commons.lang3.tuple.Pair;
 import wtf.WTFExpedition;
 import wtf.blocks.*;
+import wtf.blocks.ores.*;
 import wtf.client.WTFModelRegistry;
 import wtf.enums.AnimatedDecoType;
 import wtf.enums.Modifier;
 import wtf.enums.StaticDecoType;
-import wtf.blocks.BlockDenseRedstoneOre;
 import wtf.blocks.BlockWTFTorch;
 import wtf.config.*;
 import wtf.blocks.BlockOreSand;
@@ -174,79 +174,67 @@ public class WTFContent {
                     stoneList.add(stone);
             }
 
+			boolean dense = entry.usesDenseBlocks() && WTFExpeditionConfig.enableDenseOres;
+
 			if(!entry.getBlockId().contains("type#")) {
 				oreState = JSONLoader.getStateFromId(entry.getBlockId());
 
-				if (entry.usesDenseBlocks()) {
-					for (String stone : stoneList) {
-						BlockEntry stoneEntry = JSONLoader.identifierToBlockEntry.get(stone);
+				for (String stone : stoneList) {
+					BlockEntry stoneEntry = JSONLoader.identifierToBlockEntry.get(stone);
 
-						if (!Loader.isModLoaded(stoneEntry.getBlockId().split(":")[0])) {
-							if(!unknownMods.contains(stoneEntry.getBlockId().split(":")[0])) {
-								WTFExpedition.wtfLog.error("Mod \"" + stoneEntry.getBlockId().split(":")[0] + "\" is not loaded!");
-								unknownMods.add(stoneEntry.getBlockId().split(":")[0]);
-							}
-							continue;
+					if (!Loader.isModLoaded(stoneEntry.getBlockId().split(":")[0])) {
+						if (!unknownMods.contains(stoneEntry.getBlockId().split(":")[0])) {
+							WTFExpedition.wtfLog.error("Mod \"" + stoneEntry.getBlockId().split(":")[0] + "\" is not loaded!");
+							unknownMods.add(stoneEntry.getBlockId().split(":")[0]);
 						}
+						continue;
+					}
 
-						if (stoneEntry == null) {
-							WTFExpedition.wtfLog.error("Stone entry \"" + stone + "\" does not exist! (encountered while registering blocks for ore \"" + entry.getName() + "\")");
-							continue;
-						}
+					if (stoneEntry == null) {
+						WTFExpedition.wtfLog.error("Stone entry \"" + stone + "\" does not exist! (encountered while registering blocks for ore \"" + entry.getName() + "\")");
+						continue;
+					}
 
-						IBlockState stoneState = JSONLoader.getStateFromId(stoneEntry.getBlockId());
+					IBlockState stoneState = JSONLoader.getStateFromId(stoneEntry.getBlockId());
 
-						if (oreState == Blocks.REDSTONE_ORE.getDefaultState()) {
-							BlockDenseRedstoneOre oreOff = new BlockDenseRedstoneOre(stoneState, false);
-							oreOff.setRegistryName(WTFExpedition.modID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
-							oreOff.setCreativeTab(WTFExpedition.wtfTab);
+					if (oreState == Blocks.REDSTONE_ORE.getDefaultState()) {
+						Block oreOff = dense ? new BlockDenseRedstoneOre(stoneState, false) : new BlockRedstoneOreDerivative(stoneState, false);
+						oreOff.setRegistryName(WTFExpedition.modID, (dense ? "dense_" : "") + stoneEntry.getName() + "_" + entry.getName());
+						oreOff.setCreativeTab(WTFExpedition.wtfTab);
 
-							BlockDenseRedstoneOre oreOn = new BlockDenseRedstoneOre(stoneState, true);
-							oreOn.setRegistryName(WTFExpedition.modID, "lit_dense_" + stoneEntry.getName() + "_" + entry.getName());
+						Block oreOn = dense ? new BlockDenseRedstoneOre(stoneState, true) : new BlockRedstoneOreDerivative(stoneState, true);
+						oreOn.setRegistryName(WTFExpedition.modID, (dense ? "lit_dense_" : "lit_") + stoneEntry.getName() + "_" + entry.getName());
 
-							oreOff.setToggled(oreOn);
-							oreOn.setToggled(oreOff);
+						((IOreRedstone) oreOff).setToggled(oreOn);
+						((IOreRedstone) oreOn).setToggled(oreOff);
 
-							blocks.add(oreOff);
-							blocks.add(oreOn);
+						blocks.add(oreOff);
+						blocks.add(oreOn);
 
-							oreEntryMap.put(oreOn, entry);
-							oreEntryMap.put(oreOff, entry);
+						oreEntryMap.put(oreOn, entry);
+						oreEntryMap.put(oreOff, entry);
 
-							reg.register(oreOff);
-							reg.register(oreOn);
+						reg.register(oreOff);
+						reg.register(oreOn);
 
-							BlockSets.adjacentFracturingBlocks.add(oreOff.getRegistryName().toString());
-							BlockSets.adjacentFracturingBlocks.add(oreOn.getRegistryName().toString());
+						BlockSets.adjacentFracturingBlocks.add(oreOff.getRegistryName().toString());
+						BlockSets.adjacentFracturingBlocks.add(oreOn.getRegistryName().toString());
 
-							BlockSets.stoneAndOre.put(new StoneAndOre(stoneState, oreState), oreOff.getDefaultState());
+						BlockSets.stoneAndOre.put(new StoneAndOre(stoneState, oreState), oreOff.getDefaultState());
 
-						} else if (stoneState.getBlock() instanceof BlockFalling) {
-							// Sadly, there is no such thing as a falling redstone ore since both redstone logic and falling block logic depend on ticking. :(
-							BlockDenseOreFalling ore = new BlockDenseOreFalling(stoneState, oreState);
-							ore.setRegistryName(WTFExpedition.modID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
-							ore.setCreativeTab(WTFExpedition.wtfTab);
+					} else {
+						// Sadly, there is no such thing as a falling redstone ore since both redstone logic and falling block logic depend on ticking. :(
+						Block ore = dense ? (stoneState.getBlock() instanceof BlockFalling ? new BlockDenseOreFalling(stoneState, oreState) : new BlockDenseOre(stoneState, oreState)) : (stoneState.getBlock() instanceof BlockFalling ? new BlockOreDerivativeFalling(stoneState, oreState) : new BlockOreDerivative(stoneState, oreState));
+						ore.setRegistryName(WTFExpedition.modID, (dense ? "dense_" : "") + stoneEntry.getName() + "_" + entry.getName());
+						ore.setCreativeTab(WTFExpedition.wtfTab);
 
-							blocks.add(ore);
-							oreEntryMap.put(ore, entry);
-							BlockSets.adjacentFracturingBlocks.add(ore.getRegistryName().toString());
+						blocks.add(ore);
+						oreEntryMap.put(ore, entry);
+						BlockSets.adjacentFracturingBlocks.add(ore.getRegistryName().toString());
 
-							BlockSets.stoneAndOre.put(new StoneAndOre(stoneState, oreState), ore.getDefaultState());
+						BlockSets.stoneAndOre.put(new StoneAndOre(stoneState, oreState), ore.getDefaultState());
 
-							reg.register(ore);
-						} else {
-							BlockDenseOre ore = new BlockDenseOre(stoneState, oreState);
-							ore.setRegistryName(WTFExpedition.modID, "dense_" + stoneEntry.getName() + "_" + entry.getName());
-							ore.setCreativeTab(WTFExpedition.wtfTab);
-
-							blocks.add(ore);
-							oreEntryMap.put(ore, entry);
-							BlockSets.adjacentFracturingBlocks.add(ore.getRegistryName().toString());
-
-							BlockSets.stoneAndOre.put(new StoneAndOre(stoneState, oreState), ore.getDefaultState());
-
-							reg.register(ore);
-						}
+						reg.register(ore);
 					}
 				}
 			} else {
@@ -285,7 +273,7 @@ public class WTFContent {
 			}
 
 			for(OreGeneratorSettings generatorSettings : entry.getGenerators()) {
-				OreGenAbstract generator = getOreGenerator(oreState, entry, generatorSettings, true);
+				OreGenAbstract generator = getOreGenerator(oreState, entry.usesDenseBlocks(), generatorSettings, true);
 
 				if (generator != null) {
 					WorldGenListener.oreGenRegister.add(generator);
@@ -467,7 +455,13 @@ public class WTFContent {
 				registerItemBlockNoModel(reg, new ItemBlockDerivative((BlockDenseOre) block));
 
 			else if (block instanceof BlockDenseOreFalling)
-				registerItemBlockNoModel(reg, new ItemBlockDerivative.ItemBlockDerivativeFalling((BlockDenseOreFalling) block));
+				registerItemBlockNoModel(reg, new ItemBlockDerivative((BlockDenseOreFalling) block));
+
+			else if (block instanceof BlockOreDerivative)
+				registerItemBlockNoModel(reg, new ItemBlockDerivative((BlockOreDerivative) block));
+
+			else if (block instanceof BlockOreDerivativeFalling)
+				registerItemBlockNoModel(reg, new ItemBlockDerivative((BlockOreDerivativeFalling) block));
 
 			else if (block instanceof BlockSpeleothem)
 				if (block instanceof BlockSpeleothemFrozen)
@@ -591,7 +585,7 @@ public class WTFContent {
 		return EntityEntryBuilder.create().id(rl, entityCounter).entity(entityClass).name(rl.toString()).tracker(64, 1, true).egg(entityCounter * 16, entityCounter * 22).build();
 	}
 
-	public static OreGenAbstract getOreGenerator(IBlockState oreState, OreEntry oreEntry, OreGeneratorSettings settings, boolean getSecondary) {
+	public static OreGenAbstract getOreGenerator(IBlockState oreState, boolean denseBlock, OreGeneratorSettings settings, boolean getSecondary) {
 		String primary = settings.primaryGenerationType;
 		String secondary = settings.secondaryGenerationType;
 		
@@ -601,13 +595,11 @@ public class WTFContent {
 
 		boolean biomeWhitelist = settings.biomeTypeListWhitelist;
 		boolean dimensionWhitelist = settings.dimensionListWhitelist;
-		
-		boolean denseBlock = oreEntry.usesDenseBlocks();
 
 		OreGenAbstract generator = null;
 		
 		if(getSecondary && !secondary.isEmpty()) {
-			OreGenAbstract primaryGen = getOreGenerator(oreState, oreEntry, settings, false);
+			OreGenAbstract primaryGen = getOreGenerator(oreState, denseBlock, settings, false);
 			
 			if (secondary.equals("cave")) {
 				ArrayList<OreGenCaveFloor.surface> surfaceList = new ArrayList<>();

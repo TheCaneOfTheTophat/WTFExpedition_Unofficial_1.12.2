@@ -1,5 +1,6 @@
-package wtf.blocks;
+package wtf.blocks.ores;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,7 +16,7 @@ import wtf.init.BlockSets;
 
 import java.util.Random;
 
-public class BlockDenseRedstoneOre extends BlockDenseOre {
+public class BlockDenseRedstoneOre extends BlockDenseOre implements IOreRedstone {
 
     private final boolean isOn;
     private BlockDenseRedstoneOre toggledBlock;
@@ -111,7 +112,7 @@ public class BlockDenseRedstoneOre extends BlockDenseOre {
         return toggledBlock.getDefaultState().withProperty(DENSITY, density);
     }
 
-    public void setToggled(BlockDenseRedstoneOre block) {
-        toggledBlock = block;
+    public void setToggled(Block block) {
+        toggledBlock = (BlockDenseRedstoneOre) block;
     }
 }

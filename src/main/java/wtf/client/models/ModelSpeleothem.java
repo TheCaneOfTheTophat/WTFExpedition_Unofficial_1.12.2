@@ -21,6 +21,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import wtf.WTFExpedition;
 import wtf.blocks.BlockSpeleothem;
 import wtf.blocks.BlockSpeleothemFrozen;
+import wtf.blocks.IDerivative;
 import wtf.client.DerivativeResourceLocation;
 import wtf.client.WTFModelRegistry;
 
@@ -41,11 +42,11 @@ public class ModelSpeleothem implements IModel {
         IBlockState parentState;
 
         if(location.block instanceof BlockSpeleothemFrozen) {
-            parentState = ((BlockSpeleothem) location.block.parentForeground.getBlock()).parentBackground;
+            parentState = ((BlockSpeleothem) ((IDerivative) location.block).getParentForeground().getBlock()).parentBackground;
             frozen = true;
         }
         else {
-            parentState = location.block.parentBackground;
+            parentState = ((IDerivative) location.block).getParentBackground();
             frozen = false;
         }
 
@@ -88,7 +89,7 @@ public class ModelSpeleothem implements IModel {
 
         @Override
         public boolean accepts(ResourceLocation modelLocation) {
-            return modelLocation.getResourceDomain().equals(WTFExpedition.modID) && modelLocation.getResourcePath().contains("speleothem") && modelLocation.getResourcePath().contains("hardcoded");
+            return modelLocation instanceof DerivativeResourceLocation && modelLocation.getResourceDomain().equals(WTFExpedition.modID) && (((DerivativeResourceLocation) modelLocation).block instanceof BlockSpeleothem);
         }
 
         @Override

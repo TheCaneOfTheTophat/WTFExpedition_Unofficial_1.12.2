@@ -1,4 +1,4 @@
-package wtf.blocks;
+package wtf.blocks.ores;
 
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
@@ -15,10 +15,12 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import wtf.WTFExpedition;
+import wtf.blocks.AbstractBlockDerivativeFalling;
+import wtf.config.WTFExpeditionConfig;
 
 import javax.annotation.Nullable;
 
-public class BlockDenseOreFalling extends AbstractBlockDerivativeFalling {
+public class BlockDenseOreFalling extends AbstractBlockDerivativeFalling implements IDenseOre {
 
     public static final PropertyInteger DENSITY = PropertyInteger.create("density", 0, 2);
 
@@ -39,10 +41,14 @@ public class BlockDenseOreFalling extends AbstractBlockDerivativeFalling {
         this.onBlockHarvested(world, pos, state, player);
 
         if(state.getValue(DENSITY) < 2 && !player.capabilities.isCreativeMode)
-            state = state.withProperty(DENSITY, state.getValue(DENSITY)+1);
+            state = state.withProperty(DENSITY, state.getValue(DENSITY) + 1);
         else {
-            if (!player.capabilities.isCreativeMode)
-                this.parentBackground.getBlock().dropBlockAsItem(world, pos, this.parentBackground, 0);
+            if(WTFExpeditionConfig.oresDropStone) {
+                if (!player.capabilities.isCreativeMode)
+                    this.parentBackground.getBlock().dropBlockAsItem(world, pos, this.parentBackground, 0);
+
+                player.addStat(StatList.getBlockStats(this.parentBackground.getBlock()));
+            }
 
             state = Blocks.AIR.getDefaultState();
         }

@@ -26,6 +26,8 @@ import net.minecraftforge.fml.common.Optional;
 import org.apache.commons.lang3.tuple.Pair;
 import wtf.WTFExpedition;
 import wtf.blocks.*;
+import wtf.blocks.ores.BlockDenseOre;
+import wtf.blocks.ores.BlockDenseOreFalling;
 import wtf.config.WTFExpeditionConfig;
 import wtf.enums.IcicleType;
 import wtf.enums.Modifier;
