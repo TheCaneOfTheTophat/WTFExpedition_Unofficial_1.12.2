@@ -3,6 +3,7 @@
     "blockId": "minecraft:lapis_ore@0",
     "name": "lapis_ore",
     "stoneList": ["stone", "group#igneous", "group#metamorphic", "group#sedimentary"],
+    "defaultStone": "stone",
     "useDenseBlock": true,
     "overlayPath": "wtfexpedition:overlays/lapis_ore",
     "generation": [

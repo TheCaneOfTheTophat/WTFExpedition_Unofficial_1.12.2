@@ -156,6 +156,7 @@ public class JSONLoader {
 
                 if(parent.contains("ores")) {
                     ArrayList<String> stoneList = new ArrayList<>();
+                    String defaultStone = "";
                     boolean useDenseBlock = false;
                     String overlayPath = "";
 
@@ -164,6 +165,9 @@ public class JSONLoader {
                     if(object.has("stoneList"))
                         for (JsonElement arrayElement : object.get("stoneList").getAsJsonArray())
                             stoneList.add(arrayElement.getAsString());
+
+                    if(object.has("defaultStone"))
+                        defaultStone = object.get("defaultStone").getAsString();
 
                     if(object.has("useDenseBlock"))
                         useDenseBlock = object.get("useDenseBlock").getAsBoolean();
@@ -342,7 +346,7 @@ public class JSONLoader {
                         }
                     }
 
-                    OreEntry entryOre = new OreEntry(blockId, name, stoneList, useDenseBlock, overlayPath, generators);
+                    OreEntry entryOre = new OreEntry(blockId, name, stoneList, defaultStone, useDenseBlock, overlayPath, generators);
 
                     oreEntries.add(entryOre);
                 } else {

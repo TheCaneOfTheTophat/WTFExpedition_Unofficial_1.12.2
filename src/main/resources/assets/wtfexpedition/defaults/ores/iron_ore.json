@@ -3,6 +3,7 @@
     "blockId": "minecraft:iron_ore@0",
     "name": "iron_ore",
     "stoneList": ["stone", "group#igneous", "group#metamorphic", "group#sedimentary"],
+    "defaultStone": "stone",
     "useDenseBlock": true,
     "overlayPath": "wtfexpedition:overlays/iron_ore",
     "generation": [

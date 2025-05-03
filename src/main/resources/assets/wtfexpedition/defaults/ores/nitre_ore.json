@@ -3,6 +3,7 @@
     "blockId": "wtfexpedition:nitre_ore@0",
     "name": "nitre_ore",
     "stoneList": ["stone", "group#igneous", "group#metamorphic", "group#sedimentary"],
+    "defaultStone": "stone",
     "useDenseBlock": true,
     "overlayPath": "wtfexpedition:overlays/nitre_ore",
     "generation": [

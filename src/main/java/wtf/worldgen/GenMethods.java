@@ -82,14 +82,14 @@ public class GenMethods {
     }
 
     @Optional.Method(modid = "undergroundbiomes")
-    private static IBlockState getUBCStone(World world, BlockPos pos) {
+    public static IBlockState getUBCStone(World world, BlockPos pos) {
         UBStrataColumn column = API.STRATA_COLUMN_PROVIDER.ubStrataColumnProvider(world.provider.getDimension()).strataColumn(pos.getX(), pos.getZ());
 
         return column.stone(pos.getY());
     }
 
     @Optional.Method(modid = "undergroundbiomes")
-    private static boolean isUbcFallingBlock(Block block) {
+    public static boolean isUbcFallingBlock(Block block) {
         return block instanceof IgneousSand || block instanceof MetamorphicSand || block instanceof SedimentarySand;
     }
 

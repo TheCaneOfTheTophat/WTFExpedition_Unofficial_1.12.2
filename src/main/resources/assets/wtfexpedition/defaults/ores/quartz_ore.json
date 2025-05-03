@@ -3,6 +3,7 @@
     "blockId": "minecraft:quartz_ore@0",
     "name": "quartz_ore",
     "stoneList": ["netherrack"],
+    "defaultStone": "netherrack",
     "useDenseBlock": true,
     "overlayPath": "wtfexpedition:overlays/quartz_ore",
     "generation": [

@@ -50,6 +50,7 @@ import wtf.worldgen.ores.oregenerators.secondary.OreGenUnderWater;
 import wtf.utilities.wrappers.StoneAndOre;
 import wtf.worldgen.SubBiomeGenerator;
 import wtf.worldgen.replacers.LavaReplacer;
+import wtf.worldgen.replacers.OreReplacer;
 import wtf.worldgen.subbiomes.BiomeAutumnForest;
 
 @Mod.EventBusSubscriber
@@ -178,20 +179,36 @@ public class WTFContent {
 
 			if(!entry.getBlockId().contains("type#")) {
 				oreState = JSONLoader.getStateFromId(entry.getBlockId());
+				BlockEntry defaultStoneEntry = JSONLoader.identifierToBlockEntry.get(entry.getDefaultStone());
+
+				if (defaultStoneEntry == null) {
+					WTFExpedition.wtfLog.error("Default stone entry \"" + entry.getDefaultStone() + "\" does not exist! (encountered while registering blocks for ore \"" + entry.getName() + "\")");
+					continue;
+				}
+
+				if (!Loader.isModLoaded(defaultStoneEntry.getBlockId().split(":")[0])) {
+					if (!unknownMods.contains(defaultStoneEntry.getBlockId().split(":")[0])) {
+						WTFExpedition.wtfLog.error("Mod \"" + defaultStoneEntry.getBlockId().split(":")[0] + "\" is not loaded!");
+						unknownMods.add(defaultStoneEntry.getBlockId().split(":")[0]);
+					}
+					continue;
+				}
+
+				IBlockState defaultStoneState = JSONLoader.getStateFromId(defaultStoneEntry.getBlockId());
 
 				for (String stone : stoneList) {
 					BlockEntry stoneEntry = JSONLoader.identifierToBlockEntry.get(stone);
+
+					if (stoneEntry == null) {
+						WTFExpedition.wtfLog.error("Stone entry \"" + stone + "\" does not exist! (encountered while registering blocks for ore \"" + entry.getName() + "\")");
+						continue;
+					}
 
 					if (!Loader.isModLoaded(stoneEntry.getBlockId().split(":")[0])) {
 						if (!unknownMods.contains(stoneEntry.getBlockId().split(":")[0])) {
 							WTFExpedition.wtfLog.error("Mod \"" + stoneEntry.getBlockId().split(":")[0] + "\" is not loaded!");
 							unknownMods.add(stoneEntry.getBlockId().split(":")[0]);
 						}
-						continue;
-					}
-
-					if (stoneEntry == null) {
-						WTFExpedition.wtfLog.error("Stone entry \"" + stone + "\" does not exist! (encountered while registering blocks for ore \"" + entry.getName() + "\")");
 						continue;
 					}
 
@@ -220,6 +237,9 @@ public class WTFContent {
 						BlockSets.adjacentFracturingBlocks.add(oreOff.getRegistryName().toString());
 						BlockSets.adjacentFracturingBlocks.add(oreOn.getRegistryName().toString());
 
+						if(stoneState == defaultStoneState)
+							BlockSets.oresDefaultStone.put(oreState, stoneState);
+
 						BlockSets.stoneAndOre.put(new StoneAndOre(stoneState, oreState), oreOff.getDefaultState());
 
 					} else {
@@ -232,11 +252,17 @@ public class WTFContent {
 						oreEntryMap.put(ore, entry);
 						BlockSets.adjacentFracturingBlocks.add(ore.getRegistryName().toString());
 
+						if(stoneState == defaultStoneState)
+							BlockSets.oresDefaultStone.put(oreState, stoneState);
+
 						BlockSets.stoneAndOre.put(new StoneAndOre(stoneState, oreState), ore.getDefaultState());
 
 						reg.register(ore);
 					}
 				}
+
+				if(WTFExpeditionConfig.oreGenEnabled)
+					new OreReplacer(oreState.getBlock());
 			} else {
 				String modifierString = entry.getBlockId().split("#")[1].toLowerCase();
 

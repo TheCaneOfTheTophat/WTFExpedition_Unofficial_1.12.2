@@ -7,6 +7,7 @@ public class OreEntry {
     private final String name;
 
     private final ArrayList<String> stoneList;
+    private final String defaultStone;
 
     private final boolean useDenseBlock;
 
@@ -14,10 +15,11 @@ public class OreEntry {
 
     private final ArrayList<OreGeneratorSettings> settings;
 
-    public OreEntry(String blockId, String name, ArrayList<String> stoneList, boolean useDenseBlock, String overlayPath, ArrayList<OreGeneratorSettings> settings) {
+    public OreEntry(String blockId, String name, ArrayList<String> stoneList, String defaultStone, boolean useDenseBlock, String overlayPath, ArrayList<OreGeneratorSettings> settings) {
         this.blockId = blockId;
         this.name = name;
         this.stoneList = stoneList;
+        this.defaultStone = defaultStone;
         this.useDenseBlock = useDenseBlock;
         this.overlayPath = overlayPath;
         this.settings = settings;
@@ -33,6 +35,10 @@ public class OreEntry {
 
     public ArrayList<String> getStoneList() {
         return stoneList;
+    }
+
+    public String getDefaultStone() {
+        return defaultStone;
     }
 
     public boolean usesDenseBlocks() {
