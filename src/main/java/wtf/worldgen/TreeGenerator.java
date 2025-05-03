@@ -62,7 +62,7 @@ public class TreeGenerator {
 				Biome biome = world.getBiome(pos);
 				double numTrees = Math.max(biome.decorator.treesPerChunk, 0);
 
-				if(biome instanceof BiomeForest && ObfuscationReflectionHelper.getPrivateValue(BiomeForest.class, ((BiomeForest) biome), "type") == BiomeForest.Type.ROOFED)
+				if(biome instanceof BiomeForest && ObfuscationReflectionHelper.getPrivateValue(BiomeForest.class, ((BiomeForest) biome), "field_150632_aF") == BiomeForest.Type.ROOFED)
 					numTrees = 16;
 
 				double genChance = (16 * numTrees / 256) + (biome.decorator.extraTreeChance / 16F);

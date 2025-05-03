@@ -5,6 +5,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Loader;
@@ -27,6 +29,7 @@ import wtf.init.JSONLoader;
 import wtf.init.WTFContent;
 import wtf.network.WTFMessageBlockCrackEvent;
 import wtf.worldgen.WorldGenListener;
+import wtf.worldgen.caves.CaveTypeRegister;
 import wtf.worldgen.ores.VanillaOreGenCatcher;
 import wtf.worldgen.replacers.TorchReplacer;
 import wtf.worldgen.trees.WorldGenTreeCancel;
@@ -100,6 +103,11 @@ public class WTFExpedition {
 		WTFContent.items.clear();
 
 		CHANNEL_INSTANCE.registerMessage(WTFMessageBlockCrackEvent.Handler.class, WTFMessageBlockCrackEvent.class, 0, Side.CLIENT);
+
+		for (ResourceLocation location : Biome.REGISTRY.getKeys()) {
+			Biome biome = Biome.REGISTRY.getObject(location);
+			CaveTypeRegister.getCaveProfile(biome);
+		}
 
 		BlockSets.initBlockSets();
 

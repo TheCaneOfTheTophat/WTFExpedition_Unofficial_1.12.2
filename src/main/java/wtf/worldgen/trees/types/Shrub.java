@@ -16,8 +16,8 @@ public class Shrub {
     private final IBlockState wood;
 	
 	public Shrub(WorldGenShrub oldshrub) {
-		this.leaves = ObfuscationReflectionHelper.getPrivateValue(WorldGenShrub.class, oldshrub, "leavesMetadata");
-		this.wood = ObfuscationReflectionHelper.getPrivateValue(WorldGenShrub.class, oldshrub, "woodMetadata");
+		this.leaves = ObfuscationReflectionHelper.getPrivateValue(WorldGenShrub.class, oldshrub, "field_150528_a");
+		this.wood = ObfuscationReflectionHelper.getPrivateValue(WorldGenShrub.class, oldshrub, "field_150527_b");
 	}
 	
 	public boolean generate(World worldIn, Random rand, BlockPos position) {

@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+import wtf.WTFExpedition;
 import wtf.config.WTFExpeditionConfig;
 import wtf.utilities.wrappers.AdjPos;
 import wtf.utilities.wrappers.CaveListWrapper;
@@ -38,7 +39,7 @@ public class DungeonGenerator {
 					ceilPos = ceilPos.down();
 				}
 
-				System.out.println("Generating dungeon " + dungeon.name + " @ " + cave.getCenter().x + " " + (cave.getCenter().floor + 2) + " " + cave.getCenter().z);
+				WTFExpedition.wtfLog.debug("Generating dungeon " + dungeon.name + " @ " + cave.getCenter().x + " " + (cave.getCenter().floor + 2) + " " + cave.getCenter().z);
 				
 				dungeon.setupForGen(cave);
 				float depth = (float) (cave.getAvgFloor() / surfaceAverage);

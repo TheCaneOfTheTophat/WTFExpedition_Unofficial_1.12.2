@@ -5,6 +5,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import wtf.WTFExpedition;
 
 public class SimplexHelper {
 
@@ -72,7 +73,7 @@ public class SimplexHelper {
 	@SubscribeEvent
 	public void onWorldUnload(WorldEvent.Unload event){
 		if (!event.getWorld().isRemote) {
-			System.out.println("Clearing world variable for simplex " + this.name);
+			WTFExpedition.wtfLog.debug("Clearing world variable for simplex " + this.name);
 			simplex = null;
 		}
 	}

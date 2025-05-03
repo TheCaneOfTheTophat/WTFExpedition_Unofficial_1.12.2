@@ -64,9 +64,9 @@ public class TreeTypeGetter {
 		}
 
 		if (oldTree instanceof WorldGenTrees) {
-			IBlockState wood = ObfuscationReflectionHelper.getPrivateValue(WorldGenTrees.class, (WorldGenTrees)oldTree, "metaWood");
-			IBlockState leaf = ObfuscationReflectionHelper.getPrivateValue(WorldGenTrees.class, (WorldGenTrees)oldTree, "metaLeaves");
-			Boolean vines = ObfuscationReflectionHelper.getPrivateValue(WorldGenTrees.class, (WorldGenTrees)oldTree, "vinesGrow");
+			IBlockState wood = ObfuscationReflectionHelper.getPrivateValue(WorldGenTrees.class, (WorldGenTrees)oldTree, "field_76532_c");
+			IBlockState leaf = ObfuscationReflectionHelper.getPrivateValue(WorldGenTrees.class, (WorldGenTrees)oldTree, "field_76530_d");
+			Boolean vines = ObfuscationReflectionHelper.getPrivateValue(WorldGenTrees.class, (WorldGenTrees)oldTree, "field_76531_b");
 
 			if (wood == woodJungle) {
 				treeTypes.put(oldTree, new JungleTree());

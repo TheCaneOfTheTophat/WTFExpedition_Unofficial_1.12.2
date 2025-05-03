@@ -6,6 +6,7 @@ import java.util.HashSet;
 
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
+import wtf.WTFExpedition;
 import wtf.worldgen.caves.types.CaveTypeDefault;
 import wtf.worldgen.caves.types.CaveTypeDirtWater;
 import wtf.worldgen.caves.types.CaveTypeFungal;
@@ -76,7 +77,7 @@ public class CaveTypeRegister {
 
 	public static CaveProfile getNewProfile(Biome biome) {
 
-		//System.out.println("No profile found, generating new profile for  " + biome.getBiomeName());
+
 
 		ArrayList<AbstractDungeonType> dungeonShallow = new ArrayList<>(DungeonTypeRegister.defaultList());
 		AbstractCaveType shallow = simple;
@@ -188,7 +189,7 @@ public class CaveTypeRegister {
 		}
 
 		CaveProfile profile = new CaveProfile(deep, mid, shallow);
-		System.out.println("Setting up cave biomes for " + biome.getBiomeName() + " SHALLOW: " + shallow.name + " MID: " + mid.name + " DEEP: " + deep.name);
+		WTFExpedition.wtfLog.debug("Setting up cave biomes for " + biome.getBiomeName() + " SHALLOW: " + shallow.name + " MID: " + mid.name + " DEEP: " + deep.name);
 		profile.dungeonDeep = new ArrayList<>(new HashSet<>(dungeonDeep));
 		profile.dungeonMid = new ArrayList<>(new HashSet<>(dungeonMid));
 		profile.dungeonShallow = new ArrayList<>(new HashSet<>(dungeonShallow));
