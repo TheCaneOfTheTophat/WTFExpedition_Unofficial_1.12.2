@@ -4,6 +4,7 @@ import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -71,6 +72,16 @@ public class BlockDenseOre extends AbstractBlockDerivative implements IDenseOre 
 		}
 
 		super.harvestBlock(worldIn, player, pos, state, te, stack);
+	}
+
+	@Override
+	public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos) {
+		return Math.max(parentBackground.getBlockHardness(worldIn, pos), parentForeground.getBlockHardness(worldIn, pos));
+	}
+
+	@Override
+	public float getExplosionResistance(Entity exploder) {
+		return Math.max(parentBackground.getBlock().getExplosionResistance(exploder) / 2.5F, parentForeground.getBlock().getExplosionResistance(exploder) / 2.5F);
 	}
 
     @Override

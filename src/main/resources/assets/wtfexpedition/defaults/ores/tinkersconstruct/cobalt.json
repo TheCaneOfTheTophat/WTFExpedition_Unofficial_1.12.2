@@ -1,0 +1,28 @@
+[
+  {
+    "blockId": "tconstruct:ore@0",
+    "name": "cobalt_ore",
+    "stoneList": ["netherrack"],
+    "defaultStone": "netherrack",
+    "useDenseBlock": true,
+    "fracturesAdjacentBlocks": true,
+    "overlayPath": "wtfexpedition:overlays/ore_cobalt",
+    "generation": [
+      {
+        "minAmountPerChunk": -30,
+        "maxAmountPerChunk": 60,
+        "surfaceHeightMinPercentage": 5,
+        "surfaceHeightMaxPercentage": 95,
+        "dimensionList": [-1],
+        "veinPercentDensity": 75,
+        "primaryGenerationType": "vein",
+        "vein_generation": {
+          "veinPitchAverage": 0.44999998807907104,
+          "veinLength": 20,
+          "veinWidth": 1,
+          "veinVerticalThickness": 1
+        }
+      }
+    ]
+  }
+]

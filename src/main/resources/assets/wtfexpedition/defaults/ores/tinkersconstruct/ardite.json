@@ -1,0 +1,25 @@
+[
+  {
+    "blockId": "tconstruct:ore@1",
+    "name": "ardite_ore",
+    "stoneList": ["netherrack"],
+    "defaultStone": "netherrack",
+    "useDenseBlock": true,
+    "fracturesAdjacentBlocks": true,
+    "overlayPath": "wtfexpedition:overlays/ore_ardite",
+    "generation": [
+      {
+        "minAmountPerChunk": -30,
+        "maxAmountPerChunk": 60,
+        "surfaceHeightMinPercentage": 5,
+        "surfaceHeightMaxPercentage": 95,
+        "dimensionList": [-1],
+        "veinPercentDensity": 15,
+        "primaryGenerationType": "cloud",
+        "cloud_generation": {
+          "cloudDiameter": 14
+        }
+      }
+    ]
+  }
+]

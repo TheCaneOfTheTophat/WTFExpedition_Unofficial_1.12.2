@@ -186,6 +186,14 @@ public class WTFContent {
 					continue;
 				}
 
+				if (!Loader.isModLoaded(entry.getBlockId().split(":")[0])) {
+					if (!unknownMods.contains(entry.getBlockId().split(":")[0])) {
+						WTFExpedition.wtfLog.error("Mod \"" + entry.getBlockId().split(":")[0] + "\" is not loaded!");
+						unknownMods.add(entry.getBlockId().split(":")[0]);
+					}
+					continue;
+				}
+
 				if (!Loader.isModLoaded(defaultStoneEntry.getBlockId().split(":")[0])) {
 					if (!unknownMods.contains(defaultStoneEntry.getBlockId().split(":")[0])) {
 						WTFExpedition.wtfLog.error("Mod \"" + defaultStoneEntry.getBlockId().split(":")[0] + "\" is not loaded!");
