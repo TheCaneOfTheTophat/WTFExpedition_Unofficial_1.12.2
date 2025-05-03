@@ -196,6 +196,9 @@ public class WTFContent {
 
 				IBlockState defaultStoneState = JSONLoader.getStateFromId(defaultStoneEntry.getBlockId());
 
+				if(!WTFExpeditionConfig.onlyDerivativeOresFracture && WTFExpeditionConfig.miningOreFractures && entry.fracturesAdjacentBlocks())
+					BlockSets.adjacentFracturingBlocks.add(oreState);
+
 				for (String stone : stoneList) {
 					BlockEntry stoneEntry = JSONLoader.identifierToBlockEntry.get(stone);
 
@@ -234,8 +237,17 @@ public class WTFContent {
 						reg.register(oreOff);
 						reg.register(oreOn);
 
-						BlockSets.adjacentFracturingBlocks.add(oreOff.getRegistryName().toString());
-						BlockSets.adjacentFracturingBlocks.add(oreOn.getRegistryName().toString());
+						if(WTFExpeditionConfig.miningOreFractures && entry.fracturesAdjacentBlocks()) {
+							if(dense) {
+								for (int i = 0; i < 3; i++) {
+									BlockSets.adjacentFracturingBlocks.add(oreOn.getStateFromMeta(i));
+									BlockSets.adjacentFracturingBlocks.add(oreOff.getStateFromMeta(i));
+								}
+							} else {
+								BlockSets.adjacentFracturingBlocks.add(oreOn.getDefaultState());
+								BlockSets.adjacentFracturingBlocks.add(oreOff.getDefaultState());
+							}
+						}
 
 						if(stoneState == defaultStoneState)
 							BlockSets.oresDefaultStone.put(oreState, stoneState);
@@ -250,7 +262,14 @@ public class WTFContent {
 
 						blocks.add(ore);
 						oreEntryMap.put(ore, entry);
-						BlockSets.adjacentFracturingBlocks.add(ore.getRegistryName().toString());
+
+						if(WTFExpeditionConfig.miningOreFractures && entry.fracturesAdjacentBlocks()) {
+							if(dense) {
+								for (int i = 0; i < 3; i++)
+									BlockSets.adjacentFracturingBlocks.add(ore.getStateFromMeta(i));
+							} else
+								BlockSets.adjacentFracturingBlocks.add(ore.getDefaultState());
+						}
 
 						if(stoneState == defaultStoneState)
 							BlockSets.oresDefaultStone.put(oreState, stoneState);
@@ -261,7 +280,7 @@ public class WTFContent {
 					}
 				}
 
-				if(WTFExpeditionConfig.oreGenEnabled)
+				if(WTFExpeditionConfig.oreGenEnabled && WTFExpeditionConfig.replaceOreWithEquivalents)
 					new OreReplacer(oreState.getBlock());
 			} else {
 				String modifierString = entry.getBlockId().split("#")[1].toLowerCase();

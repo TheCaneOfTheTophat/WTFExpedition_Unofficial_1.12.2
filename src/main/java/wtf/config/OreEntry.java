@@ -11,16 +11,19 @@ public class OreEntry {
 
     private final boolean useDenseBlock;
 
+    private final boolean fracturesAdjacentBlocks;
+
     private final String overlayPath;
 
     private final ArrayList<OreGeneratorSettings> settings;
 
-    public OreEntry(String blockId, String name, ArrayList<String> stoneList, String defaultStone, boolean useDenseBlock, String overlayPath, ArrayList<OreGeneratorSettings> settings) {
+    public OreEntry(String blockId, String name, ArrayList<String> stoneList, String defaultStone, boolean useDenseBlock, boolean fracturesAdjacentBlocks, String overlayPath, ArrayList<OreGeneratorSettings> settings) {
         this.blockId = blockId;
         this.name = name;
         this.stoneList = stoneList;
         this.defaultStone = defaultStone;
         this.useDenseBlock = useDenseBlock;
+        this.fracturesAdjacentBlocks = fracturesAdjacentBlocks;
         this.overlayPath = overlayPath;
         this.settings = settings;
     }
@@ -43,6 +46,10 @@ public class OreEntry {
 
     public boolean usesDenseBlocks() {
         return useDenseBlock;
+    }
+
+    public boolean fracturesAdjacentBlocks() {
+        return fracturesAdjacentBlocks;
     }
 
     public String getRawOverlayPath() {

@@ -15,7 +15,7 @@ import wtf.worldgen.replacers.Replacer;
 public class BlockSets {
 
 	// Gameplay
-	public static HashSet<String> adjacentFracturingBlocks = new HashSet<>();
+	public static HashSet<IBlockState> adjacentFracturingBlocks = new HashSet<>();
 	public static HashMap<Block, Float> explosiveBlocks = new HashMap<>();
 	public static HashSet<IBlockState> fractureWhenMinedBlocks = new HashSet<>();
 	public static HashSet<Block> meltBlocks = new HashSet<>(Arrays.asList(Blocks.LAVA, Blocks.FLOWING_LAVA, Blocks.FLOWING_WATER, Blocks.FIRE));

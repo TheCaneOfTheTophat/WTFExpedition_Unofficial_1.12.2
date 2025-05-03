@@ -5,6 +5,7 @@
     "stoneList": ["sand", "red_sand"],
     "defaultStone": "sand",
     "useDenseBlock": true,
+    "fracturesAdjacentBlocks": true,
     "overlayPath": "wtfexpedition:overlays/gold_ore",
     "generation": [
       {

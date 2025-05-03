@@ -158,6 +158,7 @@ public class JSONLoader {
                     ArrayList<String> stoneList = new ArrayList<>();
                     String defaultStone = "";
                     boolean useDenseBlock = false;
+                    boolean fracturesAdjacentBlocks = true;
                     String overlayPath = "";
 
                     ArrayList<OreGeneratorSettings> generators = new ArrayList<>();
@@ -172,10 +173,13 @@ public class JSONLoader {
                     if(object.has("useDenseBlock"))
                         useDenseBlock = object.get("useDenseBlock").getAsBoolean();
 
+                    if(object.has("fracturesAdjacentBlocks"))
+                        fracturesAdjacentBlocks = object.get("fracturesAdjacentBlocks").getAsBoolean();
+
                     if(object.has("overlayPath"))
                         overlayPath = object.get("overlayPath").getAsString();
 
-                    if(overlayPath.isEmpty() && useDenseBlock) {
+                    if(overlayPath.isEmpty()) {
                         WTFExpedition.wtfLog.error("Undefined overlay path in ore entry \"" + name + "\" at path \"" + jsonPath + "\", skipping!");
                         index++;
                         continue;
@@ -346,7 +350,7 @@ public class JSONLoader {
                         }
                     }
 
-                    OreEntry entryOre = new OreEntry(blockId, name, stoneList, defaultStone, useDenseBlock, overlayPath, generators);
+                    OreEntry entryOre = new OreEntry(blockId, name, stoneList, defaultStone, useDenseBlock, fracturesAdjacentBlocks, overlayPath, generators);
 
                     oreEntries.add(entryOre);
                 } else {
