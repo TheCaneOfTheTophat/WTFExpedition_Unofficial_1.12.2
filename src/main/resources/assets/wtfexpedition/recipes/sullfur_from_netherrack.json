@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "conditions": [
+    {
+      "type": "wtfexpedition:netherrack_to_sulfur_enabled"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:netherrack"
+    }
+  ],
+  "result": {
+    "item": "wtfexpedition:sulfur"
+  }
+}

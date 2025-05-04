@@ -1,0 +1,6 @@
+{
+  "conditions": {
+    "home_scroll_enabled": "wtf.crafting.conditions.HomeScrollCondition",
+    "netherrack_to_sulfur_enabled": "wtf.crafting.conditions.SulfurCondition"
+  }
+}

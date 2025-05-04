@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "bonemeal",
+  "ingredients": [
+    {
+      "item": "wtfexpedition:nitre"
+    }
+  ],
+  "result": {
+    "item": "minecraft:dye",
+    "data": 15
+  }
+}

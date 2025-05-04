@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "wtfexpedition:sulfur"
+    },
+    {
+      "item": "wtfexpedition:nitre"
+    },
+    {
+      "item": "wtfexpedition:nitre"
+    },
+    {
+      "item": "wtfexpedition:nitre"
+    },
+    {
+      "item": "minecraft:coal",
+      "data": 1
+    }
+  ],
+  "result": {
+    "item": "minecraft:gunpowder"
+  }
+}

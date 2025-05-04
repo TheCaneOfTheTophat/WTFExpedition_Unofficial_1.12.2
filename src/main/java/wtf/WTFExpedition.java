@@ -82,8 +82,7 @@ public class WTFExpedition {
 		UBC = Loader.isModLoaded("undergroundbiomes");
 
 //		proxy.initWCICRender();
-//		WTFRecipes.initRecipes();
-//
+
 //		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 
 		proxy.preInitialization();
@@ -164,15 +163,11 @@ public class WTFExpedition {
 
 		MinecraftForge.EVENT_BUS.register(new WorldGenListener());
 
-		if (WTFExpeditionConfig.oreGenEnabled) {
+		if (WTFExpeditionConfig.oreGenEnabled)
 			MinecraftForge.ORE_GEN_BUS.register(new VanillaOreGenCatcher());
-		}
 
-		if (WTFExpeditionConfig.overworldGenerationEnabled) {
-			if (WTFExpeditionConfig.bigTreesEnabled) {
-				MinecraftForge.TERRAIN_GEN_BUS.register(new WorldGenTreeCancel());
-			}
-		}
+		if (WTFExpeditionConfig.overworldGenerationEnabled && WTFExpeditionConfig.bigTreesEnabled)
+			MinecraftForge.TERRAIN_GEN_BUS.register(new WorldGenTreeCancel());
 	}
 	
 	@EventHandler
