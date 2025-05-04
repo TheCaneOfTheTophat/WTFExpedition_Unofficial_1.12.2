@@ -42,16 +42,16 @@ public class LavaReplacer extends Replacer {
 			}
 
 			if (surroundingBiomeOcean)
-				return override(world, pos, Blocks.OBSIDIAN.getDefaultState(), true);
+				return override(world, pos, Blocks.OBSIDIAN.getDefaultState(), false);
 		}
 
 		if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.SNOWY) && oldState == Blocks.LAVA.getDefaultState().withProperty(BlockLiquid.LEVEL, 0) && WTFExpeditionConfig.replaceLavaWithObsidian) {
 			if (n < 0.33)
 				return false;
 			else if (n < 0.66)
-				return override(world, pos, Blocks.OBSIDIAN.getDefaultState(), true) && modify(world, pos, Modifier.LAVA_CRUST);
+				return override(world, pos, Blocks.OBSIDIAN.getDefaultState(), false) && modify(world, pos, Modifier.LAVA_CRUST);
 			else
-				return override(world, pos, Blocks.OBSIDIAN.getDefaultState(), true);
+				return override(world, pos, Blocks.OBSIDIAN.getDefaultState(), false);
 		}
 
 		return false;

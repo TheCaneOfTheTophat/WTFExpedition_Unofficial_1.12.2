@@ -35,6 +35,7 @@ public class WorldGenListener {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void wtfPopulate(PopulateChunkEvent.Post event) {
+        boolean noReplacements = BlockSets.replacementMap.isEmpty();
         World world = event.getWorld();
         int x = event.getChunkX();
         int z = event.getChunkZ();
@@ -51,10 +52,10 @@ public class WorldGenListener {
 
         int maxY = Math.min(255, getMaxY(chunk));
 
-        for (int chunkX = 0; chunkX < 16; chunkX++) {
+        for (int chunkX = noReplacements ? 0 : -8; chunkX < (noReplacements ? 16 : 24); chunkX++) {
             int worldX = (x << 4) + chunkX + 8;
 
-            for (int chunkZ = 0; chunkZ < 16; chunkZ++) {
+            for (int chunkZ = noReplacements ? 0 : -8; chunkZ < (noReplacements ? 16 : 24); chunkZ++) {
                 int worldZ = (z << 4) + chunkZ + 8;
 
                 int Y = maxY;
@@ -79,43 +80,45 @@ public class WorldGenListener {
                         }
                     }
 
-                    if(fullBlock && (prevState.getBlock() instanceof BlockFluidBase || prevState.getBlock() instanceof BlockLiquid))
-                        water.add(columnPos);
+                    if(chunkX >= 0 && chunkX <= 15 && chunkZ >= 0 && chunkZ <= 15) {
+                        if (fullBlock && (prevState.getBlock() instanceof BlockFluidBase || prevState.getBlock() instanceof BlockLiquid))
+                            water.add(columnPos);
 
-                    if (!surfaceFound) {
-                        surfaceFound = (BlockSets.surfaceMaterial.contains(state.getMaterial()) && state.isFullBlock() && !state.getBlock().hasTileEntity(state) && !isPosInSurfaceStructure(world, columnPos)) || Y == 1;
+                        if (!surfaceFound) {
+                            surfaceFound = (BlockSets.surfaceMaterial.contains(state.getMaterial()) && state.isFullBlock() && !state.getBlock().hasTileEntity(state) && !isPosInSurfaceStructure(world, columnPos)) || Y == 1;
 
-                        if (surfaceFound) {
-                            surfaceAvg += Y;
-                            surfacePositions[chunkX][chunkZ] = new SurfacePos(worldX, Y, worldZ);
+                            if (surfaceFound) {
+                                surfaceAvg += Y;
+                                surfacePositions[chunkX][chunkZ] = new SurfacePos(worldX, Y, worldZ);
 
-                            if (prevState.isFullBlock())
-                                surfacePositions[chunkX][chunkZ].setGenerated();
-                        }
-                    } else {
-                        if (!fullBlock) {
-                            if (ceiling == -1) {
-                                ceiling = Y + 1;
+                                if (prevState.isFullBlock())
+                                    surfacePositions[chunkX][chunkZ].setGenerated();
                             }
-
-                            for (EnumFacing face : EnumFacing.HORIZONTALS) {
-                                BlockPos adjPos = columnPos.offset(face);
-
-                                if (world.getBlockState(adjPos.up()).isFullBlock() && world.getBlockState(adjPos.down()).isFullBlock() && world.getBlockState(adjPos).isFullBlock()) {
-                                    caveWall.add(adjPos);
-                                    caveAdj.add(new AdjPos(columnPos, face));
+                        } else {
+                            if (!fullBlock) {
+                                if (ceiling == -1) {
+                                    ceiling = Y + 1;
                                 }
+
+                                for (EnumFacing face : EnumFacing.HORIZONTALS) {
+                                    BlockPos adjPos = columnPos.offset(face);
+
+                                    if (world.getBlockState(adjPos.up()).isFullBlock() && world.getBlockState(adjPos.down()).isFullBlock() && world.getBlockState(adjPos).isFullBlock()) {
+                                        caveWall.add(adjPos);
+                                        caveAdj.add(new AdjPos(columnPos, face));
+                                    }
+                                }
+
+                            } else if (ceiling > -1) {
+                                CavePosition pos = new CavePosition(worldX, ceiling, Y, worldZ);
+                                pos.adj.addAll(caveAdj);
+                                pos.wall.addAll(caveWall);
+                                unsortedCavePos.add(pos);
+
+                                caveAdj.clear();
+                                caveWall.clear();
+                                ceiling = -1;
                             }
-
-                        } else if (ceiling > -1) {
-                            CavePosition pos = new CavePosition(worldX, ceiling, Y, worldZ);
-                            pos.adj.addAll(caveAdj);
-                            pos.wall.addAll(caveWall);
-                            unsortedCavePos.add(pos);
-
-                            caveAdj.clear();
-                            caveWall.clear();
-                            ceiling = -1;
                         }
                     }
 

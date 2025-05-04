@@ -8,7 +8,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
-import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import wtf.WTFExpedition;
@@ -40,7 +39,6 @@ public class ListenerBreakFracture {
 			}
 
 			if (BlockSets.fractureWhenMinedBlocks.contains(state)) {
-				event.getWorld().capturedBlockSnapshots.add(new BlockSnapshot(event.getWorld(), event.getPos(), event.getState()));
 				event.setCanceled(true);
 				EntityFracture.fractureBlock(event.getWorld(), event.getPos(), false, false);
 
@@ -49,7 +47,6 @@ public class ListenerBreakFracture {
 						if(mplayer != player)
 							WTFExpedition.CHANNEL_INSTANCE.sendTo(new WTFMessageBlockCrackEvent(Block.getStateId(state), event.getPos()), ((EntityPlayerMP) mplayer));
 
-				// TODO Make this a little less awkward
 				if (tool.getItem().getRegistryName().toString().contains("tconstruct:hammer") && WTFExpeditionConfig.modifyHammerBehaviour) {
 					int toolLevel = tool.getItem().getHarvestLevel(tool, "pickaxe", player, state);
 					EntityFracture.fractureHammer(event.getWorld(), event.getPos(), toolLevel);
