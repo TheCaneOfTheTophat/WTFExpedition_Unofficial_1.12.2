@@ -21,10 +21,9 @@ public class CaveTypeFungal extends AbstractCaveType {
 			replace(world, pos, Blocks.DIRT.getDefaultState());
 	}
 
-
 	@Override
 	public void generateFloor(World world, Random rand, BlockPos pos, float depth) {
-		if (simplex.get3DNoise(world, pos.getX() / 3D, pos.getY(), pos.getZ() / 3D) < 0.33)
+		if (world.getBlockState(pos) == Blocks.DIRT.getDefaultState() || simplex.get3DNoise(world, pos.getX() / 3D, pos.getY(), pos.getZ() / 3D) < 0.33)
 			replace(world, pos, Blocks.MYCELIUM.getDefaultState());
 	}
 

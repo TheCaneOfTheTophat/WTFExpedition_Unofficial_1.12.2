@@ -53,6 +53,15 @@ public class GenMethods {
         return false;
     }
 
+    public static boolean isPosInMineshaft(World world, BlockPos pos) {
+        if(!world.isRemote) {
+            ChunkProviderServer cps = ((WorldServer) world).getChunkProvider();
+            return cps.isInsideStructure(world, "Mineshaft", pos);
+        }
+
+        return false;
+    }
+
     public static boolean isNonSolid(IBlockState state) {
         Material material = state.getMaterial();
 

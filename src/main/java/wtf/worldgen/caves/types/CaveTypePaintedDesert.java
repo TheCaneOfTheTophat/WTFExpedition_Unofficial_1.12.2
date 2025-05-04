@@ -1,7 +1,6 @@
 package wtf.worldgen.caves.types;
 
 import net.minecraft.block.BlockColored;
-import net.minecraft.block.BlockSand;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
@@ -14,13 +13,9 @@ import java.util.Random;
 
 import static wtf.worldgen.GenMethods.*;
 
-public class CaveTypePaintedDesert extends AbstractCaveType{
+public class CaveTypePaintedDesert extends AbstractCaveType {
 
-	IBlockState sand = Blocks.SAND.getDefaultState().withProperty(BlockSand.VARIANT, BlockSand.EnumType.RED_SAND);
-	IBlockState sandstone = Blocks.RED_SANDSTONE.getDefaultState();
-
-	//Red, orange, yellow, brown, white, light gray and unstained hardened c
-
+	//Red, orange, yellow, brown, white, light gray and unstained hardened clay
 	IBlockState[] slabs = {
 			//WTFBlocks.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.BLUE),
 			//WTFBlocks.terracotta_patch_stained.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.CYAN),
@@ -52,8 +47,6 @@ public class CaveTypePaintedDesert extends AbstractCaveType{
 			Blocks.STAINED_HARDENED_CLAY.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.PINK),
 			//Blocks.STAINED_HARDENED_CLAY.getDefaultState().withProperty(BlockColored.COLOR, EnumDyeColor.PURPLE),
 	};
-	
-
 
 	public CaveTypePaintedDesert(String name, int ceilingAddonPercentChance, int floorAddonPercentChance) {
 		super(name, ceilingAddonPercentChance, floorAddonPercentChance);

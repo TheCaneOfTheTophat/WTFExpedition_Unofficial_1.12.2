@@ -16,11 +16,11 @@ import static wtf.worldgen.GenMethods.*;
 
 public class CaveTypePodzol extends AbstractCaveType {
 
+	IBlockState podzol = Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.PODZOL);
+
 	public CaveTypePodzol(String name, int ceilingAddonPercentChance, int floorAddonPercentChance) {
 		super(name, ceilingAddonPercentChance, floorAddonPercentChance);
 	}
-	
-	IBlockState podzol = Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.PODZOL);
 
 	@Override
 	public void generateCeiling(World world, Random rand, BlockPos pos, float depth) {
@@ -30,8 +30,10 @@ public class CaveTypePodzol extends AbstractCaveType {
 
 	@Override
 	public void generateFloor(World world, Random rand, BlockPos pos, float depth) {
-		if (simplex.get3DNoiseScaled(world, pos, 0.2) < 0.33)
-			replace(world, pos.up(), WTFContent.podzol_patch.getDefaultState());
+		if(world.getBlockState(pos) == Blocks.DIRT.getDefaultState())
+			replace(world, pos, podzol, false);
+		else if (simplex.get3DNoiseScaled(world, pos, 0.2) < 0.33)
+			setPatch(world, pos, WTFContent.podzol_patch.getDefaultState());
 		else if (simplex.get3DNoise(world, pos) > 0.66)
 			modify(world, pos, Modifier.MOSS);
 	}
@@ -50,7 +52,7 @@ public class CaveTypePodzol extends AbstractCaveType {
 	@Override
 	public void generateWall(World world, Random rand, BlockPos pos, float depth, int height) {
 		if (height < 3 && simplex.get3DNoiseScaled(world, pos, 0.2) < 0.33)
-			replace(world, pos, podzol);
+			replace(world, pos, Blocks.DIRT.getDefaultState());
 		if (simplex.get3DNoise(world, pos) > 0.66)
 			modify(world, pos, Modifier.MOSS);
 	}

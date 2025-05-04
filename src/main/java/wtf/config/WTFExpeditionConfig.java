@@ -20,6 +20,8 @@ public class WTFExpeditionConfig {
 	public static boolean enableSubtypes;
 	public static double subtypeChance;
 	public static boolean enablePuddles;
+	public static boolean enablePermafrostBiome;
+	public static boolean enableHypervolcanicBiome;
 
 	// Tweaks: Miscellaneous
 	public static double cropGrowthPercentModifier;
@@ -161,6 +163,14 @@ public class WTFExpeditionConfig {
 
 		property = config.get(category, "Allow generation of puddles in wet cave biomes", true);
 		enablePuddles = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Enable deep permafrost caves in cold biomes", true);
+		enablePermafrostBiome = property.getBoolean();
+		propertyOrder.add(property.getName());
+
+		property = config.get(category, "Enable deep hypervolcanic caves in jungle biomes", false);
+		enableHypervolcanicBiome = property.getBoolean();
 		propertyOrder.add(property.getName());
 
 		config.setCategoryPropertyOrder(category, propertyOrder);

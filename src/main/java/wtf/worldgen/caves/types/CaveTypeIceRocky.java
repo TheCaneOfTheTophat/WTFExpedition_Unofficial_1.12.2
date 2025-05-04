@@ -18,7 +18,7 @@ public class CaveTypeIceRocky extends CaveTypeRocky {
 	public void generateFloor(World world, Random rand, BlockPos pos, float depth) {
 		super.generateFloor(world, rand, pos, depth);
 
-		if (simplex.get3DNoiseScaled(world,pos, 0.2) < 0.5 )
+		if (simplex.get3DNoiseScaled(world, pos,0.2) < 0.5)
 			setPatch(world, pos, WTFContent.ice_patch.getDefaultState());
 	}
 }
