@@ -360,7 +360,7 @@ public class JSONLoader {
                         fracturesFirstWhenMined = object.get("fracturesFirstWhenMined").getAsBoolean();
 
                     if(object.has("percentageMineSpeedModifier"))
-                        percentageMineSpeedModifier = Math.max(percentageMineSpeedModifier, 0);
+                        percentageMineSpeedModifier = Math.max(object.get("percentageMineSpeedModifier").getAsInt(), 0);
 
                     if(object.has("percentageStability"))
                         percentageStability = Math.max(Math.min(object.get("percentageStability").getAsInt(), 100), 0);
