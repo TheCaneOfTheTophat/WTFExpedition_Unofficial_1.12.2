@@ -8,7 +8,6 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -18,9 +17,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.lang3.tuple.Pair;
 import wtf.init.BlockSets;
-import wtf.enums.Modifier;
 
 import javax.annotation.Nullable;
 
@@ -32,8 +29,6 @@ public class BlockIcePatch extends BlockBreakable {
 		super(Material.ICE, false);
 		this.setSoundType(SoundType.GLASS);
 		this.setTickRandomly(true);
-
-		BlockSets.blockTransformer.put(Pair.of(Blocks.AIR.getDefaultState(), Modifier.FROZEN), this.getDefaultState());
 	}
 
 	@Override

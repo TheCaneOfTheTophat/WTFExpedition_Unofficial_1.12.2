@@ -11,7 +11,6 @@ public enum Modifier {
     LAVA_CRUST(AnimatedDecoType.LAVA_CRUST),
     WET(AnimatedDecoType.WET),
     LAVA_DRIPPING(AnimatedDecoType.LAVA_DRIPPING),
-    FROZEN(null),
     BRICK(null);
 
     private final IStringSerializable decoType;

@@ -181,10 +181,8 @@ public class WTFContent {
 				oreState = JSONLoader.getStateFromId(entry.getBlockId());
 				BlockEntry defaultStoneEntry = JSONLoader.identifierToBlockEntry.get(entry.getDefaultStone());
 
-				if (defaultStoneEntry == null) {
-					WTFExpedition.wtfLog.error("Default stone entry \"" + entry.getDefaultStone() + "\" does not exist! (encountered while registering blocks for ore \"" + entry.getName() + "\")");
-					continue;
-				}
+				if (defaultStoneEntry == null)
+					throw new RuntimeException("Default stone entry \"" + entry.getDefaultStone() + "\" does not exist! (encountered while registering blocks for ore \"" + entry.getName() + "\")");
 
 				if (!Loader.isModLoaded(entry.getBlockId().split(":")[0])) {
 					if (!unknownMods.contains(entry.getBlockId().split(":")[0])) {
@@ -210,10 +208,8 @@ public class WTFContent {
 				for (String stone : stoneList) {
 					BlockEntry stoneEntry = JSONLoader.identifierToBlockEntry.get(stone);
 
-					if (stoneEntry == null) {
-						WTFExpedition.wtfLog.error("Stone entry \"" + stone + "\" does not exist! (encountered while registering blocks for ore \"" + entry.getName() + "\")");
-						continue;
-					}
+					if (stoneEntry == null)
+						throw new RuntimeException("Stone entry \"" + stone + "\" does not exist! (encountered while registering blocks for ore \"" + entry.getName() + "\")");
 
 					if (!Loader.isModLoaded(stoneEntry.getBlockId().split(":")[0])) {
 						if (!unknownMods.contains(stoneEntry.getBlockId().split(":")[0])) {
@@ -317,9 +313,11 @@ public class WTFContent {
 					case "lava_dripping":
 						modifier = Modifier.LAVA_DRIPPING;
 						break;
+					case "brick":
+						modifier = Modifier.BRICK;
+						break;
 					default:
-						WTFExpedition.wtfLog.error("Modifier " + modifierString +  "does not exist! (encountered while registering ore \"" + entry.getName() + "\")");
-						continue;
+						throw new RuntimeException("Modifier " + modifierString +  "does not exist! (encountered while registering ore \"" + entry.getName() + "\")");
                 }
 
 				oreState = new DummyModifierBlock(modifier).getDefaultState();
@@ -353,15 +351,11 @@ public class WTFContent {
 				continue;
 			}
 
-			if(blockState == null) {
-				WTFExpedition.wtfLog.error("Block ID " + entry.getBlockId() + " in entry " + entry.getName() + " is invalid! Skipping...");
-				continue;
-			}
+			if(blockState == null)
+				throw new RuntimeException("Block ID " + entry.getBlockId() + " in entry " + entry.getName() + " is invalid!");
 
-			if(fracturedBlockState == null && !fracturedId.isEmpty()) {
-				WTFExpedition.wtfLog.error("Fractured block ID " + fracturedId + " in entry " + entry.getName() + " is invalid! Skipping...");
-				continue;
-			}
+			if(fracturedBlockState == null && !fracturedId.isEmpty())
+				throw new RuntimeException("Fractured block ID " + fracturedId + " in entry " + entry.getName() + " is invalid!");
 
 			WTFModelRegistry.textureMap.put(blockState, entry.getTexture());
 

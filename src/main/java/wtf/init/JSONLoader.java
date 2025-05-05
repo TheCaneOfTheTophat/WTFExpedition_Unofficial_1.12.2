@@ -136,20 +136,14 @@ public class JSONLoader {
                 if(object.has("blockId"))
                     blockId = object.get("blockId").getAsString();
 
-                if(blockId.isEmpty()) {
-                    WTFExpedition.wtfLog.error("Undefined block ID in " + parent.substring(0, parent.length() - 1) + " entry " + index + " at path \"" + jsonPath + "\", skipping!");
-                    index++;
-                    continue;
-                }
+                if(blockId.isEmpty())
+                    throw new RuntimeException("Undefined block ID in " + parent.substring(0, parent.length() - 1) + " entry " + index + " at path \"" + jsonPath + "\"");
 
                 if(object.has("name"))
                     name = object.get("name").getAsString();
 
-                if(name.isEmpty()) {
-                    WTFExpedition.wtfLog.error("Undefined name in " + parent.substring(0, parent.length() - 1) + " entry " + index + " at path \"" + jsonPath + "\", skipping!");
-                    index++;
-                    continue;
-                }
+                if(name.isEmpty())
+                    throw new RuntimeException("Undefined name in " + parent.substring(0, parent.length() - 1) + " entry " + index + " at path \"" + jsonPath + "\"");
 
                 if(!(parent.contains("ores") && blockId.contains("type#")))
                     blockId = addMeta(blockId);
@@ -163,26 +157,25 @@ public class JSONLoader {
 
                     ArrayList<OreGeneratorSettings> generators = new ArrayList<>();
 
-                    if(object.has("stoneList"))
-                        for (JsonElement arrayElement : object.get("stoneList").getAsJsonArray())
-                            stoneList.add(arrayElement.getAsString());
+                    if(!blockId.contains("type#")) {
+                        if (object.has("stoneList"))
+                            for (JsonElement arrayElement : object.get("stoneList").getAsJsonArray())
+                                stoneList.add(arrayElement.getAsString());
 
-                    if(object.has("defaultStone"))
-                        defaultStone = object.get("defaultStone").getAsString();
+                        if (object.has("defaultStone"))
+                            defaultStone = object.get("defaultStone").getAsString();
 
-                    if(object.has("useDenseBlock"))
-                        useDenseBlock = object.get("useDenseBlock").getAsBoolean();
+                        if (object.has("useDenseBlock"))
+                            useDenseBlock = object.get("useDenseBlock").getAsBoolean();
 
-                    if(object.has("fracturesAdjacentBlocks"))
-                        fracturesAdjacentBlocks = object.get("fracturesAdjacentBlocks").getAsBoolean();
+                        if (object.has("fracturesAdjacentBlocks"))
+                            fracturesAdjacentBlocks = object.get("fracturesAdjacentBlocks").getAsBoolean();
 
-                    if(object.has("overlayPath"))
-                        overlayPath = object.get("overlayPath").getAsString();
+                        if (object.has("overlayPath"))
+                            overlayPath = object.get("overlayPath").getAsString();
 
-                    if(overlayPath.isEmpty()) {
-                        WTFExpedition.wtfLog.error("Undefined overlay path in ore entry \"" + name + "\" at path \"" + jsonPath + "\", skipping!");
-                        index++;
-                        continue;
+                        if (overlayPath.isEmpty())
+                            throw new RuntimeException("Undefined overlay path in ore entry \"" + name + "\" at path \"" + jsonPath + "\"");
                     }
                     
                     // GENERATOR
@@ -248,17 +241,11 @@ public class JSONLoader {
                             if(generationSettings.has("maxY"))
                                 maxY = Math.min(generationSettings.get("maxY").getAsInt(), 255);
 
-                            if(surfaceHeightMaxPercentage - surfaceHeightMinPercentage < 1) {
-                                WTFExpedition.wtfLog.error("Minimum surface height percentage greater than maximum surface height percentage in ore entry \"" + name + "\" at path \"" + jsonPath + "\", skipping!");
-                                index++;
-                                continue;
-                            }
+                            if(surfaceHeightMaxPercentage - surfaceHeightMinPercentage < 1)
+                                throw new RuntimeException("Minimum surface height percentage greater than maximum surface height percentage in ore entry \"" + name + "\" at path \"" + jsonPath + "\"");
 
-                            if(maxY - minY < 1) {
-                                WTFExpedition.wtfLog.error("Minimum Y greater than maximum Y in ore entry \"" + name + "\" at path \"" + jsonPath + "\", skipping!");
-                                index++;
-                                continue;
-                            }
+                            if(maxY - minY < 1)
+                                throw new RuntimeException("Minimum Y greater than maximum Y in ore entry \"" + name + "\" at path \"" + jsonPath + "\"");
 
                             if(generationSettings.has("dimensionList"))
                                 for (JsonElement arrayElement : generationSettings.get("dimensionList").getAsJsonArray())
@@ -320,11 +307,8 @@ public class JSONLoader {
                                     if (vanillaGeneration.has("blocksPerCluster"))
                                         blocksPerCluster = vanillaGeneration.get("blocksPerCluster").getAsInt();
                                 }
-                            } else if (!primaryGenerationType.equals("cluster") && !primaryGenerationType.equals("single")) {
-                                WTFExpedition.wtfLog.error("Invalid primary generation type in ore entry \"" + name + "\" at path \"" + jsonPath + "\", skipping!");
-                                index++;
-                                continue;
-                            }
+                            } else if (!primaryGenerationType.equals("cluster") && !primaryGenerationType.equals("single"))
+                                throw new RuntimeException("Invalid primary generation type in ore entry \"" + name + "\" at path \"" + jsonPath + "\"");
 
                             if (secondaryGenerationType.equals("cave")) {
                                 if (generationSettings.has("cave_generation")) {
@@ -339,11 +323,8 @@ public class JSONLoader {
                                     if (caveGeneration.has("floor"))
                                         floor = caveGeneration.get("floor").getAsBoolean();
 
-                                } else if (!secondaryGenerationType.equals("underwater") && !secondaryGenerationType.isEmpty()) {
-                                    WTFExpedition.wtfLog.error("Invalid secondary generation type in ore entry \"" + name + "\" at path \"" + jsonPath + "\", skipping!");
-                                    index++;
-                                    continue;
-                                }
+                                } else if (!secondaryGenerationType.equals("underwater") && !secondaryGenerationType.isEmpty())
+                                    throw new RuntimeException("Invalid secondary generation type in ore entry \"" + name + "\" at path \"" + jsonPath + "\"");
                             }
 
                             generators.add(new OreGeneratorSettings(generatorName, minAmountPerChunk, maxAmountPerChunk, surfaceHeightMinPercentage, surfaceHeightMaxPercentage, minY, maxY, dimensionList, dimensionListWhitelist, veinPercentDensity, biomeTypeList, biomeTypeListWhitelist, biomeLeniency, percentGenerationPerBiomeType, primaryGenerationType, secondaryGenerationType, veinPitchAverage, veinLength, veinWidth, veinVerticalThickness, cloudDiameter, ceiling, wall, floor, blocksPerCluster));
@@ -382,7 +363,7 @@ public class JSONLoader {
                         fracturesFirstWhenMined = object.get("fracturesFirstWhenMined").getAsBoolean();
 
                     if(object.has("percentageMineSpeedModifier"))
-                        percentageMineSpeedModifier = Math.max(Math.min(object.get("percentageMineSpeedModifier").getAsInt(), 100), 0);
+                        percentageMineSpeedModifier = Math.max(percentageMineSpeedModifier, 0);
 
                     if(object.has("percentageStability"))
                         percentageStability = Math.max(Math.min(object.get("percentageStability").getAsInt(), 100), 0);
@@ -407,9 +388,6 @@ public class JSONLoader {
 
                         if(modifiers.has("lava_dripping"))
                             modifierMap.put(Modifier.LAVA_DRIPPING, modifiers.get("lava_dripping").getAsString());
-
-                        if(modifiers.has("frozen"))
-                            modifierMap.put(Modifier.FROZEN, modifiers.get("frozen").getAsString());
 
                         if(modifiers.has("brick"))
                             modifierMap.put(Modifier.BRICK, modifiers.get("brick").getAsString());

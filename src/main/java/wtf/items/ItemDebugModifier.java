@@ -52,8 +52,6 @@ public class ItemDebugModifier extends Item {
                 return "Wet";
             case LAVA_DRIPPING:
                 return "Lava Drip";
-            case FROZEN:
-                return "Freeze";
             case SOUL:
                 return "Soul";
             case BRICK:
