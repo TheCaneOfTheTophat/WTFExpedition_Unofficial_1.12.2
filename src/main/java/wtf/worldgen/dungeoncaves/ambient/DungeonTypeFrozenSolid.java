@@ -15,6 +15,7 @@ public class DungeonTypeFrozenSolid extends AbstractDungeonType {
 
 	public DungeonTypeFrozenSolid(String name) {
 		super(name, 0, 0);
+		this.genAir = true;
 	}
 
 	@Override
@@ -30,11 +31,10 @@ public class DungeonTypeFrozenSolid extends AbstractDungeonType {
 
 	@Override
 	public void generateAir(World world, Random rand, BlockPos floating, float depth) {
-		if (rand.nextBoolean()) {
+		if (rand.nextBoolean())
 			replace(world, floating, Blocks.ICE.getDefaultState());
-		} else {
+		else
 			replace(world, floating, Blocks.PACKED_ICE.getDefaultState());
-		}
 	}
 	
 	@Override

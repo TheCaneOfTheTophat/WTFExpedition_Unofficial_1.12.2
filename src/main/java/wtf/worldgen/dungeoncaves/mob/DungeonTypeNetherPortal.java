@@ -4,6 +4,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import wtf.enums.Modifier;
 import wtf.utilities.wrappers.CaveListWrapper;
 import wtf.utilities.wrappers.CavePosition;
 import wtf.worldgen.dungeoncaves.AbstractDungeonType;
@@ -48,7 +49,10 @@ public class DungeonTypeNetherPortal extends AbstractDungeonType {
 	}
 
 	@Override
-	public void generateCeiling(World world, Random rand, BlockPos pos, float depth) {}
+	public void generateCeiling(World world, Random rand, BlockPos pos, float depth) {
+		if(simplex.get3DNoise(world, pos) > 0.5)
+			modify(world, pos, Modifier.SOUL);
+	}
 
 	@Override
 	public void generateFloor(World world, Random rand, BlockPos pos, float depth) {
@@ -56,7 +60,10 @@ public class DungeonTypeNetherPortal extends AbstractDungeonType {
 	}
 
 	@Override
-	public void generateWall(World world, Random rand, BlockPos pos, float depth, int height) {}
+	public void generateWall(World world, Random rand, BlockPos pos, float depth, int height) {
+		if(simplex.get3DNoise(world, pos) > 0.5)
+			modify(world, pos, Modifier.SOUL);
+	}
 
 	@Override
 	public void generateCeilingAddons(World world, Random rand, BlockPos pos, float depth) {}

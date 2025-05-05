@@ -195,6 +195,11 @@ public class CaveTypeRegister {
 			deep = nether;
 		}
 
+		if(BiomeDictionary.hasType(biome, BiomeDictionary.Type.SPOOKY)) {
+			dungeonShallow.addAll(DungeonTypeRegister.spookyList());
+			dungeonMid.addAll(DungeonTypeRegister.spookyList());
+		}
+
 		CaveProfile profile = new CaveProfile(deep, mid, shallow);
 		WTFExpedition.wtfLog.debug("Setting up cave biomes for " + biome.getBiomeName() + " SHALLOW: " + shallow.name + " MID: " + mid.name + " DEEP: " + deep.name);
 		profile.dungeonDeep = new ArrayList<>(new HashSet<>(dungeonDeep));
