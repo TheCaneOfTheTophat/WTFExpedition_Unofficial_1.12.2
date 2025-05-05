@@ -20,7 +20,7 @@ public abstract class OreGenAbstract {
 	public final IBlockState oreBlock;
 
 	public HashMap<BiomeDictionary.Type, Float> biomeModifier = new HashMap<>();
-	public HashSet<Integer> dimension = new HashSet<>();
+	public HashSet<Integer> dimensionList = new HashSet<>();
 	public boolean dimensionWhiteList;
 	
 	public float maxGenRangeHeight;
@@ -48,9 +48,9 @@ public abstract class OreGenAbstract {
 	}
 
 	public final void generate(World world, Random random, ChunkPos pos, int surfaceAverage, UnsortedChunkCaves caves, ArrayList<BlockPos> water) {
-		boolean dimensionInList = this.dimension.contains(world.provider.getDimension());
+		boolean dimensionInList = this.dimensionList.contains(world.provider.getDimension());
 
-		if (dimensionWhiteList == dimensionInList)
+		if (dimensionWhiteList == dimensionInList || dimensionList.isEmpty())
 			doOreGen(world, random, pos, surfaceAverage, caves, water);
 	}
 	

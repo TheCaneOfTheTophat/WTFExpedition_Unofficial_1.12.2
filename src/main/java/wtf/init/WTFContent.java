@@ -643,7 +643,7 @@ public class WTFContent {
 		boolean biomeWhitelist = settings.biomeListWhitelist;
 		boolean dimensionWhitelist = settings.dimensionListWhitelist;
 
-		OreGenAbstract generator = null;
+		OreGenAbstract generator;
 		
 		if(getSecondary && !secondary.isEmpty()) {
 			OreGenAbstract primaryGen = getOreGenerator(oreState, denseBlock, settings, false);
@@ -661,10 +661,10 @@ public class WTFContent {
 					surfaceList.add(OreGenCaveFloor.surface.floor);
 
 				generator = new OreGenCaveFloor(primaryGen, oreState, settings.name, surfaceList);
-			}
-
-			if (secondary.equals("underwater"))
+			} else if (secondary.equals("underwater"))
 				generator = new OreGenUnderWater(primaryGen, oreState, settings.name);
+			else
+				throw new RuntimeException("Invalid secondary generation type " + secondary + "(encountered in generator " + settings.name + "for ore " + oreState.getBlock().getRegistryName().toString() + "@" + oreState.getBlock().getMetaFromState(oreState) + ")");
 		} else {
             switch (primary) {
                 case "cloud":
@@ -682,6 +682,8 @@ public class WTFContent {
                 case "vein":
 					generator = new OreGenVein(oreState, settings.name, new int[]{settings.veinLength, settings.veinWidth, settings.veinVerticalThickness}, (float) settings.veinPitchAverage);
 					break;
+				default:
+					throw new RuntimeException("Invalid primary generation type " + primary + "(encountered in generator " + settings.name + "for ore " + oreState.getBlock().getRegistryName().toString() + "@" + oreState.getBlock().getMetaFromState(oreState) + ")");
             }
         }
 
@@ -693,7 +695,7 @@ public class WTFContent {
 			generator.setDimensionWhiteList(dimensionWhitelist);
 			generator.setGenDenseOres(denseBlock);
 
-			generator.dimension.addAll(settings.dimensionList);
+			generator.dimensionList.addAll(settings.dimensionList);
 			generator.setVeinDensity(settings.veinPercentDensity / 100F);
 
 			for (Map.Entry<String, Integer> mapentry : settings.percentGenerationPerBiomeType.entrySet()) {

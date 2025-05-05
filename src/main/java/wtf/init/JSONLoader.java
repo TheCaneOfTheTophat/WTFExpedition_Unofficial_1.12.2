@@ -223,9 +223,6 @@ public class JSONLoader {
                             if(generationSettings.has("minAmountPerChunk"))
                                 minAmountPerChunk = generationSettings.get("minAmountPerChunk").getAsInt();
 
-                            if(generationSettings.has("minAmountPerChunk"))
-                                minAmountPerChunk = generationSettings.get("minAmountPerChunk").getAsInt();
-
                             if(generationSettings.has("maxAmountPerChunk"))
                                 maxAmountPerChunk = generationSettings.get("maxAmountPerChunk").getAsInt();
 
