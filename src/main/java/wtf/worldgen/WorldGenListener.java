@@ -144,9 +144,8 @@ public class WorldGenListener {
         if (WTFExpeditionConfig.overworldGenerationEnabled && WTFExpeditionConfig.bigTreesEnabled)
             TreeGenerator.generate(world, rand, surfacePositions);
 
-        // TODO I don't have this under a config at the moment
         // TODO Probably shouldn't change biomes on post-populate methinks
-        if (WTFExpeditionConfig.enableSurfaceModification)
+        if (WTFExpeditionConfig.enableSubBiomeGeneration)
             SubBiomeGenerator.generate(world, chunkPos);
 
         if (WTFExpeditionConfig.enableSurfaceModification && WTFExpeditionConfig.overworldGenerationEnabled)

@@ -76,6 +76,7 @@ public class WTFExpeditionConfig {
 	public static boolean oresDropStone;
 
 	// Overworld: Miscellaneous
+	public static boolean enableSubBiomeGeneration;
 	public static boolean replaceLavaWithWater;
 	public static boolean replaceLavaWithObsidian;
 
@@ -394,6 +395,10 @@ public class WTFExpeditionConfig {
 		category = "5a : overworld";
 
 		config.setCategoryComment(category, "Configurations for the Overworld module of WTFExpedition.");
+
+		property = config.get(category, "Enable generation of sub-biomes", true);
+		enableSubBiomeGeneration = property.getBoolean();
+		propertyOrder.add(property.getName());
 
 		property = config.get(category, "Replace lava with water in ocean biomes", false);
 		replaceLavaWithWater = property.getBoolean();
