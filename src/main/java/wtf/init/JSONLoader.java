@@ -191,8 +191,8 @@ public class JSONLoader {
                             ArrayList<Integer> dimensionList = new ArrayList<>();
                             boolean dimensionListWhitelist = true;
                             int veinPercentDensity = 100;
-                            ArrayList<String> biomeTypeList = new ArrayList<>();
-                            boolean biomeTypeListWhitelist = true;
+                            ArrayList<String> biomeList = new ArrayList<>();
+                            boolean biomeListWhitelist = true;
                             int biomeLeniency = 0;
                             HashMap<String, Integer> percentGenerationPerBiomeType = new HashMap<>();
 
@@ -257,12 +257,12 @@ public class JSONLoader {
                             if(generationSettings.has("veinPercentDensity"))
                                 veinPercentDensity = generationSettings.get("veinPercentDensity").getAsInt();
 
-                            if(generationSettings.has("biomeTypeList"))
-                                for (JsonElement arrayElement : generationSettings.get("biomeTypeList").getAsJsonArray())
-                                    biomeTypeList.add(arrayElement.getAsString());
+                            if(generationSettings.has("biomeList"))
+                                for (JsonElement arrayElement : generationSettings.get("biomeList").getAsJsonArray())
+                                    biomeList.add(arrayElement.getAsString());
 
-                            if(generationSettings.has("biomeTypeListWhitelist"))
-                                biomeTypeListWhitelist = generationSettings.get("biomeTypeListWhitelist").getAsBoolean();
+                            if(generationSettings.has("biomeListWhitelist"))
+                                biomeListWhitelist = generationSettings.get("biomeListWhitelist").getAsBoolean();
 
                             if(generationSettings.has("biomeLeniency"))
                                 biomeLeniency = Math.max(Math.min(generationSettings.get("biomeLeniency").getAsInt(), 4), 0);
@@ -327,7 +327,7 @@ public class JSONLoader {
                                     throw new RuntimeException("Invalid secondary generation type in ore entry \"" + name + "\" at path \"" + jsonPath + "\"");
                             }
 
-                            generators.add(new OreGeneratorSettings(generatorName, minAmountPerChunk, maxAmountPerChunk, surfaceHeightMinPercentage, surfaceHeightMaxPercentage, minY, maxY, dimensionList, dimensionListWhitelist, veinPercentDensity, biomeTypeList, biomeTypeListWhitelist, biomeLeniency, percentGenerationPerBiomeType, primaryGenerationType, secondaryGenerationType, veinPitchAverage, veinLength, veinWidth, veinVerticalThickness, cloudDiameter, ceiling, wall, floor, blocksPerCluster));
+                            generators.add(new OreGeneratorSettings(generatorName, minAmountPerChunk, maxAmountPerChunk, surfaceHeightMinPercentage, surfaceHeightMaxPercentage, minY, maxY, dimensionList, dimensionListWhitelist, veinPercentDensity, biomeList, biomeListWhitelist, biomeLeniency, percentGenerationPerBiomeType, primaryGenerationType, secondaryGenerationType, veinPitchAverage, veinLength, veinWidth, veinVerticalThickness, cloudDiameter, ceiling, wall, floor, blocksPerCluster));
                         }
                     }
 

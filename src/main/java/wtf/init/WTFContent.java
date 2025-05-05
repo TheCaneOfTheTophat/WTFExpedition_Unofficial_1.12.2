@@ -640,7 +640,7 @@ public class WTFContent {
 		int[] hardYGenRange = {settings.minY, settings.maxY};
 		int[] orePerChunk = {settings.minAmountPerChunk, settings.maxAmountPerChunk};
 
-		boolean biomeWhitelist = settings.biomeTypeListWhitelist;
+		boolean biomeWhitelist = settings.biomeListWhitelist;
 		boolean dimensionWhitelist = settings.dimensionListWhitelist;
 
 		OreGenAbstract generator = null;
@@ -696,11 +696,26 @@ public class WTFContent {
 			generator.dimension.addAll(settings.dimensionList);
 			generator.setVeinDensity(settings.veinPercentDensity / 100F);
 
-			for (Map.Entry<String, Integer> mapentry : settings.percentGenerationPerBiomeType.entrySet())
+			for (Map.Entry<String, Integer> mapentry : settings.percentGenerationPerBiomeType.entrySet()) {
 				generator.biomeModifier.put(BiomeDictionary.Type.getType(mapentry.getKey()), mapentry.getValue() / 100F);
+			}
 
-			for (String biome : settings.biomeTypeList)
-				generator.reqBiomeTypes.add(BiomeDictionary.Type.getType(biome));
+			for (String biomeOrTypeString : settings.biomeList) {
+				String typeOrId;
+
+				try {
+					typeOrId = biomeOrTypeString.split("#")[1];
+				} catch (ArrayIndexOutOfBoundsException e) {
+					throw new RuntimeException("Invalid biome or type \"" + biomeOrTypeString + "\" (encountered in generator " + settings.name + ")");
+				}
+
+				if(biomeOrTypeString.contains("type#"))
+					generator.biomeTypeList.add(BiomeDictionary.Type.getType(typeOrId));
+				else if (biomeOrTypeString.contains("biome#"))
+					generator.biomeList.add(GameRegistry.findRegistry(Biome.class).getValue(new ResourceLocation(typeOrId)));
+				else
+					throw new RuntimeException("Invalid biome or type \"" + biomeOrTypeString + "\" (encountered in generator " + settings.name + ")");
+			}
 		}
 
 		return generator;

@@ -32,7 +32,8 @@ public abstract class OreGenAbstract {
 	public float veinDensity = 1F;
 	public final SimplexHelper simplex;
 	public boolean genDenseOres;
-	public final ArrayList<BiomeDictionary.Type> reqBiomeTypes = new ArrayList<>();
+	public final ArrayList<Biome> biomeList = new ArrayList<>();
+	public final ArrayList<BiomeDictionary.Type> biomeTypeList = new ArrayList<>();
 	public boolean biomeWhiteList;
 	public int biomeLeniency;
 	
@@ -109,7 +110,7 @@ public abstract class OreGenAbstract {
 	public boolean checkBiomes(World world, BlockPos pos, int biomeLeniency) {
 		boolean valid = true;
 
-		if (!reqBiomeTypes.isEmpty()) {
+		if (!biomeTypeList.isEmpty() || !biomeList.isEmpty()) {
 			valid = false;
 			Set<Biome> biomes = new HashSet<>();
 
@@ -120,12 +121,30 @@ public abstract class OreGenAbstract {
 					biomes.add(world.getBiomeForCoordsBody(boxPos));
 			}
 
-			for (BiomeDictionary.Type type : reqBiomeTypes) {
-				for(Biome biome : biomes) {
-					boolean biomeInList = BiomeDictionary.hasType(biome, type);
+			if(!biomeTypeList.isEmpty()) {
+				for (BiomeDictionary.Type type : biomeTypeList) {
+					for (Biome biome : biomes) {
+						boolean biomeInList = BiomeDictionary.hasType(biome, type);
 
-					if (biomeWhiteList == biomeInList)
+						if (biomeWhiteList == biomeInList) {
+							valid = true;
+							break;
+						}
+					}
+
+					if(valid)
+						break;
+				}
+			}
+
+			if(!biomeList.isEmpty() && !valid) {
+				for (Biome biome : biomes) {
+					boolean biomeInList = biomeList.contains(biome);
+
+					if (biomeWhiteList == biomeInList) {
 						valid = true;
+						break;
+					}
 				}
 			}
 		}

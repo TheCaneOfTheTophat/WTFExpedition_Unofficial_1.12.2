@@ -15,8 +15,8 @@
         "surfaceHeightMaxPercentage": 120,
         "dimensionList": [0],
         "veinPercentDensity": 100,
-        "biomeTypeList": ["river"],
-        "biomeTypeListWhitelist": true,
+        "biomeList": ["type#river"],
+        "biomeListWhitelist": true,
         "biomeLeniency": 4,
         "primaryGenerationType": "single",
         "secondaryGenerationType": "underwater"

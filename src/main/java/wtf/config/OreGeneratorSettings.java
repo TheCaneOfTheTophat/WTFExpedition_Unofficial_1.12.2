@@ -21,8 +21,8 @@ public class OreGeneratorSettings {
 
     public final int veinPercentDensity;
 
-    public final ArrayList<String> biomeTypeList;
-    public final boolean biomeTypeListWhitelist;
+    public final ArrayList<String> biomeList;
+    public final boolean biomeListWhitelist;
     public final int biomeLeniency;
 
     public final HashMap<String, Integer> percentGenerationPerBiomeType;
@@ -47,7 +47,7 @@ public class OreGeneratorSettings {
     // Vanilla fields
     public final int blocksPerCluster;
 
-    public OreGeneratorSettings(String name, int minAmountPerChunk, int maxAmountPerChunk, int surfaceHeightMinPercentage, int surfaceHeightMaxPercentage, int minY, int maxY, ArrayList<Integer> dimensionList, boolean dimensionListWhitelist, int veinPercentDensity, ArrayList<String> biomeTypeList, boolean biomeTypeListWhitelist, int biomeLeniency, HashMap<String, Integer> percentGenerationPerBiomeType, String primary, String secondary, double veinPitchAverage, int veinLength, int veinWidth, int veinVerticalThickness, int cloudDiameter, boolean ceiling, boolean wall, boolean floor, int blocksPerCluster) {
+    public OreGeneratorSettings(String name, int minAmountPerChunk, int maxAmountPerChunk, int surfaceHeightMinPercentage, int surfaceHeightMaxPercentage, int minY, int maxY, ArrayList<Integer> dimensionList, boolean dimensionListWhitelist, int veinPercentDensity, ArrayList<String> biomeList, boolean biomeListWhitelist, int biomeLeniency, HashMap<String, Integer> percentGenerationPerBiomeType, String primary, String secondary, double veinPitchAverage, int veinLength, int veinWidth, int veinVerticalThickness, int cloudDiameter, boolean ceiling, boolean wall, boolean floor, int blocksPerCluster) {
         this.name = name;
         this.minAmountPerChunk = minAmountPerChunk;
         this.maxAmountPerChunk = maxAmountPerChunk;
@@ -58,8 +58,8 @@ public class OreGeneratorSettings {
         this.dimensionList = dimensionList;
         this.dimensionListWhitelist = dimensionListWhitelist;
         this.veinPercentDensity = veinPercentDensity;
-        this.biomeTypeList = biomeTypeList;
-        this.biomeTypeListWhitelist = biomeTypeListWhitelist;
+        this.biomeList = biomeList;
+        this.biomeListWhitelist = biomeListWhitelist;
         this.biomeLeniency = biomeLeniency;
         this.percentGenerationPerBiomeType = percentGenerationPerBiomeType;
         this.primaryGenerationType = primary;
